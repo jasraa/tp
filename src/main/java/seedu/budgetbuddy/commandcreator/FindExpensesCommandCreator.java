@@ -31,7 +31,7 @@ public class FindExpensesCommandCreator extends CommandCreator {
         }
     }
 
-    public Double parseMaxAmount(String input) throws NumberFormatException{
+    private Double parseMaxAmount(String input) throws NumberFormatException{
         int indexOfMaxAmountPrefix = input.indexOf(MAXAMOUNT_PREFIX);
         int startIndexOfMaxAmount = indexOfMaxAmountPrefix + MAXAMOUNT_PREFIX.length();
 
@@ -48,7 +48,7 @@ public class FindExpensesCommandCreator extends CommandCreator {
         return maxAmount;
     }
 
-    public Double parseMinAmount(String input) {
+    private Double parseMinAmount(String input) {
         int indexOfMinAmountPrefix = input.indexOf(MINAMOUNT_PREFIX);
         int startIndexOfMinAmount = indexOfMinAmountPrefix + MINAMOUNT_PREFIX.length();
 
@@ -65,7 +65,7 @@ public class FindExpensesCommandCreator extends CommandCreator {
 
         return minAmount;
     }
-    public String parseDescription(String input) {
+    private String parseDescription(String input) {
 
         int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
         int startIndexOfDescription = indexOfDescriptionPrefix + DESCRIPTION_PREFIX.length();
@@ -116,7 +116,7 @@ public class FindExpensesCommandCreator extends CommandCreator {
      * @param expenses The ExpenseList to search within.
      * @return A Command for executing the search, or null if the input is invalid.
      */
-    public Command handleFindExpensesCommand(String input, ExpenseList expenses) {
+    private Command handleFindExpensesCommand(String input, ExpenseList expenses) {
         assert input != null : "Input cannot be null";
         assert !input.isEmpty() : "Input cannot be empty";
         assert input.startsWith("find expenses") : "Input must be a find expenses command";

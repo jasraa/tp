@@ -49,4 +49,17 @@ public class RecurringExpensesListTest {
         assertNotNull(obtainedList);
         assertEquals("Utilities", obtainedList.getName());
     }
+
+    @Test
+    void printAllRecurringLists_nonEmptyList_noExceptionsThrown() {
+        recurringExpensesList.addNewRecurringList("Entertainment");
+        recurringExpensesList.addNewRecurringList("Utilities");
+
+        recurringExpensesList.printAllRecurringLists();
+    }
+
+    @Test
+    void printAllRecurringLists_EmptyList_noExceptionsThrown() {
+        recurringExpensesList.printAllRecurringLists();
+    }
 }

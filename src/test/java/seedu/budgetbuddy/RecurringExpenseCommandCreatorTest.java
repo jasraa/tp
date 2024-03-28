@@ -11,9 +11,20 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class RecurringExpenseCommandCreatorTest {
+
+    @Test
+    public void handleRecCommand_invalidCommandType_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        String input = "rec invalid Entertainment";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
     @Test
     public void handleRecCommand_newListCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec newlist Entertainment";
@@ -27,7 +38,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_newListCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec newlist";
@@ -40,7 +50,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_removeListCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -55,7 +64,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_removeListCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec removelist string";
@@ -68,7 +76,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_removeListCommandWithEmptyInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec removelist";
@@ -80,12 +87,10 @@ public class RecurringExpenseCommandCreatorTest {
     }
 
     @Test
-    public void handleRecCommand_newExpenseCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
+    public void handleRecCommand_viewListsCommand_returnsRecurringExpenseCommand() {
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
-        expensesList.addNewRecurringList("Entertainment");
-        String input = "rec newexpense to/1 c/Entertainment a/100 d/Movies";
+        String input = "rec viewlists";
 
         CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
         Command command = commandCreator.createCommand();
@@ -95,12 +100,11 @@ public class RecurringExpenseCommandCreatorTest {
     }
 
     @Test
-    public void handleRecCommand_newExpenseCommandWithInvalidAmount_returnsNull() {
-        Parser parser = new Parser();
+    public void handleRecCommand_addRecCommandWithEmptyInput_returnsNull() {
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
-        String input = "rec newexpense to/1 c/Entertainment a/sdsdfsdf d/Movies";
+        String input = "rec addrec";
 
         CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
         Command command = commandCreator.createCommand();
@@ -110,7 +114,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_addRecCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -137,8 +140,20 @@ public class RecurringExpenseCommandCreatorTest {
     }
 
     @Test
+    public void handleRecCommand_viewExpensesCommandWithEmptyInput_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        expensesList.addNewRecurringList("Entertainment");
+        String input = "rec viewexpenses";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
+
+    @Test
     public void handleRecCommand_viewExpensesCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -153,11 +168,98 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_viewExpensesCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
         String input = "rec viewexpenses fdgder";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
+
+
+    @Test
+    public void handleRecCommand_newExpenseCommandWithValidInput_createsRecurringExpenseCommand() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        expensesList.addNewRecurringList("Entertainment");
+        String input = "rec newexpense to/1 c/Entertainment a/100 d/Movies";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNotNull(command);
+        assertInstanceOf(RecurringExpenseCommand.class, command);
+    }
+
+    @Test
+    public void handleRecCommand_newExpenseCommandWithInvalidAmount_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        expensesList.addNewRecurringList("Entertainment");
+        String input = "rec newexpense to/1 c/Entertainment a/sdsdfsdf d/Movies";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
+
+    @Test
+    public void handleRecCommand_newExpenseToListCommandWithInvalidInput_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        String input = "rec newexpense to/ ";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
+
+    @Test
+    public void handleRecCommand_newExpenseToListCommandWithEmptyCategory_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        String input = "rec newexpense to/1 c/ a/200 d/ description";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
+
+    @Test
+    public void handleRecCommand_newExpenseToListCommandWithEmptyAmount_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        String input = "rec newexpense to/1 c/Entertainment a/ d/ description";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
+
+    @Test
+    public void handleRecCommand_newExpenseToListCommandWithEmptyDescription_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        String input = "rec newexpense to/1 c/Entertainment a/200 d/";
+
+        CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
+        Command command = commandCreator.createCommand();
+
+        assertNull(command);
+    }
+
+    @Test
+    public void handleRecCommand_newExpenseToListCommandWithEmptyListNumber_returnsNull() {
+        ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList expensesList = new RecurringExpensesList();
+        String input = "rec newexpense to/ c/Entertainment a/200 d/";
 
         CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenseList);
         Command command = commandCreator.createCommand();
