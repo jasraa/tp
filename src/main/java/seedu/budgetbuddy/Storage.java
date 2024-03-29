@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Scanner;
 
@@ -83,6 +84,48 @@ public class Storage {
                     saving.getCategory(), saving.getAmount()));
         }
         writer.close();
+    }
+
+    // Save Currency
+    public void saveCurrency(List<Expense> expenses, List<Saving> savings) throws IOException {
+        ensureDirectoryExists();
+        FileWriter writer = new FileWriter(filePath, false);
+
+        if (expenses == null && savings == null) {
+            throw new IOException();
+        }
+
+        if (expenses == null) {
+            // Retrieve Currency from SavingList
+            Saving saving = savings.get(0);
+            writer.write(String.format("Default Currency: %s\n", saving.getCurrency()));
+            writer.close();
+        } else {
+            // Retrieve Currency from ExpenseList
+            Expense expense = expenses.get(0);
+            writer.write(String.format("Default Currency: %s\n", expense.getCurrency()));
+            writer.close();
+        }
+    }
+
+    // Load Currency
+    public void loadCurrency(List<Expense> expenses, List<Saving> savings) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split(": ");
+            Currency currency = Currency.getInstance(parts[1].trim());
+
+            for (Saving saving : savings) {
+                saving.setCurrency(currency);
+            }
+
+            for (Expense expense : expenses) {
+                expense.setCurrency(currency);
+            }
+        }
+        scanner.close();
     }
 
 }
