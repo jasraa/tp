@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.logging.Level;
@@ -51,7 +52,6 @@ public class ExpenseList {
         return this.budgets;
     }
 
-
     public ArrayList<Expense> filterExpenses(String description, Double minAmount, Double maxAmount) {
         assert minAmount <= maxAmount : "Minimum Amount must be smaller than or equals to Max Amount";
 
@@ -78,7 +78,7 @@ public class ExpenseList {
             if (!expenses.isEmpty()) {
                 System.out.println(String.format("Current Currency: %s\n", expenses.get(0).getCurrency()));
             } else {
-                System.out.println("Default Currency: SGD");
+                System.out.println("Default Currency for Expenses: SGD");
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Problem setting currency code", e);
@@ -155,6 +155,12 @@ public class ExpenseList {
 
         Expense expense = new Expense(category, amountAsDouble, description);
         expenses.add(expense);
+
+        // Set new transaction to new default currency
+        if (!expenses.isEmpty()) {
+            Currency defaultCurrency = expenses.get(0).getCurrency();
+            expense.setCurrency(defaultCurrency);
+        }
 
     }
 

@@ -58,16 +58,10 @@ public class SavingList {
         findTotalSavings();
 
         try {
-            // Set Default Currency Code based on empty list
-            Currency defaultCurrency;
-            if (savings.isEmpty() && !expenseList.getExpenses().isEmpty()) {
-                defaultCurrency = expenseList.getExpenses().get(0).getCurrency();
-                System.out.println(String.format("Current Currency: %s", defaultCurrency));
-            } else if (!savings.isEmpty()) {
-                defaultCurrency = savings.get(0).getCurrency();
-                System.out.println(String.format("Current Currency: %s", defaultCurrency));
+            if (!savings.isEmpty()) {
+                System.out.println(String.format("Current Currency: %s", savings.get(0).getCurrency()));
             } else {
-                System.out.println("Default Currency: SGD");
+                System.out.println("Default Currency for Savings: SGD");
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Problem setting currency code", e);
@@ -134,6 +128,12 @@ public class SavingList {
         }
         Saving saving = new Saving(category, amountInt);
         savings.add(saving);
+
+        // Set new transaction to new default currency
+        if (!savings.isEmpty()) {
+            Currency defaultCurrency = savings.get(0).getCurrency();
+            saving.setCurrency(defaultCurrency);
+        }
 
         if (!categories.contains(category)) {
             categories.add(category);

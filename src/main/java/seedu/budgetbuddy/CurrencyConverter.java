@@ -68,6 +68,11 @@ public class CurrencyConverter {
         }
         assert expenses != null : "ExpenseList cannot be null";
 
+        if (expenses.getExpenses().isEmpty()) {
+            System.out.println("Unable to change currency for empty expense list. Reverting to System Default SGD");
+            return;
+        }
+
         for (Expense expense : expenses.getExpenses()) {
             // Skip if the current expense is null
             if (expense == null) {
@@ -86,6 +91,8 @@ public class CurrencyConverter {
                 System.out.println("Error converting amount for expense: " + e.getMessage());
             }
         }
+        System.out.println("Default currency for Expenses changed to " + newCurrency);
+
     }
 
     // Convert currencies in Saving List
@@ -95,6 +102,11 @@ public class CurrencyConverter {
             throw new IllegalArgumentException("SavingList cannot be null");
         }
         assert savings != null : "SavingList cannot be null";
+
+        if (savings.getSavings().isEmpty()) {
+            System.out.println("Unable to change currency for empty saving list. Reverting to System Default SGD");
+            return;
+        }
 
         for (Saving saving : savings.getSavings()) {
             // Skip if the current saving is null
@@ -114,6 +126,8 @@ public class CurrencyConverter {
                 System.out.println("Error converting amount for saving: " + e.getMessage());
             }
         }
+        System.out.println("Default currency for Savings changed to " + newCurrency);
+
     }
 
 }
