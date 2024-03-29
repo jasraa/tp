@@ -11,7 +11,7 @@ import seedu.budgetbuddy.exception.BudgetBuddyException;
 public class SavingList {
     private static final Logger LOGGER = Logger.getLogger(SavingList.class.getName());
 
-    protected ArrayList <Saving> savings;
+    protected ArrayList<Saving> savings;
     protected ArrayList<String> categories;
     protected double initialAmount;
     protected Storage storage;
@@ -57,6 +57,11 @@ public class SavingList {
             LOGGER.info("Listing savings...");
 
             findTotalSavings();
+
+            if (savings != null && expenseList != null) {
+                System.out.println(String.format("Current Currency: %s\n", savings.get(0).getCurrency()));
+            }
+
             System.out.println("Savings:");
             for (int i = 0; i < savings.size(); i++) {
                 Saving saving = savings.get(i);

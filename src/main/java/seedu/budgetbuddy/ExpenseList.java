@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class ExpenseList {
     private static final Logger LOGGER = Logger.getLogger(ExpenseList.class.getName());
 
-    protected ArrayList <Expense> expenses;
+    protected ArrayList<Expense> expenses;
     protected ArrayList<String> categories;
     protected List<Budget> budgets;
 
@@ -74,6 +74,11 @@ public class ExpenseList {
         LOGGER.info("Listing expenses...");
 
         try {
+
+            if (expenses != null) {
+                System.out.println(String.format("Current Currency: %s\n", expenses.get(0).getCurrency()));
+            }
+
             System.out.println("Expenses:");
             for (int i = 0; i < expenses.size(); i++) {
                 Expense expense = expenses.get(i);
