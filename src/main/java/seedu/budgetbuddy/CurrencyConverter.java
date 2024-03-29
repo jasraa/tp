@@ -127,7 +127,6 @@ public class CurrencyConverter {
             }
         }
         System.out.println("Default currency for Savings changed to " + newCurrency);
-
     }
 
 }

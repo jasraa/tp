@@ -53,9 +53,6 @@ public class BudgetBuddy {
             System.out.println("Error saving to file.");
         }
 
-
-
-
     }
 
     public void run() {
@@ -69,7 +66,7 @@ public class BudgetBuddy {
             defaultCurrency.loadCurrency(expenses.getExpenses(), savings.getSavings());
 
         } catch (FileNotFoundException e) {
-            System.out.println("No existing expense file found. Starting fresh.");
+            System.out.println("No existing files found. Starting fresh.");
         }
 
         ui.showWelcome();

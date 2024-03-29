@@ -41,7 +41,6 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
                     Currency newCurrency = Currency.getInstance(currencyCode.toUpperCase());
                     assert newCurrency != null : "Currency code should be valid";
                     LOGGER.log(Level.INFO, "Default currency changed to " + newCurrency);
-                    System.out.println("Default currency changed to " + newCurrency);
                     return new ChangeCurrencyCommand(newCurrency, savingList, expenseList, currencyConverter);
                 } catch (IllegalArgumentException e) {
                     LOGGER.log(Level.WARNING, "Invalid currency code: " + currencyCode);
