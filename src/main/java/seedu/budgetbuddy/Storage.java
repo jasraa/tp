@@ -8,9 +8,13 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Storage {
     private final String filePath;
+    private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
+
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -91,20 +95,23 @@ public class Storage {
         ensureDirectoryExists();
         FileWriter writer = new FileWriter(filePath, false);
 
-        if (expenses == null && savings == null) {
-            throw new IOException();
-        }
-
-        if (expenses == null) {
-            // Retrieve Currency from SavingList
-            Saving saving = savings.get(0);
-            writer.write(String.format("Default Currency: %s\n", saving.getCurrency()));
-            writer.close();
-        } else {
-            // Retrieve Currency from ExpenseList
-            Expense expense = expenses.get(0);
-            writer.write(String.format("Default Currency: %s\n", expense.getCurrency()));
-            writer.close();
+        try {
+            if (savings.isEmpty() && expenses.isEmpty()) {
+                writer.write("Default Currency: SGD");
+                writer.close();
+            } else if (!savings.isEmpty() && !expenses.isEmpty()) {
+                // Assert savings and expenses currency are equal
+                writer.write(String.format("Default Currency: %s\n", savings.get(0).getCurrency()));
+                writer.close();
+            } else if (savings.isEmpty()) {
+                writer.write(String.format("Default Currency: %s\n", expenses.get(0).getCurrency()));
+                writer.close();
+            } else {
+                writer.write(String.format("Default Currency: %s\n", savings.get(0).getCurrency()));
+                writer.close();
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Problem saving currency code", e);
         }
     }
 

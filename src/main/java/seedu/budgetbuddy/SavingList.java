@@ -2,6 +2,7 @@ package seedu.budgetbuddy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,15 +54,26 @@ public class SavingList {
     }
 
     public void listSavings(String filterCategory, ExpenseList expenseList) {
+        LOGGER.info("Listing savings...");
+        findTotalSavings();
+
         try {
-            LOGGER.info("Listing savings...");
-
-            findTotalSavings();
-
-            if (savings != null && expenseList != null) {
-                System.out.println(String.format("Current Currency: %s\n", savings.get(0).getCurrency()));
+            // Set Default Currency Code based on empty list
+            Currency defaultCurrency;
+            if (savings.isEmpty() && !expenseList.getExpenses().isEmpty()) {
+                defaultCurrency = expenseList.getExpenses().get(0).getCurrency();
+                System.out.println(String.format("Current Currency: %s", defaultCurrency));
+            } else if (!savings.isEmpty()) {
+                defaultCurrency = savings.get(0).getCurrency();
+                System.out.println(String.format("Current Currency: %s", defaultCurrency));
+            } else {
+                System.out.println("Default Currency: SGD");
             }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Problem setting currency code", e);
+        }
 
+        try {
             System.out.println("Savings:");
             for (int i = 0; i < savings.size(); i++) {
                 Saving saving = savings.get(i);
