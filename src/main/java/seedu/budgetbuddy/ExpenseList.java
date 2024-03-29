@@ -70,12 +70,22 @@ public class ExpenseList {
 
     }
 
+    /**
+     * Lists expenses based on the provided filter category.
+     * If no filter category is specified, all expenses are listed.
+     *
+     * @param filterCategory the category by which to filter the expenses (optional)
+     */
     public void listExpenses(String filterCategory) {
         LOGGER.info("Listing expenses...");
 
         // Set Default Currency Code based on empty list
         try {
+            assert expenses != null : "Expenses list should not be null";
+
             if (!expenses.isEmpty()) {
+                assert expenses.get(0) != null : "First expense should not be null";
+
                 System.out.println(String.format("Current Currency: %s\n", expenses.get(0).getCurrency()));
             } else {
                 System.out.println("Default Currency for Expenses: SGD");
