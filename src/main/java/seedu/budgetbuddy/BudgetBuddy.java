@@ -1,6 +1,7 @@
 package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.command.Command;
+import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class BudgetBuddy {
 
     private Storage expensesStorage;
     private Storage savingsStorage;
+    private Storage recurringExpensesStorage;
 
 
     public BudgetBuddy() {
@@ -27,7 +29,7 @@ public class BudgetBuddy {
         splitexpenses = new SplitExpenseList();
         expensesStorage = new Storage("src/main/java/seedu/budgetbuddy/data/ExpenseFile.txt");
         savingsStorage = new Storage("src/main/java/seedu/budgetbuddy/data/SavingsFile.txt");
-
+        recurringExpensesStorage = new Storage("./data/RecurringExpensesFile.txt");
     }
 
     public void handleCommands(String input) {
@@ -43,8 +45,11 @@ public class BudgetBuddy {
         try {
             expensesStorage.saveExpenses(expenses.getExpenses());
             savingsStorage.saveSavings(savings.getSavings());
+            recurringExpensesStorage.saveRecurringExpenses(expensesList);
         } catch (IOException e) {
             System.out.println("Error saving expenses to file.");
+        } catch (InvalidRecurringExpensesFileException e) {
+            System.out.println(e.getMessage());
         }
 
     }
@@ -55,8 +60,12 @@ public class BudgetBuddy {
         try {
             this.expenses.getExpenses().addAll(expensesStorage.loadExpenses());
             this.savings.getSavings().addAll(savingsStorage.loadSavings());
+            this.expensesList = recurringExpensesStorage.loadRecurringExpensesList();
+
         } catch (FileNotFoundException e) {
             System.out.println("No existing expense file found. Starting fresh.");
+        } catch (IOException e) {
+            System.out.println("Could not create files. Please ensure all files are present and are not directories");
         }
 
         ui.showWelcome();
