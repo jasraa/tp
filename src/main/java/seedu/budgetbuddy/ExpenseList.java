@@ -124,6 +124,13 @@ public class ExpenseList {
         }
     }
 
+    /**
+     * Calculates the total expenses from the list of expenses.
+     * Negative expense amounts are considered invalid.
+     *
+     * @return The total expenses.
+     * @throws IllegalArgumentException If any expense amount is negative.
+     */
     public double calculateTotalExpenses() {
         double totalExpenses = 0;
         try {
@@ -166,7 +173,8 @@ public class ExpenseList {
         Expense expense = new Expense(category, amountAsDouble, description);
         expenses.add(expense);
 
-        // Set new transaction to new default currency
+        // Set new expense to new default currency
+        // @author sweijie24
         if (!expenses.isEmpty()) {
             Currency defaultCurrency = expenses.get(0).getCurrency();
             expense.setCurrency(defaultCurrency);

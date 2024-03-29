@@ -22,6 +22,16 @@ public class CurrencyConverter {
         exchangeRates.put(Currency.getInstance("HKD"), 5.80);
     }
 
+    /**
+     * Converts an amount from one currency to another using exchange rates.
+     *
+     * @param amount      The amount to be converted.
+     * @param fromCurrency The currency of the original amount.
+     * @param toCurrency  The currency to which the amount is to be converted.
+     * @return The converted amount in the target currency.
+     * @throws IllegalArgumentException If exchange rates are not available for one or both currencies,
+     *                                  or if exchange rates are not positive numbers.
+     */
     public double convertAmount(double amount, Currency fromCurrency, Currency toCurrency) {
         // Check if exchange rates for both currencies are available
         if (!exchangeRates.containsKey(fromCurrency) || !exchangeRates.containsKey(toCurrency)) {
@@ -60,7 +70,13 @@ public class CurrencyConverter {
         }
     }
 
-    // Convert currencies in Expense List
+    /**
+     * Converts the currency of expenses in the given ExpenseList to the specified new currency.
+     *
+     * @param newCurrency The new currency to convert expenses to.
+     * @param expenses    The ExpenseList containing the expenses to be converted.
+     * @throws IllegalArgumentException If the ExpenseList is null.
+     */
     public void convertExpenseCurrency(Currency newCurrency, ExpenseList expenses) {
         // Check if the ExpenseList is not null
         if (expenses == null) {
@@ -95,7 +111,13 @@ public class CurrencyConverter {
 
     }
 
-    // Convert currencies in Saving List
+    /**
+     * Converts the currency of savings in the given SavingList to the specified new currency.
+     *
+     * @param newCurrency The new currency to convert savings to.
+     * @param savings     The SavingList containing the savings to be converted.
+     * @throws IllegalArgumentException If the SavingList is null.
+     */
     public void convertSavingCurrency(Currency newCurrency, SavingList savings) {
         // Check if the SavingList is not null
         if (savings == null) {
