@@ -7,7 +7,6 @@ import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RecurringExpenseCommand extends Command{
 

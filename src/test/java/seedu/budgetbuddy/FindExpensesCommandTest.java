@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FindExpensesCommandTest {
 
     @Test
-    public void FindExpensesCommand_createWithNullDescription_setsDescriptionToEmptyString() {
+    public void findExpensesCommand_createWithNullDescription_setsDescriptionToEmptyString() {
         ExpenseList expenses = new ExpenseList();
         FindExpensesCommand findExpensesCommand = new FindExpensesCommand(expenses, null
                 , null, null);

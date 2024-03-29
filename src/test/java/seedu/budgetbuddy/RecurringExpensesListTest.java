@@ -59,7 +59,7 @@ public class RecurringExpensesListTest {
     }
 
     @Test
-    void printAllRecurringLists_EmptyList_noExceptionsThrown() {
+    void printAllRecurringLists_emptyList_noExceptionsThrown() {
         recurringExpensesList.printAllRecurringLists();
     }
 }
