@@ -205,9 +205,14 @@ Converts current currency to targeted currency
 Format : `change currency [CURRENCY_CODE]`
 
 * Default currency is 'SGD'.
+* Current Currency can be identified when listing savings/expenses.
 * `CURRENCY_CODE` consists of the following currencies: 'SGD', 'USD', 'EUR', 'MYR', 'JPY', 'KRW', 'CNY', 'HKD'
 * `CURRENCY_CODE` cannot be null. 
-* Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY)
+* Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY).
+* Existing Transactions (Expenses & Savings) have to be present to change currency.
+  * In the event of empty Expenses/Savings, future additions will be in SGD until change is specified by the user.
+  * Calculation of remaining balance does *NOT* take into account currency values.
+* Future additions to existing Expenses/Savings will be using the current currency displayed.
 
 Examples of usage:
 
