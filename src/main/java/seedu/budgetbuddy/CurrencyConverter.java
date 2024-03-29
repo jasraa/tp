@@ -61,7 +61,7 @@ public class CurrencyConverter {
     }
 
     // Convert currencies in Expense List
-    public void convertCurrency(Currency newCurrency, ExpenseList expenses) {
+    public void convertExpenseCurrency(Currency newCurrency, ExpenseList expenses) {
         // Check if the ExpenseList is not null
         if (expenses == null) {
             throw new IllegalArgumentException("ExpenseList cannot be null");
@@ -89,7 +89,7 @@ public class CurrencyConverter {
     }
 
     // Convert currencies in Saving List
-    public void convertCurrency(Currency newCurrency, SavingList savings) {
+    public void convertSavingCurrency(Currency newCurrency, SavingList savings) {
         // Check if the SavingList is not null
         if (savings == null) {
             throw new IllegalArgumentException("SavingList cannot be null");

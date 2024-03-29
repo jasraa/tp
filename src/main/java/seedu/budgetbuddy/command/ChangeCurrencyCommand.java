@@ -23,7 +23,7 @@ public class ChangeCurrencyCommand extends Command {
 
     @Override
     public void execute() {
-        currencyConverter.convertCurrency(newCurrency, savings);
-        currencyConverter.convertCurrency(newCurrency, expenses);
+        currencyConverter.convertSavingCurrency(newCurrency, savings);
+        currencyConverter.convertExpenseCurrency(newCurrency, expenses);
     }
 }
