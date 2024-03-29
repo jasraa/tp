@@ -124,39 +124,70 @@ The following diagram provides a rough overview of how BudgetBuddy is built
 
 ![Diagram of overview of BudgetBuddy](diagrams/Introduction.jpg)
 
-`BudgetBuddy` is the main class of the application and directly interacts with the user, passing along the input
-into the Parser. The `Parser` creates a `CommandCreator` object depending on the user's input. The `CommandCreator`
-object then creates the `Command` object. This `Command` will be executed in `BudgetBuddy`. The `Command` object 
+`BudgetBuddy` is the main class of the application and directly interacts with the user. `BudgetBuddy` 
+passes along the input into the Parser. The `Parser` creates a `CommandCreator` object depending on the user's input
+. The `CommandCreator` object then creates the `Command` object. 
+This `Command` object will be executed in `BudgetBuddy`. The `Command` object 
 utilizes methods and the class present in the `Application Classes`, which will be explained in more 
 detail in the following sections.
 
 #### 3.2 Parser Class
-The main functionality of the Parser Class is to determine the type of `CommandCreator` object to initialize, and
-return the created `Command` object created by the `CommandCreator` back to `BudgetBuddy`
+The main functionality of the Parser Class is to determine the type of `CommandCreator` object to initialize. Using
+Boolean Functions, the Parser Class determines this by what the user input starts with. 
+After determining the type of `CommandCreator` object, the Parser initializes the `CommandCreator` object
+with all its required parameters. 
+
+Here are some examples :
+
+| Boolean Method        | Checks if input starts with | Feature Requires   | Creates                                    |
+|-----------------------|-----------------------------|--------------------|--------------------------------------------|
+| isAddExpenseCommand() | add expense                 | input, ExpenseList | AddExpenseCommandCreator(input, expenses)  |
+| isEditSavingCommand() | edit expense                | input, SavingList  | EditSavingsCommandCreator(input, savings)  |
+
+The following UML Sequence Diagram illustrates the Parser Class interactions after it has determined the CommandCreator
+object.
+
+
+**Note** : Given the wide range of commandCreator classes, do treat the CommandCreator class as a universal representation of
+all its subclasses.
+
+![Sequence Diagram of Parser](diagrams/sequence_diagram_parser.jpg)
 
 #### 3.3 Ui Class
 The Ui Class is used to print certain elements to the CLI. In particular, it consists of the Welcome Message,
 Goodbye Message, Divider Lines and all the corresponding commands' command format.
 
 #### 3.5 CommandCreator Class
-The CommandCreator class contains multiple subclasses, which corresponding to a specific function of the application.
-Within the CommandCreator classes, it handles making sense of the user input, obtaining the relevant parameters to be
-used in the created `Command` class.
+The CommandCreator class has multiple subclasses, which corresponds to a specific function of the application.
+Within the CommandCreator classes, it handles making sense of the user input, obtaining the relevant parameters, and finally
+creating the `Command` class.
+
+
+The superclass `CommandCreator` is an abstract class which is never instantiated. Where its createCommand() method is
+overridden by its subclasses.
+
+
+The association between the `Command` and `CommandCreator` can be seen in their names. E.g. `MenuCommandCreator`, would
+create a `MenuCommand` class when its createCommand() method is called. Similarly, `FindExpensesCommandCreator` would
+create a `FindCommand` class when its createCommand() method is called.
 
 #### 3.4 Command Class
 The Command class, similar to the CommandCreator class, contains multiple subclasses, all corresponding to a specific
-function of the application. In this case, each CommandCreator class would be associated to their relevant Commands.
-Here is a table of all CommandCreator class and the Commands that they can create.
+function of the application. Stated in section`3.5 CommandCreator Class`, each subclass of the `Command` Object
+is created by its associated `CommandCreator`. 
 
-"Insert Table Here"
+The superclass `Command` is an abstract class which is never instantiated. Where its execute() method is overridden
+by its subclasses. What each Command class does when its execute() method is called would be discussed in more detail
+in the Implementation section.
 
 #### 3.5 Storage Class
-The Storage Class handles the loading and saving of the Expenses and Savings in BudgetBuddy.
+The Storage Class handles the loading and saving of the features in BudgetBuddy. Different features are saved in
+different files corresponding to their data type. 
 
 ### 3.6 Application Classes
 The classes present in this group of `Application Classes` refers to certain elements which serves a purpose more
 towards the `user` instead of application itself. They represent data of the user's financial transactions,
-including expenses and savings, along with mechanisms for organizing and managing this data in meaningful ways.
+including expenses and savings, along with methods for organizing and managing this data.
 
 ##### 3.6.1 Transaction
 This is an abstract class, which is the superclass for both the Expense and Saving Classes. It contains common variables
@@ -164,8 +195,7 @@ such as Currency, Category and Amount.
 
 ##### 3.6.2 Expense
 This class holds details regarding an expense a user has. Within this class, it has 4 class-level variables :
-`String category`, `LocalDate dateAdded` , `String description` and `Double amount`. The variables and their relevance
-are as follows : 
+`String category`, `LocalDate dateAdded` , `String description` and `Double amount`.
 
 ##### 3.6.3 ExpenseList
 This class represents a list of expenses. Within this class, it has 2 class-level variables :
@@ -187,10 +217,21 @@ This class also contains the methods to handle any user interactions with the li
 brief explanation on their functionality is as follows :
 
 ##### 3.6.6 RecurringExpenseList
-Explain what it does
+This class represents a list of recurring expenses for the Recurring Expense feature. Within this class, it has 
+1 class-level variable : `String name`. Which is used to store the name of the list. Given that its overall 
+functionality is similar to ExpenseList class, it inherits the ExpenseList class.
 
 ##### 3.6.7 RecurringExpensesList
-Explain what it does
+This class represents the list of all lists of recurring expenses for the Recurring Expense feature. Within this class,
+it has only 1 class-level variable : `ArrayList<ExpenseList> recurringExpenses`. Which is used to store a list of
+ExpenseList objects. This class contains all methods required for the overall Recurring Expense feature to work. 
+The implementation of these methods would be discussed in further detail in the **Implementation** section.
+
+For clarity, the follow Class Diagram depicts the associations between RecurringExpensesList, RecurringExpenseList and
+ExpenseList.
+
+![Class Diagram](diagrams/RecurringExpensesListClassDiagram.jpg)
+
 
 
 ## 4. Implementation
@@ -457,6 +498,30 @@ class from `BudgetBuddy`, which constructs a `FindExpenseCommand` Object with `e
 6. If `filteredExpenses` is not empty, `execute()` then initializes a new variable `filteredExpenseList` 
 of type `ExpenseList` with `filteredExpenses` initialized as the `expenses` Class attribute.
 7. Finally `execute()` calls `filteredExpenseList#listexpenses()` to print filtered expenses into the CLI.
+
+### Recurring Expenses Feature
+The Recurring Expenses feature allows users to create lists of expenses, where each list of expenses can be added to
+the overall expenses in a single command. This feature includes the creation of a list of expenses, the viewing of
+all/each list of expenses and the remove of each list of expenses. All functions are orchestrated by the 
+`RecurringExpenseCommand` class, which would have been created by the `RecurringExpenseCommandCreator`, which is in turn
+created by the `Parser` class. When `RecurringExpenseCommand#execute()` is called by `BudgetBuddy`, it utilizes methods
+present in `ExpenseList`, `RecurringExpenseList` and `RecurringExpensesList` to facilitate the relevant features.
+
+Within the RecurringExpenseCommand, the following variables would be initialized :
+
+| Variable        | Variable Type | Relevance                                                                      |                                                           
+|-----------------|---------------|--------------------------------------------------------------------------------|
+| overallExpenses | ExpenseList   | Refer to the overall Expense List storing all of User's Expenses               |
+| initialListName | String        | Used as the name of the new list that will be created                          |
+| commandType     | String        | Type of RecuringExpenseCommand. E.g. `newlist`, `viewlists`, ...               |
+| listNumber      | int           | Refers to the List Number of a recurring expense list shown during `viewlists` |
+| category        | String        | Category of the Expense to be added when using `newexpense`                    |
+| amount          | Double        | Amount of Expense to be added when using `newexpense`                          |
+| description     | String        | Description of Expense to be added when using `newexpense`                     |
+
+When viewing the code, you would notice that there are 5 different constructors in `RecurringExpensesCommand`. These
+constructors correspond to the different `commandTypes` present. Each constructor would initialize only the required
+parameters for the specified `commandTypes`.
 
 
 ## 5. Product scope
