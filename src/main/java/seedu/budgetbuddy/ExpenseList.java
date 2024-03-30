@@ -79,22 +79,9 @@ public class ExpenseList {
     public void listExpenses(String filterCategory) {
         LOGGER.info("Listing expenses...");
 
-        // Set Default Currency Code based on empty list
         try {
-            assert expenses != null : "Expenses list should not be null";
+            System.out.println(String.format("Current Currency: %s\n", DefaultCurrency.getDefaultCurrency()));
 
-            if (!expenses.isEmpty()) {
-                assert expenses.get(0) != null : "First expense should not be null";
-
-                System.out.println(String.format("Current Currency: %s\n", expenses.get(0).getCurrency()));
-            } else {
-                System.out.println("Default Currency for Expenses: SGD");
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Problem setting currency code", e);
-        }
-
-        try {
             System.out.println("Expenses:");
             for (int i = 0; i < expenses.size(); i++) {
                 Expense expense = expenses.get(i);

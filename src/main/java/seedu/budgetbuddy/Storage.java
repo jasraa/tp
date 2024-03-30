@@ -12,9 +12,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Storage {
-    private final String filePath;
     private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
 
+    private final String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -91,17 +91,11 @@ public class Storage {
     }
 
     /**
-     * Saves currency information to the file specified in the constructor based on the provided expenses and savings.
-     * If both expenses and savings are empty, the default currency is set to SGD. If either expenses or savings is
-     * empty, the default currency is set to the currency of the non-empty list.
+     * Saves the default currency to the specified file path.
      *
-     * @param expenses the list of expenses to consider for determining the default currency
-     * @param savings  the list of savings to consider for determining the default currency
      * @throws IOException if an I/O error occurs while writing to the file
      */
-    public void saveCurrency(List<Expense> expenses, List<Saving> savings) throws IOException {
-        assert expenses != null : "Expense list should not be null";
-        assert savings != null : "Saving list should not be null";
+    public void saveCurrency() throws IOException {
         assert filePath != null : "File path should not be null";
 
         ensureDirectoryExists();
@@ -109,42 +103,22 @@ public class Storage {
         FileWriter writer = new FileWriter(filePath, false);
 
         try {
-            if (savings.isEmpty() && expenses.isEmpty()) {
-                writer.write("Default Currency: SGD");
-                writer.close();
-            } else if (!savings.isEmpty() && !expenses.isEmpty()) {
-                assert savings.get(0).getCurrency().equals(expenses.get(0).getCurrency()) :
-                        "Savings and expenses currency should be equal";
-                writer.write(String.format("Default Currency: %s\n", savings.get(0).getCurrency()));
-                writer.close();
-            } else if (savings.isEmpty()) {
-                assert !expenses.isEmpty() : "Expenses should not be empty when savings are empty";
+            Currency currentCurrency = DefaultCurrency.getDefaultCurrency();
+            writer.write("Default Currency: " + currentCurrency);
+            writer.close();
 
-                writer.write(String.format("Default Currency: %s\n", expenses.get(0).getCurrency()));
-                writer.close();
-            } else {
-                assert !savings.isEmpty() : "Savings should not be empty when expenses are empty";
-
-                writer.write(String.format("Default Currency: %s\n", savings.get(0).getCurrency()));
-                writer.close();
-            }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Problem saving currency code", e);
         }
     }
 
     /**
-     * Loads currency information from the file specified in the constructor and updates the currencies of expenses
-     * and savings accordingly.
+     * Loads currency data from the specified file path and sets the default currency accordingly.
      *
-     * @param expenses the list of expenses to update with the loaded currency
-     * @param savings  the list of savings to update with the loaded currency
      * @throws FileNotFoundException if the specified file path does not exist
      */
-    public void loadCurrency(List<Expense> expenses, List<Saving> savings) throws FileNotFoundException {
+    public void loadCurrency() throws FileNotFoundException {
 
-        assert expenses != null : "Expense list should not be null";
-        assert savings != null : "Saving list should not be null";
         assert filePath != null : "File path should not be null";
 
         File file = new File(filePath);
@@ -164,17 +138,8 @@ public class Storage {
 
             Currency currency = Currency.getInstance(currencyCode);
 
-            for (Saving saving : savings) {
-                assert saving != null : "Saving should not be null";
-                saving.setCurrency(currency);
-            }
-
-            for (Expense expense : expenses) {
-                assert expense != null : "Expense should not be null";
-                expense.setCurrency(currency);
-            }
+            DefaultCurrency.setDefaultCurrency(currency);
         }
         scanner.close();
     }
-
 }

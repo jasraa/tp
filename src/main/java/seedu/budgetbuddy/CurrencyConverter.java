@@ -72,6 +72,7 @@ public class CurrencyConverter {
 
     /**
      * Converts the currency of expenses in the given ExpenseList to the specified new currency.
+     * No conversion necessary if trying to convert to the same currency.
      *
      * @param newCurrency The new currency to convert expenses to.
      * @param expenses    The ExpenseList containing the expenses to be converted.
@@ -84,35 +85,34 @@ public class CurrencyConverter {
         }
         assert expenses != null : "ExpenseList cannot be null";
 
-        if (expenses.getExpenses().isEmpty()) {
-            System.out.println("Unable to change currency for empty expense list. Reverting to System Default SGD");
-            return;
-        }
+        if (DefaultCurrency.getDefaultCurrency() == newCurrency) {
+            System.out.println("Same currency. No conversion needed");
+        } else {
+            for (Expense expense : expenses.getExpenses()) {
+                // Skip if the current expense is null
+                if (expense == null) {
+                    LOGGER.warning("Skipping null expense");
+                    System.out.println("Skipping null expense");
+                    continue;
+                }
 
-        for (Expense expense : expenses.getExpenses()) {
-            // Skip if the current expense is null
-            if (expense == null) {
-                LOGGER.warning("Skipping null expense");
-                System.out.println("Skipping null expense");
-                continue;
+                try {
+                    double convertedAmount = convertAmount(expense.getAmount(), expense.getCurrency(), newCurrency);
+                    expense.setAmount(convertedAmount);
+                    expense.setCurrency(newCurrency);
+                } catch (IllegalArgumentException e) {
+                    // Handle any IllegalArgumentException thrown during conversion
+                    LOGGER.severe("Error converting amount for expense: " + e.getMessage());
+                    System.out.println("Error converting amount for expense: " + e.getMessage());
+                }
             }
-
-            try {
-                double convertedAmount = convertAmount(expense.getAmount(), expense.getCurrency(), newCurrency);
-                expense.setAmount(convertedAmount);
-                expense.setCurrency(newCurrency);
-            } catch (IllegalArgumentException e) {
-                // Handle any IllegalArgumentException thrown during conversion
-                LOGGER.severe("Error converting amount for expense: " + e.getMessage());
-                System.out.println("Error converting amount for expense: " + e.getMessage());
-            }
+            System.out.println("Default currency for Expenses changed to " + newCurrency);
         }
-        System.out.println("Default currency for Expenses changed to " + newCurrency);
-
     }
 
     /**
      * Converts the currency of savings in the given SavingList to the specified new currency.
+     * No conversion necessary if trying to convert to the same currency.
      *
      * @param newCurrency The new currency to convert savings to.
      * @param savings     The SavingList containing the savings to be converted.
@@ -125,30 +125,28 @@ public class CurrencyConverter {
         }
         assert savings != null : "SavingList cannot be null";
 
-        if (savings.getSavings().isEmpty()) {
-            System.out.println("Unable to change currency for empty saving list. Reverting to System Default SGD");
-            return;
-        }
+        if (DefaultCurrency.getDefaultCurrency() == newCurrency) {
+            System.out.println("Same currency. No conversion needed");
+        } else {
+            for (Saving saving : savings.getSavings()) {
+                // Skip if the current saving is null
+                if (saving == null) {
+                    LOGGER.warning("Skipping null saving");
+                    System.out.println("Skipping null saving");
+                    continue;
+                }
 
-        for (Saving saving : savings.getSavings()) {
-            // Skip if the current saving is null
-            if (saving == null) {
-                LOGGER.warning("Skipping null saving");
-                System.out.println("Skipping null saving");
-                continue;
+                try {
+                    double convertedAmount = convertAmount(saving.getAmount(), saving.getCurrency(), newCurrency);
+                    saving.setAmount(convertedAmount);
+                    saving.setCurrency(newCurrency);
+                } catch (IllegalArgumentException e) {
+                    // Handle any IllegalArgumentException thrown during conversion
+                    LOGGER.severe("Error converting amount for saving: " + e.getMessage());
+                    System.out.println("Error converting amount for saving: " + e.getMessage());
+                }
             }
-
-            try {
-                double convertedAmount = convertAmount(saving.getAmount(), saving.getCurrency(), newCurrency);
-                saving.setAmount(convertedAmount);
-                saving.setCurrency(newCurrency);
-            } catch (IllegalArgumentException e) {
-                // Handle any IllegalArgumentException thrown during conversion
-                LOGGER.severe("Error converting amount for saving: " + e.getMessage());
-                System.out.println("Error converting amount for saving: " + e.getMessage());
-            }
+            System.out.println("Default currency for Savings changed to " + newCurrency);
         }
-        System.out.println("Default currency for Savings changed to " + newCurrency);
     }
-
 }

@@ -48,7 +48,7 @@ public class BudgetBuddy {
             savingsStorage.saveSavings(savings.getSavings());
 
             // Save Currency
-            defaultCurrency.saveCurrency(expenses.getExpenses(), savings.getSavings());
+            defaultCurrency.saveCurrency();
         } catch (IOException e) {
             System.out.println("Error saving to file.");
         }
@@ -59,11 +59,11 @@ public class BudgetBuddy {
         Scanner scanner = new Scanner(System.in);
 
         try {
+            // Load Currency
+            defaultCurrency.loadCurrency();
+
             this.expenses.getExpenses().addAll(expensesStorage.loadExpenses());
             this.savings.getSavings().addAll(savingsStorage.loadSavings());
-
-            // Load Currency
-            defaultCurrency.loadCurrency(expenses.getExpenses(), savings.getSavings());
 
         } catch (FileNotFoundException e) {
             System.out.println("No existing files found. Starting fresh.");

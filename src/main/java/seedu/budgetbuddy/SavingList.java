@@ -59,7 +59,8 @@ public class SavingList {
     }
 
     /**
-     * Lists the savings, optionally filtered by category, and calculates the remaining savings after deducting expenses.
+     * Lists the savings, optionally filtered by category,
+     * and calculates the remaining savings after deducting expenses.
      * Prints the initial savings amount, expenses deducted, and the remaining amount.
      *
      * @param filterCategory The category to filter savings by (optional). If null, all savings are listed.
@@ -70,16 +71,7 @@ public class SavingList {
         findTotalSavings();
 
         try {
-            if (!savings.isEmpty()) {
-                System.out.println(String.format("Current Currency: %s", savings.get(0).getCurrency()));
-            } else {
-                System.out.println("Default Currency for Savings: SGD");
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Problem setting currency code", e);
-        }
-
-        try {
+            System.out.println(String.format("Current Currency: %s", DefaultCurrency.getDefaultCurrency()));
             System.out.println("Savings:");
             for (int i = 0; i < savings.size(); i++) {
                 Saving saving = savings.get(i);
