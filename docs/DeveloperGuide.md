@@ -128,7 +128,7 @@ The following diagram provides a rough overview of how BudgetBuddy is built
 passes along the input into the Parser. The `Parser` creates a `CommandCreator` object depending on the user's input
 . The `CommandCreator` object then creates the `Command` object. 
 This `Command` object will be executed in `BudgetBuddy`. The `Command` object 
-utilizes methods and the class present in the `Application Classes`, which will be explained in more 
+utilizes methods and the classes present in `Commons`, which will be explained in more 
 detail in the following sections.
 
 #### 3.2 Parser Class
@@ -146,7 +146,6 @@ Here are some examples :
 
 The following UML Sequence Diagram illustrates the Parser Class interactions after it has determined the CommandCreator
 object.
-
 
 **Note** : Given the wide range of commandCreator classes, do treat the CommandCreator class as a universal representation of
 all its subclasses.
@@ -184,10 +183,10 @@ in the Implementation section.
 The Storage Class handles the loading and saving of the features in BudgetBuddy. Different features are saved in
 different files corresponding to their data type. 
 
-### 3.6 Application Classes
-The classes present in this group of `Application Classes` refers to certain elements which serves a purpose more
-towards the `user` instead of application itself. They represent data of the user's financial transactions,
-including expenses and savings, along with methods for organizing and managing this data.
+### 3.6 Commons
+The classes present in this group of `Commons` refers to a collection of classes used by multiple other components
+. They represent data of the user's financial transactions, including expenses and savings, along with methods 
+for organizing and managing this data.
 
 ##### 3.6.1 Transaction
 This is an abstract class, which is the superclass for both the Expense and Saving Classes. It contains common variables
