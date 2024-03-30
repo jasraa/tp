@@ -500,9 +500,9 @@ of type `ExpenseList` with `filteredExpenses` initialized as the `expenses` Clas
 7. Finally `execute()` calls `filteredExpenseList#listexpenses()` to print filtered expenses into the CLI.
 
 ### Recurring Expenses Feature
-The Recurring Expenses feature allows users to create lists of expenses, where each list of expenses can be added to
+The Recurring Expenses feature allows users to create list(s) of expenses, where each list can be added to
 the overall expenses in a single command. This feature includes the creation of a list of expenses, the viewing of
-all/each list of expenses and the remove of each list of expenses. All functions are orchestrated by the 
+all/each list of expenses and the removal of each list of expenses. All functions are orchestrated by the 
 `RecurringExpenseCommand` class, which would have been created by the `RecurringExpenseCommandCreator`, which is in turn
 created by the `Parser` class. When `RecurringExpenseCommand#execute()` is called by `BudgetBuddy`, it utilizes methods
 present in `ExpenseList`, `RecurringExpenseList` and `RecurringExpensesList` to facilitate the relevant features.
@@ -513,7 +513,7 @@ Within the RecurringExpenseCommand, the following variables would be initialized
 |-----------------|---------------|--------------------------------------------------------------------------------|
 | overallExpenses | ExpenseList   | Refer to the overall Expense List storing all of User's Expenses               |
 | initialListName | String        | Used as the name of the new list that will be created                          |
-| commandType     | String        | Type of RecuringExpenseCommand. E.g. `newlist`, `viewlists`, ...               |
+| commandType     | String        | Type of RecurringExpenseCommand. E.g. `newlist`, `viewlists`, ...              |
 | listNumber      | int           | Refers to the List Number of a recurring expense list shown during `viewlists` |
 | category        | String        | Category of the Expense to be added when using `newexpense`                    |
 | amount          | Double        | Amount of Expense to be added when using `newexpense`                          |
@@ -523,6 +523,45 @@ When viewing the code, you would notice that there are 5 different constructors 
 constructors correspond to the different `commandTypes` present. Each constructor would initialize only the required
 parameters for the specified `commandTypes`.
 
+A switch statement in `RecurringExpensesCommand` is used, where it runs the corresponding function according to the
+`commandType`. The following is the `commandType`, class-level methods used and methods utilized from other classes 
+when `RecurringExpensesCommand#execute()` is called
+
+| commandType  | Calls Method                     | Uses Methods  From                                                                                               |                                                       
+|--------------|----------------------------------|------------------------------------------------------------------------------------------------------------------|
+| newlist      | addNewList()                     | `RecurringExpensesList#addNewRecurringList()`                                                                    |
+| viewlists    | printList()                      | `RecurringExpensesList#printAllRecurringLists()`                                                                 |
+| removelist   | removeList()                     | `RecurringExpensesList#removeList()`                                                                             |
+| newexpense   | addExpenseToList()               | `RecurringExpensesList#getExpenseListAtListNumber()`, `ExpenseList#addExpense()`                                 |
+| addrec       | addRecurringExpensesToExpenses() | `RecurringExpensesList#getExpenseListAtListNumber()`, `ExpenseList#getExpenses()`, `AddExpenseCommand#execute()` |
+| viewexpenses | printExpensesAtIndex             | `RecurringExpensesList#getExpenseListAtListNumber()` , `ExpenseList#listExpenses()`                              |                             |
+
+From the table above, most commandTypes have a fairly straight forward process of calling a single method from the relevant classes. However,
+the `addrec` commandType would be the most complicated to follow, given that it utilized 3 methods from three different classes. The following
+is a UML sequence diagram to illustrate the implementation of the addRecurringExpensesToExpenses() method in `RecurringExpenseCommand`
+
+![Sequence Diagram for addRecurringExpensesToExpenses()](diagrams/sequenceDiagram_RecurringExpenses.jpg)
+
+The following is an example of the processes that occur when the user uses the rec addrec command :
+1. The user types `rec addrec 1`. This input is passed through the `Parser`
+class from `BudgetBuddy`, which constructs a `RecurringExpenseCommandCreator`
+2. `RecurringExpenseCommandCreator` identifies that the command type is `addrec`, obtains all the relevant parameters,
+and uses the constructor `RecurringExpenseCommand(1, expensesList, overallExpenses, addrec)`. Note that 
+`expensesList` here is the overall list containing all lists of recurring expenses and `overallExpenses` is the user's
+overall expenses.
+3. The created `RecurringExpenseCommand` is returned to the `Parser`, which is then returned to `BudgetBuddy`.
+4. `BudgetBuddy` calls `RecurringExpenseCommand#execute()`
+5. In `execute()`, `RecurringExpenseCommand` identifies it needs to perform a `addrec` operation from its 
+`commandType` and calls its own `addRecurringExpensesToExpenses()`
+6. The first check is passed as the listNumber is a valid number. If the listNumber is invalid, an error message is printed,
+and the method would have ended here.
+7. The `expenseList` we wish to add into the `overallExpenses` is obtained utilizing `RecurringExpensesList#getExpenseListAtListNumber(listNumber)`
+where `listNumber` is `1`.
+8. Next the `ArrayList<Expense> expenses` is extracted by utilizing `ExpenseList#getExpenses()` from our extracted `expenseList`
+9. Lastly, a for loop is utilized, extracting the `category`, `amount` and `description` of all the expenses present in `expenses`
+and adding them one by one into the `overallExpenses`. This is done so by creating a new `AddExpenseCommand` with the relevant parameters and executing it. FOr more details regarding
+this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpenseCommand`.
+10. Finally, a success message is printed to the User.
 
 ## 5. Product scope
 
@@ -538,19 +577,26 @@ type fast. It also provides the ability to deal with finances on a singular plat
 
 ## User Stories
 
-| Version | As a ...          | I want to ...                                             | So that I can ...                                                |
-|---------|-------------------|-----------------------------------------------------------|------------------------------------------------------------------|
-| v1.0    | user              | be able to view my expenses                               | track my prior expenditures and plan future expenses accordingly |
-| v1.0    | user              | be able to view my savings                                | plan my budget accordingly                                       |
-| v1.0    | user              | be able to view my expenses by  their relevant categories | control my spending                                              |
-| v1.0    | user              | be able to identify my largest savings category           | allocate necessary saved funds                                   |
-| v1.0    | user              | add expenses                                              | track my spending                                                |
-| v1.0    | user              | Categorise my expenses                                    | manage my finances more efficiently                              |
-| v1.0    | user              | Edit or delete expenses                                   | remove any incorrectly added items                               |
-| v1.0    | user              | allocate saved funds                                      | know how much I will have left after expenses                    |
-| v1.0    | User              | See what commands i can use                               | I know how to use the application                                |
-| v2.0    | user              | Plan my budget                                            | Avoid overspending                                               |
-| v2.0    | frequent traveler | log my expenses in multiple currencies                    | accurately track my expenses across different countries          |
+| Version | As a ...          | I want to ...                                                   | So that I can ...                                                |
+|---------|-------------------|-----------------------------------------------------------------|------------------------------------------------------------------|
+| v1.0    | user              | be able to view my expenses                                     | track my prior expenditures and plan future expenses accordingly |
+| v1.0    | user              | be able to view my savings                                      | plan my budget accordingly                                       |
+| v1.0    | user              | be able to view my expenses by  their relevant categories       | control my spending                                              |
+| v1.0    | user              | be able to identify my largest savings category                 | allocate necessary saved funds                                   |
+| v1.0    | user              | add expenses                                                    | track my spending                                                |
+| v1.0    | user              | Categorise my expenses                                          | manage my finances more efficiently                              |
+| v1.0    | user              | Edit or delete expenses                                         | remove any incorrectly added items                               |
+| v1.0    | user              | allocate saved funds                                            | know how much I will have left after expenses                    |
+| v1.0    | user              | be able to find expenses by description                         | know the expenses i have that is associated with the description |
+| v1.0    | user              | be able to find expenses more than a certain amount             | know what my deemed larger expenses are                          |
+| v1.0    | user              | be able to find expenses less than a certain amount             | know what my deemed lower expenses are                           |
+| v1.0    | User              | See what commands i can use                                     | I know how to use the application                                |
+| v2.0    | user              | Plan my budget                                                  | Avoid overspending                                               |
+| v2.0    | frequent traveler | log my expenses in multiple currencies                          | accurately track my expenses across different countries          |
+| v2.0    | user              | add multiple expenses at once                                   | Add common expenditures i have monthly at one shot               |
+| v2.0    | user              | have multiple lists of recurring expenses                       | separate associated recurring expenses together                  |
+| v2.0    | user              | view what expenses i have in each of my recurring expenses list | know what expenses i have put into each list                     |
+| v2.0    | user              | remove a list from my recurring expenses list                   | remove underutilized lists or wrongly added lists                |
 
 
 ## Non-Functional Requirements
