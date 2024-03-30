@@ -98,7 +98,7 @@ public class SavingList {
             if (remainingAmount < 0) {
                 System.out.println("You are currently short on savings by: $" + String.format("%.2f", remainingAmount));
             } else {
-                System.out.println("Remaining Amount: $" + String.format("%.2f", remainingAmount));
+                System.out.println("Overall Remaining Amount: $" + String.format("%.2f", remainingAmount));
 
             }
         } catch (Exception e) {
