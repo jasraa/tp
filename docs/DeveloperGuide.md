@@ -487,12 +487,13 @@ user has left that option empty if not in use, e.t.c `find expenses d/ morethan/
 unused parameters are treated a null variables instead.
 
 1. The user types `find expenses d/bruno morethan/30 lessthan/200`. This input is passed through the `Parser`
-class from `BudgetBuddy`, which constructs a `FindExpenseCommand` Object with `expenses : current overall ExpenseList`, 
-`description : bruno`, `minAmount : 30`, `maxAmount : 200`.
+class from `BudgetBuddy`, which constructs a `FindExpenseCommandCreator` Object. The `FindExpenseCommandCreator` then
+creates a `FindExpenseCommand` object with its variables initialized to  with `expenses : current overall ExpenseList`,
+`description : bruno`, `minAmount : 30`, `maxAmount : 200`. , by calling `FindExpenseCommandCreator#createCommand()`.
 2. `Parser` returns this created `FindExpenseCommand` Object to `BudgetBuddy` and `BudgetBuddy` calls 
 `FindExpenseCommand#execute()`
 3. `execute()` is called, which initializes a variable `filteredExpenses` of type `ArrayList<Expense>`.
-4. `execute()`then calls `ExpenseList#filterexpenses`, which returns the filtered expenses based on the `description`,
+4. `execute()`then calls `ExpenseList#filterexpenses()`, which returns the filtered expenses based on the `description`,
 `minAmount` and `maxAmount` into the `filteredExpenses` variable.
 5.  If `filteredExpenses` is empty, "No Matching Expenses Found" is printed and `execute` ends here.
 6. If `filteredExpenses` is not empty, `execute()` then initializes a new variable `filteredExpenseList` 
