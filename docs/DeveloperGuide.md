@@ -152,6 +152,7 @@ Here is a table of all CommandCreator class and the Commands that they can creat
 
 #### 3.5 Storage Class
 The Storage Class handles the loading and saving of the Expenses and Savings in BudgetBuddy.
+It also saves and loads the default currency being used by the user.
 
 ### 3.6 Application Classes
 The classes present in this group of `Application Classes` refers to certain elements which serves a purpose more
@@ -174,6 +175,13 @@ This class represents a list of expenses. Within this class, it has 2 class-leve
 This class also contains the methods to handle any user interactions with the list of expenses. The methods and a
 brief explanation on their functionality is as follows :
 
+* listExpenses(String filterCategory) :
+  * The core functionality of this class. It lists a user's total expenses, optionally filtered by category as per user
+  input.
+  * The amounts being shown are dependent on the currency being used.
+* calculateTotalExpenses() :
+  * The method used to calculate all expenses found in the expense list.
+
 ##### 3.6.4 Saving
 This class holds details regarding a saving a user has. Within this class, it has 3 class-level variables :
 `String category`, `LocalDate dateAdded`, `Double amount`. The variables and their relevance
@@ -186,11 +194,38 @@ This class represents a list of savings. Within this class, it has 2 class-level
 This class also contains the methods to handle any user interactions with the list of savings. The methods and a
 brief explanation on their functionality is as follows :
 
+* listSavings(String filterCategory, ExpenseList expenseList) :
+  * The core functionality of this class. It prints the initial savings amount, expenses deducted, and the remaining 
+  amount. 
+  * It is able to print only the filtered category as per user input.
+  * The amounts being shown is dependent on the currency being used.
+* findTotalSavings() :
+  * Calculates the total savings amount by summing up the amounts of all savings.
+* calculateRemainingSavings(double initialAmount, double totalExpenses) :
+  * Calculates the remaining savings amount after deducting total expenses from the initial amount.
+  * Provides clarity on how much savings user has left to spend.
+
 ##### 3.6.6 RecurringExpenseList
 Explain what it does
 
 ##### 3.6.7 RecurringExpensesList
 Explain what it does
+
+##### 3.6.8 CurrencyConverter
+This class contains a hash map of all the relevant currencies with respect to SGD, as well as the methods to handle 
+any user interactions involving the conversion of currency. 
+
+The methods and a brief explanation on their functionality is as follows :
+* convertAmount(double amount, Currency fromCurrency, Currency toCurrency) : 
+  * This method takes in the amount to be converted from its current currency to a new currency.
+  * The mapping is done through the use of a HashMap.
+  * This method is called by the following 2 methods.
+* convertExpenseCurrency(Currency newCurrency, ExpenseList expenses) : 
+  * This method converts every entry in expenses into the new currency as inputted by the user.
+  * It uses the convertAmount() method to carry out the conversion.
+* convertSavingCurrency(Currency newCurrency, SavingList savings) :
+    * This method converts every entry in savings into the new currency as inputted by the user.
+    * It uses the convertAmount() method to carry out the conversion.
 
 
 ## 4. Implementation
