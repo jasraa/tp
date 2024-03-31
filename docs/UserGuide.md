@@ -7,14 +7,12 @@ to deal with finances on a singular platform with ease as long as you can type f
 
 
 ## Quick Start
-
-
 1. Ensure that you have Java 11 installed.
 2. Down the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/BudgetBuddy-MVP).
 
 
 ## Features
-1. Menu
+1. Display Commands
 2. Add
 3. Edit Savings
 4. Edit Expense
@@ -263,7 +261,7 @@ Examples of usage :
 
 ### Add an expense to a recurring bill : `rec newexpense`
 
-Adds an expenses to a specified recurring bill
+Adds an expense to a specified recurring bill
 
 Format : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
 
