@@ -184,18 +184,20 @@ Example Usage:
 
 Finds expenses based on their description or amount
 
-Format : `find expenses [d/DESCRIPTION] [morethan/MINAMOUNT] [lessthan/MAXAMOUNT]`
+Format : `find expenses d/DESCRIPTION morethan/MINAMOUNT lessthan/MAXAMOUNT`
 
-* `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` can be used in any order and combination
+* All prefixes `d/`, `morethan/` and `lessthan` **must be** present
+* `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` are optional to use as long as *at least* one parameter used.
+* Leaving either `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` empty assumes that the parameter is not considered when finding expenses
 * `DESCRIPTION` is the description associated with the expenses the user wishes to find
 * `MINAMOUNT` is the filter for expenses with amounts higher than specified value
 * `MAXAMOUNT` is the filter for expenses with amounts lower than specified value
-* At least one filter must be provided
 
 Examples of usage :
 
-`find expenses d/coffee` : Finds all expenses with the word "coffee" in the description
-`find expenses d/coffee morethan/200` : Finds all expenses with the word "coffee" and amount higher than $200
+`find expenses d/coffee morethan/ lessthan/ ` : Finds all expenses with the word "coffee" in the description
+`find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than $200
+`find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than $200, but lesser than $400
 
 ### Changing Currencies : `change currency [CURRENCY_CODE]`
 
