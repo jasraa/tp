@@ -66,6 +66,7 @@ public class ExpenseListTest {
         assertEquals(1, savingList.getSavings().size());
     }
 
+    //@@jasraa
     @Test @Disabled
     public void editExpense_invalidCategoryOrIndex_failure() throws BudgetBuddyException {
         // Create an ExpenseList and add two expenses
