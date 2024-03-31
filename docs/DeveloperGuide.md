@@ -144,14 +144,6 @@ Here are some examples :
 | isAddExpenseCommand() | add expense                 | input, ExpenseList | AddExpenseCommandCreator(input, expenses)  |
 | isEditSavingCommand() | edit expense                | input, SavingList  | EditSavingsCommandCreator(input, savings)  |
 
-The following UML Sequence Diagram illustrates the Parser Class interactions after it has determined the CommandCreator
-object.
-
-**Note** : Given the wide range of commandCreator classes, do treat the CommandCreator class as a universal representation of
-all its subclasses.
-
-![Sequence Diagram of Parser](diagrams/sequence_diagram_parser.jpg)
-
 #### 3.3 Ui Class
 The Ui Class is used to print certain elements to the CLI. In particular, it consists of the Welcome Message,
 Goodbye Message, Divider Lines and all the corresponding commands' command format.
@@ -161,10 +153,8 @@ The CommandCreator class has multiple subclasses, which corresponds to a specifi
 Within the CommandCreator classes, it handles making sense of the user input, obtaining the relevant parameters, and finally
 creating the `Command` class.
 
-
 The superclass `CommandCreator` is an abstract class which is never instantiated. Where its createCommand() method is
 overridden by its subclasses.
-
 
 The association between the `Command` and `CommandCreator` can be seen in their names. E.g. `MenuCommandCreator`, would
 create a `MenuCommand` class when its createCommand() method is called. Similarly, `FindExpensesCommandCreator` would
@@ -178,6 +168,10 @@ is created by its associated `CommandCreator`.
 The superclass `Command` is an abstract class which is never instantiated. Where its execute() method is overridden
 by its subclasses. What each Command class does when its execute() method is called would be discussed in more detail
 in the Implementation section.
+
+The following UML Sequence Diagram depicts the process of the process through which an input is gone through the application, up till the point
+where the command gets executed :
+![UML Sequence Diagram of Command](diagrams/sequence_diagram_command.jpg)
 
 #### 3.5 Storage Class
 The Storage Class handles the loading and saving of the features in BudgetBuddy. Different features are saved in
@@ -397,8 +391,8 @@ The following UML Sequence Diagram shows how the MenuCommandCreator for Menu Com
 has already detected that the user input is a menu command and has initialized a MenuCommandCreator object:
 ![Sequence Diagram for MenuCommandCreator for Menu Command](diagrams/sequenceDiagram-MenuCommandCreator.jpg)
 
-The following UML Sequence Diagram shows how the overall Menu feature works :
-![Sequence Diagram for Menu Command](diagrams/sequenceDiagram_MenuFeature.jpg)
+The following UML Sequence Diagram shows the processes of the MenuCommand upon the call of its execute() command:
+![Sequence Diagram for Menu Command](diagrams/sequenceDiagram_MenuCommand.jpg)
 
 Given below is an example usage scenario and how the full Menu feature works :
 1. The user types `menu 1`. This input passed from `BudgetBuddy` into `Parser#parseCommands()`.
@@ -443,7 +437,7 @@ obtain a new `ExpenseList` object containing the filtered expenses, along with p
 The following UML Sequence diagram below shows how FindExpensesCommandCreator works to 
 obtain the relevant inputs for the Find Feature, NOTING that the Parser has already determined the input to be a find :
 expenses command, and has also created the FindExpensesCommandCreator.
-![Sequence Diagram for Parser for Find Feature](diagrams/sequenceDiagram-Parser%20For%20Find%20Command.jpg)
+![Sequence Diagram for FindFeatureCommandCreator](diagrams/sequenceDiagram-FindCommandCreator.jpg)
 
 The following is a step-by-step explanation for the processes that occur before the FindExpensesCommand is created :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -474,7 +468,7 @@ or equals to `maxAmount`. If this check does not pass, the function immediately 
 , which is then returned to `BudgetBuddy`
 
 The following UML Sequence diagram below shows how the Find Feature command works when a user provides a **valid**
-find expenses command:
+find expenses command upon the call of its execute() method:
 
 ![Sequence diagram for Find Feature](diagrams/SequenceDiagram_FindExpenses.jpg)
 
