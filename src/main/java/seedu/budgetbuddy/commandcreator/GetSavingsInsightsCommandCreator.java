@@ -1,8 +1,7 @@
 package seedu.budgetbuddy.commandcreator;
-
 import seedu.budgetbuddy.SavingList;
-import seedu.budgetbuddy.GetSavingsInsightsCommand;
 import seedu.budgetbuddy.command.Command;
+import seedu.budgetbuddy.command.GetSavingsInsightsCommand;
 
 public class GetSavingsInsightsCommandCreator extends CommandCreator {
 

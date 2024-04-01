@@ -1,12 +1,15 @@
 package seedu.budgetbuddy;
 
-import java.util.*;
-
 import seedu.budgetbuddy.exception.BudgetBuddyException;
-
+import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
 
 
 public class ExpenseList {

@@ -1,8 +1,6 @@
-package seedu.budgetbuddy;
+package seedu.budgetbuddy.command;
 
 import seedu.budgetbuddy.SavingList;
-import seedu.budgetbuddy.command.Command;
-import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 public class GetSavingsInsightsCommand extends Command {
 

@@ -2,13 +2,30 @@ package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.ListBudgetCommand;
-
-import seedu.budgetbuddy.commandcreator.*;
+import seedu.budgetbuddy.commandcreator.CommandCreator;
+import seedu.budgetbuddy.commandcreator.AddExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.AddSavingCommandCreator;
+import seedu.budgetbuddy.commandcreator.ChangeCurrencyCommandCreator;
+import seedu.budgetbuddy.commandcreator.DeleteExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.EditExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.EditSavingsCommandCreator;
+import seedu.budgetbuddy.commandcreator.FindExpensesCommandCreator;
+import seedu.budgetbuddy.commandcreator.GetExpenseInsightsCommandCreator;
+import seedu.budgetbuddy.commandcreator.GetSavingsInsightsCommandCreator;
+import seedu.budgetbuddy.commandcreator.ListCommandCreator;
+import seedu.budgetbuddy.commandcreator.ListSplittedExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.MenuCommandCreator;
+import seedu.budgetbuddy.commandcreator.RecurringExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.ReduceSavingCommandCreator;
+import seedu.budgetbuddy.commandcreator.SetBudgetCommandCreator;
+import seedu.budgetbuddy.commandcreator.SettleSplitExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 
 public class Parser {
