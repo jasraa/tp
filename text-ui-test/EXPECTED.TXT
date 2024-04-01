@@ -9,5 +9,6 @@ __________________________________________________
 5. Find Expenses       6. Split Expenses
 7. Manage Recurring Bills
 8. Change Currency
+9. Show Statistics
 __________________________________________________
 Goodbye! Thank you for using BudgetBuddy.
