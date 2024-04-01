@@ -16,6 +16,7 @@ public class Ui {
         System.out.println("5. Find Expenses       6. Split Expenses");
         System.out.println("7. Manage Recurring Bills");
         System.out.println("8. Change Currency");
+        System.out.println("9. Show Statistics");
 
         System.out.println(DIVIDER);
     }
@@ -35,6 +36,7 @@ public class Ui {
         System.out.println("5. Find Expenses       6. Split Expenses");
         System.out.println("7. Manage Recurring Bills               ");
         System.out.println("8. Change Currency");
+        System.out.println("9. Show Statistics");
         System.out.println("Use 'menu INDEX' to select an option");
         System.out.println(DIVIDER);
     }
@@ -98,6 +100,11 @@ public class Ui {
             System.out.println("USD    SGD    EUR");
             System.out.println("JPY    KRW    MYR");
             System.out.println("CNY    HKD");
+            break;
+        case 9:
+            System.out.println("Show Statistics");
+            System.out.println("get savings insights");
+            System.out.println("get expenses insights");
             break;
         default:
             System.out.println("Invalid menu index.");
