@@ -22,8 +22,9 @@ to deal with finances on a singular platform with ease as long as you can type f
 6. Delete Expense
 7. List Savings
 8. List Expense
-9. Find Expense
-10. Change Currency
+9. Split expenses
+10. Find Expense
+11. Change Currency
 
 ### Display Commands : `menu`
 Displays the corresponding features of BudgetBuddy
@@ -180,6 +181,29 @@ Example Usage:
 `list expenses`
 `list expenses Transport`
 `list expenses Housing`
+
+### Splitting Expenses: `split expenses`
+
+Split expenses
+
+Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
+
+* The `AMOUNT` is the total amount spent. It must be a non-negative number.
+* The `NUMBER_OF_PEOPLE` is the number of individuals who are bound to split the bill. It must be a positive integer.
+* The `DESCRIPTION` can be any string.
+
+Example Usage:
+
+`list expenses a/100 n/10 d/Lunch`
+
+### Check splitted expenses `check splitted expenses`
+
+Check expenses
+
+Format: `check splitted expenses`
+
+* the system will list all splitted expenses.
+* The listed splitted expenses include details such as the total amount spent, number of people in the bill, description and the amount payable by each person.
 
 ### Finding expenses : `find expenses`
 
