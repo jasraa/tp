@@ -12,6 +12,16 @@ public class EditExpenseCommandCreator extends CommandCreator {
         this.expenses = expenses;
     }
 
+    /**
+     * Parses the input command to extract parameters for editing an expense entry and then
+     * creates a command to perform the edit operation. The input string is expected to contain
+     * parts with prefixes indicating category (c/), index (i/), amount (a/), and description (d/).
+     *
+     * @param expenses The ExpenseList object containing the list of expenses to be edited.
+     * @param input    The input command string containing the edit parameters.
+     * @return An instance of EditExpenseCommand if the input is valid, or null if the input
+     *         is invalid or incomplete.
+     */
     public Command handleEditExpenseCommand(ExpenseList expenses, String input) {
         String[] parts = input.split(" ");
         String category = null;
