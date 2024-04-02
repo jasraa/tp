@@ -22,75 +22,10 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         this.expenses = expenses;
     }
 
-    private static void checkForInvalidParameters(String input) {
-        if (!input.contains("to/") || !input.contains("d/") || !input.contains("a/") || !input.contains("c/")) {
-            throw new IllegalArgumentException("Please Ensure that you include to/, c/, a/ and d/");
+    private void checkForInvalidCharacters(String input) throws BudgetBuddyException{
+        if (input.contains("|") || input.contains("!")) {
+            throw new BudgetBuddyException("Please do not include a | or ! in your input");
         }
-    }
-
-    public String parseDescription(String input) throws BudgetBuddyException {
-        int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
-        int startIndexOfDescription = indexOfDescriptionPrefix + DESCRIPTION_PREFIX.length();
-
-        int endIndexOfDescription = input.length();
-
-        String description = input.substring(startIndexOfDescription,endIndexOfDescription);
-
-        if(description.trim().isEmpty()) {
-            throw new BudgetBuddyException("Please Ensure Description is NOT empty");
-        }
-
-        return description;
-    }
-    public Double parseAmount(String input) throws NumberFormatException, BudgetBuddyException{
-        int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
-        int startIndexOfAmount = indexOfAmountPrefix + AMOUNT_PREFIX.length();
-
-        int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
-        int endIndexOfAmount = indexOfDescriptionPrefix - 1;
-
-        String amountAsString = input.substring(startIndexOfAmount, endIndexOfAmount);
-
-        if(amountAsString.trim().isEmpty()) {
-            throw new BudgetBuddyException("Please Ensure Amount is NOT empty");
-        }
-
-        Double amount = Double.parseDouble(amountAsString);
-
-        return amount;
-    }
-
-    public String parseCategory(String input) throws BudgetBuddyException{
-        int indexOfCategoryPrefix = input.indexOf(CATEGORY_PREFIX);
-        int startIndexOfCategory = indexOfCategoryPrefix + CATEGORY_PREFIX.length();
-
-        int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
-        int endIndexOfCategory = indexOfAmountPrefix - 1;
-
-        String category = input.substring(startIndexOfCategory, endIndexOfCategory);
-
-        if(category.trim().isEmpty()) {
-            throw new BudgetBuddyException("Please Ensure Category is NOT empty");
-        }
-
-        return category;
-    }
-    public int parseListNumber(String input) throws NumberFormatException, BudgetBuddyException{
-        int indexOfListNumberPrefix = input.indexOf(LISTNUMBER_PREFIX);
-        int startIndexOfListNumber = indexOfListNumberPrefix + LISTNUMBER_PREFIX.length();
-
-        int indexOfCategoryPrefix = input.indexOf(CATEGORY_PREFIX);
-        int endIndexOfListNumber = indexOfCategoryPrefix - 1;
-
-        String listNumberAsString = input.substring(startIndexOfListNumber, endIndexOfListNumber);
-
-        if(listNumberAsString.trim().isEmpty()) {
-            throw new BudgetBuddyException("Please Ensure List Number is NOT empty");
-        }
-
-        int listNumber = Integer.parseInt(listNumberAsString);
-
-        return listNumber;
     }
 
     public Command createViewExpensesCommand(String[] commandParts) {
@@ -125,14 +60,89 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         }
 
     }
-    public Command createAddExpenseToListCommand(String input) {
 
+    private static void checkForInvalidParameters(String input) {
+        if (!input.contains("to/") || !input.contains("d/") || !input.contains("a/") || !input.contains("c/")) {
+            throw new IllegalArgumentException("Please Ensure that you include to/, c/, a/ and d/");
+        }
+    }
+
+    private String parseDescription(String input) throws BudgetBuddyException {
+        int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
+        int startIndexOfDescription = indexOfDescriptionPrefix + DESCRIPTION_PREFIX.length();
+
+        int endIndexOfDescription = input.length();
+
+        String description = input.substring(startIndexOfDescription,endIndexOfDescription);
+
+        if(description.trim().isEmpty()) {
+            throw new BudgetBuddyException("Please Ensure Description is NOT empty");
+        }
+
+        return description;
+    }
+    private Double parseAmount(String input) throws NumberFormatException, BudgetBuddyException{
+        int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
+        int startIndexOfAmount = indexOfAmountPrefix + AMOUNT_PREFIX.length();
+
+        int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
+        int endIndexOfAmount = indexOfDescriptionPrefix - 1;
+
+        String amountAsString = input.substring(startIndexOfAmount, endIndexOfAmount);
+
+        if(amountAsString.trim().isEmpty()) {
+            throw new BudgetBuddyException("Please Ensure Amount is NOT empty");
+        }
+
+        Double amount = Double.parseDouble(amountAsString);
+
+        return amount;
+    }
+
+    private String parseCategory(String input) throws BudgetBuddyException{
+        int indexOfCategoryPrefix = input.indexOf(CATEGORY_PREFIX);
+        int startIndexOfCategory = indexOfCategoryPrefix + CATEGORY_PREFIX.length();
+
+        int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
+        int endIndexOfCategory = indexOfAmountPrefix - 1;
+
+        String category = input.substring(startIndexOfCategory, endIndexOfCategory);
+
+        if(category.trim().isEmpty()) {
+            throw new BudgetBuddyException("Please Ensure Category is NOT empty");
+        }
+
+        return category;
+    }
+    private int parseListNumber(String input) throws NumberFormatException, BudgetBuddyException{
+        int indexOfListNumberPrefix = input.indexOf(LISTNUMBER_PREFIX);
+        int startIndexOfListNumber = indexOfListNumberPrefix + LISTNUMBER_PREFIX.length();
+
+        int indexOfCategoryPrefix = input.indexOf(CATEGORY_PREFIX);
+        int endIndexOfListNumber = indexOfCategoryPrefix - 1;
+
+        String listNumberAsString = input.substring(startIndexOfListNumber, endIndexOfListNumber);
+
+        if(listNumberAsString.trim().isEmpty()) {
+            throw new BudgetBuddyException("Please Ensure List Number is NOT empty");
+        }
+
+        int listNumber = Integer.parseInt(listNumberAsString);
+
+        return listNumber;
+    }
+
+    public Command createAddExpenseToListCommand(String input) {
         try {
             checkForInvalidParameters(input);
+            checkForInvalidCharacters(input);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             System.out.println("Command Format : rec newexpense to/ LISTNUMBER c/ CATEGORY" +
                     " a/ AMOUNT d/ DESCRIPTION");
+            return null;
+        } catch (BudgetBuddyException e) {
+            System.out.println(e.getMessage());
             return null;
         }
 
@@ -176,27 +186,25 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
     public Command createViewListCommand() {
         return new RecurringExpenseCommand(recurringExpensesList, "viewlists");
     }
-    public Command createNewListCommand(String[] commandParts) {
 
+    public Command createNewListCommand(String[] commandParts) {
         try {
             String listName = commandParts[2];
+            checkForInvalidCharacters(input);
             return new RecurringExpenseCommand(listName, recurringExpensesList, "newlist");
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Please Input a Valid listName");
             System.out.println("Command Format : rec newlist [listName]");
             return null;
+        } catch (BudgetBuddyException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-
     }
-    public Command handleRecCommand(String input, RecurringExpensesList expensesList, ExpenseList overallExpenses){
+    public Command handleRecCommand(String input){
         String[] commandParts = input.split(" ");
         String commandType = commandParts[1];
         commandType = commandType.trim();
-
-        if (!RecurringExpenseCommand.commandTypes.contains(commandType)) {
-            System.out.println("This Command Type does not exist for \"rec\"");
-            return null;
-        }
 
         switch(commandType) {
         case "newlist":
@@ -212,6 +220,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         case "viewexpenses":
             return createViewExpensesCommand(commandParts);
         default:
+            System.out.println("This Command Type does not exist for \"rec\"");
             return null;
         }
 
@@ -219,6 +228,6 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
     @Override
     public Command createCommand() {
-        return handleRecCommand(input, recurringExpensesList, expenses);
+        return handleRecCommand(input);
     }
 }

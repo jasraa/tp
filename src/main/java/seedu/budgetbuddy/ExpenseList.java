@@ -1,12 +1,14 @@
 package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.exception.BudgetBuddyException;
+
+import java.util.Arrays;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
@@ -16,7 +18,7 @@ import java.util.Comparator;
 public class ExpenseList {
     private static final Logger LOGGER = Logger.getLogger(ExpenseList.class.getName());
 
-    protected ArrayList <Expense> expenses;
+    protected ArrayList<Expense> expenses;
     protected ArrayList<String> categories;
     protected List<Budget> budgets;
 
@@ -53,16 +55,17 @@ public class ExpenseList {
         return this.budgets;
     }
 
-
     public ArrayList<Expense> filterExpenses(String description, Double minAmount, Double maxAmount) {
-        assert minAmount <= maxAmount : "Minimum Amount must be smaller than or equals to Max Amount";
+        assert minAmount == null || maxAmount == null || minAmount <= maxAmount
+                : "Minimum Amount must be smaller than or equals to Max Amount if both are not null";
 
-        LOGGER.log(Level.INFO, "Start Filtering expenses based on description : " + " minAmount : "
-                + minAmount + "maxAmount : " + maxAmount);
+        LOGGER.log(Level.INFO, "Start Filtering expenses based on description : " + description + " minAmount : "
+                + minAmount + " maxAmount : " + maxAmount);
 
         String descriptionInLowerCase = description.toLowerCase();
         ArrayList<Expense> filteredExpenses = new ArrayList<>(this.expenses.stream()
-                .filter(expense -> (expense.getDescription().toLowerCase().contains(descriptionInLowerCase)))
+                .filter(expense -> (expense.getDescription()
+                        .toLowerCase().contains(descriptionInLowerCase)))
                 .filter(expense -> (minAmount == null || expense.getAmount() > minAmount))
                 .filter(expense -> (maxAmount == null || expense.getAmount() < maxAmount))
                 .collect(Collectors.toList()));
@@ -72,10 +75,18 @@ public class ExpenseList {
 
     }
 
+    /**
+     * Lists expenses based on the provided filter category.
+     * If no filter category is specified, all expenses are listed.
+     *
+     * @param filterCategory the category by which to filter the expenses (optional)
+     */
     public void listExpenses(String filterCategory) {
         LOGGER.info("Listing expenses...");
 
         try {
+            System.out.println(String.format("Current Currency: %s\n", DefaultCurrency.getDefaultCurrency()));
+
             System.out.println("Expenses:");
             for (int i = 0; i < expenses.size(); i++) {
                 Expense expense = expenses.get(i);
@@ -105,6 +116,13 @@ public class ExpenseList {
         }
     }
 
+    /**
+     * Calculates the total expenses from the list of expenses.
+     * Negative expense amounts are considered invalid.
+     *
+     * @return The total expenses.
+     * @throws IllegalArgumentException If any expense amount is negative.
+     */
     public double calculateTotalExpenses() {
         double totalExpenses = 0;
         try {
