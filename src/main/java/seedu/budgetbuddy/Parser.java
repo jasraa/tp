@@ -2,28 +2,30 @@ package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.ListBudgetCommand;
-
 import seedu.budgetbuddy.commandcreator.CommandCreator;
-import seedu.budgetbuddy.commandcreator.FindExpensesCommandCreator;
-import seedu.budgetbuddy.commandcreator.MenuCommandCreator;
-import seedu.budgetbuddy.commandcreator.RecurringExpenseCommandCreator;
-import seedu.budgetbuddy.commandcreator.ChangeCurrencyCommandCreator;
-import seedu.budgetbuddy.commandcreator.ListCommandCreator;
 import seedu.budgetbuddy.commandcreator.AddExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.AddSavingCommandCreator;
-import seedu.budgetbuddy.commandcreator.ListSplittedExpenseCommandCreator;
-import seedu.budgetbuddy.commandcreator.SettleSplitExpenseCommandCreator;
-import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.ChangeCurrencyCommandCreator;
+import seedu.budgetbuddy.commandcreator.DeleteExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.EditExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.EditSavingsCommandCreator;
-import seedu.budgetbuddy.commandcreator.DeleteExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.FindExpensesCommandCreator;
+import seedu.budgetbuddy.commandcreator.GetExpenseInsightsCommandCreator;
+import seedu.budgetbuddy.commandcreator.GetSavingsInsightsCommandCreator;
+import seedu.budgetbuddy.commandcreator.ListCommandCreator;
+import seedu.budgetbuddy.commandcreator.ListSplittedExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.MenuCommandCreator;
+import seedu.budgetbuddy.commandcreator.RecurringExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.ReduceSavingCommandCreator;
 import seedu.budgetbuddy.commandcreator.SetBudgetCommandCreator;
-
+import seedu.budgetbuddy.commandcreator.SettleSplitExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.GetBudgetCommandCreator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 
 public class Parser {
@@ -117,6 +119,10 @@ public class Parser {
         return input.startsWith("set budget");
     }
 
+    public Boolean isGetBudgetCommand(String input) {
+        return input.startsWith("get budget");
+    }
+
     public boolean isListBudgetCommand(String input){
         return input.startsWith("budget print");
     }
@@ -128,6 +134,16 @@ public class Parser {
     public Command handleListBudgetCommand(ExpenseList expenseList) {
         return new ListBudgetCommand(expenseList);
     }
+
+    public Boolean isGetExpensesInsightsCommand(String input) {
+        return input.equalsIgnoreCase("get expenses insights");
+    }
+
+    public Boolean isGetSavingsInsightsCommand(String input) {
+        return input.equalsIgnoreCase("get savings insights");
+    }
+
+
 
     /**
      * Parses a string input into a Command object and returns the associated
@@ -216,10 +232,24 @@ public class Parser {
             CommandCreator commandCreator = new SetBudgetCommandCreator(expenses, input);
             return commandCreator.createCommand();
         }
-
+        if (isGetBudgetCommand(input)) {
+            CommandCreator commandCreator = new GetBudgetCommandCreator(expenses, input);
+            return commandCreator.createCommand();
+        }
         if (isListBudgetCommand(input)){
             return handleListBudgetCommand(expenses);
         }
+
+        if (isGetExpensesInsightsCommand(input)) {
+            CommandCreator commandCreator = new GetExpenseInsightsCommandCreator(expenses);
+            return commandCreator.createCommand();
+        }
+
+        if (isGetSavingsInsightsCommand(input)) {
+            CommandCreator commandCreator = new GetSavingsInsightsCommandCreator(savings);
+            return commandCreator.createCommand();
+        }
+
         return null;
     }
 }

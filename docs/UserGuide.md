@@ -22,8 +22,11 @@ to deal with finances on a singular platform with ease as long as you can type f
 6. Delete Expense
 7. List Savings
 8. List Expense
-9. Find Expense
-10. Change Currency
+9. Split expenses
+10. Find Expense
+11. Change Currency
+12. Get Graphical Insights for expenses
+13. Get Graphical Insights for savings
 
 ### Display Commands : `menu`
 Displays the corresponding features of BudgetBuddy
@@ -79,7 +82,7 @@ Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 
 Example of usage:
 
-`add savings c/Salary a/10000`
+`split expenses a/100 n/10 d/Lunch
 
 ### Edit Savings: `edit savings`
 Edit Savings that have been added previously.
@@ -181,6 +184,24 @@ Example Usage:
 `list expenses Transport`
 `list expenses Housing`
 
+### Check splitted expenses `check splitted expenses`
+
+Check expenses
+
+Format: `check splitted expenses`
+
+* the system will list all splitted expenses.
+* The listed splitted expenses include details such as the total amount spent, number of people in the bill, description and the amount payable by each person.
+
+### Settle splitted expenses `settle expense`
+
+Settle splitted expenses
+
+Format `settle i/Index`
+
+* The system will settle the splitted expense corresponding to `Index`
+* `Index` must be a positive integer
+
 ### Finding expenses : `find expenses`
 
 Finds expenses based on their description or amount
@@ -215,6 +236,24 @@ Examples of usage:
 
 `change currency USD` : Converts current currency into USD
 
+### Get Graphical Insights for expenses: `get expenses insights`
+* This feature provides an overview of the expenses distribution across different categories. 
+* A horizontal bar graph showing the percentage of total expenses attributed to each category.
+* It highlights the category with the highest expenses, the one with the lowest (excluding categories with no expenses),
+* and lists any categories where no expenses have been recorded.
+* Categories are Housing, Groceries, Utility, Transport, Entertainment, and Others.
+
+Example of usage: `get expenses insights`
+
+### Get Graphical Insights for savings: `get savings insights`
+* This feature offers a comprehensive look at how your savings are allocated across various categories. 
+* A horizontal bar graph showing the percentage of total savings attributed to each category.
+* It highlights the category with the highest savings, the one with the lowest (excluding categories with no savings),
+* and lists any categories where no savings have been added.
+* Categories are Salary, Investments, Gifts, and Others
+
+Example of Usage: `get savings insights`
+
 ## Command Summary
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
@@ -224,4 +263,6 @@ Examples of usage:
 * List Savings: `list savings CATEGORY`
 * Find Expenses `find expenses [d/DESCRIPTION] [morethan/MINAMOUNT] [lessthan/MAXAMOUNT]`
 * Change Currency `change currency [CURRENCY_CODE]`
+* Get Graphical Insights for expenses `get expenses insights` 
+* Get Graphical Insights for savings `get savings insights`
 

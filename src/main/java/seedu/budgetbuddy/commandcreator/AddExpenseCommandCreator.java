@@ -5,6 +5,9 @@ import seedu.budgetbuddy.command.AddExpenseCommand;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
+/**
+ * Creates an AddExpenseCommand object.
+ */
 public class AddExpenseCommandCreator extends CommandCreator {
     private ExpenseList expenses;
     private String input;
@@ -14,6 +17,13 @@ public class AddExpenseCommandCreator extends CommandCreator {
         this.input = input;
     }
 
+    /**
+     * Parses the input and creates a new AddExpenseCommand object.
+     * 
+     * @param expenses The list of expenses.
+     * @param input The input string.
+     * @return The AddExpenseCommand object.
+     */
     public Command handleAddExpenseCommand(ExpenseList expenses, String input) {
         if (input == null || !input.contains("c/") || !input.contains("a/") || !input.contains("d/")) {
             System.out.println("Invalid command format.");
@@ -58,6 +68,13 @@ public class AddExpenseCommandCreator extends CommandCreator {
         return new AddExpenseCommand(expenses, category, amount, description);
     }
 
+    /**
+     * Extracts the details for the add command.
+     * 
+     * @param details The details string.
+     * @param prefix The prefix to search for.
+     * @return The extracted details.
+     */
     private String extractDetailsForAdd(String details, String prefix) {
         int startIndex = details.indexOf(prefix) + prefix.length();
         int endIndex = details.length();
