@@ -7,14 +7,12 @@ to deal with finances on a singular platform with ease as long as you can type f
 
 
 ## Quick Start
-
-
 1. Ensure that you have Java 11 installed.
 2. Down the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/BudgetBuddy-MVP).
 
 
 ## Features
-1. Menu
+1. Display Commands
 2. Add
 3. Edit Savings
 4. Edit Expense
@@ -22,8 +20,12 @@ to deal with finances on a singular platform with ease as long as you can type f
 6. Delete Expense
 7. List Savings
 8. List Expense
-9. Find Expense
-10. Change Currency
+9. Split expenses
+10. Find Expense
+11. Recurring Bills
+12. Change Currency
+13. Get Graphical Insights for expenses
+14. Get Graphical Insights for savings
 
 ### Display Commands : `menu`
 Displays the corresponding features of BudgetBuddy
@@ -79,7 +81,7 @@ Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 
 Example of usage:
 
-`add savings c/Salary a/10000`
+`split expenses a/100 n/10 d/Lunch
 
 ### Edit Savings: `edit savings`
 Edit Savings that have been added previously.
@@ -181,22 +183,135 @@ Example Usage:
 `list expenses Transport`
 `list expenses Housing`
 
+### Check splitted expenses `check splitted expenses`
+
+Check expenses
+
+Format: `check splitted expenses`
+
+* the system will list all splitted expenses.
+* The listed splitted expenses include details such as the total amount spent, number of people in the bill, description and the amount payable by each person.
+
+### Settle splitted expenses `settle expense`
+
+Settle splitted expenses
+
+Format `settle i/Index`
+
+* The system will settle the splitted expense corresponding to `Index`
+* `Index` must be a positive integer
+
 ### Finding expenses : `find expenses`
 
 Finds expenses based on their description or amount
 
-Format : `find expenses [d/DESCRIPTION] [morethan/MINAMOUNT] [lessthan/MAXAMOUNT]`
+Format : `find expenses d/DESCRIPTION morethan/MINAMOUNT lessthan/MAXAMOUNT`
 
-* `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` can be used in any order and combination
+* All prefixes `d/`, `morethan/` and `lessthan` **must be** present
+* `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` are optional to use as long as *at least* one parameter used.
+* Leaving either `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` empty assumes that the parameter is not considered when finding expenses
 * `DESCRIPTION` is the description associated with the expenses the user wishes to find
 * `MINAMOUNT` is the filter for expenses with amounts higher than specified value
 * `MAXAMOUNT` is the filter for expenses with amounts lower than specified value
-* At least one filter must be provided
 
 Examples of usage :
 
-`find expenses d/coffee` : Finds all expenses with the word "coffee" in the description
-`find expenses d/coffee morethan/200` : Finds all expenses with the word "coffee" and amount higher than $200
+`find expenses d/coffee morethan/ lessthan/ ` : Finds all expenses with the word "coffee" in the description
+`find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than $200
+`find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than $200, but lesser than $400
+
+### Add Recurring Bill : `rec newlist`
+
+Adds a new recurring Bill.
+
+Format : `rec newlist LISTNAME`
+
+* `LISTNAME` refers to the name you wish to associate the recurring Bill with
+* `LISTNAME` cannot be empty
+* This command is **space sensitive**, in particular the space between `rec`, `newlist` and `LISTNAME`
+should be **exactly** one space apart for the command to be recognised
+
+Examples of usage :
+
+`rec newlist Subscriptions` : Creates a new empty recurring bill named `Subscriptions`
+
+### List all Recurring Bills : `rec viewlists`
+
+Lists all recurring bill names, along with their associated list number
+
+Format : `rec viewlists`
+
+* This command is **space sensitive**, in particular, the space between `rec` and `viewlists` must be
+**exactly** one space apart for the command to be recognised 
+
+Examples of Output : 
+
+When there are already added recurring bills :
+
+![Output of viewlists when there are recurring bills added](userguideimages/rec_viewlists_exampleOutput.jpg)
+
+When there are no added recurring bills
+
+![Output of viewlists where there are no recurring bills](userguideimages/rec_viewlists_emptyOutput.png)
+
+### Remove Recurring Bill : `rec removelist`
+
+Removes a recurring bill
+
+Format : `rec removelist LISTNUMBER`
+
+* `LISTNUMBER` refers to the associated list number of recurring bill when doing a `rec viewlists`
+* `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
+
+Examples of usage :
+
+`rec removelist 2` : Removes the 2nd recurring bill in the list of recurring bills
+
+### Add an expense to a recurring bill : `rec newexpense`
+
+Adds an expense to a specified recurring bill
+
+Format : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
+
+* `LISTNUMBER` refers to the associated list number of recurring bill when doing a `rec viewlists`
+* `CATEGORY` refers to the category of the expense you wish to add
+* `AMOUNT` refers to the amount value of the expense you wish to add
+* `DESCRIPTION` refers to the description of the expense you wish to add
+* `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
+* `CATEGORY`, `AMOUNT` and `DESCRIPTION` follows the same constraints as if you were to add a normal expense
+
+Examples of usage :
+`rec newexpense to/1 c/Entertainment a/200 d/movies` : Adds a new expense to the 1st recurring bill 
+, with category as Entertainment, amount as 200 and description as Movies
+
+### View expenses in a recurring bill : `rec viewexpenses`
+
+Views all expenses in a specified recurring bill
+
+Format : `rec viewexpenses LISTNUMBER`
+
+* `LISTNUMBER` refers to the associated list number of the recurring bill when doing a `rec viewlists`
+* `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
+* This command is **space sensitive**, in particular, the space between `rec` and `viewlists` must be
+  **exactly** one space apart for the command to be recognised
+
+Examples of usage :
+`rec viewexpenses 1` : Prints all expenses in the 1st recurring bill
+
+### Add expenses in a recurring bill to overall expenses : `rec addrec`
+
+Adds all expenses in a specified recurring bill to the overall expenses
+
+Format : `rec addrec LISTNUMBER`
+
+* `LISTNUMBER` refers to the associated list number of the recurring bill when doing a `rec viewlists`
+* `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
+*  You may wish to perform a `list expenses` to view the newly added expenses being added to the
+overall list of expenses
+
+Examples of usage :
+`rec addrec 1` : Adds all expenses in the 1st recurring bill into the overall expenses
+
 
 ### Changing Currencies : `change currency [CURRENCY_CODE]`
 
@@ -205,21 +320,51 @@ Converts current currency to targeted currency
 Format : `change currency [CURRENCY_CODE]`
 
 * Default currency is 'SGD'.
+* Current Currency can be identified when listing savings/expenses.
 * `CURRENCY_CODE` consists of the following currencies: 'SGD', 'USD', 'EUR', 'MYR', 'JPY', 'KRW', 'CNY', 'HKD'
 * `CURRENCY_CODE` cannot be null. 
-* Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY)
+* Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY).
+* Future additions to Expenses/Savings will be using the current currency displayed.
 
 Examples of usage:
 
 `change currency USD` : Converts current currency into USD
 
+### Get Graphical Insights for expenses: `get expenses insights`
+* This feature provides an overview of the expenses distribution across different categories. 
+* A horizontal bar graph showing the percentage of total expenses attributed to each category.
+* It highlights the category with the highest expenses, the one with the lowest (excluding categories with no expenses),
+* and lists any categories where no expenses have been recorded.
+* Categories are Housing, Groceries, Utility, Transport, Entertainment, and Others.
+
+Example of usage: `get expenses insights`
+
+### Get Graphical Insights for savings: `get savings insights`
+* This feature offers a comprehensive look at how your savings are allocated across various categories. 
+* A horizontal bar graph showing the percentage of total savings attributed to each category.
+* It highlights the category with the highest savings, the one with the lowest (excluding categories with no savings),
+* and lists any categories where no savings have been added.
+* Categories are Salary, Investments, Gifts, and Others
+
+Example of Usage: `get savings insights`
+
+
 ## Command Summary
+* Display Commands : `menu INDEX`
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * Edit Expenses `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
 * Edit Savings `edit savings c/CATEGORY i/INDEX a/AMOUNT`
 * List Expenses: `list expenses CATEGORY`
 * List Savings: `list savings CATEGORY`
-* Find Expenses `find expenses [d/DESCRIPTION] [morethan/MINAMOUNT] [lessthan/MAXAMOUNT]`
-* Change Currency `change currency [CURRENCY_CODE]`
+* Find Expenses: `find expenses [d/DESCRIPTION] [morethan/MINAMOUNT] [lessthan/MAXAMOUNT]`
+* Change Currency: `change currency [CURRENCY_CODE]`
+* Add Recurring Bill: `rec newlist LISTNAME`
+* List All Recurring Bills: `rec viewlists`
+* Remove Recurring Bill : `rec removelist LISTNUMBER`
+* Add Expense to Recurring Bill : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
+* View Expenses in Recurring Bill : `rec viewexpenses LISTNUMBER`
+* Add Expenses in Recurring Bill to Overall Expenses : `rec addrec LISTNUMBER`
+* Get Graphical Insights for expenses `get expenses insights` 
+* Get Graphical Insights for savings `get savings insights`
 

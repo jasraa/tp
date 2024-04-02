@@ -1,20 +1,23 @@
 package seedu.budgetbuddy;
 
-import java.util.ArrayList;
-
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.Arrays;
+
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
 
 
 public class ExpenseList {
     private static final Logger LOGGER = Logger.getLogger(ExpenseList.class.getName());
 
-    protected ArrayList <Expense> expenses;
+    protected ArrayList<Expense> expenses;
     protected ArrayList<String> categories;
     protected List<Budget> budgets;
 
@@ -51,7 +54,6 @@ public class ExpenseList {
         return this.budgets;
     }
 
-
     public ArrayList<Expense> filterExpenses(String description, Double minAmount, Double maxAmount) {
         assert minAmount == null || maxAmount == null || minAmount <= maxAmount
                 : "Minimum Amount must be smaller than or equals to Max Amount if both are not null";
@@ -72,10 +74,18 @@ public class ExpenseList {
 
     }
 
+    /**
+     * Lists expenses based on the provided filter category.
+     * If no filter category is specified, all expenses are listed.
+     *
+     * @param filterCategory the category by which to filter the expenses (optional)
+     */
     public void listExpenses(String filterCategory) {
         LOGGER.info("Listing expenses...");
 
         try {
+            System.out.println(String.format("Current Currency: %s\n", DefaultCurrency.getDefaultCurrency()));
+
             System.out.println("Expenses:");
             for (int i = 0; i < expenses.size(); i++) {
                 Expense expense = expenses.get(i);
@@ -105,6 +115,13 @@ public class ExpenseList {
         }
     }
 
+    /**
+     * Calculates the total expenses from the list of expenses.
+     * Negative expense amounts are considered invalid.
+     *
+     * @return The total expenses.
+     * @throws IllegalArgumentException If any expense amount is negative.
+     */
     public double calculateTotalExpenses() {
         double totalExpenses = 0;
         try {
@@ -149,6 +166,15 @@ public class ExpenseList {
 
     }
 
+    /**
+     * Edits an expense entry in the expenses list at the specified index. Updates the category,
+     * amount, and description of the expense.
+     *
+     * @param category    The new category to assign to the expense entry.
+     * @param index       The index in the list where the expense entry is located.
+     * @param amount      The new amount to assign to the expense entry.
+     * @param description The new description to assign to the expense entry.
+     */
     public void editExpense(String category, int index, double amount, String description) {
         LOGGER.info(String.format("Attempting to edit expense at index %d with category '%s', " +
                 "amount %.2f, and description '%s'", index, category, amount, description));
@@ -219,6 +245,119 @@ public class ExpenseList {
         }
         LOGGER.info("Creating new budget for category: " + category);
         budgets.add(new Budget(category, budget));
+    }
+
+
+    public void getBudgetForCategory(String category) {
+        Budget budgetForCategory = budgets.stream()
+                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
+                .findFirst()
+                .orElse(null);
+
+        if (budgetForCategory != null) {
+            System.out.println("Budget for " + category + ": $" + budgetForCategory.getBudget());
+        } else {
+            System.out.println("No budget set for " + category);
+        }
+    }
+
+    /**
+     * Calculates and prints a distribution of expenses in various categories as a horizontal bar graph.
+     * It also identifies and prints the categories with the highest and lowest expenses,
+     * as well as categories where no expenses have been added.
+     */
+    public void getExpenseInsights() {
+        double totalExpenses = calculateTotalExpenses();
+        if (totalExpenses == 0) {
+            System.out.println("No expenses to display.");
+            return;
+        }
+
+        Map<String, Double> sumsByCategory = new HashMap<>();
+        for (Expense expense : expenses) {
+            sumsByCategory.merge(expense.getCategory(), expense.getAmount(), Double::sum);
+        }
+
+        // Calculate the highest expense amount
+        double highestExpense = Collections.max(sumsByCategory.values());
+
+        // Identify the categories with the highest expenses
+        List<String> highestCategories = sumsByCategory.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(highestExpense))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        // Calculate the lowest expense amount excluding the highest if it's the only value
+        double lowestExpense = sumsByCategory.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0 && !highestCategories.contains(entry.getKey()))
+                .mapToDouble(Map.Entry::getValue)
+                .min().orElse(Double.MAX_VALUE);
+
+        // Identify the categories with the lowest expenses
+        List<String> lowestCategories = sumsByCategory.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0 && entry.getValue().equals(lowestExpense))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        // If lowestExpense is Double.MAX_VALUE, then this list should be empty
+        if (lowestExpense == Double.MAX_VALUE) {
+            lowestCategories.clear();
+        }
+
+        // Identify categories with no expenses
+        List<String> noExpenseCategories = categories.stream()
+                .filter(category -> !sumsByCategory.containsKey(category) || sumsByCategory.get(category) == 0)
+                .collect(Collectors.toList());
+
+        ui.printDivider();
+        printExpensesDistribution(sumsByCategory, totalExpenses);
+        ui.printDivider();
+
+        System.out.println("Highest Expense Category: " + formatCategoryList(highestCategories));
+        System.out.println("Lowest Expense Category: " + formatCategoryList(lowestCategories));
+        System.out.println("Categories with no expenses added: " + formatCategoryList(noExpenseCategories));
+        ui.printDivider();
+    }
+
+    /**
+     * Prints the distribution of expenses in a bar graph format.
+     * Each category's expenses are represented by a percentage and a visual bar made of hashes ('#').
+     *
+     * @param sumsByCategory A map containing the sum of expenses for each category.
+     * @param totalExpenses  The total amount of expenses, used to calculate the percentage for each category.
+     */
+    private void printExpensesDistribution(Map<String, Double> sumsByCategory, double totalExpenses) {
+        // Find the maximum percentage to scale the bars
+        double maxPercentage = sumsByCategory.values().stream()
+                .mapToDouble(amount -> (amount / totalExpenses) * 100)
+                .max()
+                .orElse(100);
+
+        // Calculate percentages and build bars
+        for (String category : categories) {
+            Double sum = sumsByCategory.getOrDefault(category, 0.0);
+            double percentage = (sum / totalExpenses) * 100;
+            int barLength = (int) (percentage / (maxPercentage / 50));
+            String bar = "[" + "#".repeat(Math.max(0, barLength)) + "]";
+            System.out.println(String.format("%-15s: %6.2f%% %s", category, percentage, bar));
+        }
+    }
+
+    /**
+     * Formats a list of categories into a string. If the list contains more than one category,
+     * they are joined by commas, with "and" before the last category. If the list is empty,
+     * returns "None".
+     *
+     * @param categories The list of category names to be formatted.
+     * @return A string representing the formatted categories or "None" if the list is empty.
+     */
+    private String formatCategoryList(List<String> categories) {
+        if (categories.isEmpty()) {
+            return "None";
+        } else {
+            return String.join(", ", categories.subList(0, categories.size() - 1))
+                    + (categories.size() > 1 ? " and " : "") + categories.get(categories.size() - 1);
+        }
     }
 
 }

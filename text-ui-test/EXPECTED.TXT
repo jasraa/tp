@@ -8,6 +8,7 @@ __________________________________________________
 2. Manage Savings      4. View Savings
 5. Find Expenses       6. Split Expenses
 7. Manage Recurring Bills
-8. Change Currency
+8. Change Currency     9. Manage Budget
+10. Get Graphical Insights
 __________________________________________________
 Goodbye! Thank you for using BudgetBuddy.

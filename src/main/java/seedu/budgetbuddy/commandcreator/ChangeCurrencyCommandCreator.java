@@ -27,6 +27,17 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
         this.newCurrency = newCurrency;
 
     }
+
+    /**
+     * Parses the user input to create a ChangeCurrencyCommand for changing the default currency.
+     * If the input is valid, a ChangeCurrencyCommand is returned with the specified new currency.
+     *
+     * @param input             The user input to be parsed.
+     * @param savingList        The SavingList containing savings data.
+     * @param expenseList       The ExpenseList containing expenses data.
+     * @param currencyConverter The CurrencyConverter object for currency conversion.
+     * @return A ChangeCurrencyCommand if the input is valid; otherwise, null.
+     */
     public Command handleChangeCurrencyCommand(String input, SavingList savingList, ExpenseList expenseList,
                                                CurrencyConverter currencyConverter) {
         if (input.startsWith("change currency")) {
@@ -41,7 +52,6 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
                     Currency newCurrency = Currency.getInstance(currencyCode.toUpperCase());
                     assert newCurrency != null : "Currency code should be valid";
                     LOGGER.log(Level.INFO, "Default currency changed to " + newCurrency);
-                    System.out.println("Default currency changed to " + newCurrency);
                     return new ChangeCurrencyCommand(newCurrency, savingList, expenseList, currencyConverter);
                 } catch (IllegalArgumentException e) {
                     LOGGER.log(Level.WARNING, "Invalid currency code: " + currencyCode);

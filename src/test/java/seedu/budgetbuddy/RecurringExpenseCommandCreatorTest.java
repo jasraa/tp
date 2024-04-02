@@ -128,7 +128,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_addRecCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec addrec sdefwre";
@@ -266,4 +265,5 @@ public class RecurringExpenseCommandCreatorTest {
 
         assertNull(command);
     }
+
 }

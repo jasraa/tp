@@ -126,7 +126,7 @@ public class RecurringExpenseCommand extends Command{
 
         ui.printDivider();
         System.out.println("You Recurring Expenses in " + expenseList.getName() +
-                "has been added to your overall Expenses");
+                " has been added to your overall Expenses");
 
         ui.printDivider();
 

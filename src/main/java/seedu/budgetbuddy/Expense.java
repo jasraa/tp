@@ -5,7 +5,12 @@ import java.time.LocalDate;
 public class Expense extends Transaction{
     protected String description;
     private LocalDate dateAdded;
-    
+
+    public Expense(LocalDate dateAdded, String category, double amount, String description) {
+        super(category, amount);
+        this.dateAdded = dateAdded;
+        this.description = description;
+    }
     public Expense(String category, double amount, String description) {
         super(category, amount);
         this.description = description;

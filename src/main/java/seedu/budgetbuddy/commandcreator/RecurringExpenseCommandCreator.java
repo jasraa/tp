@@ -22,7 +22,11 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         this.expenses = expenses;
     }
 
-
+    private void checkForInvalidCharacters(String input) throws BudgetBuddyException{
+        if (input.contains("|") || input.contains("!")) {
+            throw new BudgetBuddyException("Please do not include a | or ! in your input");
+        }
+    }
 
     public Command createViewExpensesCommand(String[] commandParts) {
         try {
@@ -129,13 +133,16 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
     }
 
     public Command createAddExpenseToListCommand(String input) {
-
         try {
             checkForInvalidParameters(input);
+            checkForInvalidCharacters(input);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             System.out.println("Command Format : rec newexpense to/ LISTNUMBER c/ CATEGORY" +
                     " a/ AMOUNT d/ DESCRIPTION");
+            return null;
+        } catch (BudgetBuddyException e) {
+            System.out.println(e.getMessage());
             return null;
         }
 
@@ -179,17 +186,20 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
     public Command createViewListCommand() {
         return new RecurringExpenseCommand(recurringExpensesList, "viewlists");
     }
-    public Command createNewListCommand(String[] commandParts) {
 
+    public Command createNewListCommand(String[] commandParts) {
         try {
             String listName = commandParts[2];
+            checkForInvalidCharacters(input);
             return new RecurringExpenseCommand(listName, recurringExpensesList, "newlist");
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Please Input a Valid listName");
             System.out.println("Command Format : rec newlist [listName]");
             return null;
+        } catch (BudgetBuddyException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-
     }
     public Command handleRecCommand(String input){
         String[] commandParts = input.split(" ");
