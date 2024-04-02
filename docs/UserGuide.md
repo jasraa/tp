@@ -20,9 +20,12 @@ to deal with finances on a singular platform with ease as long as you can type f
 6. Delete Expense
 7. List Savings
 8. List Expense
-9. Find Expense
-10. Change Currency
+9. Split expenses
+10. Find Expense
 11. Recurring Bills
+12. Change Currency
+13. Get Graphical Insights for expenses
+14. Get Graphical Insights for savings
 
 ### Display Commands : `menu`
 Displays the corresponding features of BudgetBuddy
@@ -78,7 +81,7 @@ Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 
 Example of usage:
 
-`add savings c/Salary a/10000`
+`split expenses a/100 n/10 d/Lunch
 
 ### Edit Savings: `edit savings`
 Edit Savings that have been added previously.
@@ -180,6 +183,24 @@ Example Usage:
 `list expenses Transport`
 `list expenses Housing`
 
+### Check splitted expenses `check splitted expenses`
+
+Check expenses
+
+Format: `check splitted expenses`
+
+* the system will list all splitted expenses.
+* The listed splitted expenses include details such as the total amount spent, number of people in the bill, description and the amount payable by each person.
+
+### Settle splitted expenses `settle expense`
+
+Settle splitted expenses
+
+Format `settle i/Index`
+
+* The system will settle the splitted expense corresponding to `Index`
+* `Index` must be a positive integer
+
 ### Finding expenses : `find expenses`
 
 Finds expenses based on their description or amount
@@ -198,21 +219,6 @@ Examples of usage :
 `find expenses d/coffee morethan/ lessthan/ ` : Finds all expenses with the word "coffee" in the description
 `find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than $200
 `find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than $200, but lesser than $400
-
-### Changing Currencies : `change currency [CURRENCY_CODE]`
-
-Converts current currency to targeted currency
-
-Format : `change currency [CURRENCY_CODE]`
-
-* Default currency is 'SGD'.
-* `CURRENCY_CODE` consists of the following currencies: 'SGD', 'USD', 'EUR', 'MYR', 'JPY', 'KRW', 'CNY', 'HKD'
-* `CURRENCY_CODE` cannot be null. 
-* Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY)
-
-Examples of usage:
-
-`change currency USD` : Converts current currency into USD
 
 ### Add Recurring Bill : `rec newlist`
 
@@ -307,6 +313,42 @@ Examples of usage :
 `rec addrec 1` : Adds all expenses in the 1st recurring bill into the overall expenses
 
 
+### Changing Currencies : `change currency [CURRENCY_CODE]`
+
+Converts current currency to targeted currency
+
+Format : `change currency [CURRENCY_CODE]`
+
+* Default currency is 'SGD'.
+* Current Currency can be identified when listing savings/expenses.
+* `CURRENCY_CODE` consists of the following currencies: 'SGD', 'USD', 'EUR', 'MYR', 'JPY', 'KRW', 'CNY', 'HKD'
+* `CURRENCY_CODE` cannot be null. 
+* Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY).
+* Future additions to Expenses/Savings will be using the current currency displayed.
+
+Examples of usage:
+
+`change currency USD` : Converts current currency into USD
+
+### Get Graphical Insights for expenses: `get expenses insights`
+* This feature provides an overview of the expenses distribution across different categories. 
+* A horizontal bar graph showing the percentage of total expenses attributed to each category.
+* It highlights the category with the highest expenses, the one with the lowest (excluding categories with no expenses),
+* and lists any categories where no expenses have been recorded.
+* Categories are Housing, Groceries, Utility, Transport, Entertainment, and Others.
+
+Example of usage: `get expenses insights`
+
+### Get Graphical Insights for savings: `get savings insights`
+* This feature offers a comprehensive look at how your savings are allocated across various categories. 
+* A horizontal bar graph showing the percentage of total savings attributed to each category.
+* It highlights the category with the highest savings, the one with the lowest (excluding categories with no savings),
+* and lists any categories where no savings have been added.
+* Categories are Salary, Investments, Gifts, and Others
+
+Example of Usage: `get savings insights`
+
+
 ## Command Summary
 * Display Commands : `menu INDEX`
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
@@ -323,4 +365,6 @@ Examples of usage :
 * Add Expense to Recurring Bill : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * View Expenses in Recurring Bill : `rec viewexpenses LISTNUMBER`
 * Add Expenses in Recurring Bill to Overall Expenses : `rec addrec LISTNUMBER`
+* Get Graphical Insights for expenses `get expenses insights` 
+* Get Graphical Insights for savings `get savings insights`
 

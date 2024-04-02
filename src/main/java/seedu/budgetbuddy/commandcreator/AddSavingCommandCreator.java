@@ -9,10 +9,24 @@ public class AddSavingCommandCreator extends CommandCreator{
     private SavingList savings;
     private String input;
 
+    /**
+     * Creates an AddSavingCommandCreator object.
+     * 
+     * @param savings The list of savings.
+     * @param input The input string.
+     */
     public AddSavingCommandCreator(SavingList savings, String input) {
         this.savings = savings;
         this.input = input;
     }
+
+    /**
+     * Parses the input and creates a new AddSavingCommand object.
+     * 
+     * @param savings The list of savings.
+     * @param input The input string.
+     * @return The AddSavingCommand object.
+     */
 
     public Command handleAddSavingCommand(SavingList savings, String input) {
         if (input == null || !input.contains(" ") || !input.contains("c/") || !input.contains("a/")) {
@@ -56,6 +70,14 @@ public class AddSavingCommandCreator extends CommandCreator{
         return new AddSavingCommand(savings, category, amount);
     }
 
+    /**
+     * Extracts the details for adding a saving.
+     * 
+     * @param details The details string.
+     * @param prefix The prefix string.
+     * @return The details for adding a saving.
+     */
+    
     private String extractDetailsForAdd(String details, String prefix) {
         int startIndex = details.indexOf(prefix) + prefix.length();
         int endIndex = details.length();
