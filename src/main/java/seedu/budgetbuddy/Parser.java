@@ -20,6 +20,7 @@ import seedu.budgetbuddy.commandcreator.ReduceSavingCommandCreator;
 import seedu.budgetbuddy.commandcreator.SetBudgetCommandCreator;
 import seedu.budgetbuddy.commandcreator.SettleSplitExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
+import seedu.budgetbuddy.commandcreator.GetBudgetCommandCreator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
