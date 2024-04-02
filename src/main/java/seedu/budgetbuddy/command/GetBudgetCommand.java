@@ -13,6 +13,6 @@ public class GetBudgetCommand extends Command {
 
     @Override
     public void execute() {
-        expenseList.getBudgetForCategory(category);
+        expenseList.getBudgetAndListExpensesForCategory(category);
     }
 }
