@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 
+import java.util.ArrayList;
+
 public class ExpenseListTest {
 
     private static final Logger LOGGER = Logger.getLogger(ExpenseListTest.class.getName());
@@ -98,6 +100,90 @@ public class ExpenseListTest {
         int initialSize = expenseList.getExpenses().size();
         expenseList.deleteExpense(initialSize + 1); // Trying to delete with index out of bounds
         assertEquals(initialSize, expenseList.getExpenses().size()); // Size should remain the same
+    }
+
+    @Test
+    public void filterExpenses_filterByDescription_returnsTwoMatches() throws BudgetBuddyException {
+        ExpenseList expenses = new ExpenseList();
+        expenses.addExpense("Groceries", "100", "Apples");
+        expenses.addExpense("Transport", "50", "Bus fare");
+        expenses.addExpense("Entertainment", "75", "Movie");
+        expenses.addExpense("Groceries", "100", "apple");
+        ArrayList<Expense> filteredExpenses = expenses.filterExpenses("apple"
+                , null, null);
+
+        assertEquals(2, filteredExpenses.size());
+
+    }
+
+    @Test
+    public void filterExpenses_filterByMinAmount_returnsThreeMatches() throws BudgetBuddyException {
+        ExpenseList expenses = new ExpenseList();
+        expenses.addExpense("Groceries", "100", "Apples");
+        expenses.addExpense("Transport", "50", "Bus fare");
+        expenses.addExpense("Entertainment", "75", "Movie");
+        expenses.addExpense("Groceries", "100", "apple");
+        ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
+                , 50.00, null);
+
+        assertEquals(3, filteredExpenses.size());
+
+    }
+
+    @Test
+    public void filterExpenses_filterByMaxAmount_returnsOneMatches() throws BudgetBuddyException {
+        ExpenseList expenses = new ExpenseList();
+        expenses.addExpense("Groceries", "100", "Apples");
+        expenses.addExpense("Transport", "50", "Bus fare");
+        expenses.addExpense("Entertainment", "75", "Movie");
+        expenses.addExpense("Groceries", "100", "apple");
+        ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
+                , null, 75.00);
+
+        assertEquals(1, filteredExpenses.size());
+
+    }
+
+    @Test
+    public void filterExpenses_filterByRange_returnsTwoMatches() throws BudgetBuddyException {
+        ExpenseList expenses = new ExpenseList();
+        expenses.addExpense("Groceries", "100", "Apples");
+        expenses.addExpense("Transport", "50", "Bus fare");
+        expenses.addExpense("Entertainment", "75", "Movie");
+        expenses.addExpense("Groceries", "100", "apple");
+        ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
+                , 49.00, 76.00);
+
+        assertEquals(2, filteredExpenses.size());
+
+    }
+
+    @Test
+    public void filterExpenses_filterByDescriptionAndMinAmount_returnsOneMatch() throws BudgetBuddyException {
+        ExpenseList expenses = new ExpenseList();
+        expenses.addExpense("Groceries", "20", "Apples");
+        expenses.addExpense("Transport", "50", "Bus fare");
+        expenses.addExpense("Entertainment", "75", "Movie");
+        expenses.addExpense("Groceries", "100", "apple");
+        ArrayList<Expense> filteredExpenses = expenses.filterExpenses("apple"
+                , 50.00, null);
+
+        assertEquals(1, filteredExpenses.size());
+
+    }
+
+    @Test
+    public void filterExpenses_filterByNull_returnsAllMatch() throws BudgetBuddyException {
+        ExpenseList expenses = new ExpenseList();
+        expenses.addExpense("Groceries", "20", "Apples");
+        expenses.addExpense("Transport", "50", "Bus fare");
+        expenses.addExpense("Entertainment", "75", "Movie");
+        expenses.addExpense("Groceries", "100", "apple");
+        ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
+                , null, null);
+
+        assertEquals(4, filteredExpenses.size());
+
     }
 
     @Test

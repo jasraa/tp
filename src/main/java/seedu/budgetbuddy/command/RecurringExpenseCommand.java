@@ -7,13 +7,10 @@ import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RecurringExpenseCommand extends Command{
-    public static ArrayList<String> commandTypes = new ArrayList<>(Arrays.asList("newlist",
-            "removelist", "rename", "viewlists", "newexpense", "addrec", "viewexpenses"));
 
-    private RecurringExpensesList expensesList;
+    private RecurringExpensesList recurringExpensesList;
 
     private ExpenseList overallExpenses;
     private String initialListName;
@@ -24,41 +21,41 @@ public class RecurringExpenseCommand extends Command{
     private Double amount;
     private String description;
 
-    private Ui ui = new Ui();
+    private final Ui ui = new Ui();
 
 
-    public RecurringExpenseCommand(RecurringExpensesList expensesList, String commandType) {
+    public RecurringExpenseCommand(RecurringExpensesList recurringExpensesList, String commandType) {
         this.commandType = commandType;
-        this.expensesList = expensesList;
+        this.recurringExpensesList = recurringExpensesList;
     }
 
     public RecurringExpenseCommand(String initialListName,
-                                   RecurringExpensesList expensesList, String commandType) {
+                                   RecurringExpensesList recurringExpensesList, String commandType) {
         this.initialListName = initialListName;
         this.commandType = commandType;
-        this.expensesList = expensesList;
+        this.recurringExpensesList = recurringExpensesList;
     }
 
     public RecurringExpenseCommand(int listNumber,
-                                   RecurringExpensesList expensesList, String commandType) {
+                                   RecurringExpensesList recurringExpensesList, String commandType) {
         this.listNumber = listNumber;
         this.commandType = commandType;
-        this.expensesList = expensesList;
+        this.recurringExpensesList = recurringExpensesList;
     }
 
-    public RecurringExpenseCommand(int listNumber, RecurringExpensesList expensesList,
+    public RecurringExpenseCommand(int listNumber, RecurringExpensesList recurringExpensesList,
                                    ExpenseList overallExpenses, String commandType) {
 
-        this.expensesList = expensesList;
+        this.recurringExpensesList = recurringExpensesList;
         this.overallExpenses = overallExpenses;
         this.listNumber = listNumber;
         this.commandType = commandType;
     }
 
-    public RecurringExpenseCommand( int listNumber, RecurringExpensesList expensesList, String category,
+    public RecurringExpenseCommand(int listNumber, RecurringExpensesList recurringExpensesList, String category,
                                    Double amount, String description, String commandType) {
 
-        this.expensesList = expensesList;
+        this.recurringExpensesList = recurringExpensesList;
         this.listNumber = listNumber;
         this.category = category;
         this.amount = amount;
@@ -67,30 +64,30 @@ public class RecurringExpenseCommand extends Command{
     }
 
 
-    public void addNewList(String listName) {
-        expensesList.addNewRecurringList(listName);
+    private void addNewList(String listName) {
+        recurringExpensesList.addNewRecurringList(listName);
     }
 
-    public void removeList() {
+    private void removeList() {
 
-        if (listNumber == 0 || listNumber > expensesList.getSize()) {
+        if (listNumber == 0 || listNumber > recurringExpensesList.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + expensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
             return;
         }
 
-        expensesList.removeList(listNumber);
+        recurringExpensesList.removeList(listNumber);
     }
 
-    public void addExpenseToList() {
+    private void addExpenseToList() {
 
-        if (listNumber <= 0 || listNumber > expensesList.getSize()) {
+        if (listNumber <= 0 || listNumber > recurringExpensesList.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + expensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
             return;
         }
 
-        ExpenseList expenses = expensesList.getExpenseListAtListNumber(listNumber);
+        ExpenseList expenses = recurringExpensesList.getExpenseListAtListNumber(listNumber);
 
         try {
             expenses.addExpense(category, amount.toString(), description);
@@ -105,15 +102,15 @@ public class RecurringExpenseCommand extends Command{
 
     }
 
-    public void addRecurringExpensesToExpenses() {
+    private void addRecurringExpensesToExpenses() {
 
-        if (listNumber <= 0 || listNumber > expensesList.getSize()) {
+        if (listNumber <= 0 || listNumber > recurringExpensesList.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + expensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
             return;
         }
 
-        ExpenseList expenseList = expensesList.getExpenseListAtListNumber(listNumber);
+        ExpenseList expenseList = recurringExpensesList.getExpenseListAtListNumber(listNumber);
         ArrayList<Expense> expenses = expenseList.getExpenses();
 
         for (Expense expense : expenses) {
@@ -135,21 +132,21 @@ public class RecurringExpenseCommand extends Command{
 
     }
 
-    public void printExpensesAtIndex() {
+    private void printExpensesAtIndex() {
 
-        if (listNumber <= 0 || listNumber > expensesList.getSize()) {
+        if (listNumber <= 0 || listNumber > recurringExpensesList.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + expensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
             return;
         }
 
-        ExpenseList expenseList = expensesList.getExpenseListAtListNumber(listNumber);
+        ExpenseList expenseList = recurringExpensesList.getExpenseListAtListNumber(listNumber);
 
         expenseList.listExpenses(null);
     }
 
-    public void printList() {
-        expensesList.printAllRecurringLists();
+    private void printList() {
+        recurringExpensesList.printAllRecurringLists();
     }
     public void execute(){
 

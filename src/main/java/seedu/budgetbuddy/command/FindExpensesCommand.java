@@ -18,7 +18,7 @@ public class FindExpensesCommand extends Command {
 
     public FindExpensesCommand(ExpenseList expenses, String description, Double minAmount, Double maxAmount) {
         if (minAmount != null && maxAmount != null) {
-            assert minAmount <= maxAmount : "Minimum amount cannot be larger than Maximum Amount";
+            assert minAmount < maxAmount : "Minimum amount cannot be larger than Maximum Amount";
         }
 
         ui = new Ui();
@@ -33,7 +33,8 @@ public class FindExpensesCommand extends Command {
         this.maxAmount = maxAmount;
     }
 
-    public void printInitializationMessage() {
+
+    private void printInitializationMessage() {
         ui.printDivider();
         System.out.println("Looking for Expenses with the following parameters : ");
 
@@ -60,13 +61,17 @@ public class FindExpensesCommand extends Command {
     }
 
     @Override
+    public String getDescription() {
+        return this.description;
+    }
+
+    @Override
     public void execute() {
 
         LOGGER.log(Level.INFO, "Start processing of Find Command");
 
-        if (minAmount != null && maxAmount != null) {
-            assert minAmount <= maxAmount : "Minimum amount cannot be larger than Maximum Amount";
-        }
+        assert minAmount == null || maxAmount == null || minAmount <= maxAmount
+                : "Minimum amount cannot be larger than Maximum Amount";
 
         LOGGER.log(Level.INFO, "Creating filteredExpenses");
 
