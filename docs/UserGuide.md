@@ -234,6 +234,41 @@ Examples of usage:
 
 `change currency USD` : Converts current currency into USD
 
+### Setting Budgets: 
+
+Sets budget for specified category
+
+Format: `set budget c/CATEGORY b/BUDGET`
+
+* `CATEGORY` must be a pre-existing category
+* `BUDGET` must be a positive integer
+
+Example of usage: 
+`set budget c/Housing b/1000` : Sets a budget of $1000 for Housing category
+
+### Getting budget for specific category:
+
+Retrieves the budget for the specified category, also lists expenses in descending order,
+and shows the percentage of budget that each expense takes up.
+
+Format: `get budget c/CATEGORY`
+
+* `CATEGORY` must be a pre-existing category
+
+Example of usage: 
+`get budget c/Transport`: Retrieves the set budget for transport (if any), lists expenses 
+in transport category in ascending order, and shows % of budget taken up by each of them.
+
+### Print all the budgets
+
+* Prints all the budgets in a table (Table 1)
+* Table 1 contains information about amount spent, remaining amount and % of budget spent for each category
+* If any of the budgets have been exceeded, will be displayed in another table (Table 2)
+* Table 2 contains categories that exceeded budget and amount exceeded.
+
+Format: `budget print`
+
+
 ### Get Graphical Insights for expenses: `get expenses insights`
 * This feature provides an overview of the expenses distribution across different categories. 
 * A horizontal bar graph showing the percentage of total expenses attributed to each category.
@@ -261,6 +296,9 @@ Example of Usage: `get savings insights`
 * List Savings: `list savings CATEGORY`
 * Find Expenses `find expenses [d/DESCRIPTION] [morethan/MINAMOUNT] [lessthan/MAXAMOUNT]`
 * Change Currency `change currency [CURRENCY_CODE]`
+* Set Budget `set budget c/CATEGORY b/BUDGET`
+* Get Budget `get budget c/CATEGORY`
+* Print Budgets `budget print`
 * Get Graphical Insights for expenses `get expenses insights` 
 * Get Graphical Insights for savings `get savings insights`
 

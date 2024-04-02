@@ -17,7 +17,7 @@ public class ListBudgetCommand extends Command{
 
         // Print all budgets in a table format
         System.out.printf("%-20s | %-15s | %-15s | %-15s | %-15s%n", "Category", "Budget", "Spent",
-                "Remaining", "% Spent");
+                            "Remaining", "% Spent");
         System.out.println(String.join("", java.util.Collections.nCopies(88, "-"))); // Creates a line
 
         if (expenseList.getBudgets().isEmpty()) {
@@ -26,16 +26,16 @@ public class ListBudgetCommand extends Command{
             for (Budget budget : expenseList.getBudgets()) {
                 String category = budget.getCategory();
                 double budgetAmount = budget.getBudget();
-                double totalSpent = expenseList.getExpenses().stream()
+                double categorySpent = expenseList.getExpenses().stream()
                         .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
                         .mapToDouble(Expense::getAmount)
                         .sum();
-                double remaining = budgetAmount - totalSpent;
-                double percentSpent = (totalSpent / budgetAmount) * 100;
+                String remaining = categorySpent > budgetAmount ? "Exceeded" :
+                                    String.format("$%.2f", budgetAmount - categorySpent);
+                double percentSpent = (categorySpent / budgetAmount) * 100;
 
-                // Print budget with total spent and remaining for each category
-                System.out.printf("%-20s | $%-14.2f | $%-14.2f | $%-14.2f | %-13.2f%%%n",
-                        category, budgetAmount, totalSpent, remaining, percentSpent);
+                System.out.printf("%-20s | $%-14.2f | $%-14.2f | %-14s | %-13.2f%%%n",
+                        category, budgetAmount, categorySpent, remaining, percentSpent);
                 System.out.println(String.join("",
                         java.util.Collections.nCopies(88, "-"))); // Creates a line
             }
@@ -43,9 +43,9 @@ public class ListBudgetCommand extends Command{
 
         System.out.println("\nCategories above budget:");
         System.out.printf("%-20s | %-15s%n", "Category", "Exceeded by");
-        System.out.println(String.join("", java.util.Collections.nCopies(44, "-"))); // Creates a line
-        boolean found = false;
+        System.out.println(String.join("", java.util.Collections.nCopies(44, "-")));
 
+        boolean found = false;
         for (String category : expenseList.getCategories()) {
             double totalSpent = expenseList.getExpenses().stream()
                     .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
@@ -67,6 +67,6 @@ public class ListBudgetCommand extends Command{
         if (!found) {
             System.out.println("No categories are above budget.");
         }
-        ui.printDivider();
+        System.out.println(String.join("", java.util.Collections.nCopies(44, "-")));
     }
 }

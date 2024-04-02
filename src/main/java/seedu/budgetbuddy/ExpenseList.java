@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 public class ExpenseList {
@@ -229,19 +230,48 @@ public class ExpenseList {
         budgets.add(new Budget(category, budget));
     }
 
-
-    public void getBudgetForCategory(String category) {
+    /**
+     * Retrieves and prints the budget for a specified category and lists all the expenses under that category.
+     * The expenses are sorted from the highest to the lowest amount, displaying the amount and what percentage
+     * of the total budget each expense constitutes.
+     *
+     * @param category The category for which to retrieve and print the budget and expenses.
+     */
+    public void getBudgetAndListExpensesForCategory(String category) {
         Budget budgetForCategory = budgets.stream()
                 .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
                 .findFirst()
                 .orElse(null);
 
-        if (budgetForCategory != null) {
-            System.out.println("Budget for " + category + ": $" + budgetForCategory.getBudget());
-        } else {
+        if (budgetForCategory == null) {
             System.out.println("No budget set for " + category);
+            return;
+        }
+
+        double budgetAmount = budgetForCategory.getBudget();
+        System.out.println("Budget for " + category + ": $" + budgetAmount);
+
+        List<Expense> expensesForCategory = expenses.stream()
+                .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
+                .sorted(Comparator.comparingDouble(Expense::getAmount).reversed())
+                .collect(Collectors.toList());
+
+        if (expensesForCategory.isEmpty()) {
+            System.out.println("No expenses recorded for " + category);
+            return;
+        }
+
+        System.out.printf("%-20s | %-15s | %-15s%n", "Expense", "Amount", "% of Budget");
+        ui.printDivider();
+
+        for (Expense expense : expensesForCategory) {
+            double amount = expense.getAmount();
+            double percentOfBudget = (amount / budgetAmount) * 100;
+            System.out.printf("%-20s | $%-14.2f | %-14.2f%%%n", expense.getDescription(), amount, percentOfBudget);
+            ui.printDivider();
         }
     }
+
 
     /**
      * Calculates and prints a distribution of expenses in various categories as a horizontal bar graph.
