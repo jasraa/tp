@@ -7,12 +7,17 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Storage {
+    private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
+
     private final String filePath;
 
     public Storage(String filePath) {
@@ -189,4 +194,56 @@ public class Storage {
         writer.close();
     }
 
+    /**
+     * Saves the default currency to the specified file path.
+     *
+     * @throws IOException if an I/O error occurs while writing to the file
+     */
+    public void saveCurrency() throws IOException {
+        assert filePath != null : "File path should not be null";
+
+        ensureDirectoryExists();
+
+        FileWriter writer = new FileWriter(filePath, false);
+
+        try {
+            Currency currentCurrency = DefaultCurrency.getDefaultCurrency();
+            writer.write("Default Currency: " + currentCurrency);
+            writer.close();
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Problem saving currency code", e);
+        }
+    }
+
+    /**
+     * Loads currency data from the specified file path and sets the default currency accordingly.
+     *
+     * @throws FileNotFoundException if the specified file path does not exist
+     */
+    public void loadCurrency() throws FileNotFoundException {
+
+        assert filePath != null : "File path should not be null";
+
+        File file = new File(filePath);
+        assert file.exists() : "Currency file does not exist";
+        assert file.isFile() : "Currency file is not a regular file";
+
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            assert line != null : "Line should not be null";
+
+            String[] parts = line.split(": ");
+            assert parts.length == 2 : "Invalid line format";
+
+            String currencyCode = parts[1].trim();
+            assert !currencyCode.isEmpty() : "Currency code should not be empty";
+
+            Currency currency = Currency.getInstance(currencyCode);
+
+            DefaultCurrency.setDefaultCurrency(currency);
+        }
+        scanner.close();
+    }
 }

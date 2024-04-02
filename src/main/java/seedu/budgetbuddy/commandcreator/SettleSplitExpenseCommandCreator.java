@@ -8,11 +8,21 @@ public class SettleSplitExpenseCommandCreator extends CommandCreator{
     private String input;
     private SplitExpenseList splitexpenses;
 
+    /*
+     * Creates a SettleSplitExpenseCommandCreator object.
+     */
     public SettleSplitExpenseCommandCreator(String input, SplitExpenseList splitexpenses) {
         this.input = input;
         this.splitexpenses = splitexpenses;
     }
 
+    /*
+     * Parses the input and creates a new SettleSplitExpenseCommand object.
+     * 
+     * @param input The input string.
+     * @param splitexpenses The list of split expenses.
+     * @return The SettleSplitExpenseCommand object.
+     */
     public Command handleSettleExpenseCommand(String input, SplitExpenseList splitexpenses) {
 
         assert input != null : "Input should not be null";

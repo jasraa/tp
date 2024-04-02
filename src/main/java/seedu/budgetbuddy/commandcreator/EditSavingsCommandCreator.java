@@ -11,6 +11,16 @@ public class EditSavingsCommandCreator extends CommandCreator {
         this.input = input;
         this.savings = savings;
     }
+
+    /**
+     * Parses the input command to extract the parameters for editing a saving entry and then
+     * initiates the edit operation. The command string is expected to contain indicators
+     * followed by the values for category (c/), index (i/), and amount (a/).
+     *
+     * @param savings The SavingList object that contains the list of savings.
+     * @param input   The input command string containing the parameters to edit a saving entry.
+     * @return A Command object to execute the edit operation or null if the input is invalid.
+     */
     public Command handleEditSavingCommand(SavingList savings, String input) {
         String[] parts = input.split(" ");
         String category = null;

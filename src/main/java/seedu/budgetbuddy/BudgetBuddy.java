@@ -14,10 +14,11 @@ public class BudgetBuddy {
     private SavingList savings;
     private SplitExpenseList splitexpenses;
     private RecurringExpensesList expensesList;
-
     private Storage expensesStorage;
     private Storage savingsStorage;
     private Storage recurringExpensesStorage;
+    private Storage defaultCurrency;
+
 
 
     public BudgetBuddy() {
@@ -30,6 +31,8 @@ public class BudgetBuddy {
         expensesStorage = new Storage("src/main/java/seedu/budgetbuddy/data/ExpenseFile.txt");
         savingsStorage = new Storage("src/main/java/seedu/budgetbuddy/data/SavingsFile.txt");
         recurringExpensesStorage = new Storage("./data/RecurringExpensesFile.txt");
+        defaultCurrency = new Storage("src/main/java/seedu/budgetbuddy/data/DefaultCurrency.txt");
+
     }
 
     public void handleCommands(String input) {
@@ -46,8 +49,11 @@ public class BudgetBuddy {
             expensesStorage.saveExpenses(expenses.getExpenses());
             savingsStorage.saveSavings(savings.getSavings());
             recurringExpensesStorage.saveRecurringExpenses(expensesList);
+            // Save Currency
+            defaultCurrency.saveCurrency();
         } catch (IOException e) {
-            System.out.println("Error saving expenses to file.");
+            System.out.println("Error saving to file.");
+
         } catch (InvalidRecurringExpensesFileException e) {
             System.out.println(e.getMessage());
         }
@@ -58,12 +64,15 @@ public class BudgetBuddy {
         Scanner scanner = new Scanner(System.in);
 
         try {
+            // Load Currency
+            defaultCurrency.loadCurrency();
             this.expenses.getExpenses().addAll(expensesStorage.loadExpenses());
             this.savings.getSavings().addAll(savingsStorage.loadSavings());
             this.expensesList = recurringExpensesStorage.loadRecurringExpensesList();
 
+
         } catch (FileNotFoundException e) {
-            System.out.println("No existing expense file found. Starting fresh.");
+            System.out.println("No existing files found. Starting fresh.");
         } catch (IOException e) {
             System.out.println("Could not create files. Please ensure all files are present and are not directories");
         }

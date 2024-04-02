@@ -23,11 +23,9 @@ public class ListCommandCreator extends CommandCreator {
     public ListCommandCreator(ExpenseList expenses, SavingList savings,
                               String input) {
 
-
         this.expenses = expenses;
         this.savings = savings;
         this.input = input;
-
 
         this.expenseCategories = new ArrayList<>(Arrays.asList("Housing",
                 "Groceries", "Utility", "Transport", "Entertainment", "Others"));
@@ -35,6 +33,12 @@ public class ListCommandCreator extends CommandCreator {
                 "Investments", "Gifts", "Others"));
     }
 
+    /**
+     * Checks if the given category is valid for expenses.
+     *
+     * @param category The category to be validated.
+     * @return true if the category is valid for expenses; false otherwise.
+     */
     private boolean isValidExpenseCategory(String category) {
 
         assert category != null : "Category should not be null";
@@ -48,6 +52,12 @@ public class ListCommandCreator extends CommandCreator {
         return false;
     }
 
+    /**
+     * Checks if the given category is valid for savings.
+     *
+     * @param category The category to be validated.
+     * @return true if the category is valid for savings; false otherwise.
+     */
     private boolean isValidSavingsCategory(String category) {
 
         assert category != null : "Category should not be null";
@@ -62,12 +72,13 @@ public class ListCommandCreator extends CommandCreator {
     }
 
     /**
-     * Parses the "list" command, allowing for optional category filtering.
+     * Parses the user input to create a ListCommand for listing expenses or savings.
+     * If the input is valid, a ListCommand is returned with the specified list type and optional filter category.
      *
-     * @param input The full user input string.
-     * @param expenseList The ExpenseList to list from.
-     * @param savingList The SavingList to list from.
-     * @return A Command for executing the list, or null if the input is invalid.
+     * @param input        The user input to be parsed.
+     * @param expenseList  The ExpenseList containing expenses data.
+     * @param savingList   The SavingList containing savings data.
+     * @return A ListCommand if the input is valid; otherwise, null.
      */
     public Command handleListCommand(String input, ExpenseList expenseList, SavingList savingList) {
         assert input != null : "Input should not be null";
@@ -130,7 +141,6 @@ public class ListCommandCreator extends CommandCreator {
         default:
             return null;
         }return null;
-
     }
 
     @Override

@@ -15,7 +15,8 @@ public class Ui {
         System.out.println("2. Manage Savings      4. View Savings");
         System.out.println("5. Find Expenses       6. Split Expenses");
         System.out.println("7. Manage Recurring Bills");
-        System.out.println("8. Change Currency");
+        System.out.println("8. Change Currency     9. Manage Budget");
+        System.out.println("10. Get Graphical Insights");
 
         System.out.println(DIVIDER);
     }
@@ -34,7 +35,8 @@ public class Ui {
         System.out.println("2. Manage Savings      4. View Savings");
         System.out.println("5. Find Expenses       6. Split Expenses");
         System.out.println("7. Manage Recurring Bills               ");
-        System.out.println("8. Change Currency");
+        System.out.println("8. Change Currency     9. Manage Budget");
+        System.out.println("10. Get Graphical Insights");
         System.out.println("Use 'menu INDEX' to select an option");
         System.out.println(DIVIDER);
     }
@@ -53,8 +55,6 @@ public class Ui {
             System.out.println("add expense c/CATEGORY a/AMOUNT d/DESCRIPTION");
             System.out.println("edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION");
             System.out.println("delete expense i/INDEX");
-            System.out.println("set budget c/CATEGORY b/BUDGET");
-            System.out.println("budget print");
             break;
         case 2:
             System.out.println("Manage Savings");
@@ -77,7 +77,7 @@ public class Ui {
             break;
         case 6:
             System.out.println("Split Expenses");
-            System.out.println("split expenses a/AMOUNT n/NUMBER d/DESCRIPTION");
+            System.out.println("split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION");
             System.out.println("check splitted expenses");
             System.out.println("settle i/INDEX");
             break;
@@ -98,6 +98,16 @@ public class Ui {
             System.out.println("USD    SGD    EUR");
             System.out.println("JPY    KRW    MYR");
             System.out.println("CNY    HKD");
+            break;
+        case 9:
+            System.out.println("Manage budget");
+            System.out.println("set budget c/CATEGORY b/BUDGET");
+            System.out.println("budget print");
+            break;
+        case 10:
+            System.out.println("Get Graphical Insights");
+            System.out.println("get savings insights");
+            System.out.println("get expenses insights");
             break;
         default:
             System.out.println("Invalid menu index.");

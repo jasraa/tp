@@ -10,11 +10,24 @@ public class SplitExpenseCommandCreator extends CommandCreator{
     private SplitExpenseList splitexpenses;
     private String input;
 
+    /**
+     * Creates a SplitExpenseCommandCreator object.
+     * 
+     * @param splitexpenses The list of split expenses.
+     * @param input The input string.
+     */
     public SplitExpenseCommandCreator(SplitExpenseList splitexpenses, String input) {
         this.splitexpenses = splitexpenses;
         this.input = input;
     }
 
+    /**
+     * Parses the input and creates a new SplitExpenseCommand object.
+     * 
+     * @param splitexpenses The list of split expenses.
+     * @param input The input string.
+     * @return The SplitExpenseCommand object.
+     */
     public Command handleSplitExpenseCommand(SplitExpenseList splitexpenses, String input) {
         if (input == null || !input.contains("a/") || !input.contains("n/") || !input.contains("d/")) {
             System.out.println("Invalid command format.");
@@ -55,6 +68,13 @@ public class SplitExpenseCommandCreator extends CommandCreator{
         return new SplitExpenseCommand(splitexpenses, amount, numberOfPeople, description);
     }
 
+    /**
+     * Extracts the detail from the input string using the prefix.
+     * 
+     * @param input The input string.
+     * @param prefix The prefix to search for.
+     * @return The detail extracted from the input string.
+     */
     private String extractDetail(String input, String prefix) {
         try {
             int startIndex = input.indexOf(prefix) + prefix.length();
