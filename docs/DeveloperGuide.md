@@ -74,36 +74,6 @@ The activity diagram provides an overview of the Budget Management feature's wor
 2. To view budgets, the user enters `budget print`. The Parser class creates a `ListBudgetCommand` object. This command 
 retrieves the budgets using `getBudgets()` and displays them, also indicating any categories that are over budget.
 
-## Product scope
-### Target user profile
-
-{Describe the target user profile}
-
-### Value proposition
-
-{Describe the value proposition: what problem does it solve?}
-
-## User Stories
-
-| Version  | As a ... | I want to ...             | So that I can ...                                           |
-|----------|----------|---------------------------|-------------------------------------------------------------|
-| v1.0     | new user | see usage instructions    | refer to them when I forget how to use the application      |
-| v2.0     | user     | find a to-do item by name | locate a to-do without having to go through the entire list |
-
-## Non-Functional Requirements
-
-{Give non-functional requirements}
-
-## Glossary
-
-* *glossary item* - Definition
-
-## Instructions for manual testing
-
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
-
-## Edit Expenses
-
 ## 1. Introduction
 Welcome to the Developer Guide for BudgetBuddy! This guide has been created to help you current and future 
 developers of Budget understand how BudgetBuddy works and aid developers in easily adding new features, 
@@ -152,6 +122,7 @@ Here is a table of all CommandCreator class and the Commands that they can creat
 
 #### 3.5 Storage Class
 The Storage Class handles the loading and saving of the Expenses and Savings in BudgetBuddy.
+It also saves and loads the default currency being used by the user.
 
 ### 3.6 Application Classes
 The classes present in this group of `Application Classes` refers to certain elements which serves a purpose more
@@ -167,30 +138,138 @@ This class holds details regarding an expense a user has. Within this class, it 
 `String category`, `LocalDate dateAdded` , `String description` and `Double amount`. The variables and their relevance
 are as follows : 
 
+`String category` : This variable holds the category of the expense. It represents the type or classification 
+of the expense as per the pre-defined categories ("Housing", "Groceries", "Utility", "Transport", "Entertainment").
+
+`LocalDate dateAdded` : This variable holds the date when the expense was added or recorded. 
+It is of type LocalDate, representing a date without a time zone. 
+Storing the date of the expense allows users to track when each expense occurred, 
+facilitating budget management and analysis over time.
+
+`String description` : This variable holds a description of the expense. 
+It provides additional details or information about the expense, 
+such as what the expense was for or any relevant notes. 
+Descriptions help users understand the context or purpose of each expense entry.
+
+`Double amount` :  This variable holds the monetary amount of the expense. 
+It represents the cost or value of the expense, typically in the currency used by the user. 
+Storing the amount allows users to track how much money was spent on each expense, 
+aiding in budgeting and financial planning.
+
 ##### 3.6.3 ExpenseList
 This class represents a list of expenses. Within this class, it has 2 class-level variables :
 `ArrayList<Expense> expenses` and `ArrayList<String> categories`, The variables and there relevance are as follows :
 
+`ArrayList<Expense> expenses` : This variable holds a list of `Expense` objects. 
+Each `Expense` object represents an expense incurred by the user. The list stores all the expenses entered by the user. 
+Managing expenses in a list allows for easy retrieval, modification, and deletion of individual expenses. 
+Additionally, it enables functionalities such as filtering, listing, and calculating total expenses.
+
+`ArrayList<String> categories` : This variable holds a list of predefined expense categories. 
+Each category represents a classification or grouping for expenses, such as "Housing," "Groceries," "Utility," etc. 
+The list provides predefined options for users to select when adding or editing expenses. 
+It helps organize expenses into meaningful groups, 
+allowing users to track and analyze their spending habits across different expense categories.
+
 This class also contains the methods to handle any user interactions with the list of expenses. The methods and a
 brief explanation on their functionality is as follows :
+
+* listExpenses(String filterCategory) :
+  * The core functionality of this class. It lists a user's total expenses, optionally filtered by category as per user
+  input.
+  * The amounts being shown are dependent on the currency being used.
+* calculateTotalExpenses() :
+  * The method used to calculate all expenses found in the expense list.
 
 ##### 3.6.4 Saving
 This class holds details regarding a saving a user has. Within this class, it has 3 class-level variables :
 `String category`, `LocalDate dateAdded`, `Double amount`. The variables and their relevance
 are as follows :
 
+`String Category` : This variable holds the category of the saving. 
+Similar to expenses, savings can also be categorized based on their purpose or intended use. 
+Pre-defined categories include ("Salary", "Investments", "Gifts", or "Others"). 
+Categorizing savings helps users allocate funds for different financial goals and track progress towards those goals.
+
+`LocalDate dateAdded` : This variable holds the date when the saving was added or recorded. 
+As with expenses, tracking the date of each saving allows users to monitor their saving habits over time. 
+It provides a historical record of when savings were initiated, 
+helping users understand their saving patterns and behaviors.
+
+`Double amount` : This variable holds the monetary amount of the saving. 
+It represents the value or sum of money saved by the user. 
+The amount indicates how much money has been set aside or accumulated towards achieving a particular financial goal. 
+Users can track their progress towards savings targets and 
+monitor their overall financial health based on the amount saved.
+
 ##### 3.6.5 SavingList
 This class represents a list of savings. Within this class, it has 2 class-level variables :
-`ArrayList<Saving> expenses` and `ArrayList<String> categories`, The variables and there relevance are as follows :
+`ArrayList<Saving> savings` and `ArrayList<String> categories`, The variables and there relevance are as follows :
+
+`ArrayList<Saving> savings`: This variable holds a list of `Saving` objects, 
+where each object represents a saving made by the user. The list stores all the savings entered by the user. 
+Managing savings in a list allows for easy retrieval, modification, and reduction of individual savings. 
+Additionally, it enables functionalities such as listing savings, calculating remaining savings after 
+deducting expenses, and adding new savings.
+
+`ArrayList<String> categories`: This variable holds a list of predefined saving categories. 
+Each category represents a classification or grouping for savings, such as "Salary," "Investments," "Gifts," etc. 
+The list provides predefined options for users to select when adding or editing savings. 
+It helps organize savings into meaningful groups, allowing users to track and 
+manage their savings across different categories.
 
 This class also contains the methods to handle any user interactions with the list of savings. The methods and a
 brief explanation on their functionality is as follows :
+
+* `listSavings(String filterCategory, ExpenseList expenseList)` :
+  * The core functionality of this class. It prints the initial savings amount, expenses deducted, and the remaining 
+  amount. 
+  * It is able to print only the filtered category as per user input.
+  * The amounts being shown is dependent on the currency being used.
+* `findTotalSavings()` :
+  * Calculates the total savings amount by summing up the amounts of all savings.
+* `calculateRemainingSavings(double initialAmount, double totalExpenses)` :
+  * Calculates the remaining savings amount after deducting total expenses from the initial amount.
+  * Provides clarity on how much savings user has left to spend.
 
 ##### 3.6.6 RecurringExpenseList
 Explain what it does
 
 ##### 3.6.7 RecurringExpensesList
 Explain what it does
+
+##### 3.6.8 DefaultCurrency
+
+##### 3.6.9 CurrencyConverter
+The `CurrencyConverter` class provides functionality for converting amounts between different currencies. It includes two class-level variables:
+
+`Map<Currency, Double> exchangeRates`: This variable represents a map where the keys are instances of 
+the `Currency` class, and the values are conversion rates as `Double` values. 
+The map stores exchange rates for various currencies relative to a base currency (in this case, Singapore Dollar, SGD). 
+The exchange rates are initialized with default values for common currencies such as 
+USD, EUR, JPY, KRW, MYR, CNY, and HKD.
+
+The class includes several methods to handle currency conversion tasks:
+
+* `convertAmount(double amount, Currency fromCurrency, Currency toCurrency)`: 
+This method converts an amount from one currency to another using exchange rates stored in the `exchangeRates` map. 
+It takes the original amount, the currency of the original amount (`fromCurrency`), 
+and the target currency (`toCurrency`) as parameters and returns the converted amount. 
+The method ensures that exchange rates are available for both currencies and that they are positive numbers.
+
+* `convertExpenseCurrency(Currency newCurrency, ExpenseList expenses)`: 
+This method converts the currency of expenses in a given `ExpenseList` to a specified new currency (`newCurrency`). 
+It iterates through the expenses in the list, converts each expense amount to the new currency 
+using the `convertAmount` method, and updates the expense amounts and currencies accordingly.
+
+* `convertSavingCurrency(Currency newCurrency, SavingList savings)`: Similar to `convertExpenseCurrency`, 
+this method converts the currency of savings in a given `SavingList` to a specified new currency (`newCurrency`). 
+It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount` 
+method, and updates the saving amounts and currencies accordingly.
+
+These methods facilitate currency conversion tasks by handling the conversion logic, validating input parameters, 
+and logging relevant messages. They provide essential functionality for managing expenses and savings in different 
+currencies within the budget management application.
 
 
 ## 4. Implementation
@@ -239,27 +318,29 @@ category to "Transport," amount to 40.0, and description to "GRAB."
 7. A message "Expense edited successfully." is printed to the console.
 
 
-### Listing feature (List Savings)
-The Listing Savings Feature enables users to view their savings, potentially filtered by a specific category. This functionality is orchestrated by the `ListSavingsCommand` class, which is initialized by the `Parser` class. Within the `ListSavingsCommand` object, the `Parser` provides it with an `SavingList` object, along with an optional `filterCategory`. The relevance of these class attributes in `ListSavingsCommand` is detailed in the following table:
+### Listing Feature (List Savings)
+
+The Listing Savings Feature enables users to view their savings, potentially filtered by a specific category. This functionality is orchestrated by the `ListSavingsCommand` class, which is initialized by the `ListCommandCreator` class. Within the `ListSavingsCommand` object, the `ListCommandCreator` provides it with a `SavingList` object, an `ExpenseList` object, along with an optional `filterCategory`. The relevance of these class attributes in `ListSavingsCommand` is detailed in the following table:
 
 | Class Attribute | Variable Type | Relevance                                                                           |
 |-----------------|---------------|-------------------------------------------------------------------------------------|
-| savings         | SavingList    | The `SavingLi st` object containing the list of savings to be displayed or filtered |
+| savings         | SavingList    | The `SavingList` object containing the list of savings to be displayed or filtered |
+| expenses        | ExpenseList   | The `ExpenseList` object containing the list of expenses                            |
 | filterCategory  | String        | The category to filter the savings by, if provided                                  |
 
 When `BudgetBuddy` invokes the `execute()` method via `command.execute()`, the `ListSavingsCommand` object uses several methods from the `SavingList` class to perform its tasks:
 
 | Method                      | Return Type        | Relevance                                                      |
 |-----------------------------|--------------------|----------------------------------------------------------------|
-| getSavings()                | ArrayList<Sav ing> | Retrieves the list of all savings from the `SavingList`        |
-| findTotalSavings()          | void               | Calculates the  total amount of savings stored in `SavingList` |
+| getSavings()                | ArrayList<Saving>  | Retrieves the list of all savings from the `SavingList`        |
+| findTotalSavings()          | void               | Calculates the total amount of savings stored in `SavingList`  |
 | listSavings()               | void               | Prints the savings, filtered by `filterCategory`, to the CLI   |
 | calculateRemainingSavings() | double             | Calculates the remaining amount after deducting total expenses |
 
 The Listing Savings feature follows these steps when a user inputs a command to list savings:
 1. The user inputs `list savings [optional: filterCategory]`. This input is processed by the `Parser` class in `BudgetBuddy`, which creates a `ListSavingsCommand` object with `savings` set to the current `SavingList` and `filterCategory` to the user-specified category, if any.
 2. The `Parser` returns this `ListSavingsCommand` object to `BudgetBuddy`, which calls `ListSavingsCommand.execute()`.
-3. `execute()` calls `SavingList.listSavings(filterCategory)`, where the `filterCategory` is applied if provided.
+3. `execute()` calls `SavingList.listSavings(filterCategory, expenses)`, where the `filterCategory` is applied if provided.
 4. Within `listSavings()`, the `findTotalSavings()` method is called first to calculate the initial total savings amount.
 5. The `listSavings()` method continues by iterating through each `Saving` and printing those that match the `filterCategory` criteria.
 6. After listing, the method calculates and displays the remaining savings by calling `calculateRemainingSavings(initialAmount, totalExpenses)`, accounting for any expenses deducted.
@@ -270,25 +351,26 @@ The UML Sequence diagram for the Listing Savings feature would illustrate the in
 ![Sequence diagram for List Expense Feature](diagrams/SavingList_SequenceDiagram.png)
 
 ### Listing feature (List Expenses)
-The Listing Expenses Feature enables users to view their recorded expenses, optionally filtered by a category. This functionality is coordinated by the `ListExpensesCommand` class, which is instantiated by the `Parser` class with an `ExpenseList` object and an optional `filterCategory`. The roles of these attributes in `ListExpensesCommand` are:
+The Listing Expenses Feature provides users with the ability to view their expenses, which can be filtered by category. The `ListExpenseCommand` class, generated by the `ListCommandCreator`, is responsible for this feature. The class utilizes the `ExpenseList` object to access and manipulate expense records, optionally applying a filter based on the category. The significance of the `ListExpenseCommand` class's attributes is outlined below:
 
 | Class Attribute | Variable Type | Relevance                                                                         |
 |-----------------|---------------|-----------------------------------------------------------------------------------|
 | expenses        | ExpenseList   | Holds the list of expenses to be filtered and listed                              |
 | filterCategory  | String        | The category to filter the expenses by (null if no filtering is needed)           |
 
-Upon invocation of the `execute()` method by `BudgetBuddy` via `command.execute()`, the `ListExpensesCommand` object leverages methods from the `ExpenseList` class to display the filtered list of expenses:
+Upon invoking the `execute()` method by `BudgetBuddy` through `command.execute()`, the `ListExpenseCommand` object calls upon several methods from the `ExpenseList` class to carry out its responsibilities:
 
-| Method         | Return Type | Relevance                                                               |
-|----------------|-------------|-------------------------------------------------------------------------|
-| listExpenses() | void        | Prints the expenses, filtered by `filterCategory`, to the command line  |
+| Method                   | Return Type | Relevance                                                              |
+|--------------------------|-------------|------------------------------------------------------------------------|
+| listExpenses()           | void        | Prints the expenses, filtered by `filterCategory`, to the command line |
+| calculateTotalExpenses() | double      | Calculates the total expenses from the list of expenses                |
 
 Here's an overview of the process flow when a user employs the Listing Expenses feature:
-1. The user inputs `list expenses [category]`. This input is processed by the `Parser` class in `BudgetBuddy`, creating a `ListExpensesCommand` object with the `expenses` set to the current overall `ExpenseList`, and the `filterCategory` set to the user-specified category (or null if not specified).
-2. `Parser` returns this `ListExpensesCommand` object to `BudgetBuddy`, which then invokes `ListExpensesCommand.execute()`.
-3. The `execute()` method calls `ExpenseList.listExpenses(filterCategory)`.
-4. The `listExpenses()` method in `ExpenseList` then iterates over the expenses, applying the category filter if one is provided, and prints each qualifying expense.
-5. It concludes by printing the total amount of listed expenses.
+1. The user types `list expenses [optional: filterCategory]`. This command is parsed by the `Parser` class within `BudgetBuddy`, which then creates a `ListExpenseCommand` with `expenses` set to the current `ExpenseList` and `filterCategory` set to any specified by the user.
+2. The `Parser` returns the `ListExpenseCommand` object to `BudgetBuddy`, which calls `ListExpenseCommand.execute()`.
+3. The `execute()` method invokes `ExpenseList.listExpenses(filterCategory)`. If a `filterCategory` is provided, it will filter the expenses accordingly.
+4. The `listExpenses()` method in `ExpenseList` iterates over the list of expenses and prints each one that matches the filter category criteria or all expenses if no filter is provided.
+5. The method concludes by displaying the total expenses calculated using `calculateTotalExpenses()`.
 
 #### Sequence Diagram
 The sequence diagram for the Listing Expenses feature would illustrate the above steps, showing the interactions between the `User`, `BudgetBuddy`, `Parser`, `ListExpensesCommand`, and `ExpenseList` classes.
@@ -298,29 +380,44 @@ The sequence diagram for the Listing Expenses feature would illustrate the above
 ### Currency Converter feature
 The Currency Converter Feature allows users to convert the currency of expenses and savings. This feature is facilitated by the `ChangeCurrencyCommand` class, initialized by the `Parser` class with `CurrencyConverter`, `ExpenseList`, and `SavingList` objects, alongside the `newCurrency` to convert to. The importance of these class attributes is as follows:
 
-| Class Attribute   | Variable Type     | Relevance                                                   |
-|-------------------|-------------------|-------------------------------------------------------------|
-| currencyConverter | CurrencyConverter | The object responsible for currency conversion calculations |
-| expenseList       | ExpenseList       | Contains the expenses whose currency will be converted      |
-| savingList        | SavingList        | Contains the savings whose currency will be converted       |
-| newCurrency       | Currency          | The new currency to which the amounts will be converted     |
+| Class Attribute   | Variable Type          | Relevance                                                   |
+|-------------------|------------------------|-------------------------------------------------------------|
+| currencyConverter | CurrencyConverter      | The object responsible for currency conversion calculations |
+| expenseList       | ExpenseList            | Contains the expenses whose currency will be converted      |
+| savingList        | SavingList             | Contains the savings whose currency will be converted       |
+| newCurrency       | Currency               | The new currency to which the amounts will be converted     | 
+| exchangeRates     | Map<Currency, Double>  | Stores exchange rates with currencies as keys               |
 
 When `BudgetBuddy` calls `command.execute()`, `ChangeCurrencyCommand` employs the following methods from `CurrencyConverter` to convert the currency of all financial records:
 
-| Method             | Return Type | Relevance                                                                         |
-|--------------------|-------------|-----------------------------------------------------------------------------------|
-| convertCurrency()  | void        | Converts the currency of each `Expense` and `Saving` object to `newCurrency`      |
+| Method                   | Return Type | Relevance                                                                 |
+|--------------------------|-------------|---------------------------------------------------------------------------|
+| convertExpenseCurrency() | void        | Converts the currency of each `Expense` object to `newCurrency`           |
+| convertSavingCurrency()  | void        | Converts the currency of each `Saving` object to `newCurrency`            |
+| convertAmount()          | double      | Converts an amount from one currency to another using the exchange rates  |
+
+The Currency Converter feature also includes a mechanism for managing a default currency across the application, facilitated by the `DefaultCurrency` class. This enhancement allows for seamless conversion of financial records to a user-specified default currency.
+
+The `DefaultCurrency` class is designed to maintain and update the application-wide default currency setting. It provides static methods to get and set the default currency:
+
+| Method               | Return Type | Relevance                                                    |
+|----------------------|-------------|--------------------------------------------------------------|
+| getDefaultCurrency   | Currency    | Retrieves the current default currency for the application   |
+| setDefaultCurrency   | void        | Updates the default currency to a new value                  |
+
 
 Here's the step-by-step process when the user uses the Currency Converter feature:
 1. The user inputs `change currency [newCurrencyCode]`. `Parser` processes this input and constructs a `ChangeCurrencyCommand` object with the necessary attributes.
 2. The `ChangeCurrencyCommand` object is returned to `BudgetBuddy`, which calls `ChangeCurrencyCommand.execute()`.
-3. `execute()` invokes `CurrencyConverter.convertCurrency(newCurrency, expenseList)` and `CurrencyConverter.convertCurrency(newCurrency, savingList)`.
-4. Within each `convertCurrency` call, the amounts of `Expense` or `Saving` objects are converted to the `newCurrency` using the `convertAmount` method.
-5. The `setAmount` and `setCurrency` methods of `ExpenseList` and `SavingList` are used to update the amounts and currency codes.
-6. The updated financial records are now in the new currency.
+3. `execute()` invokes `CurrencyConverter.convertExpenseCurrency(newCurrency, expenseList)` and `CurrencyConverter.convertSavingCurrency(newCurrency, savingList)`.
+4. Within the `convertExpenseCurrency` and `convertSavingCurrency` call, the amounts of `Expense` or `Saving` objects are converted to the `newCurrency` using the `convertAmount` method.
+5. The `DefaultCurrency.setDefaultCurrency(newCurrency)` method is called to update the application's default currency setting to `newCurrency`.
+6. The `setAmount` and `setCurrency` methods of `ExpenseList` and `SavingList` are used to update the amounts and currency codes.
+7. After successful conversion of savings and expenses, the default currency of the application is updated, reflecting the new choice across BudgetBuddy.
+
 
 #### Sequence Diagram
-![Sequence diagram for List Expense Feature](diagrams/CurrencyConverter_SequenceDiagram.png)
+![Sequence diagram for CurrencyConverter Feature](diagrams/CurrencyConverter_SequenceDiagram.png)
 
 ### Menu Feature
   

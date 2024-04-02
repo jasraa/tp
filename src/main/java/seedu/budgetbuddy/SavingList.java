@@ -3,6 +3,7 @@ package seedu.budgetbuddy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
@@ -14,7 +15,7 @@ import seedu.budgetbuddy.exception.BudgetBuddyException;
 public class SavingList {
     private static final Logger LOGGER = Logger.getLogger(SavingList.class.getName());
 
-    protected ArrayList <Saving> savings;
+    protected ArrayList<Saving> savings;
     protected ArrayList<String> categories;
     protected double initialAmount;
     protected Storage storage;
@@ -38,6 +39,11 @@ public class SavingList {
         return savings;
     }
 
+    /**
+     * Calculates the total savings amount by summing up the amounts of all savings.
+     * Sets the initial amount to the calculated total savings.
+     * Logs a severe error if an AssertionError occurs during the calculation.
+     */
     public void findTotalSavings() {
         try {
             assert savings != null : "Savings list should not be null";
@@ -55,11 +61,20 @@ public class SavingList {
         }
     }
 
+    /**
+     * Lists the savings, optionally filtered by category,
+     * and calculates the remaining savings after deducting expenses.
+     * Prints the initial savings amount, expenses deducted, and the remaining amount.
+     *
+     * @param filterCategory The category to filter savings by (optional). If null, all savings are listed.
+     * @param expenseList    The ExpenseList object containing the expenses to deduct from savings.
+     */
     public void listSavings(String filterCategory, ExpenseList expenseList) {
-        try {
-            LOGGER.info("Listing savings...");
+        LOGGER.info("Listing savings...");
+        findTotalSavings();
 
-            findTotalSavings();
+        try {
+            System.out.println(String.format("Current Currency: %s", DefaultCurrency.getDefaultCurrency()));
             System.out.println("Savings:");
             for (int i = 0; i < savings.size(); i++) {
                 Saving saving = savings.get(i);
@@ -86,7 +101,7 @@ public class SavingList {
             if (remainingAmount < 0) {
                 System.out.println("You are currently short on savings by: $" + String.format("%.2f", remainingAmount));
             } else {
-                System.out.println("Remaining Amount: $" + String.format("%.2f", remainingAmount));
+                System.out.println("Overall Remaining Amount: $" + String.format("%.2f", remainingAmount));
 
             }
         } catch (Exception e) {
@@ -94,6 +109,13 @@ public class SavingList {
         }
     }
 
+    /**
+     * Calculates the remaining savings amount after deducting total expenses from the initial amount.
+     *
+     * @param initialAmount The initial amount of savings.
+     * @param totalExpenses The total amount of expenses to be deducted.
+     * @return The remaining savings amount after deducting total expenses.
+     */
     public double calculateRemainingSavings(double initialAmount, double totalExpenses) {
         try {
             assert initialAmount >= 0 : "Initial amount should not be negative";

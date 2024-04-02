@@ -38,14 +38,14 @@ public class CurrencyConverterTest {
     }
 
     @Test
-    public void convertCurrency_convertCurrenciesInSavingList_success() throws BudgetBuddyException {
+    public void convertSavingCurrency_convertCurrenciesInSavingList_success() throws BudgetBuddyException {
         CurrencyConverter converter = new CurrencyConverter();
         SavingList savings = new SavingList();
         savings.addSaving("Salary", "1000");
         savings.addSaving("Investments", "200");
         Currency newCurrency = Currency.getInstance("USD");
 
-        converter.convertCurrency(newCurrency, savings);
+        converter.convertSavingCurrency(newCurrency, savings);
 
         for (Saving saving : savings.getSavings()) {
             assertEquals(newCurrency, saving.getCurrency());
@@ -53,14 +53,14 @@ public class CurrencyConverterTest {
     }
 
     @Test
-    public void convertCurrency_convertCurrenciesInExpenseList_success() throws BudgetBuddyException {
+    public void convertExpenseCurrency_convertCurrenciesInExpenseList_success() throws BudgetBuddyException {
         CurrencyConverter converter = new CurrencyConverter();
         ExpenseList expenses = new ExpenseList();
         expenses.addExpense("Transport", "1000", "MRT");
         expenses.addExpense("Housing", "200", "BTO");
         Currency newCurrency = Currency.getInstance("USD");
 
-        converter.convertCurrency(newCurrency, expenses);
+        converter.convertExpenseCurrency(newCurrency, expenses);
 
         for (Expense expense : expenses.getExpenses()) {
             assertEquals(newCurrency, expense.getCurrency());

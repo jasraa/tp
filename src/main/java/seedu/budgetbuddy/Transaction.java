@@ -10,15 +10,13 @@ public abstract class Transaction {
     public Transaction(String category, double amount) {
         this.category = category;
         this.amount = amount;
-        this.currency = Currency.getInstance("SGD");
+        this.currency = DefaultCurrency.getDefaultCurrency();
 
     }
 
     public String getCategory() {
         return category;
     }
-
-    // Getters and setters
     public double getAmount() {
         return amount;
     }
