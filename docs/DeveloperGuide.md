@@ -94,40 +94,63 @@ The following diagram provides a rough overview of how BudgetBuddy is built
 
 ![Diagram of overview of BudgetBuddy](diagrams/Introduction.jpg)
 
-`BudgetBuddy` is the main class of the application and directly interacts with the user, passing along the input
-into the Parser. The `Parser` creates a `CommandCreator` object depending on the user's input. The `CommandCreator`
-object then creates the `Command` object. This `Command` will be executed in `BudgetBuddy`. The `Command` object 
-utilizes methods and the class present in the `Application Classes`, which will be explained in more 
+`BudgetBuddy` is the main class of the application and directly interacts with the user. `BudgetBuddy` 
+passes along the input into the Parser. The `Parser` creates a `CommandCreator` object depending on the user's input
+. The `CommandCreator` object then creates the `Command` object. 
+This `Command` object will be executed in `BudgetBuddy`. The `Command` object 
+utilizes methods and the classes present in `Commons`, which will be explained in more 
 detail in the following sections.
 
 #### 3.2 Parser Class
-The main functionality of the Parser Class is to determine the type of `CommandCreator` object to initialize, and
-return the created `Command` object created by the `CommandCreator` back to `BudgetBuddy`
+The main functionality of the Parser Class is to determine the type of `CommandCreator` object to initialize. Using
+Boolean Functions, the Parser Class determines this by what the user input starts with. 
+After determining the type of `CommandCreator` object, the Parser initializes the `CommandCreator` object
+with all its required parameters. 
+
+Here are some examples :
+
+| Boolean Method        | Checks if input starts with | Feature Requires   | Creates                                    |
+|-----------------------|-----------------------------|--------------------|--------------------------------------------|
+| isAddExpenseCommand() | add expense                 | input, ExpenseList | AddExpenseCommandCreator(input, expenses)  |
+| isEditSavingCommand() | edit expense                | input, SavingList  | EditSavingsCommandCreator(input, savings)  |
 
 #### 3.3 Ui Class
 The Ui Class is used to print certain elements to the CLI. In particular, it consists of the Welcome Message,
 Goodbye Message, Divider Lines and all the corresponding commands' command format.
 
 #### 3.5 CommandCreator Class
-The CommandCreator class contains multiple subclasses, which corresponding to a specific function of the application.
-Within the CommandCreator classes, it handles making sense of the user input, obtaining the relevant parameters to be
-used in the created `Command` class.
+The CommandCreator class has multiple subclasses, which corresponds to a specific function of the application.
+Within the CommandCreator classes, it handles making sense of the user input, obtaining the relevant parameters, and finally
+creating the `Command` class.
+
+The superclass `CommandCreator` is an abstract class which is never instantiated. Where its createCommand() method is
+overridden by its subclasses.
+
+The association between the `Command` and `CommandCreator` can be seen in their names. E.g. `MenuCommandCreator`, would
+create a `MenuCommand` class when its createCommand() method is called. Similarly, `FindExpensesCommandCreator` would
+create a `FindCommand` class when its createCommand() method is called.
 
 #### 3.4 Command Class
 The Command class, similar to the CommandCreator class, contains multiple subclasses, all corresponding to a specific
-function of the application. In this case, each CommandCreator class would be associated to their relevant Commands.
-Here is a table of all CommandCreator class and the Commands that they can create.
+function of the application. Stated in section`3.5 CommandCreator Class`, each subclass of the `Command` Object
+is created by its associated `CommandCreator`. 
 
-"Insert Table Here"
+The superclass `Command` is an abstract class which is never instantiated. Where its execute() method is overridden
+by its subclasses. What each Command class does when its execute() method is called would be discussed in more detail
+in the Implementation section.
+
+The following UML Sequence Diagram depicts the process of the process through which an input is gone through the application, up till the point
+where the command gets executed :
+![UML Sequence Diagram of Command](diagrams/sequence_diagram_command.jpg)
 
 #### 3.5 Storage Class
-The Storage Class handles the loading and saving of the Expenses and Savings in BudgetBuddy.
-It also saves and loads the default currency being used by the user.
+The Storage Class handles the loading and saving of the features in BudgetBuddy. Different features are saved in
+different files corresponding to their data type. 
 
-### 3.6 Application Classes
-The classes present in this group of `Application Classes` refers to certain elements which serves a purpose more
-towards the `user` instead of application itself. They represent data of the user's financial transactions,
-including expenses and savings, along with mechanisms for organizing and managing this data in meaningful ways.
+### 3.6 Commons
+The classes present in this group of `Commons` refers to a collection of classes used by multiple other components
+. They represent data of the user's financial transactions, including expenses and savings, along with methods 
+for organizing and managing this data.
 
 ##### 3.6.1 Transaction
 This is an abstract class, which is the superclass for both the Expense and Saving Classes. It contains common variables
@@ -135,8 +158,7 @@ such as Currency, Category and Amount.
 
 ##### 3.6.2 Expense
 This class holds details regarding an expense a user has. Within this class, it has 4 class-level variables :
-`String category`, `LocalDate dateAdded` , `String description` and `Double amount`. The variables and their relevance
-are as follows : 
+`String category`, `LocalDate dateAdded` , `String description` and `Double amount`.
 
 `String category` : This variable holds the category of the expense. It represents the type or classification 
 of the expense as per the pre-defined categories ("Housing", "Groceries", "Utility", "Transport", "Entertainment").
@@ -233,10 +255,21 @@ brief explanation on their functionality is as follows :
   * Provides clarity on how much savings user has left to spend.
 
 ##### 3.6.6 RecurringExpenseList
-Explain what it does
+This class represents a list of recurring expenses for the Recurring Expense feature. Within this class, it has 
+1 class-level variable : `String name`. Which is used to store the name of the list. Given that its overall 
+functionality is similar to ExpenseList class, it inherits the ExpenseList class.
 
 ##### 3.6.7 RecurringExpensesList
-Explain what it does
+This class represents the list of all lists of recurring expenses for the Recurring Expense feature. Within this class,
+it has only 1 class-level variable : `ArrayList<ExpenseList> recurringExpenses`. Which is used to store a list of
+ExpenseList objects. This class contains all methods required for the overall Recurring Expense feature to work. 
+The implementation of these methods would be discussed in further detail in the **Implementation** section.
+
+For clarity, the follow Class Diagram depicts the associations between RecurringExpensesList, RecurringExpenseList and
+ExpenseList.
+
+![Class Diagram](diagrams/RecurringExpensesListClassDiagram.jpg)
+
 
 ##### 3.6.8 DefaultCurrency
 
@@ -454,8 +487,8 @@ The following UML Sequence Diagram shows how the MenuCommandCreator for Menu Com
 has already detected that the user input is a menu command and has initialized a MenuCommandCreator object:
 ![Sequence Diagram for MenuCommandCreator for Menu Command](diagrams/sequenceDiagram-MenuCommandCreator.jpg)
 
-The following UML Sequence Diagram shows how the overall Menu feature works :
-![Sequence Diagram for Menu Command](diagrams/sequenceDiagram_MenuFeature.jpg)
+The following UML Sequence Diagram shows the processes of the MenuCommand upon the call of its execute() command:
+![Sequence Diagram for Menu Command](diagrams/sequenceDiagram_MenuCommand.jpg)
 
 Given below is an example usage scenario and how the full Menu feature works :
 1. The user types `menu 1`. This input passed from `BudgetBuddy` into `Parser#parseCommands()`.
@@ -500,7 +533,7 @@ obtain a new `ExpenseList` object containing the filtered expenses, along with p
 The following UML Sequence diagram below shows how FindExpensesCommandCreator works to 
 obtain the relevant inputs for the Find Feature, NOTING that the Parser has already determined the input to be a find :
 expenses command, and has also created the FindExpensesCommandCreator.
-![Sequence Diagram for Parser for Find Feature](diagrams/sequenceDiagram-Parser%20For%20Find%20Command.jpg)
+![Sequence Diagram for FindFeatureCommandCreator](diagrams/sequenceDiagram-FindCommandCreator.jpg)
 
 The following is a step-by-step explanation for the processes that occur before the FindExpensesCommand is created :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -531,7 +564,7 @@ or equals to `maxAmount`. If this check does not pass, the function immediately 
 , which is then returned to `BudgetBuddy`
 
 The following UML Sequence diagram below shows how the Find Feature command works when a user provides a **valid**
-find expenses command:
+find expenses command upon the call of its execute() method:
 
 ![Sequence diagram for Find Feature](diagrams/SequenceDiagram_FindExpenses.jpg)
 
@@ -543,18 +576,82 @@ user has left that option empty if not in use, e.t.c `find expenses d/ morethan/
 unused parameters are treated a null variables instead.
 
 1. The user types `find expenses d/bruno morethan/30 lessthan/200`. This input is passed through the `Parser`
-class from `BudgetBuddy`, which constructs a `FindExpenseCommand` Object with `expenses : current overall ExpenseList`, 
-`description : bruno`, `minAmount : 30`, `maxAmount : 200`.
+class from `BudgetBuddy`, which constructs a `FindExpenseCommandCreator` Object. The `FindExpenseCommandCreator` then
+creates a `FindExpenseCommand` object with its variables initialized to  with `expenses : current overall ExpenseList`,
+`description : bruno`, `minAmount : 30`, `maxAmount : 200`. , by calling `FindExpenseCommandCreator#createCommand()`.
 2. `Parser` returns this created `FindExpenseCommand` Object to `BudgetBuddy` and `BudgetBuddy` calls 
 `FindExpenseCommand#execute()`
 3. `execute()` is called, which initializes a variable `filteredExpenses` of type `ArrayList<Expense>`.
-4. `execute()`then calls `ExpenseList#filterexpenses`, which returns the filtered expenses based on the `description`,
+4. `execute()`then calls `ExpenseList#filterexpenses()`, which returns the filtered expenses based on the `description`,
 `minAmount` and `maxAmount` into the `filteredExpenses` variable.
 5.  If `filteredExpenses` is empty, "No Matching Expenses Found" is printed and `execute` ends here.
 6. If `filteredExpenses` is not empty, `execute()` then initializes a new variable `filteredExpenseList` 
 of type `ExpenseList` with `filteredExpenses` initialized as the `expenses` Class attribute.
 7. Finally `execute()` calls `filteredExpenseList#listexpenses()` to print filtered expenses into the CLI.
 
+### Recurring Expenses Feature
+The Recurring Expenses feature allows users to create list(s) of expenses, where each list can be added to
+the overall expenses in a single command. This feature includes the creation of a list of expenses, the viewing of
+all/each list of expenses and the removal of each list of expenses. All functions are orchestrated by the 
+`RecurringExpenseCommand` class, which would have been created by the `RecurringExpenseCommandCreator`, which is in turn
+created by the `Parser` class. When `RecurringExpenseCommand#execute()` is called by `BudgetBuddy`, it utilizes methods
+present in `ExpenseList`, `RecurringExpenseList` and `RecurringExpensesList` to facilitate the relevant features.
+
+Within the RecurringExpenseCommand, the following variables would be initialized :
+
+| Variable        | Variable Type | Relevance                                                                      |                                                           
+|-----------------|---------------|--------------------------------------------------------------------------------|
+| overallExpenses | ExpenseList   | Refer to the overall Expense List storing all of User's Expenses               |
+| initialListName | String        | Used as the name of the new list that will be created                          |
+| commandType     | String        | Type of RecurringExpenseCommand. E.g. `newlist`, `viewlists`, ...              |
+| listNumber      | int           | Refers to the List Number of a recurring expense list shown during `viewlists` |
+| category        | String        | Category of the Expense to be added when using `newexpense`                    |
+| amount          | Double        | Amount of Expense to be added when using `newexpense`                          |
+| description     | String        | Description of Expense to be added when using `newexpense`                     |
+
+When viewing the code, you would notice that there are 5 different constructors in `RecurringExpensesCommand`. These
+constructors correspond to the different `commandTypes` present. Each constructor would initialize only the required
+parameters for the specified `commandTypes`.
+
+A switch statement in `RecurringExpensesCommand` is used, where it runs the corresponding function according to the
+`commandType`. The following is the `commandType`, class-level methods used and methods utilized from other classes 
+when `RecurringExpensesCommand#execute()` is called
+
+| commandType  | Calls Method                     | Uses Methods  From                                                                                               |                                                       
+|--------------|----------------------------------|------------------------------------------------------------------------------------------------------------------|
+| newlist      | addNewList()                     | `RecurringExpensesList#addNewRecurringList()`                                                                    |
+| viewlists    | printList()                      | `RecurringExpensesList#printAllRecurringLists()`                                                                 |
+| removelist   | removeList()                     | `RecurringExpensesList#removeList()`                                                                             |
+| newexpense   | addExpenseToList()               | `RecurringExpensesList#getExpenseListAtListNumber()`, `ExpenseList#addExpense()`                                 |
+| addrec       | addRecurringExpensesToExpenses() | `RecurringExpensesList#getExpenseListAtListNumber()`, `ExpenseList#getExpenses()`, `AddExpenseCommand#execute()` |
+| viewexpenses | printExpensesAtIndex             | `RecurringExpensesList#getExpenseListAtListNumber()` , `ExpenseList#listExpenses()`                              |                             |
+
+From the table above, most commandTypes have a fairly straight forward process of calling a single method from the relevant classes. However,
+the `addrec` commandType would be the most complicated to follow, given that it utilized 3 methods from three different classes. The following
+is a UML sequence diagram to illustrate the implementation of the addRecurringExpensesToExpenses() method in `RecurringExpenseCommand`
+
+![Sequence Diagram for addRecurringExpensesToExpenses()](diagrams/sequenceDiagram_RecurringExpenses.jpg)
+
+The following is an example of the processes that occur when the user uses the rec addrec command :
+1. The user types `rec addrec 1`. This input is passed through the `Parser`
+class from `BudgetBuddy`, which constructs a `RecurringExpenseCommandCreator`
+2. `RecurringExpenseCommandCreator` identifies that the command type is `addrec`, obtains all the relevant parameters,
+and uses the constructor `RecurringExpenseCommand(1, expensesList, overallExpenses, addrec)`. Note that 
+`expensesList` here is the overall list containing all lists of recurring expenses and `overallExpenses` is the user's
+overall expenses.
+3. The created `RecurringExpenseCommand` is returned to the `Parser`, which is then returned to `BudgetBuddy`.
+4. `BudgetBuddy` calls `RecurringExpenseCommand#execute()`
+5. In `execute()`, `RecurringExpenseCommand` identifies it needs to perform a `addrec` operation from its 
+`commandType` and calls its own `addRecurringExpensesToExpenses()`
+6. The first check is passed as the listNumber is a valid number. If the listNumber is invalid, an error message is printed,
+and the method would have ended here.
+7. The `expenseList` we wish to add into the `overallExpenses` is obtained utilizing `RecurringExpensesList#getExpenseListAtListNumber(listNumber)`
+where `listNumber` is `1`.
+8. Next the `ArrayList<Expense> expenses` is extracted by utilizing `ExpenseList#getExpenses()` from our extracted `expenseList`
+9. Lastly, a for loop is utilized, extracting the `category`, `amount` and `description` of all the expenses present in `expenses`
+and adding them one by one into the `overallExpenses`. This is done so by creating a new `AddExpenseCommand` with the relevant parameters and executing it. FOr more details regarding
+this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpenseCommand`.
+10. Finally, a success message is printed to the User.
 
 ## 5. Product scope
 
@@ -570,19 +667,26 @@ type fast. It also provides the ability to deal with finances on a singular plat
 
 ## User Stories
 
-| Version | As a ...          | I want to ...                                             | So that I can ...                                                |
-|---------|-------------------|-----------------------------------------------------------|------------------------------------------------------------------|
-| v1.0    | user              | be able to view my expenses                               | track my prior expenditures and plan future expenses accordingly |
-| v1.0    | user              | be able to view my savings                                | plan my budget accordingly                                       |
-| v1.0    | user              | be able to view my expenses by  their relevant categories | control my spending                                              |
-| v1.0    | user              | be able to identify my largest savings category           | allocate necessary saved funds                                   |
-| v1.0    | user              | add expenses                                              | track my spending                                                |
-| v1.0    | user              | Categorise my expenses                                    | manage my finances more efficiently                              |
-| v1.0    | user              | Edit or delete expenses                                   | remove any incorrectly added items                               |
-| v1.0    | user              | allocate saved funds                                      | know how much I will have left after expenses                    |
-| v1.0    | User              | See what commands i can use                               | I know how to use the application                                |
-| v2.0    | user              | Plan my budget                                            | Avoid overspending                                               |
-| v2.0    | frequent traveler | log my expenses in multiple currencies                    | accurately track my expenses across different countries          |
+| Version | As a ...          | I want to ...                                                   | So that I can ...                                                |
+|---------|-------------------|-----------------------------------------------------------------|------------------------------------------------------------------|
+| v1.0    | user              | be able to view my expenses                                     | track my prior expenditures and plan future expenses accordingly |
+| v1.0    | user              | be able to view my savings                                      | plan my budget accordingly                                       |
+| v1.0    | user              | be able to view my expenses by  their relevant categories       | control my spending                                              |
+| v1.0    | user              | be able to identify my largest savings category                 | allocate necessary saved funds                                   |
+| v1.0    | user              | add expenses                                                    | track my spending                                                |
+| v1.0    | user              | Categorise my expenses                                          | manage my finances more efficiently                              |
+| v1.0    | user              | Edit or delete expenses                                         | remove any incorrectly added items                               |
+| v1.0    | user              | allocate saved funds                                            | know how much I will have left after expenses                    |
+| v1.0    | user              | be able to find expenses by description                         | know the expenses i have that is associated with the description |
+| v1.0    | user              | be able to find expenses more than a certain amount             | know what my deemed larger expenses are                          |
+| v1.0    | user              | be able to find expenses less than a certain amount             | know what my deemed lower expenses are                           |
+| v1.0    | User              | See what commands i can use                                     | I know how to use the application                                |
+| v2.0    | user              | Plan my budget                                                  | Avoid overspending                                               |
+| v2.0    | frequent traveler | log my expenses in multiple currencies                          | accurately track my expenses across different countries          |
+| v2.0    | user              | add multiple expenses at once                                   | Add common expenditures i have monthly at one shot               |
+| v2.0    | user              | have multiple lists of recurring expenses                       | separate associated recurring expenses together                  |
+| v2.0    | user              | view what expenses i have in each of my recurring expenses list | know what expenses i have put into each list                     |
+| v2.0    | user              | remove a list from my recurring expenses list                   | remove underutilized lists or wrongly added lists                |
 
 
 ## Non-Functional Requirements
