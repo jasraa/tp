@@ -1,5 +1,7 @@
 package seedu.budgetbuddy;
 
+import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -8,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 public class Storage {
     private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
@@ -51,6 +55,105 @@ public class Storage {
         return expenses;
     }
 
+    public void resetRecurringExpensesListFile() throws IOException {
+        File file = new File(filePath);
+        file.delete();
+        file.createNewFile();
+        FileWriter writer = new FileWriter(filePath, false);
+        writer.write("");
+    }
+
+    public void parseRecurringExpensesFile(ArrayList<ExpenseList> recurringExpenses, String line) {
+
+        if (line.startsWith("!!!")) {
+            int indexOfStartExclamation = line.indexOf("!!!", 0);
+            int indexOfStartOfListName = indexOfStartExclamation + 3;
+
+            int indexOfEndExclamation = line.indexOf("!!!", 4);
+            int indexOfEndOfListName = indexOfEndExclamation - 1;
+
+            String name = line.substring(indexOfStartOfListName, indexOfEndOfListName).trim();
+            ExpenseList expenses = new RecurringExpenseList(name, new ArrayList<>());
+
+            recurringExpenses.add(expenses);
+        } else {
+            String[] parts = line.split("\\|");
+
+            int listNumber = Integer.parseInt(parts[0].trim());
+            LocalDate dateAdded = LocalDate.parse(parts[1].trim());
+            String category = parts[2].trim();
+            double amount = Double.parseDouble(parts[3].trim());
+            String description = parts[4].trim();
+            Expense expense = new Expense(dateAdded, category, amount, description);
+
+            int listNumberAsArrayIndex = listNumber - 1;
+            ExpenseList expenses = recurringExpenses.get(listNumberAsArrayIndex);
+            expenses.getExpenses().add(expense);
+        }
+
+    }
+    public RecurringExpensesList loadRecurringExpensesList() throws IOException{
+        File file = new File(filePath);
+        ArrayList<ExpenseList> recurringExpenses = new ArrayList<>();
+
+        try {
+            Scanner scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.isEmpty()) {
+                    continue;
+                }
+                parseRecurringExpensesFile(recurringExpenses, line);
+            }
+
+            scanner.close();
+
+            RecurringExpensesList recurringExpensesList = new RecurringExpensesList(recurringExpenses);
+            return recurringExpensesList;
+        } catch (Exception e) {
+            System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
+            resetRecurringExpensesListFile();
+            return new RecurringExpensesList();
+        }
+
+    }
+
+    public void saveRecurringExpenses(RecurringExpensesList recurringExpensesList)
+            throws InvalidRecurringExpensesFileException, IOException {
+
+        ensureDirectoryExists();
+
+        try {
+            FileWriter writer = new FileWriter(filePath, false);
+            int numberOfRecurringExpenseList = recurringExpensesList.getSize();
+
+            for (int i = 0; i < numberOfRecurringExpenseList; i++) {
+                int listNumber = i + 1;
+                ExpenseList expenseList = recurringExpensesList.getExpenseListAtListNumber(listNumber);
+                ArrayList<Expense> expenses = expenseList.getExpenses();
+                String listName = expenseList.getName();
+
+                writer.write(String.format("!!! %s !!!\n", listName));
+
+                for (Expense expense : expenses) {
+                    writer.write(String.format("%d | %s | %s | %.2f | %s\n"
+                            , listNumber
+                            , expense.getDateAdded(), expense.getCategory()
+                            , expense.getAmount(), expense.getDescription()));
+                }
+
+            }
+            writer.close();
+
+        } catch (IOException e) {
+            resetRecurringExpensesListFile();
+            throw new InvalidRecurringExpensesFileException("The RecurringExpensesFile seems to not be valid" +
+                    ", file has been reinitialized. Run a command to save your recurringexpenses");
+        }
+
+    }
+
     public void saveExpenses(List<Expense> expenses) throws IOException {
         ensureDirectoryExists(); // Ensure directory and file exist before writing
         FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
@@ -61,8 +164,9 @@ public class Storage {
         writer.close();
     }
 
-    // Inside Storage.java
 
+
+    // Inside Storage.java
     public List<Saving> loadSavings() throws FileNotFoundException {
         File file = new File(filePath);
         List<Saving> savings = new ArrayList<>();
