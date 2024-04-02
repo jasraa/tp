@@ -80,7 +80,7 @@ Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 
 Example of usage:
 
-`add savings c/Salary a/10000`
+`split expenses a/100 n/10 d/Lunch
 
 ### Edit Savings: `edit savings`
 Edit Savings that have been added previously.
@@ -182,20 +182,6 @@ Example Usage:
 `list expenses Transport`
 `list expenses Housing`
 
-### Splitting Expenses: `split expenses`
-
-Split expenses
-
-Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
-
-* The `AMOUNT` is the total amount spent. It must be a non-negative number.
-* The `NUMBER_OF_PEOPLE` is the number of individuals who are bound to split the bill. It must be a positive integer.
-* The `DESCRIPTION` can be any string.
-
-Example Usage:
-
-`list expenses a/100 n/10 d/Lunch`
-
 ### Check splitted expenses `check splitted expenses`
 
 Check expenses
@@ -204,6 +190,15 @@ Format: `check splitted expenses`
 
 * the system will list all splitted expenses.
 * The listed splitted expenses include details such as the total amount spent, number of people in the bill, description and the amount payable by each person.
+
+### Settle splitted expenses `settle expense`
+
+Settle splitted expenses
+
+Format `settle i/Index`
+
+* The system will settle the splitted expense corresponding to `Index`
+* `Index` must be a positive integer
 
 ### Finding expenses : `find expenses`
 
