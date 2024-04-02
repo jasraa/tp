@@ -1,6 +1,7 @@
 package seedu.budgetbuddy.command;
 
 import seedu.budgetbuddy.CurrencyConverter;
+import seedu.budgetbuddy.DefaultCurrency;
 import seedu.budgetbuddy.ExpenseList;
 import seedu.budgetbuddy.SavingList;
 
@@ -23,7 +24,8 @@ public class ChangeCurrencyCommand extends Command {
 
     @Override
     public void execute() {
-        currencyConverter.convertCurrency(newCurrency, savings);
-        currencyConverter.convertCurrency(newCurrency, expenses);
+        currencyConverter.convertSavingCurrency(newCurrency, savings);
+        currencyConverter.convertExpenseCurrency(newCurrency, expenses);
+        DefaultCurrency.setDefaultCurrency(newCurrency);
     }
 }

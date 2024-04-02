@@ -6,6 +6,10 @@ public class RecurringExpensesList {
     protected ArrayList<ExpenseList> recurringExpenses;
 
     Ui ui = new Ui();
+
+    public RecurringExpensesList(ArrayList<ExpenseList> recurringExpenses) {
+        this.recurringExpenses = recurringExpenses;
+    }
     public RecurringExpensesList() {
         this.recurringExpenses = new ArrayList<>();
     }
@@ -58,5 +62,7 @@ public class RecurringExpensesList {
         int listNumberAsArrayPosition = listNumber - 1;
         return recurringExpenses.get(listNumberAsArrayPosition);
     }
+
+
 
 }

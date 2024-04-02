@@ -2,13 +2,18 @@ package seedu.budgetbuddy;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
 import seedu.budgetbuddy.exception.BudgetBuddyException;
-
+import java.util.logging.Level;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.logging.Logger;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingListTest {
+
+    private static final Logger LOGGER = Logger.getLogger(SavingListTest.class.getName());
 
     @Test
     public void calculateRemainingSavings_sufficientFunds_success() {
@@ -87,5 +92,35 @@ public class SavingListTest {
 
         // Assert that the amount after reduction is as expected
         assertEquals(expectedAmountAfterReduction, savingList.getSavings().get(indexToReduce - 1).getAmount());
+    }
+
+    @Test
+    public void testGetSavingsInsights() {
+        // Set up the SavingList with sample savings
+        SavingList savingList = new SavingList();
+        try {
+            savingList.addSaving("Salary", "1000");
+            savingList.addSaving("Investments", "500");
+            savingList.addSaving("Gifts", "200");
+        } catch (BudgetBuddyException e) {
+            LOGGER.log(Level.SEVERE, "Exception occurred while adding savings", e);
+        }
+
+        // Redirect standard output to capture the output of getSavingsInsights
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Invoke the method
+        savingList.getSavingsInsights();
+
+        // Capture and assert the output
+        String output = outContent.toString();
+        assertTrue(output.contains("Highest Savings Category:"));
+        assertTrue(output.contains("Lowest Savings Category:"));
+        assertTrue(output.contains("Categories with no savings added:"));
+
+        // Restore the original standard output
+        System.setOut(originalOut);
     }
 }
