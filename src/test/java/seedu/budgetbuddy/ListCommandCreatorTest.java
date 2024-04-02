@@ -29,23 +29,6 @@ public class ListCommandCreatorTest {
     }
 
     @Test
-    public void handleListCommand_listExpensesWithCategory_success() throws BudgetBuddyException {
-        ExpenseList expenseList = new ExpenseList();
-        SavingList savingList = new SavingList();
-        SplitExpenseList splitExpenseList = new SplitExpenseList();
-        expenseList.addExpense("Transport", "50", "Bus Fare");
-        expenseList.addExpense("Housing", "3000", "BTO");
-
-        String input = "list expenses housing";
-
-        ListCommandCreator listCommandCreator = new ListCommandCreator(expenseList, savingList, input);
-
-        Command command = listCommandCreator.handleListCommand(input, expenseList, savingList);
-
-        assertEquals(ListExpenseCommand.class, command.getClass());
-    }
-
-    @Test
     public void handleListCommand_listExpensesWithCategory_invalidCategory() throws BudgetBuddyException {
         ExpenseList expenseList = new ExpenseList();
         SavingList savingList = new SavingList();

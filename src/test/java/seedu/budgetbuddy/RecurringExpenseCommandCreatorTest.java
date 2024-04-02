@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class RecurringExpenseCommandCreatorTest {
     @Test
     public void handleRecCommand_newListCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec newlist Entertainment";
@@ -27,7 +26,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_newListCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec newlist";
@@ -40,7 +38,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_removeListCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -55,7 +52,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_removeListCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec removelist string";
@@ -68,7 +64,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_removeListCommandWithEmptyInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec removelist";
@@ -81,7 +76,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_newExpenseCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -96,7 +90,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_newExpenseCommandWithInvalidAmount_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -110,7 +103,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_addRecCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -125,7 +117,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_addRecCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         String input = "rec addrec sdefwre";
@@ -138,7 +129,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_viewExpensesCommandWithValidInput_createsRecurringExpenseCommand() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");
@@ -153,7 +143,6 @@ public class RecurringExpenseCommandCreatorTest {
 
     @Test
     public void handleRecCommand_viewExpensesCommandWithInvalidInput_returnsNull() {
-        Parser parser = new Parser();
         ExpenseList expenseList = new ExpenseList();
         RecurringExpensesList expensesList = new RecurringExpensesList();
         expensesList.addNewRecurringList("Entertainment");

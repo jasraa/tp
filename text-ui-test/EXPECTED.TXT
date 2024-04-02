@@ -10,5 +10,6 @@ __________________________________________________
 7. Manage Recurring Bills
 8. Change Currency
 9. Manage Budget
+9. Get Graphical Insights
 __________________________________________________
 Goodbye! Thank you for using BudgetBuddy.
