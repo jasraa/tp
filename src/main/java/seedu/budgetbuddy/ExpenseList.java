@@ -229,6 +229,20 @@ public class ExpenseList {
         budgets.add(new Budget(category, budget));
     }
 
+
+    public void getBudgetForCategory(String category) {
+        Budget budgetForCategory = budgets.stream()
+                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
+                .findFirst()
+                .orElse(null);
+
+        if (budgetForCategory != null) {
+            System.out.println("Budget for " + category + ": $" + budgetForCategory.getBudget());
+        } else {
+            System.out.println("No budget set for " + category);
+        }
+    }
+
     /**
      * Calculates and prints a distribution of expenses in various categories as a horizontal bar graph.
      * It also identifies and prints the categories with the highest and lowest expenses,

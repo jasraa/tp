@@ -20,7 +20,7 @@ import seedu.budgetbuddy.commandcreator.ReduceSavingCommandCreator;
 import seedu.budgetbuddy.commandcreator.SetBudgetCommandCreator;
 import seedu.budgetbuddy.commandcreator.SettleSplitExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
-
+import seedu.budgetbuddy.commandcreator.GetBudgetCommandCreator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -117,6 +117,10 @@ public class Parser {
 
     public Boolean isSetBudgetCommand(String input){
         return input.startsWith("set budget");
+    }
+
+    public Boolean isGetBudgetCommand(String input) {
+        return input.startsWith("get budget");
     }
 
     public boolean isListBudgetCommand(String input){
@@ -228,7 +232,10 @@ public class Parser {
             CommandCreator commandCreator = new SetBudgetCommandCreator(expenses, input);
             return commandCreator.createCommand();
         }
-
+        if (isGetBudgetCommand(input)) {
+            CommandCreator commandCreator = new GetBudgetCommandCreator(expenses, input);
+            return commandCreator.createCommand();
+        }
         if (isListBudgetCommand(input)){
             return handleListBudgetCommand(expenses);
         }

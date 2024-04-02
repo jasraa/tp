@@ -1,3 +1,10 @@
+2024-04-02 | Entertainment | 40.00 | movie
+2024-04-02 | Transport | 80.00 | GRAB
+2024-04-02 | Entertainment | 40.00 | movie
+2024-04-02 | Groceries | 250.00 | ntuc
+2024-04-02 | Transport | 100.00 | MRT
+2024-04-02 | Housing | 200.00 | BTO
+2024-04-02 | Housing | 50.00 | rent
 2024-04-02 | Entertainment | 30.00 | movie
 2024-04-02 | Transport | 60.00 | GRAB
 2024-04-02 | Entertainment | 30.00 | movie
