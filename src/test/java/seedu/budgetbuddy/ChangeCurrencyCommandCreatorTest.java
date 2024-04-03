@@ -16,6 +16,7 @@ public class ChangeCurrencyCommandCreatorTest {
     public void handleChangeCurrencyCommand_changeCurrencyToUSD_success() throws BudgetBuddyException {
         SavingList savingList = new SavingList();
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
         CurrencyConverter currencyConverter = new CurrencyConverter();
 
         savingList.addSaving("Salary", "1000");
@@ -23,10 +24,10 @@ public class ChangeCurrencyCommandCreatorTest {
         String input = "change currency USD";
 
         ChangeCurrencyCommandCreator changeCurrencyCommandCreator = new ChangeCurrencyCommandCreator(input, savingList,
-                expenseList, currencyConverter);
+                expenseList, recurringExpensesList, currencyConverter);
 
         Command command = changeCurrencyCommandCreator.handleChangeCurrencyCommand(input, savingList,
-                expenseList, currencyConverter);
+                expenseList, recurringExpensesList, currencyConverter);
 
         assertEquals(ChangeCurrencyCommand.class, command.getClass());
     }
@@ -35,16 +36,17 @@ public class ChangeCurrencyCommandCreatorTest {
     public void handleChangeCurrencyCommand_changeCurrency_invalidCurrencyCode() throws BudgetBuddyException {
         SavingList savingList = new SavingList();
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
         CurrencyConverter currencyConverter = new CurrencyConverter();
 
         savingList.addSaving("Salary", "1000");
 
         String input = "change currency abc";
         ChangeCurrencyCommandCreator changeCurrencyCommandCreator = new ChangeCurrencyCommandCreator(input, savingList,
-                expenseList, currencyConverter);
+                expenseList, recurringExpensesList, currencyConverter);
 
         Command command = changeCurrencyCommandCreator.handleChangeCurrencyCommand(input, savingList,
-                expenseList, currencyConverter);
+                expenseList, recurringExpensesList, currencyConverter);
         assertNull(command);
     }
 
@@ -52,16 +54,17 @@ public class ChangeCurrencyCommandCreatorTest {
     public void handleChangeCurrencyCommand_changeCurrency_invalidCommandFormat() throws BudgetBuddyException {
         SavingList savingList = new SavingList();
         ExpenseList expenseList = new ExpenseList();
+        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
         CurrencyConverter currencyConverter = new CurrencyConverter();
 
         savingList.addSaving("Salary", "1000");
 
         String input = "change currency abc asd";
         ChangeCurrencyCommandCreator changeCurrencyCommandCreator = new ChangeCurrencyCommandCreator(input, savingList,
-                expenseList, currencyConverter);
+                expenseList, recurringExpensesList, currencyConverter);
 
         Command command = changeCurrencyCommandCreator.handleChangeCurrencyCommand(input, savingList,
-                expenseList, currencyConverter);
+                expenseList, recurringExpensesList, currencyConverter);
         assertNull(command);
     }
 }
