@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import seedu.budgetbuddy.command.ChangeCurrencyCommand;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.commandcreator.ChangeCurrencyCommandCreator;
+import seedu.budgetbuddy.commons.CurrencyConverter;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

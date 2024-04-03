@@ -22,7 +22,7 @@ public class MenuCommandCreatorTest {
     }
 
     @Test
-    public void createMenuCommand_menuCommandwithValidIndex_success() {
+    public void createMenuCommand_menuCommandWithValidIndex_success() {
         CommandCreator commandCreator = new MenuCommandCreator("menu 1");
         Command command = commandCreator.createCommand();
 

@@ -1,6 +1,6 @@
 package seedu.budgetbuddy.command;
 
-import seedu.budgetbuddy.SplitExpenseList;
+import seedu.budgetbuddy.commons.SplitExpenseList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 public class SplitExpenseCommand extends Command {

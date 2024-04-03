@@ -6,6 +6,7 @@ import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.ListBudgetCommand;
 import seedu.budgetbuddy.command.GetBudgetCommand;
 import seedu.budgetbuddy.commandcreator.GetBudgetCommandCreator;
+import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 

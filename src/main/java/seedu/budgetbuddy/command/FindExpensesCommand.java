@@ -1,7 +1,7 @@
 package seedu.budgetbuddy.command;
 
-import seedu.budgetbuddy.Expense;
-import seedu.budgetbuddy.ExpenseList;
+import seedu.budgetbuddy.commons.Expense;
+import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.Ui;
 
 import java.util.ArrayList;

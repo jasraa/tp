@@ -1,6 +1,11 @@
 package seedu.budgetbuddy;
 
 import org.junit.jupiter.api.Test;
+import seedu.budgetbuddy.commons.CurrencyConverter;
+import seedu.budgetbuddy.commons.SavingList;
+import seedu.budgetbuddy.commons.Saving;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.Currency;

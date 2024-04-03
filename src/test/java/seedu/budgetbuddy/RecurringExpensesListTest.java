@@ -1,6 +1,8 @@
 package seedu.budgetbuddy;
 
 import org.junit.jupiter.api.Test;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

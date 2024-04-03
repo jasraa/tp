@@ -1,6 +1,10 @@
 package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.command.Command;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.SavingList;
+import seedu.budgetbuddy.commons.SplitExpenseList;
 import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
 
 import java.io.FileNotFoundException;

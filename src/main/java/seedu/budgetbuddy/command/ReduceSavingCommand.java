@@ -1,6 +1,6 @@
 package seedu.budgetbuddy.command;
 
-import seedu.budgetbuddy.SavingList;
+import seedu.budgetbuddy.commons.SavingList;
 
 public class ReduceSavingCommand extends Command{
 

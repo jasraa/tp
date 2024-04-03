@@ -1,6 +1,6 @@
 package seedu.budgetbuddy.command;
 
-import seedu.budgetbuddy.SavingList;
+import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.logging.Logger;

@@ -1,10 +1,10 @@
 package seedu.budgetbuddy.command;
 
-import seedu.budgetbuddy.CurrencyConverter;
-import seedu.budgetbuddy.DefaultCurrency;
-import seedu.budgetbuddy.ExpenseList;
-import seedu.budgetbuddy.SavingList;
-import seedu.budgetbuddy.RecurringExpensesList;
+import seedu.budgetbuddy.commons.CurrencyConverter;
+import seedu.budgetbuddy.commons.DefaultCurrency;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.SavingList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
 
 import java.util.Currency;
 

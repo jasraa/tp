@@ -3,6 +3,8 @@ package seedu.budgetbuddy;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
+import seedu.budgetbuddy.commons.Expense;
+import seedu.budgetbuddy.commons.RecurringExpenseList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -2,7 +2,7 @@ package seedu.budgetbuddy.commandcreator;
 
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.GetExpenseInsightsCommand;
-import seedu.budgetbuddy.ExpenseList;
+import seedu.budgetbuddy.commons.ExpenseList;
 
 public class GetExpenseInsightsCommandCreator extends CommandCreator {
 

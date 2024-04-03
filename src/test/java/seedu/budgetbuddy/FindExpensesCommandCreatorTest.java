@@ -5,6 +5,7 @@ import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.FindExpensesCommand;
 import seedu.budgetbuddy.commandcreator.CommandCreator;
 import seedu.budgetbuddy.commandcreator.FindExpensesCommandCreator;
+import seedu.budgetbuddy.commons.ExpenseList;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;

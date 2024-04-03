@@ -1,5 +1,5 @@
 package seedu.budgetbuddy.commandcreator;
-import seedu.budgetbuddy.SavingList;
+import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.GetSavingsInsightsCommand;
 
