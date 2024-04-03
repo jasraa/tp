@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SplitExpenseList {
-    private static final Logger LOGGER = Logger.getLogger(SplitExpenseList.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected ArrayList <SplitExpense> splitexpenses;
     public SplitExpenseList(ArrayList<SplitExpense> splitexpenses){
         this.splitexpenses = splitexpenses;

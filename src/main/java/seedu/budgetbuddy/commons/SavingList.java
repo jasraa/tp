@@ -15,7 +15,7 @@ import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 public class SavingList {
-    private static final Logger LOGGER = Logger.getLogger(SavingList.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     protected ArrayList<Saving> savings;
     protected ArrayList<String> categories;

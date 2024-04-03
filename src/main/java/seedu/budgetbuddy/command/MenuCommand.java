@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 public class MenuCommand extends Command {
 
-    private static Logger logger = Logger.getLogger("MenuCommandLogger");
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private int index;
     private Ui ui;
 

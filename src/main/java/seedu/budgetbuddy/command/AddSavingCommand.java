@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class AddSavingCommand extends Command {
-    private static final Logger LOGGER = Logger.getLogger(AddSavingCommand.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private SavingList savings;
     private final String category;

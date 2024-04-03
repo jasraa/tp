@@ -1,6 +1,6 @@
 package seedu.budgetbuddy.command;
 
-import seedu.budgetbuddy.Budget;
+import seedu.budgetbuddy.commons.Budget;
 import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.Ui;
