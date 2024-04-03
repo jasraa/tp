@@ -1,5 +1,6 @@
 package seedu.budgetbuddy;
 
+import seedu.budgetbuddy.exception.BudgetBuddyException;
 import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
 
 import java.io.File;
@@ -45,10 +46,11 @@ public class Storage {
             String line = scanner.nextLine();
             String[] parts = line.split("\\|");
             // Assuming the order is Date|Category|Amount|Description
+            LocalDate date = LocalDate.parse(parts[0].trim());
             String category = parts[1].trim();
             double amount = Double.parseDouble(parts[2].trim());
             String description = parts[3].trim();
-            Expense expense = new Expense(category, amount, description);
+            Expense expense = new Expense(date, category, amount, description);
             expenses.add(expense);
         }
         scanner.close();
@@ -63,7 +65,8 @@ public class Storage {
         writer.write("");
     }
 
-    public void parseRecurringExpensesFile(ArrayList<ExpenseList> recurringExpenses, String line) {
+    public void parseRecurringExpensesFile(ArrayList<ExpenseList> recurringExpenses, String line)
+            throws BudgetBuddyException{
 
         if (line.startsWith("!!!")) {
             int indexOfStartExclamation = line.indexOf("!!!", 0);
@@ -78,6 +81,10 @@ public class Storage {
             recurringExpenses.add(expenses);
         } else {
             String[] parts = line.split("\\|");
+
+            if (parts.length > 5) {
+                throw new BudgetBuddyException("Invalid Format of Line : There should only be 4 Dividers");
+            }
 
             int listNumber = Integer.parseInt(parts[0].trim());
             LocalDate dateAdded = LocalDate.parse(parts[1].trim());
@@ -112,6 +119,7 @@ public class Storage {
             RecurringExpensesList recurringExpensesList = new RecurringExpensesList(recurringExpenses);
             return recurringExpensesList;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
             resetRecurringExpensesListFile();
             return new RecurringExpensesList();

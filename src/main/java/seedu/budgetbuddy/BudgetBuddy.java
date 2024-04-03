@@ -28,10 +28,10 @@ public class BudgetBuddy {
         savings = new SavingList();
         expensesList = new RecurringExpensesList();
         splitexpenses = new SplitExpenseList();
-        expensesStorage = new Storage("src/main/java/seedu/budgetbuddy/data/ExpenseFile.txt");
-        savingsStorage = new Storage("src/main/java/seedu/budgetbuddy/data/SavingsFile.txt");
+        expensesStorage = new Storage("./data/ExpenseFile.txt");
+        savingsStorage = new Storage("./data/SavingsFile.txt");
         recurringExpensesStorage = new Storage("./data/RecurringExpensesFile.txt");
-        defaultCurrency = new Storage("src/main/java/seedu/budgetbuddy/data/DefaultCurrency.txt");
+        defaultCurrency = new Storage("./data/DefaultCurrency.txt");
 
     }
 

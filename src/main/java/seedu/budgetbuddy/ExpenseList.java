@@ -19,23 +19,20 @@ public class ExpenseList {
     private static final Logger LOGGER = Logger.getLogger(ExpenseList.class.getName());
 
     protected ArrayList<Expense> expenses;
-    protected ArrayList<String> categories;
+    protected ArrayList<String> categories = new ArrayList<>(Arrays.asList("Housing",
+            "Groceries", "Utility", "Transport", "Entertainment", "Others"));
     protected List<Budget> budgets;
 
     Ui ui = new Ui();
 
     public ExpenseList(ArrayList<Expense> expenses) {
         this.expenses = expenses;
-        this.categories = new ArrayList<>(Arrays.asList("Housing",
-                "Groceries", "Utility", "Transport", "Entertainment", "Others"));
         this.budgets = new ArrayList<>();
 
     }
 
     public ExpenseList() {
         this.expenses = new ArrayList<>();
-        this.categories = new ArrayList<>(Arrays.asList("Housing",
-                "Groceries", "Utility", "Transport", "Entertainment", "Others"));
         this.budgets = new ArrayList<>();
     }
 
