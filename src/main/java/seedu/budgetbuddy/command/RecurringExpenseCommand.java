@@ -7,9 +7,11 @@ import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RecurringExpenseCommand extends Command{
-
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private RecurringExpensesList recurringExpensesList;
 
     private ExpenseList overallExpenses;
@@ -97,6 +99,8 @@ public class RecurringExpenseCommand extends Command{
             ui.printDivider();
 
         } catch (BudgetBuddyException e) {
+            LOGGER.log(Level.WARNING
+                    , "An attempt to add an Invalid Expense was created. Error Captured Successfully");
             System.out.println(e.getMessage());
         }
 
