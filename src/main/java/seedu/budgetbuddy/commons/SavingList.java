@@ -9,8 +9,6 @@ import java.util.logging.Logger;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-import seedu.budgetbuddy.Storage;
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
@@ -20,7 +18,6 @@ public class SavingList {
     protected ArrayList<Saving> savings;
     protected ArrayList<String> categories;
     protected double initialAmount;
-    protected Storage storage;
     Ui ui = new Ui();
 
 
@@ -30,7 +27,6 @@ public class SavingList {
         this.categories = new ArrayList<>(Arrays.asList("Salary",
                 "Investments", "Gifts", "Others"));
         this.initialAmount = 0;
-        this.storage = new Storage("src/main/java/seedu/budgetbuddy/data/SavingsFile.txt");
     }
 
     public int size() {
