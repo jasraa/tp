@@ -19,6 +19,13 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
     private RecurringExpensesList recurringExpensesList;
     private ExpenseList expenses;
 
+
+    /**
+     * Constructs a RecurringExpenseCommandCreator with the provided input, recurringExpensesList and expenses
+     * @param input The user input
+     * @param recurringExpensesList The RecurringExpensesList containing a list of ExpenseList
+     * @param expenses The ExpenseList containing user's overall expenses
+     */
     public RecurringExpenseCommandCreator(String input, RecurringExpensesList recurringExpensesList
             , ExpenseList expenses) {
 
@@ -27,6 +34,12 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         this.expenses = expenses;
     }
 
+    /**
+     * Checks the input for the presence of `|` and `!`. Throws the BudgetBuddyException if detected in the user input
+     *
+     * @param input The user input
+     * @throws IllegalArgumentException if any of the required prefixes are not found
+     */
     private void checkForInvalidCharacters(String input) throws BudgetBuddyException{
         if (input.contains("|") || input.contains("!")) {
             LOGGER.log(Level.WARNING, "An attempt of including a | and ! in input has been detected." +
@@ -35,6 +48,13 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         }
     }
 
+    /**
+     * Creates a RecurringExpenseCommand to view all expenses in a specific ExpenseList in recurringExpensesList
+     * This method obtains the listNumber from the provided commandParts.
+     *
+     * @param commandParts The split parts of the input command string
+     * @return RecurringExpenseCommand if list number is valid, returns null if list number is invalid or empty
+     */
     public Command createViewExpensesCommand(String[] commandParts) {
         try {
             String listNumberAsString = commandParts[2];
@@ -52,6 +72,15 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             return null;
         }
     }
+
+    /**
+     * Creates a RecurringExpenseCommand to add the expenses in a specific ExpenseList in recurringExpensesList into
+     * the overall ExpenseList.
+     * This method obtains the listNumber from the provided commandParts.
+     *
+     * @param commandParts The split parts of the input command string
+     * @return RecurringExpenseCommand if the list number is valid, returns null if list number is invalid or empty
+     */
     public Command createAddListToOverallExpensesCommand(String[] commandParts) {
 
         try {
@@ -72,12 +101,26 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
     }
 
+
+    /**
+     * Checks the input for the presence of all the required to/ , d/, a/ and c/ prefixes
+     *
+     * @param input The user input
+     * @throws IllegalArgumentException if any of the required prefixes are not found
+     */
     private static void checkForInvalidParameters(String input) {
         if (!input.contains("to/") || !input.contains("d/") || !input.contains("a/") || !input.contains("c/")) {
             throw new IllegalArgumentException("Please Ensure that you include to/, c/, a/ and d/");
         }
     }
 
+    /**
+     * Parses the description from the input string
+     *
+     * @param input The user input
+     * @return The extracted description from the d/ prefix
+     * @throws BudgetBuddyException if the description is empty
+     */
     private String parseDescription(String input) throws BudgetBuddyException {
         int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
         int startIndexOfDescription = indexOfDescriptionPrefix + DESCRIPTION_PREFIX.length();
@@ -93,6 +136,15 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
         return description;
     }
+
+    /**
+     * Parses the amount from the input string
+     *
+     * @param input The user input
+     * @return The extracted amount from the a/ prefix
+     * @throws NumberFormatException If the extracted amount is not a valid double
+     * @throws BudgetBuddyException If the extracted amount is empty
+     */
     private Double parseAmount(String input) throws NumberFormatException, BudgetBuddyException{
         int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
         int startIndexOfAmount = indexOfAmountPrefix + AMOUNT_PREFIX.length();
@@ -112,6 +164,13 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         return amount;
     }
 
+    /**
+     * Parses the category from the input string
+     *
+     * @param input The user input
+     * @return The extracted category from the c/ prefix
+     * @throws BudgetBuddyException If the category is empty
+     */
     private String parseCategory(String input) throws BudgetBuddyException{
         int indexOfCategoryPrefix = input.indexOf(CATEGORY_PREFIX);
         int startIndexOfCategory = indexOfCategoryPrefix + CATEGORY_PREFIX.length();
@@ -127,6 +186,15 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
         return category;
     }
+
+    /**
+     * Parses the list number from the input string
+     *
+     * @param input The user input
+     * @return The extracted list number from the `to/` prefix
+     * @throws NumberFormatException if the list number is not a valid number
+     * @throws BudgetBuddyException if the list number is empty
+     */
     private int parseListNumber(String input) throws NumberFormatException, BudgetBuddyException{
         int indexOfListNumberPrefix = input.indexOf(LISTNUMBER_PREFIX);
         int startIndexOfListNumber = indexOfListNumberPrefix + LISTNUMBER_PREFIX.length();
@@ -145,6 +213,13 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         return listNumber;
     }
 
+
+    /**
+     * Creates a RecurringExpenseCommand to add an expense into a specific ExpenseList in recurringExpensesList
+     *
+     * @param input The user input
+     * @return RecurringExpenseCommand if user input is valid, returns null if any of the user input is invalid
+     */
     public Command createAddExpenseToListCommand(String input) {
         try {
             checkForInvalidParameters(input);
@@ -183,6 +258,13 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
     }
 
+    /**
+     * Creates a RecurringExpenseCommand to remove a specified ExpenseList in the recurringExpensesList
+     * This method uses the provided commandParts to obtain the list Number of the ExpenseList to remove
+     *
+     * @param commandParts The split parts of the user input
+     * @return RecurringExpenseCommand if user input is valid, returns null if listNumber is empty or invalid
+     */
     public Command createRemoveListCommand(String[] commandParts) {
         try {
             String listNumberAsString = commandParts[2];
@@ -200,10 +282,24 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             return null;
         }
     }
+
+
+    /**
+     * Creates a RecurringExpenseCommand to print all the names of the ExpenseLists present in recurringExpensesList
+     *
+     * @return A RecurringExpenseCommand
+     */
     public Command createViewListCommand() {
         return new RecurringExpenseCommand(recurringExpensesList, "viewlists");
     }
 
+    /**
+     * Creates a RecurringExpenseCommand to add a new RecurringExpenseList into recurringExpensesList
+     * This method uses the provided `commandParts` to extract the listName of the new RecurringExpenseList
+     *
+     * @param commandParts The split parts of the user input
+     * @return RecurringExpenseCommand if listName is valid, returns null if the listName extracted is empty
+     */
     public Command createNewListCommand(String[] commandParts) {
         try {
             String listName = commandParts[2];
@@ -220,6 +316,15 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             return null;
         }
     }
+
+    /**
+     * Handles the creation of the various types of RecurringExpenseCommand based on the extracted commandType
+     * This method extracts the commandType from the user input, and calls methods based on the commandType
+     *
+     * @param input The user input
+     * @return RecurringExpenseCommand if commandType extracted is a valid commandType,
+     *         returns null if commandType is not valid
+     */
     public Command handleRecCommand(String input){
         String[] commandParts = input.split(" ");
         String commandType = commandParts[1];
