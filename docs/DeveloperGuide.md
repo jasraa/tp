@@ -474,6 +474,11 @@ For Clarity, the menu items and their corresponding indexes are as follows :
 | 3     | View Expenses           |
 | 4     | View Savings            |
 | 5     | Find Expenses           |
+| 6     | Split Expenses          |
+| 7     | Manage Recurring Bills  |
+| 8     | Change Currency         |
+| 9     | Manage Budget           |
+| 10    | Get Graphical Insights  | 
 
 Upon the call of the `execute()` method in BudgetBuddy using `command.execute()`, the `MenuCommand` object
 utilizes methods from the `UI` class to display the relevant menu items. The utilized methods are as follows :
