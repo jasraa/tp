@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 
 public class Parser {
 
-    private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected ArrayList<String> expenseCategories;
     protected ArrayList<String> savingsCategories;
 

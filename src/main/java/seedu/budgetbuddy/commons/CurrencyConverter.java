@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class CurrencyConverter {
 
-    private static final Logger LOGGER = Logger.getLogger(CurrencyConverter.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Map<Currency, Double> exchangeRates;
     public CurrencyConverter() {
         this.exchangeRates = new HashMap<>();

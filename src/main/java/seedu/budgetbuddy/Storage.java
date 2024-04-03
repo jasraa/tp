@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 
 public class Storage {
-    private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private final String filePath;
 

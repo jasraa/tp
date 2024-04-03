@@ -18,7 +18,7 @@ import java.util.Comparator;
 
 
 public class ExpenseList {
-    private static final Logger LOGGER = Logger.getLogger(ExpenseList.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     protected ArrayList<Expense> expenses;
     protected ArrayList<String> categories = new ArrayList<>(Arrays.asList("Housing",
