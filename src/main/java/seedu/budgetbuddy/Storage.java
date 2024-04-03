@@ -46,10 +46,11 @@ public class Storage {
             String line = scanner.nextLine();
             String[] parts = line.split("\\|");
             // Assuming the order is Date|Category|Amount|Description
+            LocalDate date = LocalDate.parse(parts[0].trim());
             String category = parts[1].trim();
             double amount = Double.parseDouble(parts[2].trim());
             String description = parts[3].trim();
-            Expense expense = new Expense(category, amount, description);
+            Expense expense = new Expense(date, category, amount, description);
             expenses.add(expense);
         }
         scanner.close();
