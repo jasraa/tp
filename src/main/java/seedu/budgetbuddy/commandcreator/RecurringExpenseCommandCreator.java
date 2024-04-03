@@ -6,7 +6,11 @@ import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.RecurringExpenseCommand;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class RecurringExpenseCommandCreator extends CommandCreator{
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final String LISTNUMBER_PREFIX = "to/";
     private static final String CATEGORY_PREFIX = "c/";
     private static final String AMOUNT_PREFIX = "a/";
@@ -17,6 +21,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
     public RecurringExpenseCommandCreator(String input, RecurringExpensesList recurringExpensesList
             , ExpenseList expenses) {
+
         this. input = input;
         this.recurringExpensesList = recurringExpensesList;
         this.expenses = expenses;
@@ -24,6 +29,8 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
     private void checkForInvalidCharacters(String input) throws BudgetBuddyException{
         if (input.contains("|") || input.contains("!")) {
+            LOGGER.log(Level.WARNING, "An attempt of including a | and ! in input has been detected." +
+                    "Attempting to handle error");
             throw new BudgetBuddyException("Please do not include a | or ! in your input");
         }
     }
@@ -34,10 +41,12 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             int listNumber = Integer.parseInt(listNumberAsString);
             return new RecurringExpenseCommand(listNumber, recurringExpensesList, "viewexpenses");
         } catch (NumberFormatException e) {
+            LOGGER.log(Level.WARNING, "An invalid integer has been detected");
             System.out.println("Please input a valid Integer");
             System.out.println("Command Format : rec viewexpenses [List Number]");
             return null;
         } catch (ArrayIndexOutOfBoundsException e) {
+            LOGGER.log(Level.WARNING, "Value at commandParts[2] does not exist");
             System.out.println("List Number Cannot be Empty");
             System.out.println("Command Format : rec viewexpenses [List Number]");
             return null;
@@ -50,10 +59,12 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             int listNumber = Integer.parseInt(listNumberAsString);
             return new RecurringExpenseCommand(listNumber, recurringExpensesList, expenses, "addrec");
         } catch (NumberFormatException e) {
+            LOGGER.log(Level.WARNING, "An invalid integer has been detected");
             System.out.println("Please input a valid Integer");
             System.out.println("Command Format : rec addrec [List Number]");
             return null;
         } catch (ArrayIndexOutOfBoundsException e) {
+            LOGGER.log(Level.WARNING, "Value at commandParts[2] does not exist");
             System.out.println("List Number Cannot be Empty");
             System.out.println("Command Format : rec addrec [List Number]");
             return null;
@@ -76,6 +87,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         String description = input.substring(startIndexOfDescription,endIndexOfDescription);
 
         if(description.trim().isEmpty()) {
+            LOGGER.log(Level.WARNING, "Empty Description Detected, throwing BudgetBuddyException");
             throw new BudgetBuddyException("Please Ensure Description is NOT empty");
         }
 
@@ -91,6 +103,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         String amountAsString = input.substring(startIndexOfAmount, endIndexOfAmount);
 
         if(amountAsString.trim().isEmpty()) {
+            LOGGER.log(Level.WARNING, "Empty Amount Detected, throwing BudgetBuddyException");
             throw new BudgetBuddyException("Please Ensure Amount is NOT empty");
         }
 
@@ -155,11 +168,13 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             return new RecurringExpenseCommand(listNumber, recurringExpensesList, category,
                     amount, description, "newexpense");
         } catch (BudgetBuddyException e) {
+            LOGGER.log(Level.INFO, "Successfully caught BudgetBuddy Exception. Handling Error");
             System.out.println(e.getMessage());
             System.out.println("Command Format : rec newexpense to/ LISTNUMBER c/ CATEGORY" +
                     " a/ AMOUNT d/ DESCRIPTION");
             return null;
         } catch (NumberFormatException e) {
+            LOGGER.log(Level.INFO, "Successfully caught NumberFormatException. Handling Error");
             System.out.println("Please ensure that listNumber and Amount are valid Numbers");
             System.out.println("Command Format : rec newexpense to/ LISTNUMBER c/ CATEGORY" +
                     " a/ AMOUNT d/ DESCRIPTION");
@@ -174,10 +189,12 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             int listNumber = Integer.parseInt(listNumberAsString);
             return new RecurringExpenseCommand(listNumber, recurringExpensesList, "removelist");
         } catch (ArrayIndexOutOfBoundsException e) {
+            LOGGER.log(Level.INFO, "Successfully caught Exception. Handling Error");
             System.out.println("List Number Cannot be Empty");
             System.out.println("Command Format : rec removelist [List Number]");
             return null;
         } catch (NumberFormatException e) {
+            LOGGER.log(Level.INFO, "Successfully caught Exception. Handling Error");
             System.out.println("Please input a valid Integer");
             System.out.println("Command Format : rec removelist [List Number]");
             return null;
@@ -193,10 +210,12 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             checkForInvalidCharacters(input);
             return new RecurringExpenseCommand(listName, recurringExpensesList, "newlist");
         } catch (ArrayIndexOutOfBoundsException e) {
+            LOGGER.log(Level.INFO, "Successfully caught Exception. Handling Error");
             System.out.println("Please Input a Valid listName");
             System.out.println("Command Format : rec newlist [listName]");
             return null;
         } catch (BudgetBuddyException e) {
+            LOGGER.log(Level.INFO, "Successfully caught Exception. Handling Error");
             System.out.println(e.getMessage());
             return null;
         }
