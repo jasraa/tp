@@ -9,23 +9,36 @@ to deal with finances on a singular platform with ease as long as you can type f
 ## Quick Start
 1. Ensure that you have Java 11 installed.
 2. Down the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/BudgetBuddy-MVP).
+3. Copy the file to the folder you want to use as the home folder.
+4. Open  command terminal, ``cd`` into the folder you put your jar file in, and use the `java -jar BudgetBuddy.jar` command to run the application.
 
 
 ## Features
-1. Display Commands
-2. Add
-3. Edit Savings
-4. Edit Expense
-5. Reduce Savings
-6. Delete Expense
-7. List Savings
-8. List Expense
-9. Split expenses
-10. Find Expense
-11. Recurring Bills
-12. Change Currency
-13. Get Graphical Insights for expenses
-14. Get Graphical Insights for savings
+1. Display Commands()
+2. Add Expense
+3. Add Savings
+4. Add Split Expenses
+5. Edit Savings
+6. Edit Expense
+7. Reduce Savings
+8. Delete Expense
+9. List Savings
+10. List Expense
+11. Check Splitted Expenses
+12. Settle Splitted Expenses
+13. Find Expense
+14. Add Recurring Bill
+15. List Recurring Bills
+16. Remove Recurring Bill
+17. Add Expense to a Recurring Bill
+18. View Expenses in a Recurring Bill
+19. Add Expenses in a Recurring Bill to Overall Expenses
+20. Change Currency
+21. Set Budget
+22. Get Budget
+23. Print Budget
+24. Get Graphical Insights for expenses
+25. Get Graphical Insights for savings
 
 ### Display Commands : `menu`
 Displays the corresponding features of BudgetBuddy
@@ -382,6 +395,25 @@ Example of usage: `get expenses insights`
 * Categories are Salary, Investments, Gifts, and Others
 
 Example of Usage: `get savings insights`
+
+
+### Saving the data
+
+BudgetBuddy data is automatically saved to the hard disk after any command that changes the data. There is no need to save manually.
+
+However, the exceptions to these are the following features. Where no implementation of saving and loading has been added for these features :
+* Setting Budgets
+* Splitted Expenses
+
+### Editing the data file
+
+BudgetBuddy data is saved automatically as a text file `[JAR file location]/data/*.txt`. Where * represents the different names of the files
+. Four files should be created upon first startup of BudgetBuddy : `SavingsFile.txt`, `ExpenseFile.txt`, `RecurringExpensesFile.txt` and `DefaultCurrency.txt`
+Advanced users are welcome to update the data directly by editing this file. However, caution is advised as certain edits may cause JunBot to behave unexpectedly.
+
+
+> ⚠️ **Caution:** Certain edits can cause BudgetBuddy to behave in unexpected ways (e.g. if value entered is outside of acceptable range, or the entries are not in the right format). Therefore, edit the data file only
+> if you are confident that you can update it correctly
 
 
 ## Command Summary
