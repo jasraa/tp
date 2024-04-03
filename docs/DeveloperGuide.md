@@ -40,6 +40,14 @@ their budgets using `getBudgets`, and highlight those that are above the set bud
 | setBudget(category, budget) | void          | Sets or updates the budget for a given category in the ExpenseList |
 | getBudgets()                | List<Budget>  | Retrieves the list of all budgets set                              |
 
+The `ListBudgetCommand`'s updated execution function now features an improved display that not only shows the budget, 
+spent amount, and remaining balance but also clearly indicates when the budget has been exceeded. If the expenses 
+surpass the budget, instead of showing a negative remaining balance, it displays "Exceeded", providing a straightforward
+and immediate visual cue that the budget limits have been surpassed.
+
+The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
+by what amount, making it easy for users to identify areas of concern.
+
 
 #### Sequence diagrams
 
@@ -657,6 +665,39 @@ where `listNumber` is `1`.
 and adding them one by one into the `overallExpenses`. This is done so by creating a new `AddExpenseCommand` with the relevant parameters and executing it. FOr more details regarding
 this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpenseCommand`.
 10. Finally, a success message is printed to the User.
+
+
+### Setting Budget Feature
+The Set Budget feature allows users to allocate a specific budget to various categories. This feature is managed by the
+SetBudgetCommand class, which is instantiated by the SetBudgetCommandCreator as a result of the Parser class
+interpretation. Within the SetBudgetCommand object, the following variables are initialized:
+
+| Variable    | Variable Type | Relevance                                                               |                                                           
+|-------------|---------------|-------------------------------------------------------------------------|
+| expenseList | ExpenseList   | The ExpenseList object containing all the categories to set budgets for |
+| category    | String        | The category for which the budget is to be set                          |
+| budget      | double        | The financial limit allocated to the specified category                 |
+
+When the execute() method is called via command.execute(), the SetBudgetCommand utilizes methods from the ExpenseList
+class to apply the budget:
+
+| Method      | Return Type | Relevance                                                |                                                           
+|-------------|-------------|----------------------------------------------------------|
+| expenseList | ExpenseList | Sets the budget for a specific category within the list  |
+
+The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid 
+command to set a budget:
+![SeqDiagramBudget.png](SeqDiagramBudget.png)
+
+The sequence of operations for an example input, `set budget c/Transport b/500`, is as follows:
+1. BudgetBuddy receives the user input and utilizes the Parser to decipher it.
+2. The Parser identifies the key components of the input (category and budget) and constructs a SetBudgetCommand object with the identified category (Transport) and budget (500).
+3. The Parser then hands over the SetBudgetCommand object to BudgetBuddy.
+4. BudgetBuddy invokes the execute() method on the SetBudgetCommand object.
+5. The SetBudgetCommand object calls the setBudget() method on the ExpenseList, passing in the category and budget amount.
+6. The ExpenseList updates or creates a budget allocation for the specified category with the provided amount.
+7. A confirmation message is displayed in the console indicating the budget has been successfully set or updated.
+
 
 ## 5. Product scope
 
