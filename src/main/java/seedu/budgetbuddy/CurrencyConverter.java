@@ -149,4 +149,25 @@ public class CurrencyConverter {
             System.out.println("Default currency for Savings changed to " + newCurrency);
         }
     }
+
+    public void convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpensesList recurringExpensesList) {
+        if (recurringExpensesList == null) {
+            throw new IllegalArgumentException("SavingList cannot be null");
+        }
+
+        if (DefaultCurrency.getDefaultCurrency() == newCurrency) {
+            System.out.println("Same currency for Recurring Expenses. No Conversion needed");
+            return;
+        }
+
+        int numberOfExpenseList = recurringExpensesList.getSize();
+
+        for (int i = 0; i < numberOfExpenseList; i++) {
+            int arrayIndexAsListNumber = i + 1;
+            ExpenseList reccuringExpenseList = recurringExpensesList.getExpenseListAtListNumber(arrayIndexAsListNumber);
+            convertExpenseCurrency(newCurrency, reccuringExpenseList);
+        }
+
+        System.out.println("Default currency for Recurring Expenses changed to " + newCurrency);
+    }
 }

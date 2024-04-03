@@ -213,7 +213,7 @@ public class Parser {
         }
 
         if (isConvertCurrencyCommand(input)) {
-            CommandCreator commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses,
+            CommandCreator commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses, expensesList,
                     new CurrencyConverter());
             return commandCreator.createCommand();
         }
