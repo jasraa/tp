@@ -90,6 +90,7 @@ public class Storage {
             String[] parts = line.split("\\|");
 
             if (parts.length > 5) {
+                LOGGER.log(Level.WARNING, "Invalid RecurringExpensesFile detected, throwing Exception");
                 throw new BudgetBuddyException("Invalid Format of Line : There should only be 4 Dividers");
             }
 
@@ -126,6 +127,7 @@ public class Storage {
             RecurringExpensesList recurringExpensesList = new RecurringExpensesList(recurringExpenses);
             return recurringExpensesList;
         } catch (Exception e) {
+            LOGGER.log(Level.INFO, "Exception successfully caught. Error has been handled");
             System.out.println(e.getMessage());
             System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
             resetRecurringExpensesListFile();
