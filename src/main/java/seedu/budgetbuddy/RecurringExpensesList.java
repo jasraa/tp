@@ -14,10 +14,16 @@ public class RecurringExpensesList {
         this.recurringExpenses = new ArrayList<>();
     }
     public void addNewRecurringList(String listName) {
+
+        assert !listName.contains("!") && !listName.contains("|") : "List Name should not contain a ! or |";
+        assert !listName.isEmpty() : "List Name should not be empty";
         ExpenseList expenses = new RecurringExpenseList(listName, new ArrayList<>());
 
         recurringExpenses.add(expenses);
 
+        ui.printDivider();
+        System.out.println("New List Created with name : " + expenses.getName());
+        ui.printDivider();
     }
 
     public void removeList(int listNumber) {
