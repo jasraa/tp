@@ -2,6 +2,7 @@ package seedu.budgetbuddy;
 
 import org.junit.jupiter.api.Test;
 import seedu.budgetbuddy.command.FindExpensesCommand;
+import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

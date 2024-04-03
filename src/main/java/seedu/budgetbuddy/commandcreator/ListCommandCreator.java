@@ -1,7 +1,7 @@
 package seedu.budgetbuddy.commandcreator;
 
-import seedu.budgetbuddy.ExpenseList;
-import seedu.budgetbuddy.SavingList;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.ListExpenseCommand;
 import seedu.budgetbuddy.command.ListSavingsCommand;

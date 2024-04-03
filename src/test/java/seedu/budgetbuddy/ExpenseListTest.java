@@ -1,6 +1,9 @@
 package seedu.budgetbuddy;
 
 import org.junit.jupiter.api.Test;
+import seedu.budgetbuddy.commons.Expense;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 import org.junit.jupiter.api.Disabled;
 import java.io.ByteArrayOutputStream;

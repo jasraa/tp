@@ -5,6 +5,10 @@ import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.FindExpensesCommand;
 import seedu.budgetbuddy.command.MenuCommand;
 import seedu.budgetbuddy.command.RecurringExpenseCommand;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.SavingList;
+import seedu.budgetbuddy.commons.SplitExpenseList;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;

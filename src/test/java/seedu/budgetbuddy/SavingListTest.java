@@ -2,6 +2,7 @@ package seedu.budgetbuddy;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 import java.util.logging.Level;
 import java.io.ByteArrayOutputStream;
@@ -59,7 +60,7 @@ public class SavingListTest {
 
         savingList.findTotalSavings();
 
-        assertEquals(800, savingList.initialAmount);
+        assertEquals(800, savingList.getInitialAmount());
 
     }
 

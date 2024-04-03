@@ -1,6 +1,6 @@
 package seedu.budgetbuddy.commandcreator;
 
-import seedu.budgetbuddy.SplitExpenseList;
+import seedu.budgetbuddy.commons.SplitExpenseList;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.SettleSplitExpenseCommand;
 

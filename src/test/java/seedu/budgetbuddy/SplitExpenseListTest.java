@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import seedu.budgetbuddy.commons.SplitExpenseList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 

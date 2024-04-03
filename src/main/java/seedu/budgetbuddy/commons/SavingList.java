@@ -1,4 +1,4 @@
-package seedu.budgetbuddy;
+package seedu.budgetbuddy.commons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+import seedu.budgetbuddy.Storage;
+import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 public class SavingList {
@@ -33,6 +35,10 @@ public class SavingList {
 
     public int size() {
         return savings.size();
+    }
+
+    public double getInitialAmount() {
+        return this.initialAmount;
     }
 
     public ArrayList<Saving> getSavings() {

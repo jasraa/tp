@@ -1,5 +1,7 @@
-package seedu.budgetbuddy;
+package seedu.budgetbuddy.commons;
 
+import seedu.budgetbuddy.Budget;
+import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package seedu.budgetbuddy;
+package seedu.budgetbuddy.commons;
 
 import java.util.ArrayList;
 

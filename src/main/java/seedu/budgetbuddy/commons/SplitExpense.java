@@ -1,4 +1,4 @@
-package seedu.budgetbuddy;
+package seedu.budgetbuddy.commons;
 
 public class SplitExpense {
     private final String amount;

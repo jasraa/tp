@@ -1,8 +1,8 @@
 package seedu.budgetbuddy.command;
 
-import seedu.budgetbuddy.Expense;
-import seedu.budgetbuddy.ExpenseList;
-import seedu.budgetbuddy.RecurringExpensesList;
+import seedu.budgetbuddy.commons.Expense;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 

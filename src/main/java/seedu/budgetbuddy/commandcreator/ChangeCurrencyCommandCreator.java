@@ -1,9 +1,9 @@
 package seedu.budgetbuddy.commandcreator;
 
-import seedu.budgetbuddy.CurrencyConverter;
-import seedu.budgetbuddy.ExpenseList;
-import seedu.budgetbuddy.RecurringExpensesList;
-import seedu.budgetbuddy.SavingList;
+import seedu.budgetbuddy.commons.CurrencyConverter;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.command.ChangeCurrencyCommand;
 import seedu.budgetbuddy.command.Command;
 

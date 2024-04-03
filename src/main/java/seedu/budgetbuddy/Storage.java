@@ -1,5 +1,12 @@
 package seedu.budgetbuddy;
 
+import seedu.budgetbuddy.commons.Saving;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.Expense;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseList;
+import seedu.budgetbuddy.commons.DefaultCurrency;
+
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
 

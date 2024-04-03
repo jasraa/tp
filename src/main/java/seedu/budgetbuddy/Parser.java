@@ -21,6 +21,12 @@ import seedu.budgetbuddy.commandcreator.SetBudgetCommandCreator;
 import seedu.budgetbuddy.commandcreator.SettleSplitExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.GetBudgetCommandCreator;
+import seedu.budgetbuddy.commons.SavingList;
+import seedu.budgetbuddy.commons.ExpenseList;
+import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.SplitExpenseList;
+import seedu.budgetbuddy.commons.CurrencyConverter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -153,7 +159,7 @@ public class Parser {
      * @return A Command object corresponding to the user input, or null if the
      *         input is invalid.
      */
-    public Command parseCommand(ExpenseList expenses, SavingList savings, SplitExpenseList 
+    public Command parseCommand(ExpenseList expenses, SavingList savings, SplitExpenseList
             splitexpenses, RecurringExpensesList expensesList, String input) {
         
         if(isMenuCommand(input)) {
