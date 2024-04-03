@@ -2,7 +2,6 @@ package seedu.budgetbuddy.command;
 
 import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.commons.ExpenseList;
-import seedu.budgetbuddy.commons.RecurringExpenseList;
 import seedu.budgetbuddy.commons.RecurringExpensesList;
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
@@ -171,8 +170,7 @@ public class RecurringExpenseCommand extends Command{
         }
 
     }
-
-
+    
     /**
      * Adds all Expenses in the ExpenseList located at the provided listNumber in the `recurringExpensesList`,
      * into the provided `overallExpenses`
