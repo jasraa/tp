@@ -8,7 +8,7 @@ to deal with finances on a singular platform with ease as long as you can type f
 
 ## Quick Start
 1. Ensure that you have Java 11 installed.
-2. Down the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/BudgetBuddy-MVP).
+2. Down the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/v2.0).
 3. Copy the file to the folder you want to use as the home folder.
 4. Open  command terminal, ``cd`` into the folder you put your jar file in, and use the `java -jar BudgetBuddy.jar` command to run the application.
 
