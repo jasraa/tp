@@ -93,7 +93,6 @@ public class ListCommandCreator extends CommandCreator {
         switch (action) {
         case "list":
             if (parts.length == 2) {
-                // List expenses or savings
                 String listType = parts[1];
                 assert !listType.isEmpty() : "List type should not be empty";
 
@@ -105,7 +104,6 @@ public class ListCommandCreator extends CommandCreator {
             } else if (parts.length == 3 && parts[1].equalsIgnoreCase("expenses")) {
                 String filterCategory = parts[2];
                 try {
-                    // Checks for valid category input
                     if (filterCategory != null) {
                         boolean isValidCategory = isValidExpenseCategory(filterCategory);
                         if (!isValidCategory) {
@@ -121,7 +119,6 @@ public class ListCommandCreator extends CommandCreator {
             } else if (parts.length == 3 && parts[1].equalsIgnoreCase("savings")) {
                 String filterCategory = parts[2];
                 try {
-                    // Checks for valid category input
                     if (filterCategory != null) {
                         boolean isValidCategory = isValidSavingsCategory(filterCategory);
                         if (!isValidCategory) {
@@ -133,14 +130,15 @@ public class ListCommandCreator extends CommandCreator {
                 } catch (IllegalArgumentException e) {
                     LOGGER.log(Level.WARNING, "Invalid category inputted: " + filterCategory, e);
                 }
-                return new ListSavingsCommand(savingList, expenseList, filterCategory); // Pass expenseList instance
+                return new ListSavingsCommand(savingList, expenseList, filterCategory);
             } else {
                 return null;
             }
             break;
         default:
             return null;
-        }return null;
+        }
+        return null;
     }
 
     @Override

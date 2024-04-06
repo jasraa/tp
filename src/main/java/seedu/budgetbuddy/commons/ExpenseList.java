@@ -102,7 +102,6 @@ public class ExpenseList {
             for (int i = 0; i < expenses.size(); i++) {
                 Expense expense = expenses.get(i);
 
-                // Checks for null expenses
                 if (expense == null) {
                     LOGGER.warning("Expense object at index " + i + " is null");
                     continue;
@@ -119,7 +118,6 @@ public class ExpenseList {
             ui.printDivider();
             System.out.println("Overall Total Expenses: $" + String.format("%.2f", calculateTotalExpenses()));
 
-            // Assertion: Check if total expenses calculation is correct
             double totalExpenses = calculateTotalExpenses();
             assert totalExpenses >= 0 : "Total expenses should be non-negative";
         } catch (Exception e) {
@@ -147,7 +145,6 @@ public class ExpenseList {
             LOGGER.log(Level.WARNING, "Negative expense amount detected", e);
         }
 
-        // Assertion: Check if total expenses is non-negative
         assert totalExpenses >= 0 : "Total expenses should be non-negative";
 
         return totalExpenses;
