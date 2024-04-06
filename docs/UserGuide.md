@@ -45,8 +45,8 @@ Displays the corresponding features of BudgetBuddy
 
 Format: `menu [INDEX]`
 
-* The `INDEX` refers to the number associated with each menu option. If `INDEX` is not provided, the overall 
-menu list will be displayed
+* The `INDEX` refers to the number associated with each menu option. If `INDEX` is not provided **OR** 
+is of value `0`, the overall menu list will be displayed
 * `INDEX` must be either be empty OR a positive integer and a valid index in the menu list
 
 Example of usage:
