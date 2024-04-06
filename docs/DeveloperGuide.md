@@ -280,6 +280,17 @@ ExpenseList.
 
 
 ##### 3.6.8 DefaultCurrency
+The `DefaultCurrency` class manages the application's default currency setting. It contains a static variable:
+
+- `Currency defaultCurrency`: Holds the current default currency setting, initialized to the Singapore Dollar (SGD) using the `Currency.getInstance("SGD")` method.
+
+The class provides two static methods:
+
+- `getDefaultCurrency()`: Returns the `defaultCurrency` currently set for the application. This allows different parts of the application to retrieve the default currency consistently.
+
+- `setDefaultCurrency(Currency currency)`: Assigns a new `Currency` object to `defaultCurrency`. This method enables the application to update the default currency based on user actions or preferences.
+
+This class ensures a consistent default currency is used throughout the application, essential for functions like displaying amounts and performing currency conversions.
 
 ##### 3.6.9 CurrencyConverter
 The `CurrencyConverter` class provides functionality for converting amounts between different currencies. It includes two class-level variables:
