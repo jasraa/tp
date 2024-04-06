@@ -150,8 +150,8 @@ public class CurrencyConverter {
         }
     }
 
-    public void convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpensesList recurringExpensesList) {
-        if (recurringExpensesList == null) {
+    public void convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpenseLists recurringExpenseLists) {
+        if (recurringExpenseLists == null) {
             throw new IllegalArgumentException("SavingList cannot be null");
         }
 
@@ -160,11 +160,11 @@ public class CurrencyConverter {
             return;
         }
 
-        int numberOfExpenseList = recurringExpensesList.getSize();
+        int numberOfExpenseList = recurringExpenseLists.getSize();
 
         for (int i = 0; i < numberOfExpenseList; i++) {
             int arrayIndexAsListNumber = i + 1;
-            ExpenseList reccuringExpenseList = recurringExpensesList.getExpenseListAtListNumber(arrayIndexAsListNumber);
+            ExpenseList reccuringExpenseList = recurringExpenseLists.getExpenseListAtListNumber(arrayIndexAsListNumber);
             convertExpenseCurrency(newCurrency, reccuringExpenseList);
         }
 

@@ -1,7 +1,7 @@
 package seedu.budgetbuddy.commandcreator;
 
 import seedu.budgetbuddy.commons.ExpenseList;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.RecurringExpenseCommand;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
@@ -16,21 +16,21 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
     private static final String AMOUNT_PREFIX = "a/";
     private static final String DESCRIPTION_PREFIX = "d/";
     private String input;
-    private RecurringExpensesList recurringExpensesList;
+    private RecurringExpenseLists recurringExpenseLists;
     private ExpenseList expenses;
 
 
     /**
      * Constructs a RecurringExpenseCommandCreator with the provided input, recurringExpensesList and expenses
      * @param input The user input
-     * @param recurringExpensesList The RecurringExpensesList containing a list of ExpenseList
+     * @param recurringExpenseLists The RecurringExpensesList containing a list of ExpenseList
      * @param expenses The ExpenseList containing user's overall expenses
      */
-    public RecurringExpenseCommandCreator(String input, RecurringExpensesList recurringExpensesList
+    public RecurringExpenseCommandCreator(String input, RecurringExpenseLists recurringExpenseLists
             , ExpenseList expenses) {
 
         this. input = input;
-        this.recurringExpensesList = recurringExpensesList;
+        this.recurringExpenseLists = recurringExpenseLists;
         this.expenses = expenses;
     }
 
@@ -59,7 +59,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         try {
             String listNumberAsString = commandParts[2];
             int listNumber = Integer.parseInt(listNumberAsString);
-            return new RecurringExpenseCommand(listNumber, recurringExpensesList, "viewexpenses");
+            return new RecurringExpenseCommand(listNumber, recurringExpenseLists, "viewexpenses");
         } catch (NumberFormatException e) {
             LOGGER.log(Level.WARNING, "An invalid integer has been detected");
             System.out.println("Please input a valid Integer");
@@ -86,7 +86,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         try {
             String listNumberAsString = commandParts[2];
             int listNumber = Integer.parseInt(listNumberAsString);
-            return new RecurringExpenseCommand(listNumber, recurringExpensesList, expenses, "addrec");
+            return new RecurringExpenseCommand(listNumber, recurringExpenseLists, expenses, "addrec");
         } catch (NumberFormatException e) {
             LOGGER.log(Level.WARNING, "An invalid integer has been detected");
             System.out.println("Please input a valid Integer");
@@ -127,7 +127,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
         int endIndexOfDescription = input.length();
 
-        String description = input.substring(startIndexOfDescription,endIndexOfDescription);
+        String description = input.substring(startIndexOfDescription,endIndexOfDescription).trim();
 
         if(description.trim().isEmpty()) {
             LOGGER.log(Level.WARNING, "Empty Description Detected, throwing BudgetBuddyException");
@@ -150,7 +150,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         int startIndexOfAmount = indexOfAmountPrefix + AMOUNT_PREFIX.length();
 
         int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
-        int endIndexOfAmount = indexOfDescriptionPrefix - 1;
+        int endIndexOfAmount = indexOfDescriptionPrefix;
 
         String amountAsString = input.substring(startIndexOfAmount, endIndexOfAmount);
 
@@ -176,9 +176,9 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         int startIndexOfCategory = indexOfCategoryPrefix + CATEGORY_PREFIX.length();
 
         int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
-        int endIndexOfCategory = indexOfAmountPrefix - 1;
+        int endIndexOfCategory = indexOfAmountPrefix;
 
-        String category = input.substring(startIndexOfCategory, endIndexOfCategory);
+        String category = input.substring(startIndexOfCategory, endIndexOfCategory).trim();
 
         if(category.trim().isEmpty()) {
             throw new BudgetBuddyException("Please Ensure Category is NOT empty");
@@ -200,9 +200,9 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         int startIndexOfListNumber = indexOfListNumberPrefix + LISTNUMBER_PREFIX.length();
 
         int indexOfCategoryPrefix = input.indexOf(CATEGORY_PREFIX);
-        int endIndexOfListNumber = indexOfCategoryPrefix - 1;
+        int endIndexOfListNumber = indexOfCategoryPrefix;
 
-        String listNumberAsString = input.substring(startIndexOfListNumber, endIndexOfListNumber);
+        String listNumberAsString = input.substring(startIndexOfListNumber, endIndexOfListNumber).trim();
 
         if(listNumberAsString.trim().isEmpty()) {
             throw new BudgetBuddyException("Please Ensure List Number is NOT empty");
@@ -213,6 +213,43 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         return listNumber;
     }
 
+    private void checkForOutOfOrderParameters(String input) throws BudgetBuddyException{
+        assert (input.contains(LISTNUMBER_PREFIX) && input.contains(CATEGORY_PREFIX)
+                && input.contains(AMOUNT_PREFIX) && input.contains(DESCRIPTION_PREFIX))
+                : "Input has all required prefixes";
+
+        int indexOfListNumberPrefix = input.indexOf(LISTNUMBER_PREFIX);
+        int indexOfCategoryPrefix = input.indexOf(CATEGORY_PREFIX);
+        int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
+        int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
+
+        if (indexOfListNumberPrefix > indexOfCategoryPrefix) {
+            throw new BudgetBuddyException("Please Ensure your prefixes are in the right order");
+        }
+
+        if (indexOfCategoryPrefix > indexOfAmountPrefix) {
+            throw new BudgetBuddyException("Please Ensure your prefixes are in the right order");
+        }
+
+        if (indexOfAmountPrefix > indexOfDescriptionPrefix) {
+            throw new BudgetBuddyException("Please Ensure your prefixes are in the right order");
+        }
+    }
+
+    private void checkForDuplicateParameters(String input) throws BudgetBuddyException {
+
+        assert (input.contains(LISTNUMBER_PREFIX) && input.contains(CATEGORY_PREFIX)
+                && input.contains(AMOUNT_PREFIX) && input.contains(DESCRIPTION_PREFIX))
+                : "Input has all required prefixes";
+
+        String[] parameters = {LISTNUMBER_PREFIX, CATEGORY_PREFIX, AMOUNT_PREFIX, DESCRIPTION_PREFIX};
+
+        for (String parameter : parameters) {
+            if (input.indexOf(parameter) != input.lastIndexOf(parameter)) {
+                throw new BudgetBuddyException("Please ensure that you do not have any duplicate parameters");
+            }
+        }
+    }
 
     /**
      * Creates a RecurringExpenseCommand to add an expense into a specific ExpenseList in recurringExpensesList
@@ -223,14 +260,13 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
     public Command createAddExpenseToListCommand(String input) {
         try {
             checkForInvalidParameters(input);
+            checkForDuplicateParameters(input);
             checkForInvalidCharacters(input);
-        } catch (IllegalArgumentException e) {
+            checkForOutOfOrderParameters(input);
+        } catch (IllegalArgumentException | BudgetBuddyException e) {
             System.out.println(e.getMessage());
             System.out.println("Command Format : rec newexpense to/ LISTNUMBER c/ CATEGORY" +
                     " a/ AMOUNT d/ DESCRIPTION");
-            return null;
-        } catch (BudgetBuddyException e) {
-            System.out.println(e.getMessage());
             return null;
         }
 
@@ -240,7 +276,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             Double amount = parseAmount(input);
             String description = parseDescription(input);
 
-            return new RecurringExpenseCommand(listNumber, recurringExpensesList, category,
+            return new RecurringExpenseCommand(listNumber, recurringExpenseLists, category,
                     amount, description, "newexpense");
         } catch (BudgetBuddyException e) {
             LOGGER.log(Level.INFO, "Successfully caught BudgetBuddy Exception. Handling Error");
@@ -250,7 +286,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
             return null;
         } catch (NumberFormatException e) {
             LOGGER.log(Level.INFO, "Successfully caught NumberFormatException. Handling Error");
-            System.out.println("Please ensure that listNumber and Amount are valid Numbers");
+            System.out.println("Please ensure that listNumber and Amount are valid Numbers/Monetary amounts");
             System.out.println("Command Format : rec newexpense to/ LISTNUMBER c/ CATEGORY" +
                     " a/ AMOUNT d/ DESCRIPTION");
             return null;
@@ -269,7 +305,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         try {
             String listNumberAsString = commandParts[2];
             int listNumber = Integer.parseInt(listNumberAsString);
-            return new RecurringExpenseCommand(listNumber, recurringExpensesList, "removelist");
+            return new RecurringExpenseCommand(listNumber, recurringExpenseLists, "removelist");
         } catch (ArrayIndexOutOfBoundsException e) {
             LOGGER.log(Level.INFO, "Successfully caught Exception. Handling Error");
             System.out.println("List Number Cannot be Empty");
@@ -290,31 +326,42 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
      * @return A RecurringExpenseCommand
      */
     public Command createViewListCommand() {
-        return new RecurringExpenseCommand(recurringExpensesList, "viewlists");
+        return new RecurringExpenseCommand(recurringExpenseLists, "viewlists");
     }
 
     /**
      * Creates a RecurringExpenseCommand to add a new RecurringExpenseList into recurringExpensesList
-     * This method uses the provided `commandParts` to extract the listName of the new RecurringExpenseList
      *
-     * @param commandParts The split parts of the user input
+     * @param input The user input
      * @return RecurringExpenseCommand if listName is valid, returns null if the listName extracted is empty
      */
-    public Command createNewListCommand(String[] commandParts) {
+    public Command createNewListCommand(String input) {
+        assert (input.startsWith("rec newlist")) : "Input must start with rec newlist ";
+
         try {
-            String listName = commandParts[2];
             checkForInvalidCharacters(input);
-            return new RecurringExpenseCommand(listName, recurringExpensesList, "newlist");
+            int indexOfNewListCommandType = input.indexOf("newlist");
+            int indexOfListName = indexOfNewListCommandType + "newlist".length();
+            int endIndexOfListName = input.length();
+
+            String listName = input.substring(indexOfListName, endIndexOfListName).trim();
+
+            if (listName.isEmpty()) {
+                System.out.println("Please Ensure the LISTNAME is not empty");
+                return null;
+            }
+
+            return new RecurringExpenseCommand(listName, this.recurringExpenseLists, "newlist");
+
         } catch (ArrayIndexOutOfBoundsException e) {
-            LOGGER.log(Level.INFO, "Successfully caught Exception. Handling Error");
-            System.out.println("Please Input a Valid listName");
-            System.out.println("Command Format : rec newlist [listName]");
+            System.out.println("Something went wrong");
             return null;
         } catch (BudgetBuddyException e) {
-            LOGGER.log(Level.INFO, "Successfully caught Exception. Handling Error");
+            LOGGER.log(Level.INFO, "BudgetBuddyException has been caught and handled");
             System.out.println(e.getMessage());
             return null;
         }
+
     }
 
     /**
@@ -326,25 +373,31 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
      *         returns null if commandType is not valid
      */
     public Command handleRecCommand(String input){
-        String[] commandParts = input.split(" ");
-        String commandType = commandParts[1];
-        commandType = commandType.trim();
 
-        switch(commandType) {
-        case "newlist":
-            return createNewListCommand(commandParts);
-        case "viewlists":
-            return createViewListCommand();
-        case "removelist":
-            return createRemoveListCommand(commandParts);
-        case "newexpense":
-            return createAddExpenseToListCommand(input);
-        case "addrec":
-            return createAddListToOverallExpensesCommand(commandParts);
-        case "viewexpenses":
-            return createViewExpensesCommand(commandParts);
-        default:
-            System.out.println("This Command Type does not exist for \"rec\"");
+        try {
+            String[] commandParts = input.split(" ");
+            String commandType = commandParts[1];
+            commandType = commandType.trim();
+
+            switch(commandType) {
+            case "newlist":
+                return createNewListCommand(this.input);
+            case "viewlists":
+                return createViewListCommand();
+            case "removelist":
+                return createRemoveListCommand(commandParts);
+            case "newexpense":
+                return createAddExpenseToListCommand(input);
+            case "addrec":
+                return createAddListToOverallExpensesCommand(commandParts);
+            case "viewexpenses":
+                return createViewExpensesCommand(commandParts);
+            default:
+                System.out.println("This Command Type does not exist for \"rec\"");
+                return null;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Please do not leave the command type empty");
             return null;
         }
 

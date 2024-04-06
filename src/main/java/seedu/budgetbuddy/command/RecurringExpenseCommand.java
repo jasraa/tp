@@ -2,7 +2,7 @@ package seedu.budgetbuddy.command;
 
 import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.commons.ExpenseList;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class RecurringExpenseCommand extends Command{
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private RecurringExpensesList recurringExpensesList;
+    private RecurringExpenseLists recurringExpenseLists;
 
     private ExpenseList overallExpenses;
     private String initialListName;
@@ -29,12 +29,12 @@ public class RecurringExpenseCommand extends Command{
      * Constructs a RecurringExpenseCommand for operations that only require the recurringExpensesList.
      * This constructor is used when the commandType is `viewlists`
      *
-     * @param recurringExpensesList The overall recurringExpensesList containing the list of ExpenseList
+     * @param recurringExpenseLists The overall recurringExpensesList containing the list of ExpenseList
      * @param commandType The commandType of the RecurringExpenseCommand
      */
-    public RecurringExpenseCommand(RecurringExpensesList recurringExpensesList, String commandType) {
+    public RecurringExpenseCommand(RecurringExpenseLists recurringExpenseLists, String commandType) {
         this.commandType = commandType;
-        this.recurringExpensesList = recurringExpensesList;
+        this.recurringExpenseLists = recurringExpenseLists;
     }
 
     /**
@@ -43,14 +43,14 @@ public class RecurringExpenseCommand extends Command{
      * This constructor is used when the commandType is `newlist`
      *
      * @param initialListName The name of the new RecurringExpenseList to create
-     * @param recurringExpensesList The overall recurringExpensesList containing the list of ExpenseList
+     * @param recurringExpenseLists The overall recurringExpensesList containing the list of ExpenseList
      * @param commandType The commandType of the RecurringExpenseCommand
      */
     public RecurringExpenseCommand(String initialListName,
-                                   RecurringExpensesList recurringExpensesList, String commandType) {
+                                   RecurringExpenseLists recurringExpenseLists, String commandType) {
         this.initialListName = initialListName;
         this.commandType = commandType;
-        this.recurringExpensesList = recurringExpensesList;
+        this.recurringExpenseLists = recurringExpenseLists;
     }
 
     /**
@@ -58,14 +58,14 @@ public class RecurringExpenseCommand extends Command{
      * This constructor is used when the commandType is either `viewexpenses` or `removelist`
      *
      * @param listNumber The listNumber associated to the listName printed during a `viewlists` command
-     * @param recurringExpensesList The overall recurringExpensesList containing the list of ExpenseList
+     * @param recurringExpenseLists The overall recurringExpensesList containing the list of ExpenseList
      * @param commandType The commandType of the RecurringExpenseCommand
      */
     public RecurringExpenseCommand(int listNumber,
-                                   RecurringExpensesList recurringExpensesList, String commandType) {
+                                   RecurringExpenseLists recurringExpenseLists, String commandType) {
         this.listNumber = listNumber;
         this.commandType = commandType;
-        this.recurringExpensesList = recurringExpensesList;
+        this.recurringExpenseLists = recurringExpenseLists;
     }
 
 
@@ -75,14 +75,14 @@ public class RecurringExpenseCommand extends Command{
      * This constructor is used when the commandType is `addrec`
      *
      * @param listNumber The listNumber associated to the listName printed during a `viewlists` command
-     * @param recurringExpensesList The overall recurringExpensesList containing the list of ExpenseList
+     * @param recurringExpenseLists The overall recurringExpensesList containing the list of ExpenseList
      * @param overallExpenses The overall ExpenseList containing all the user's expenses
      * @param commandType The commandType of the RecurringExpenseCommand
      */
-    public RecurringExpenseCommand(int listNumber, RecurringExpensesList recurringExpensesList,
+    public RecurringExpenseCommand(int listNumber, RecurringExpenseLists recurringExpenseLists,
                                    ExpenseList overallExpenses, String commandType) {
 
-        this.recurringExpensesList = recurringExpensesList;
+        this.recurringExpenseLists = recurringExpenseLists;
         this.overallExpenses = overallExpenses;
         this.listNumber = listNumber;
         this.commandType = commandType;
@@ -94,16 +94,16 @@ public class RecurringExpenseCommand extends Command{
      * This constructor is used when the commandType is `newexpense`
      *
      * @param listNumber The listNumber associated to the listName printed during a `viewlists` command
-     * @param recurringExpensesList The overall recurringExpensesList containing the list of ExpenseList
+     * @param recurringExpenseLists The overall recurringExpensesList containing the list of ExpenseList
      * @param category The category of the new expense user wishes to add
      * @param amount The amount of the new expense user wishes to add
      * @param description The description of the new expense user wishes to add
      * @param commandType The commandType of the RecurringExpenseCommand
      */
-    public RecurringExpenseCommand(int listNumber, RecurringExpensesList recurringExpensesList, String category,
+    public RecurringExpenseCommand(int listNumber, RecurringExpenseLists recurringExpenseLists, String category,
                                    Double amount, String description, String commandType) {
 
-        this.recurringExpensesList = recurringExpensesList;
+        this.recurringExpenseLists = recurringExpenseLists;
         this.listNumber = listNumber;
         this.category = category;
         this.amount = amount;
@@ -117,7 +117,7 @@ public class RecurringExpenseCommand extends Command{
      * @param listName The name of the new list
      */
     private void addNewList(String listName) {
-        recurringExpensesList.addNewRecurringList(listName);
+        recurringExpenseLists.addNewRecurringList(listName);
     }
 
     /**
@@ -127,13 +127,13 @@ public class RecurringExpenseCommand extends Command{
      */
     private void removeList(int listNumber) {
 
-        if (listNumber == 0 || listNumber > recurringExpensesList.getSize()) {
+        if (listNumber <= 0 || listNumber > recurringExpenseLists.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpenseLists.getSize());
             return;
         }
 
-        recurringExpensesList.removeList(listNumber);
+        recurringExpenseLists.removeList(listNumber);
     }
 
 
@@ -148,19 +148,24 @@ public class RecurringExpenseCommand extends Command{
      */
     private void addExpenseToList(int listNumber, String category, Double amount, String description) {
 
-        if (listNumber <= 0 || listNumber > recurringExpensesList.getSize()) {
+        if (listNumber <= 0 || listNumber > recurringExpenseLists.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpenseLists.getSize());
             return;
         }
 
-        ExpenseList expenses = recurringExpensesList.getExpenseListAtListNumber(listNumber);
+        ExpenseList expenses = recurringExpenseLists.getExpenseListAtListNumber(listNumber);
 
         try {
             expenses.addExpense(category, amount.toString(), description);
 
             ui.printDivider();
             System.out.println("Successfully Added Expense to " + expenses.getName());
+            System.out.println("|Details of Expense");
+            System.out.println("--------------------");
+            System.out.println("|Category : " + category);
+            System.out.println("|Amount : " + amount);
+            System.out.println("|Description : " + description);
             ui.printDivider();
 
         } catch (BudgetBuddyException e) {
@@ -176,21 +181,28 @@ public class RecurringExpenseCommand extends Command{
      * into the provided `overallExpenses`
      *
      * @param listNumber The list position of the ExpenseList in recurringExpensesList
-     * @param recurringExpensesList The overall recurringExpensesList
+     * @param recurringExpenseLists The overall recurringExpensesList
      * @param overallExpenses The overall expenses
      */
-    private void addRecurringExpensesToExpenses(int listNumber, RecurringExpensesList recurringExpensesList
+    private void addRecurringExpensesToExpenses(int listNumber, RecurringExpenseLists recurringExpenseLists
             , ExpenseList overallExpenses) {
 
-        if (listNumber <= 0 || listNumber > recurringExpensesList.getSize()) {
+        if (listNumber <= 0 || listNumber > recurringExpenseLists.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpenseLists.getSize());
             return;
         }
 
-        ExpenseList expenseList = recurringExpensesList.getExpenseListAtListNumber(listNumber);
+        ExpenseList expenseList = recurringExpenseLists.getExpenseListAtListNumber(listNumber);
         ArrayList<Expense> expenses = expenseList.getExpenses();
 
+        if (expenses.isEmpty()) {
+            ui.printDivider();
+            System.out.println("There are no expenses present in \"" + expenseList.getName() +
+                    "\" nothing has been added to the overall expenses");
+            ui.printDivider();
+            return;
+        }
         for (Expense expense : expenses) {
             String category = expense.getCategory();
             Double amount = expense.getAmount();
@@ -205,7 +217,6 @@ public class RecurringExpenseCommand extends Command{
         ui.printDivider();
         System.out.println("You Recurring Expenses in " + expenseList.getName() +
                 " has been added to your overall Expenses");
-
         ui.printDivider();
 
     }
@@ -215,17 +226,17 @@ public class RecurringExpenseCommand extends Command{
      * `recurringExpensesList`
      *
      * @param listNumber The list position of the ExpenseList in recurringExpensesList
-     * @param recurringExpensesList The recurringExpensesList to obtain ExpenseList from
+     * @param recurringExpenseLists The recurringExpensesList to obtain ExpenseList from
      */
-    private void printExpensesAtIndex(int listNumber, RecurringExpensesList recurringExpensesList) {
+    private void printExpensesAtIndex(int listNumber, RecurringExpenseLists recurringExpenseLists) {
 
-        if (listNumber <= 0 || listNumber > recurringExpensesList.getSize()) {
+        if (listNumber <= 0 || listNumber > recurringExpenseLists.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
-            System.out.println("Number of Lists you have currently : " + recurringExpensesList.getSize());
+            System.out.println("Number of Lists you have currently : " + recurringExpenseLists.getSize());
             return;
         }
 
-        ExpenseList expenseList = recurringExpensesList.getExpenseListAtListNumber(listNumber);
+        ExpenseList expenseList = recurringExpenseLists.getExpenseListAtListNumber(listNumber);
 
         expenseList.listExpenses(null);
     }
@@ -235,7 +246,7 @@ public class RecurringExpenseCommand extends Command{
      * Prints the names of all ExpenseList in the recurringExpensesList
      */
     private void printList() {
-        recurringExpensesList.printAllRecurringLists();
+        recurringExpenseLists.printAllRecurringLists();
     }
     public void execute(){
 
@@ -253,10 +264,10 @@ public class RecurringExpenseCommand extends Command{
             addExpenseToList(this.listNumber, this.category, this.amount, this.description);
             break;
         case "addrec":
-            addRecurringExpensesToExpenses(this.listNumber, this.recurringExpensesList, this.overallExpenses);
+            addRecurringExpensesToExpenses(this.listNumber, this.recurringExpenseLists, this.overallExpenses);
             break;
         case "viewexpenses":
-            printExpensesAtIndex(this.listNumber, this.recurringExpensesList);
+            printExpensesAtIndex(this.listNumber, this.recurringExpenseLists);
             break;
         default:
             break;

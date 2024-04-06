@@ -3,7 +3,7 @@ package seedu.budgetbuddy;
 import org.junit.jupiter.api.Test;
 import seedu.budgetbuddy.command.RecurringExpenseCommand;
 import seedu.budgetbuddy.commons.ExpenseList;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,19 +16,19 @@ public class RecurringExpenseCommandTest {
         overallExpenses.addExpense("Entertainment", "200", "first");
         overallExpenses.addExpense("Entertainment", "200", "second");
 
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("list1");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("list1");
 
-        RecurringExpenseCommand add = new RecurringExpenseCommand(1,recurringExpensesList
+        RecurringExpenseCommand add = new RecurringExpenseCommand(1, recurringExpenseLists
                 ,"Entertainment", 200.00,"description", "newexpense" );
 
-        RecurringExpenseCommand secondAdd = new RecurringExpenseCommand(1,recurringExpensesList
+        RecurringExpenseCommand secondAdd = new RecurringExpenseCommand(1, recurringExpenseLists
                ,"Entertainment", 500.00,"description", "newexpense" );
 
         add.execute();
         secondAdd.execute();
 
-        RecurringExpenseCommand command = new RecurringExpenseCommand(1, recurringExpensesList
+        RecurringExpenseCommand command = new RecurringExpenseCommand(1, recurringExpenseLists
                 , overallExpenses,"addrec");
 
         command.execute();
@@ -44,19 +44,19 @@ public class RecurringExpenseCommandTest {
         overallExpenses.addExpense("Entertainment", "200", "first");
         overallExpenses.addExpense("Entertainment", "200", "second");
 
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("list1");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("list1");
 
-        RecurringExpenseCommand add = new RecurringExpenseCommand(1,recurringExpensesList
+        RecurringExpenseCommand add = new RecurringExpenseCommand(1, recurringExpenseLists
                 ,"Entertainment", 200.00,"description", "newexpense" );
 
-        RecurringExpenseCommand secondAdd = new RecurringExpenseCommand(1,recurringExpensesList
+        RecurringExpenseCommand secondAdd = new RecurringExpenseCommand(1, recurringExpenseLists
                 ,"Entertainment", 500.00,"description", "newexpense" );
 
         add.execute();
         secondAdd.execute();
 
-        RecurringExpenseCommand command = new RecurringExpenseCommand(2, recurringExpensesList
+        RecurringExpenseCommand command = new RecurringExpenseCommand(2, recurringExpenseLists
                 , overallExpenses,"addrec");
 
         command.execute();
@@ -68,11 +68,11 @@ public class RecurringExpenseCommandTest {
     @Test
     public void execute_viewExpensesWithOutOfBoundsIndex_printsErrorMessageNoExceptionThrown() {
 
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("list1");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("list1");
 
 
-        RecurringExpenseCommand command = new RecurringExpenseCommand(2, recurringExpensesList
+        RecurringExpenseCommand command = new RecurringExpenseCommand(2, recurringExpenseLists
                 , "viewexpenses");
 
         command.execute();
@@ -81,19 +81,19 @@ public class RecurringExpenseCommandTest {
     @Test
     public void execute_viewExpensesWithValidIndex_printsOutputWithNoExceptionThrown() {
 
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("list1");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("list1");
 
 
-        RecurringExpenseCommand command = new RecurringExpenseCommand(1, recurringExpensesList
+        RecurringExpenseCommand command = new RecurringExpenseCommand(1, recurringExpenseLists
                 , "viewexpenses");
 
         command.execute();
     }
     @Test
     public void execute_viewEmptyListOfRecurringExpensesList_printsListWithoutExceptions() {
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        RecurringExpenseCommand recurringExpenseCommand = new RecurringExpenseCommand(recurringExpensesList
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        RecurringExpenseCommand recurringExpenseCommand = new RecurringExpenseCommand(recurringExpenseLists
                 , "viewlists");
 
         recurringExpenseCommand.execute();
@@ -101,12 +101,12 @@ public class RecurringExpenseCommandTest {
 
     @Test
     public void execute_viewNonEmptyListOfRecurringExpensesList_printsListWithoutExceptions() {
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("listOne");
-        recurringExpensesList.addNewRecurringList("listTwo");
-        recurringExpensesList.addNewRecurringList("listThree");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("listOne");
+        recurringExpenseLists.addNewRecurringList("listTwo");
+        recurringExpenseLists.addNewRecurringList("listThree");
 
-        RecurringExpenseCommand recurringExpenseCommand = new RecurringExpenseCommand(recurringExpensesList
+        RecurringExpenseCommand recurringExpenseCommand = new RecurringExpenseCommand(recurringExpenseLists
                 , "viewlists");
 
         recurringExpenseCommand.execute();
@@ -114,78 +114,78 @@ public class RecurringExpenseCommandTest {
 
     @Test
     public void execute_addNewList_sizeOfOverallListIncreasedByOne() {
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("listOne");
-        recurringExpensesList.addNewRecurringList("listTwo");
-        recurringExpensesList.addNewRecurringList("listThree");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("listOne");
+        recurringExpenseLists.addNewRecurringList("listTwo");
+        recurringExpenseLists.addNewRecurringList("listThree");
 
         RecurringExpenseCommand recurringExpenseCommand = new RecurringExpenseCommand("listFour"
-                , recurringExpensesList, "newlist");
+                , recurringExpenseLists, "newlist");
 
         recurringExpenseCommand.execute();
 
-        assertEquals(4, recurringExpensesList.getSize());
+        assertEquals(4, recurringExpenseLists.getSize());
 
     }
     @Test
     public void execute_removeList_sizeOfOverallListReducedByOne(){
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("listOne");
-        recurringExpensesList.addNewRecurringList("listTwo");
-        recurringExpensesList.addNewRecurringList("listThree");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("listOne");
+        recurringExpenseLists.addNewRecurringList("listTwo");
+        recurringExpenseLists.addNewRecurringList("listThree");
 
         RecurringExpenseCommand recurringExpenseCommand = new RecurringExpenseCommand(2,
-                recurringExpensesList, "removelist" );
+                recurringExpenseLists, "removelist" );
 
         recurringExpenseCommand.execute();
 
-        assertEquals(2, recurringExpensesList.getSize());
+        assertEquals(2, recurringExpenseLists.getSize());
     }
 
     @Test
     public void execute_removeListWithOutOfBoundsListNumber_sizeOfOverallListStaysSame(){
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("listOne");
-        recurringExpensesList.addNewRecurringList("listTwo");
-        recurringExpensesList.addNewRecurringList("listThree");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("listOne");
+        recurringExpenseLists.addNewRecurringList("listTwo");
+        recurringExpenseLists.addNewRecurringList("listThree");
 
         RecurringExpenseCommand recurringExpenseCommand = new RecurringExpenseCommand(4,
-                recurringExpensesList, "removelist" );
+                recurringExpenseLists, "removelist" );
 
         recurringExpenseCommand.execute();
 
-        assertEquals(3, recurringExpensesList.getSize());
+        assertEquals(3, recurringExpenseLists.getSize());
     }
 
     @Test
     public void execute_newExpenseCommandWithInvalidCategory_sizeOfRecurringExpenseListUnchanged() {
 
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("list1");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("list1");
 
-        RecurringExpenseCommand newExpenseCommand = new RecurringExpenseCommand(1,recurringExpensesList
+        RecurringExpenseCommand newExpenseCommand = new RecurringExpenseCommand(1, recurringExpenseLists
                 ,"invalid", 500.00,"description", "newexpense" );
 
 
         newExpenseCommand.execute();
 
-        assertEquals(0, recurringExpensesList.getExpenseListAtListNumber(1).getExpenses().size());
+        assertEquals(0, recurringExpenseLists.getExpenseListAtListNumber(1).getExpenses().size());
 
     }
 
     @Test
     public void execute_newExpenseCommand_sizeOfRecurringExpenseListIncreaseByOne() {
 
-        RecurringExpensesList recurringExpensesList = new RecurringExpensesList();
-        recurringExpensesList.addNewRecurringList("list1");
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        recurringExpenseLists.addNewRecurringList("list1");
 
-        RecurringExpenseCommand newExpenseCommand = new RecurringExpenseCommand(1,recurringExpensesList
+        RecurringExpenseCommand newExpenseCommand = new RecurringExpenseCommand(1, recurringExpenseLists
                 ,"Entertainment", 500.00,"description", "newexpense" );
 
 
         newExpenseCommand.execute();
 
-        assertEquals(1, recurringExpensesList.getExpenseListAtListNumber(1).getExpenses().size());
+        assertEquals(1, recurringExpenseLists.getExpenseListAtListNumber(1).getExpenses().size());
 
     }
 }
