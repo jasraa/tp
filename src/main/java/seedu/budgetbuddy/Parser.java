@@ -198,7 +198,7 @@ public class Parser {
             return commandCreator.createCommand();
         }
 
-        if (isListCommand(input)) {
+        if (isListCommand(input.toLowerCase())) {
             CommandCreator commandCreator = new ListCommandCreator(expenses, savings, input);
             return commandCreator.createCommand();
         }
@@ -218,7 +218,7 @@ public class Parser {
             return commandCreator.createCommand();
         }
 
-        if (isConvertCurrencyCommand(input)) {
+        if (isConvertCurrencyCommand(input.toLowerCase())) {
             CommandCreator commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses, expensesList,
                     new CurrencyConverter());
             return commandCreator.createCommand();

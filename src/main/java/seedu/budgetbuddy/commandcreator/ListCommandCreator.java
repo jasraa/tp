@@ -87,7 +87,7 @@ public class ListCommandCreator extends CommandCreator {
         String[] parts = input.split(" ");
         assert parts.length >= 1 : "At least one part should be present in the input";
 
-        String action = parts[0];
+        String action = parts[0].toLowerCase();
         assert !action.isEmpty() : "Action should not be empty";
 
         switch (action) {
