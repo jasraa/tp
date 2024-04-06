@@ -11,13 +11,12 @@ public class Ui {
                 "to view commands for the respective functions");
         System.out.println("To view all menu items again, type \"menu\".");
         System.out.println(DIVIDER);
-        System.out.println("1. Manage Expenses     3. View Expenses");
-        System.out.println("2. Manage Savings      4. View Savings");
-        System.out.println("5. Find Expenses       6. Split Expenses");
-        System.out.println("7. Manage Recurring Bills");
-        System.out.println("8. Change Currency     9. Manage Budget");
-        System.out.println("10. Get Graphical Insights");
-
+        System.out.println("0. Display the whole menu");
+        System.out.println("1. Manage Expenses        2. View Expenses");
+        System.out.println("3. View Expenses          4. View Savings");
+        System.out.println("5. Find Expenses          6. Split Expenses");
+        System.out.println("7. Manage Recurring Bills 8. Change Currency");
+        System.out.println("9. Manage Budget          10. Get Graphical Insights");
         System.out.println(DIVIDER);
     }
 
@@ -31,12 +30,12 @@ public class Ui {
     public void showMenuTitles() {
         System.out.println(DIVIDER);
         System.out.println("Menu Options:");
-        System.out.println("1. Manage Expenses     3. View Expenses");
-        System.out.println("2. Manage Savings      4. View Savings");
-        System.out.println("5. Find Expenses       6. Split Expenses");
-        System.out.println("7. Manage Recurring Bills               ");
-        System.out.println("8. Change Currency     9. Manage Budget");
-        System.out.println("10. Get Graphical Insights");
+        System.out.println("0. Display the whole menu");
+        System.out.println("1. Manage Expenses        3. View Expenses");
+        System.out.println("2. Manage Savings         4. View Savings");
+        System.out.println("5. Find Expenses          6. Split Expenses");
+        System.out.println("7. Manage Recurring Bills 8. Change Currency");
+        System.out.println("9. Manage Budget          10. Get Graphical Insights");
         System.out.println("Use 'menu INDEX' to select an option");
         System.out.println(DIVIDER);
     }

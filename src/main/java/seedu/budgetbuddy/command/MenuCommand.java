@@ -12,7 +12,7 @@ public class MenuCommand extends Command {
     private Ui ui;
 
     public MenuCommand(int index) {
-        assert index >= 0 : "Index should be a positive number";
+        assert index > 0 : "Index should be a positive number";
         this.index = index;
         ui = new Ui();
 
