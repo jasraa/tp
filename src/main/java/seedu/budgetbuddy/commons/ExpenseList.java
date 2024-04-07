@@ -173,6 +173,32 @@ public class ExpenseList {
             throw new BudgetBuddyException("Expenses should not be negative.");
         }
 
+        // Check against the budget before adding the expense
+        Budget budgetForCategory = budgets.stream()
+                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
+                .findFirst()
+                .orElse(null);
+
+        if (budgetForCategory != null) {
+            double totalSpent = expenses.stream()
+                    .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
+                    .mapToDouble(Expense::getAmount)
+                    .sum();
+            double projectedTotal = totalSpent + amountAsDouble;
+
+            if (projectedTotal > budgetForCategory.getBudget()) {
+                ui.printDivider();
+                System.out.println("Warning: Adding this expense will exceed your budget for " + category);
+                ui.printDivider();
+
+                // Replace with actual user confirmation in your application context
+                if (!ui.getUserConfirmation()) {
+                    System.out.println("Expense not added due to budget constraints.");
+                    return; // Exit without adding the expense
+                }
+            }
+        }
+
         Expense expense = new Expense(category, amountAsDouble, description);
         expenses.add(expense);
 
