@@ -103,14 +103,14 @@ The following diagram provides a rough overview of how BudgetBuddy is built
 ![Diagram of overview of BudgetBuddy](diagrams/Introduction.jpg)
 
 `BudgetBuddy` is the main class of the application and directly interacts with the user. `BudgetBuddy` 
-passes along the input into the Parser. The `Parser` creates a `CommandCreator` object depending on the user's input
+passes along the input into the `Parser`. The `Parser` creates a `CommandCreator` object depending on the user's input
 . The `CommandCreator` object then creates the `Command` object. 
 This `Command` object will be executed in `BudgetBuddy`. The `Command` object 
 utilizes methods and the classes present in `Commons`, which will be explained in more 
 detail in the following sections.
 
 #### 3.2 Parser Class
-The main functionality of the Parser Class is to determine the type of `CommandCreator` object to initialize. Using
+The main functionality of the Parser Class is to determine the type of `CommandCreator` object to create. Using
 Boolean Functions, the Parser Class determines this by what the user input starts with. 
 After determining the type of `CommandCreator` object, the Parser initializes the `CommandCreator` object
 with all its required parameters. 
@@ -129,31 +129,51 @@ Goodbye Message, Divider Lines and all the corresponding commands' command forma
 #### 3.5 CommandCreator Class
 The CommandCreator class has multiple subclasses, which corresponds to a specific function of the application.
 Within the CommandCreator classes, it handles making sense of the user input, obtaining the relevant parameters, and finally
-creating the `Command` class.
+creating the `Command` class to be executed.
 
-The superclass `CommandCreator` is an abstract class which is never instantiated. Where its createCommand() method is
-overridden by its subclasses.
+The superclass `CommandCreator` is an abstract class which is never instantiated. Where its `createCommand()` 
+method is overridden by its subclasses.
 
 The association between the `Command` and `CommandCreator` can be seen in their names. E.g. `MenuCommandCreator`, would
 create a `MenuCommand` class when its createCommand() method is called. Similarly, `FindExpensesCommandCreator` would
 create a `FindCommand` class when its createCommand() method is called.
 
+For clarity, unlike the `BudgetBudget` and `Parser` class, where only **one** instance of them is used for the entire
+application, a **new** `CommandCreator` subclass is instantiated every time a user provides an input. Hence,
+a created `CommandCreator` will always be specific to, and only handle `one` user input. This will be further illustrated in the
+UML Sequence Diagram provided in section `3.4 Command Class`
+
 #### 3.4 Command Class
 The Command class, similar to the CommandCreator class, contains multiple subclasses, all corresponding to a specific
-function of the application. Stated in section`3.5 CommandCreator Class`, each subclass of the `Command` Object
-is created by its associated `CommandCreator`. 
+function/feature of the application. Stated in section`3.5 CommandCreator Class`
+, each subclass of the `Command` Object is created by its associated `CommandCreator`. 
 
-The superclass `Command` is an abstract class which is never instantiated. Where its execute() method is overridden
-by its subclasses. What each Command class does when its execute() method is called would be discussed in more detail
-in the Implementation section.
+The superclass `Command` is an abstract class which is never instantiated. Where its `execute()` method is overridden
+by its subclasses. What each Command subclass does when its `execute()` method is called would be discussed in 
+more detail in the Implementation section.
 
-The following UML Sequence Diagram depicts the process of the process through which an input is gone through the application, up till the point
-where the command gets executed :
-![UML Sequence Diagram of Command](diagrams/sequence_diagram_command.jpg)
+For clarity, similar to the `CommandCreator` class, a **new** `Command` subclass is instantiated every time a
+user provides an input. As such a created `Command` will always be specific to, and only handle `one` user input.
+
+
+The following UML Sequence Diagram depicts the process of what happens
+when a user input is passed through the application, up till the point when the command gets executed :
+
+**Note** : BudgetBuddy instantiates other classes such as the Storage and Ui class, however, 
+these steps have been left out as they have no relevance to the process of creating and executing a Command.
+
+
+![UML Sequence Diagram of Command](diagrams/sequenceDiagram_Command.jpg)
 
 #### 3.5 Storage Class
 The Storage Class handles the loading and saving of the features in BudgetBuddy. Different features are saved in
-different files corresponding to their data type. 
+different files corresponding to their data type.
+
+The **Storing** methods are always called after every `user input`, ensuring that the saved files 
+are always up-to-date.
+
+Similarly, the **Loading** methods present in the Storage Class is always called **before** the application is fully
+initialized.
 
 ### 3.6 Commons
 The classes present in this group of `Commons` refers to a collection of classes used by multiple other components
