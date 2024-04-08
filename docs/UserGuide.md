@@ -10,7 +10,8 @@ to deal with finances on a singular platform with ease as long as you can type f
 1. Ensure that you have Java 11 installed.
 2. Down the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/v2.0).
 3. Copy the file to the folder you want to use as the home folder.
-4. Open  command terminal, ``cd`` into the folder you put your jar file in, and use the `java -jar BudgetBuddy.jar` command to run the application.
+4. Open  command terminal, ``cd`` into the folder you put your jar file in, and use the `java -jar BudgetBuddy.jar` 
+command to run the application.
 
 
 ## Features
@@ -108,7 +109,7 @@ Format: `edit savings c/CATEGORY i/INDEX a/AMOUNT`
 
 Example of usage:
 
-`edit savings c/Entertainment i/3 a/300`
+`edit savings c/Salary i/2 a/180 d/Monthly Salary`
 
 ### Edit Expenses: `edit expense`
 Edit expenses that have been added previously.
@@ -123,7 +124,7 @@ Format: `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
 
 Example of usage:
 
-`edit expense c/Utility i/2 a/180 d/Household Electricity`
+`edit expense c/Entertainment i/3 a/30 d/movie`
 
 ### Reduce Savings: `reduce savings`
 
