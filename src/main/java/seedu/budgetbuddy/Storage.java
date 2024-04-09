@@ -1,6 +1,7 @@
 package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.commons.Saving;
+import seedu.budgetbuddy.commons.SplitExpense;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.commons.RecurringExpensesList;
@@ -70,6 +71,7 @@ public class Storage {
         file.createNewFile();
         FileWriter writer = new FileWriter(filePath, false);
         writer.write("");
+        writer.close();
     }
 
     public void parseRecurringExpensesFile(ArrayList<ExpenseList> recurringExpenses, String line)
@@ -232,6 +234,38 @@ public class Storage {
             LOGGER.log(Level.SEVERE, "Problem saving currency code", e);
         }
     }
+
+
+    public List<SplitExpense> loadSplitExpenses() throws FileNotFoundException {
+        File file = new File(filePath);
+        List<SplitExpense> splitExpenses = new ArrayList<>();
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split("\\|");
+            // Assuming the order is Date|Amount|Number of People|Description
+            String amount = parts[1].trim();
+            String numberOfPeople = parts[2].trim();
+            String description = parts[3].trim();
+            SplitExpense splitExpense = new SplitExpense(amount, numberOfPeople, description);
+            splitExpenses.add(splitExpense);
+        }
+        scanner.close();
+        return splitExpenses;
+    }
+
+    public void saveSplitExpenses(List<SplitExpense> splitExpenses) throws IOException {
+
+        ensureDirectoryExists(); 
+        
+        FileWriter writer = new FileWriter(filePath, false); 
+        for (SplitExpense splitExpense : splitExpenses) {
+            writer.write(String.format("%s | %s | %s\n",
+                    splitExpense.getAmount(), splitExpense.getNumberOfPeople(), splitExpense.getDescription()));
+        }
+        writer.close();
+    }
+
 
     /**
      * Loads currency data from the specified file path and sets the default currency accordingly.
