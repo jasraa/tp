@@ -130,7 +130,7 @@ public class Parser {
     }
 
     public boolean isListBudgetCommand(String input){
-        return input.startsWith("budget print");
+        return input.startsWith("print budget");
     }
 
     public Boolean isSettleSplitExpenseCommand(String input) {

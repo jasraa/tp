@@ -103,7 +103,7 @@ public class Ui {
             System.out.println("Manage budget");
             System.out.println("set budget c/CATEGORY b/BUDGET");
             System.out.println("get budget c/CATEGORY");
-            System.out.println("budget print");
+            System.out.println("print budget");
             break;
         case 10:
             System.out.println("Get Graphical Insights");
