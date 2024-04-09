@@ -22,7 +22,7 @@ public class AddExpenseCommand extends Command{
     public void execute() {
         try {
             expenses.addExpense(this.category,this.amount,this.description);
-            System.out.println("Expense Added :" + category + " of $" + amount + " description : " + description);
+            System.out.println("Expense Added: " + category + " of $" + amount + " description: " + description);
         } catch (BudgetBuddyException e) {
             System.out.println(e.getMessage());
         }
