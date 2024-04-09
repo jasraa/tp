@@ -38,7 +38,7 @@ public class SettleSplitExpenseCommandCreator extends CommandCreator{
         try {
             int index = Integer.parseInt(parts[1]) - 1;
             // Check if the index is within the bounds of the expense list.
-            if (index < 0 || index >= splitexpenses.size()) {
+            if (index < 0 || index >= splitexpenses.getSize()) {
                 System.out.println("Error: Index is out of bounds.");
                 return null;
             }
