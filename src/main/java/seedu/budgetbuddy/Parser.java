@@ -23,7 +23,7 @@ import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.GetBudgetCommandCreator;
 import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.commons.ExpenseList;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.commons.SplitExpenseList;
 import seedu.budgetbuddy.commons.CurrencyConverter;
 
@@ -175,7 +175,7 @@ public class Parser {
      *         input is invalid.
      */
     public Command parseCommand(ExpenseList expenses, SavingList savings, SplitExpenseList
-            splitexpenses, RecurringExpensesList expensesList, String input) {
+            splitexpenses, RecurringExpenseLists expensesList, String input) {
         
         if(isMenuCommand(input)) {
             LOGGER.log(Level.INFO, "Confirmed that input is a menu command");

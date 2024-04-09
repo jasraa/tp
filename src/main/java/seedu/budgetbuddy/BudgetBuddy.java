@@ -2,7 +2,7 @@ package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.commons.ExpenseList;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.commons.SplitExpenseList;
 import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
@@ -17,7 +17,7 @@ public class BudgetBuddy {
     private ExpenseList expenses;
     private SavingList savings;
     private SplitExpenseList splitexpenses;
-    private RecurringExpensesList expensesList;
+    private RecurringExpenseLists recurringExpenseLists;
     private Storage expensesStorage;
     private Storage savingsStorage;
     private Storage recurringExpensesStorage;
@@ -30,7 +30,7 @@ public class BudgetBuddy {
         parser = new Parser();
         expenses = new ExpenseList();
         savings = new SavingList();
-        expensesList = new RecurringExpensesList();
+        recurringExpenseLists = new RecurringExpenseLists();
         splitexpenses = new SplitExpenseList();
         expensesStorage = new Storage("./data/ExpenseFile.txt");
         savingsStorage = new Storage("./data/SavingsFile.txt");
@@ -40,7 +40,7 @@ public class BudgetBuddy {
     }
 
     public void handleCommands(String input) {
-        Command command = parser.parseCommand(expenses, savings, splitexpenses, expensesList, input);
+        Command command = parser.parseCommand(expenses, savings, splitexpenses, recurringExpenseLists, input);
 
 
         if (command != null) {
@@ -52,7 +52,8 @@ public class BudgetBuddy {
         try {
             expensesStorage.saveExpenses(expenses.getExpenses());
             savingsStorage.saveSavings(savings.getSavings());
-            recurringExpensesStorage.saveRecurringExpenses(expensesList);
+            recurringExpensesStorage.saveRecurringExpenses(recurringExpenseLists);
+
             defaultCurrency.saveCurrency();
         } catch (IOException e) {
             System.out.println("Error saving to file.");
@@ -70,7 +71,7 @@ public class BudgetBuddy {
             defaultCurrency.loadCurrency();
             this.expenses.getExpenses().addAll(expensesStorage.loadExpenses());
             this.savings.getSavings().addAll(savingsStorage.loadSavings());
-            this.expensesList = recurringExpensesStorage.loadRecurringExpensesList();
+            this.recurringExpenseLists = recurringExpensesStorage.loadRecurringExpensesList();
 
 
         } catch (FileNotFoundException e) {

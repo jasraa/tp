@@ -4,7 +4,7 @@ import seedu.budgetbuddy.commons.CurrencyConverter;
 import seedu.budgetbuddy.commons.DefaultCurrency;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.commons.SavingList;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 
 import java.util.Currency;
 
@@ -13,15 +13,15 @@ public class ChangeCurrencyCommand extends Command {
     private Currency newCurrency;
     private SavingList savings;
     private ExpenseList expenses;
-    private RecurringExpensesList recurringExpensesList;
+    private RecurringExpenseLists recurringExpenseLists;
     private CurrencyConverter currencyConverter;
 
     public ChangeCurrencyCommand(Currency newCurrency, SavingList savings, ExpenseList expenses,
-                                 RecurringExpensesList recurringExpensesList, CurrencyConverter currencyConverter) {
+                                 RecurringExpenseLists recurringExpenseLists, CurrencyConverter currencyConverter) {
         this.newCurrency = newCurrency;
         this.savings = savings;
         this.expenses = expenses;
-        this.recurringExpensesList = recurringExpensesList;
+        this.recurringExpenseLists = recurringExpenseLists;
         this.currencyConverter = currencyConverter;
     }
 
@@ -29,7 +29,7 @@ public class ChangeCurrencyCommand extends Command {
     public void execute() {
         currencyConverter.convertSavingCurrency(newCurrency, savings);
         currencyConverter.convertExpenseCurrency(newCurrency, expenses);
-        currencyConverter.convertRecurringExpensesCurrency(newCurrency, recurringExpensesList);
+        currencyConverter.convertRecurringExpensesCurrency(newCurrency, recurringExpenseLists);
         currencyConverter.convertBudgetCurrency(newCurrency, expenses);
         DefaultCurrency.setDefaultCurrency(newCurrency);
     }

@@ -28,18 +28,19 @@ command to run the application.
 11. Check Splitted Expenses
 12. Settle Splitted Expenses
 13. Find Expense
-14. Add Recurring Bill
-15. List Recurring Bills
-16. Remove Recurring Bill
-17. Add Expense to a Recurring Bill
-18. View Expenses in a Recurring Bill
-19. Add Expenses in a Recurring Bill to Overall Expenses
-20. Change Currency
-21. Set Budget
-22. Get Budget
-23. Print Budget
-24. Get Graphical Insights for expenses
-25. Get Graphical Insights for savings
+14. Recurring Bill Description
+15. Add Recurring Bill
+16. List Recurring Bills
+17. Remove Recurring Bill
+18. Add Expense to a Recurring Bill
+19. View Expenses in a Recurring Bill
+20. Add Expenses in a Recurring Bill to Overall Expenses
+21. Change Currency
+22. Set Budget
+23. Get Budget
+24. Print Budget
+25. Get Graphical Insights for expenses
+26. Get Graphical Insights for savings
 
 ### Display Commands : `menu`
 Displays the corresponding features of BudgetBuddy
@@ -272,6 +273,17 @@ Examples of usage :
 `find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than $200
 `find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than $200, but lesser than $400
 
+### Recurring Bill Description
+The next few features in the user guide would be related to the Recurring Bill Feature. The commands associated to
+this overall feature would start with the `rec` command, followed by the relevant `commandType` and parameters. This
+feature allows user to create and manage multiple lists of expenses **separate** from the user's overall expenses
+, which can be added to the users overall expenses.
+
+The term **recurring** here is to indicate that a user is able to **add** a set of pre-defined expenses to their
+overall expenses at any given point in time. Hence, this could range from subscription payments, a future grocery list,
+etc.
+
+
 ### Add Recurring Bill : `rec newlist`
 
 Adds a new recurring Bill.
@@ -295,6 +307,7 @@ Format : `rec viewlists`
 
 * This command is **space sensitive**, in particular, the space between `rec` and `viewlists` must be
 **exactly** one space apart for the command to be recognised 
+* **Note** Anything typed after `rec viewlists` will be ignored.
 
 Examples of Output : 
 
@@ -313,7 +326,7 @@ Removes a recurring bill
 Format : `rec removelist LISTNUMBER`
 
 * `LISTNUMBER` refers to the associated list number of recurring bill when doing a `rec viewlists`
-* `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
+* `LISTNUMBER` must be a **valid** integer > 0, and should be a **valid** list number
 
 Examples of usage :
 
@@ -330,7 +343,10 @@ Format : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * `AMOUNT` refers to the amount value of the expense you wish to add
 * `DESCRIPTION` refers to the description of the expense you wish to add
 * `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
-* `CATEGORY`, `AMOUNT` and `DESCRIPTION` follows the same constraints as if you were to add a normal expense
+* `CATEGORY`, `AMOUNT` and `DESCRIPTION` follows the same constraints as if you were to add a normal expense.
+* `to/, c/, a/, d/` must be placed in the **right order**
+* **Note** Although the user is able to combine the prefixes without any spaces, etc. 
+`rec newexpense to/1c/Entertainmenta/200d/movies`, it is strongly recommended to ensure spaces for clarity.
 
 Examples of usage :
 `rec newexpense to/1 c/Entertainment a/200 d/movies` : Adds a new expense to the 1st recurring bill 
