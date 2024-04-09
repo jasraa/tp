@@ -55,7 +55,14 @@ public class Parser {
         return input.startsWith("find expenses");
     }
 
+    /**
+     * Checks if the provided input starts with the word "list" .
+     *
+     * @param input The user input string
+     * @return true if user input starts with "list", else returns false
+     */
     public Boolean isListCommand(String input) {
+        LOGGER.log(Level.INFO, "Checking if input is a List Command");
         return input.startsWith("list");
     }
 
@@ -109,7 +116,15 @@ public class Parser {
     public Boolean isReduceSavingCommand(String input) {
         return input.startsWith("reduce savings");
     }
+
+    /**
+     * Checks if the provided input starts with the phrase "change currency".
+     *
+     * @param input The user input string
+     * @return true if user input starts with "change currency", else returns false
+     */
     public Boolean isConvertCurrencyCommand(String input) {
+        LOGGER.log(Level.INFO, "Checking if input is Change Currency Command");
         return input.startsWith("change currency");
     }
 
@@ -198,7 +213,7 @@ public class Parser {
             return commandCreator.createCommand();
         }
 
-        if (isListCommand(input)) {
+        if (isListCommand(input.toLowerCase())) {
             CommandCreator commandCreator = new ListCommandCreator(expenses, savings, input);
             return commandCreator.createCommand();
         }
@@ -218,7 +233,7 @@ public class Parser {
             return commandCreator.createCommand();
         }
 
-        if (isConvertCurrencyCommand(input)) {
+        if (isConvertCurrencyCommand(input.toLowerCase())) {
             CommandCreator commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses, expensesList,
                     new CurrencyConverter());
             return commandCreator.createCommand();

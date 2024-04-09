@@ -53,7 +53,6 @@ public class BudgetBuddy {
             expensesStorage.saveExpenses(expenses.getExpenses());
             savingsStorage.saveSavings(savings.getSavings());
             recurringExpensesStorage.saveRecurringExpenses(expensesList);
-            // Save Currency
             defaultCurrency.saveCurrency();
         } catch (IOException e) {
             System.out.println("Error saving to file.");
@@ -68,7 +67,6 @@ public class BudgetBuddy {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            // Load Currency
             defaultCurrency.loadCurrency();
             this.expenses.getExpenses().addAll(expensesStorage.loadExpenses());
             this.savings.getSavings().addAll(savingsStorage.loadSavings());
