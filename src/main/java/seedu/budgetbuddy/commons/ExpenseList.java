@@ -232,18 +232,27 @@ public class ExpenseList {
         return "placeholder";
     }
 
-    public void setBudget(String category, double budget){
+    public void setBudget(String category, double budget) {
         LOGGER.info("Setting budget - Category: " + category + ", Budget: $" + budget);
-        for (Budget b : budgets){
-            if (b.getCategory().equalsIgnoreCase(category)){
+
+        // Check if the budget is a positive value
+        if (budget < 0) {
+            System.out.println("Sorry, BUDGET must be positive integer");
+            return;
+        }
+
+        for (Budget b : budgets) {
+            if (b.getCategory().equalsIgnoreCase(category)) {
                 LOGGER.info("Updating budget for category: " + category);
                 b.setBudget(budget);
                 System.out.println("Updated budget for " + category + " to $" + budget);
                 return;
             }
         }
+
         LOGGER.info("Creating new budget for category: " + category);
         budgets.add(new Budget(category, budget));
+        System.out.println("Budget Added: " + category + " of $" + budget);
     }
 
     /**
@@ -290,7 +299,7 @@ public class ExpenseList {
             ui.printDivider();
         }
     }
-    
+
 
     /**
      * Calculates and prints a distribution of expenses in various categories as a horizontal bar graph.
