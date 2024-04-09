@@ -101,6 +101,7 @@ public class SavingList {
 
             double remainingAmount = calculateRemainingSavings(initialAmount, totalExpenses);
             if (remainingAmount < 0) {
+                remainingAmount *= -1;
                 System.out.println("You are currently short on savings by: $" + String.format("%.2f", remainingAmount));
             } else {
                 System.out.println("Overall Remaining Amount: $" + String.format("%.2f", remainingAmount));
@@ -205,10 +206,12 @@ public class SavingList {
         }
     }
 
-    public void reduceSavings(int index, double amount){
-        if (index >= 0 && index < savings.size()){
+    // @@author Dheekshitha2
+    public void reduceSavings(int index, double amount) {
+
+        if (index >= 0 && index < savings.size()) {
             Saving saving = savings.get(index);
-            if(saving.getAmount() >= amount){
+            if (saving.getAmount() >= amount) {
                 saving.setAmount(saving.getAmount() - amount);
                 System.out.println("Savings reduced successfully!");
             } else {

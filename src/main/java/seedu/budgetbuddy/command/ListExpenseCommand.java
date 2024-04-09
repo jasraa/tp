@@ -13,7 +13,6 @@ public class ListExpenseCommand extends Command {
      */
     public ListExpenseCommand(ExpenseList expenses) {
         this.expenses = expenses;
-        this.filterCategory = null; // Indicates no filter category is provided
     }
 
     /**
@@ -33,7 +32,6 @@ public class ListExpenseCommand extends Command {
      */
     @Override
     public void execute() {
-        // Now, list the expenses with or without a filter category
         expenses.listExpenses(filterCategory);
     }
 }

@@ -44,7 +44,7 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
     public Command handleChangeCurrencyCommand(String input, SavingList savingList, ExpenseList expenseList,
                                                RecurringExpenseLists recurringExpenseLists,
                                                CurrencyConverter currencyConverter) {
-        if (input.startsWith("change currency")) {
+        if (input.toLowerCase().startsWith("change currency")) {
             String[] parts = input.split(" ");
             assert parts.length > 1 : "Input should contain currency code";
 

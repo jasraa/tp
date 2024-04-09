@@ -109,7 +109,4 @@ public class RecurringExpenseLists {
         int listNumberAsArrayPosition = listNumber - 1;
         return recurringExpenses.get(listNumberAsArrayPosition);
     }
-
-
-
 }

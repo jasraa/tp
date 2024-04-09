@@ -32,10 +32,6 @@ public class ListSavingsCommand extends Command {
         this.filterCategory = filterCategory;
     }
 
-    /**
-     * Lists all the savings.
-     */
-
     @Override
     public void execute() {
         savings.listSavings(this.filterCategory, this.expenses);
