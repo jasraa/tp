@@ -111,6 +111,10 @@ Example of usage:
 
 `edit savings c/Salary i/2 a/180 d/Monthly Salary`
 
+Expected Output:
+
+`Saving edited successfully.`
+
 ### Edit Expenses: `edit expense`
 Edit expenses that have been added previously.
 
@@ -125,6 +129,10 @@ Format: `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
 Example of usage:
 
 `edit expense c/Entertainment i/3 a/30 d/movie`
+
+Expected Output:
+
+`Expense edited successfully.`
 
 ### Reduce Savings: `reduce savings`
 
