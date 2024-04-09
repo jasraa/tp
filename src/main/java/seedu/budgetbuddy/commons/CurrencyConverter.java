@@ -193,8 +193,10 @@ public class CurrencyConverter {
                 budget.setBudget(convertedBudgetAmount);
             } catch (IllegalArgumentException e) {
                 // Handle any IllegalArgumentException thrown during conversion
-                LOGGER.severe("Error converting budget amount for category: " + budget.getCategory() + "; " + e.getMessage());
-                System.out.println("Error converting budget amount for category: " + budget.getCategory() + "; " + e.getMessage());
+                LOGGER.severe("Error converting budget amount for category: " + budget.getCategory()
+                                    + "; " + e.getMessage());
+                System.out.println("Error converting budget amount for category: " + budget.getCategory()
+                                    + "; " + e.getMessage());
             }
         }
 
