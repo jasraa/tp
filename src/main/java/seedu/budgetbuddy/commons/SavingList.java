@@ -211,11 +211,7 @@ public class SavingList {
 
     // @@author Dheekshitha2
     public void reduceSavings(int index, double amount) {
-        // Check if the amount is positive
-        if (amount <= 0) {
-            System.out.println("Amount must be a positive value.");
-            return;
-        }
+
         if (index >= 0 && index < savings.size()) {
             Saving saving = savings.get(index);
             if (saving.getAmount() >= amount) {

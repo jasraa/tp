@@ -235,12 +235,6 @@ public class ExpenseList {
     public void setBudget(String category, double budget) {
         LOGGER.info("Setting budget - Category: " + category + ", Budget: $" + budget);
 
-        // Check if the budget is a positive value
-        if (budget < 0) {
-            System.out.println("Sorry, BUDGET must be positive integer");
-            return;
-        }
-
         for (Budget b : budgets) {
             if (b.getCategory().equalsIgnoreCase(category)) {
                 LOGGER.info("Updating budget for category: " + category);
