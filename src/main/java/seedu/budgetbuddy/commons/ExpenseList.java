@@ -251,29 +251,32 @@ public class ExpenseList {
      * The expenses are sorted from the highest to the lowest amount, displaying the amount and what percentage
      * of the total budget each expense constitutes.
      *
-     * @param category The category for which to retrieve and print the budget and expenses.
+     * @param inputCategory The category for which to retrieve and print the budget and expenses.
      */
-    public void getBudgetAndListExpensesForCategory(String category) {
+    public void getBudgetAndListExpensesForCategory(String inputCategory) {
+        // Trim the input and replace multiple internal spaces with a single space
+        String normalizedCategory = inputCategory.trim().replaceAll("\\s+", " ");
+
         Budget budgetForCategory = budgets.stream()
-                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
+                .filter(budget -> budget.getCategory().equalsIgnoreCase(normalizedCategory))
                 .findFirst()
                 .orElse(null);
 
         if (budgetForCategory == null) {
-            System.out.println("No budget set for " + category);
+            System.out.println("No budget set for " + normalizedCategory);
             return;
         }
 
         double budgetAmount = budgetForCategory.getBudget();
-        System.out.println("Budget for " + category + ": $" + budgetAmount);
+        System.out.println("Budget for " + normalizedCategory + ": $" + budgetAmount);
 
         List<Expense> expensesForCategory = expenses.stream()
-                .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
+                .filter(expense -> expense.getCategory().equalsIgnoreCase(normalizedCategory))
                 .sorted(Comparator.comparingDouble(Expense::getAmount).reversed())
                 .collect(Collectors.toList());
 
         if (expensesForCategory.isEmpty()) {
-            System.out.println("No expenses recorded for " + category);
+            System.out.println("No expenses recorded for " + normalizedCategory);
             return;
         }
 
@@ -287,7 +290,7 @@ public class ExpenseList {
             ui.printDivider();
         }
     }
-
+    
 
     /**
      * Calculates and prints a distribution of expenses in various categories as a horizontal bar graph.
