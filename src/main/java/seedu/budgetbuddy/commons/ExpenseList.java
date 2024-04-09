@@ -77,8 +77,8 @@ public class ExpenseList {
         ArrayList<Expense> filteredExpenses = new ArrayList<>(this.expenses.stream()
                 .filter(expense -> (expense.getDescription()
                         .toLowerCase().contains(descriptionInLowerCase)))
-                .filter(expense -> (minAmount == null || expense.getAmount() > minAmount))
-                .filter(expense -> (maxAmount == null || expense.getAmount() < maxAmount))
+                .filter(expense -> (minAmount == null || expense.getAmount() >= minAmount))
+                .filter(expense -> (maxAmount == null || expense.getAmount() <= maxAmount))
                 .collect(Collectors.toList()));
 
         LOGGER.log(Level.INFO, "Ending filtering and returning filtered expenses");

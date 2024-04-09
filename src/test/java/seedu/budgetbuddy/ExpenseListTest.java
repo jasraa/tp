@@ -123,7 +123,7 @@ public class ExpenseListTest {
     public void filterExpenses_filterByMinAmount_returnsThreeMatches() throws BudgetBuddyException {
         ExpenseList expenses = new ExpenseList();
         expenses.addExpense("Groceries", "100", "Apples");
-        expenses.addExpense("Transport", "50", "Bus fare");
+        expenses.addExpense("Transport", "40", "Bus fare");
         expenses.addExpense("Entertainment", "75", "Movie");
         expenses.addExpense("Groceries", "100", "apple");
         ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
@@ -143,7 +143,7 @@ public class ExpenseListTest {
         ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
                 , null, 75.00);
 
-        assertEquals(1, filteredExpenses.size());
+        assertEquals(2, filteredExpenses.size());
 
     }
 

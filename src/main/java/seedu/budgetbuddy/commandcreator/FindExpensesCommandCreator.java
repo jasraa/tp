@@ -25,6 +25,21 @@ public class FindExpensesCommandCreator extends CommandCreator {
         this.expenses = expenses;
     }
 
+    private void checkForOutOfOrderParameters(String input) throws BudgetBuddyException {
+        int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
+        int indexOfMinAmountPrefix = input.indexOf(MINAMOUNT_PREFIX);
+        int indexOfMaxAmountPrefix = input.indexOf(MAXAMOUNT_PREFIX);
+
+        if (indexOfDescriptionPrefix > indexOfMinAmountPrefix) {
+            throw new BudgetBuddyException("Please ensure that your parameters are in the right order.");
+        }
+
+        if (indexOfMinAmountPrefix > indexOfMaxAmountPrefix) {
+            throw new BudgetBuddyException("Please ensure that your parameters are in the right order.");
+        }
+
+    }
+
     private static void checkForInvalidParameters(String input) {
         if (!input.contains("d/") || !input.contains("morethan/") || !input.contains("lessthan/")) {
             throw new IllegalArgumentException("Please Ensure that you include d/, morethan/ and lessthan/");
@@ -37,7 +52,7 @@ public class FindExpensesCommandCreator extends CommandCreator {
 
         int endIndexOfMaxAmount = input.length();
 
-        String maxAmountAsString = input.substring(startIndexOfMaxAmount, endIndexOfMaxAmount);
+        String maxAmountAsString = input.substring(startIndexOfMaxAmount, endIndexOfMaxAmount).trim();
 
         if (maxAmountAsString.trim().isEmpty()) {
             return null;
@@ -53,9 +68,9 @@ public class FindExpensesCommandCreator extends CommandCreator {
         int startIndexOfMinAmount = indexOfMinAmountPrefix + MINAMOUNT_PREFIX.length();
 
         int indexOfMaxAmountPrefix = input.indexOf(MAXAMOUNT_PREFIX);
-        int endIndexOfMinAmount = indexOfMaxAmountPrefix - 1;
+        int endIndexOfMinAmount = indexOfMaxAmountPrefix;
 
-        String minAmountAsString = input.substring(startIndexOfMinAmount, endIndexOfMinAmount);
+        String minAmountAsString = input.substring(startIndexOfMinAmount, endIndexOfMinAmount).trim();
 
         if (minAmountAsString.trim().isEmpty()) {
             return null;
@@ -71,7 +86,7 @@ public class FindExpensesCommandCreator extends CommandCreator {
         int startIndexOfDescription = indexOfDescriptionPrefix + DESCRIPTION_PREFIX.length();
 
         int indexOfMinAmountPrefix = input.indexOf(MINAMOUNT_PREFIX);
-        int endIndexOfDescription = indexOfMinAmountPrefix - 1;
+        int endIndexOfDescription = indexOfMinAmountPrefix;
 
         String description = input.substring(startIndexOfDescription, endIndexOfDescription).trim();
 
@@ -102,7 +117,7 @@ public class FindExpensesCommandCreator extends CommandCreator {
     private static void compareMinAndMaxAmount(Double minAmount, Double maxAmount) throws BudgetBuddyException{
 
         if (minAmount != null && maxAmount != null) {
-            if (minAmount >= maxAmount) {
+            if (minAmount > maxAmount) {
                 throw new BudgetBuddyException("Ensure minimum amount is smaller than maximum amount");
             }
         }
@@ -125,11 +140,12 @@ public class FindExpensesCommandCreator extends CommandCreator {
 
         try {
             checkForInvalidParameters(input);
+            checkForOutOfOrderParameters(input);
             checkForDuplicateParameters(input, "d/");
             checkForDuplicateParameters(input, "morethan/");
             checkForDuplicateParameters(input, "lessthan/");
 
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | BudgetBuddyException e) {
             System.out.println(e.getMessage());
             return null;
         }
