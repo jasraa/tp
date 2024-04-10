@@ -11,6 +11,8 @@ public class CurrencyConverter {
 
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Map<Currency, Double> exchangeRates;
+    private Ui ui = new Ui();
+
     public CurrencyConverter() {
         this.exchangeRates = new HashMap<>();
         // Initialize exchange rates with default values
@@ -24,7 +26,6 @@ public class CurrencyConverter {
         exchangeRates.put(Currency.getInstance("HKD"), 5.80);
     }
 
-    private Ui ui = new Ui();
 
     /**
      * Converts an amount from one currency to another using exchange rates.
