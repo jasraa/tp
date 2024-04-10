@@ -89,8 +89,8 @@ everytime they leave/reopen the application
 
 #### Documentation
 Developer Guide : Pull Requests [#108](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/108),[#77](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/77), [#76](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/76), [#67](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/76)
-  1. Added diagrams and documentation for the features `Recurring Expenses`, `Menu` and `Find`
-  2. Added diagrams documentation for the `Introduction`, `Setup Guide` and `Design` sections
+  1. Added diagrams and documentation for the features `Recurring Expenses`, `Menu` and `Find` under `Implementation` Section
+  2. Added diagrams and documentation for the `Introduction`, `Setup Guide` and `Design` sections
 
 
 User Guide : Pull Requests [#140](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/140),[#136](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/136), [#109](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/109), [#61](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/61)
@@ -100,6 +100,8 @@ User Guide : Pull Requests [#140](https://github.com/AY2324S2-CS2113-T12-3/tp/pu
 #### Community
 1. PRs reviewed : [#195](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/195), [#111](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/111), [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107), [#100](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/100), [#99](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/99)
 2. Provided support and help to teammates in bug-fixing and ideation of features. (Communication was done through text-messages and weekly-meeting calls, may contact group-mates to ascertain this)
+3. Provided DG Peer Review Comments for another team. [CS2113-F12-2 LifeTrack](https://github.com/nus-cs2113-AY2324S2/tp/pull/56)
+4. Reported bugs for another team during PE-D. [CS2113T-T09-1 MediTracker](https://github.com/AY2324S2-CS2113T-T09-1/tp/)
 
 
 
