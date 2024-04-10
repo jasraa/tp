@@ -1,5 +1,7 @@
 package seedu.budgetbuddy.commons;
 
+import seedu.budgetbuddy.Ui;
+
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,8 @@ public class CurrencyConverter {
         exchangeRates.put(Currency.getInstance("CNY"), 5.36);
         exchangeRates.put(Currency.getInstance("HKD"), 5.80);
     }
+
+    private Ui ui = new Ui();
 
     /**
      * Converts an amount from one currency to another using exchange rates.
@@ -184,13 +188,18 @@ public class CurrencyConverter {
 
         int numberOfExpenseList = recurringExpenseLists.getSize();
 
+        ui.printDivider();
+        System.out.println("Conversion for expenses in Recurring Expenses : ");
+
         for (int i = 0; i < numberOfExpenseList; i++) {
             int arrayIndexAsListNumber = i + 1;
             ExpenseList reccuringExpenseList = recurringExpenseLists.getExpenseListAtListNumber(arrayIndexAsListNumber);
+            System.out.print("Changing the default currency for " + reccuringExpenseList.getName() + ": ");
             convertExpenseCurrency(newCurrency, reccuringExpenseList);
         }
 
         System.out.println("Default currency for Recurring Expenses changed to " + newCurrency);
+        ui.printDivider();
     }
 
     public void convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList) {
