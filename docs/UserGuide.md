@@ -58,15 +58,22 @@ Example of usage:
 `menu 1` : Displays commands related to feature associated to menu list item 1
 
 ### Add Expense
-Adds new expense
+Records a new expense under a specific category with a detailed description.
 
 Format: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
 
 * Increments expense of the specified CATEGORY by AMOUNT given.
-* The `CATEGORY` must be one of the following pre-defined categories: "Housing",
-  "Groceries", "Utility", "Transport", "Entertainment" or "Others".
-* The `AMOUNT` must be a positive integer.
-* The `DESCRIPTION` can be any string.
+* The category under which the expense is to be recorded. It must match one of the 
+  pre-defined categories exactly (not case-insensitive):
+    Housing
+    Groceries
+    Utility
+    Transport
+    Entertainment
+    Others
+* The `AMOUNT` is the amount to add to the expense. It must be a positive number and can include 
+  up to two decimal places.
+* The `DESCRIPTION` is a brief description of the expense. Accepts any text string.
 
 Example of Usage:
 
@@ -74,15 +81,23 @@ Example of Usage:
 
 
 ### Add Savings
-Increase savings by specified amount to the savings list
+Adds a specified amount to the savings under a particular category.
 
 Format:  `add savings c/CATEGORY a/AMOUNT`
 
 * Increments savings of the specified CATEGORY by AMOUNT given.
-* The `CATEGORY` must be one of the following pre-defined categories: "Salary",
-  "Investments", "Gifts" or "Others".
-* The `AMOUNT` must be a positive integer.
-* The `DESCRIPTION` can be any string.
+* The category for the savings increment. It must be one of the pre-defined 
+  categories (not case-insensitive):
+    Salary
+    Investments
+    Gifts
+    Others
+* The `AMOUNT` is the amount to add to the savings. It must be a positive number 
+  and can include up to two decimal places.
+
+Example of Usage:
+
+`add savings c/Salary a/500.50`
 
 ### Add Split Expenses
 Add expenses that are meant for splitting among friends or colleague
