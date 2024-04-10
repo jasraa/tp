@@ -158,25 +158,36 @@ public class ExpenseList {
         assert category != null : "Category should not be null";
         assert amount != null : "Amount should not be null";
         assert description != null : "Description should not be null";
-
-        if (!categories.contains(category)) {
-            throw new BudgetBuddyException("The category '" + category + "' is not listed.");
+    
+        String matchedCategory = categories.stream()
+            .filter(existingCategory -> existingCategory.equalsIgnoreCase(category))
+            .findFirst()
+            .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
+    
+        if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up to maximum two decimal places.");
         }
+    
         double amountAsDouble;
         try {
             amountAsDouble = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
             throw new BudgetBuddyException("Invalid amount format. Amount should be a number.");
         }
-
+    
         if (amountAsDouble < 0) {
             throw new BudgetBuddyException("Expenses should not be negative.");
         }
-
-        Expense expense = new Expense(category, amountAsDouble, description);
+    
+        final double MAX_AMOUNT = 1_000_000_000_000.00;
+        if (amountAsDouble > MAX_AMOUNT) {
+            throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
+        }
+    
+        Expense expense = new Expense(matchedCategory, amountAsDouble, description);
         expenses.add(expense);
-
     }
+    
 
     /**
      * Edits an expense entry in the expenses list at the specified index. Updates the category,

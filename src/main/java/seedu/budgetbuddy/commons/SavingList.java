@@ -132,24 +132,41 @@ public class SavingList {
     }
 
     public void addSaving(String category, String amount) throws BudgetBuddyException{
-        if (!categories.contains(category)) {
-            throw new BudgetBuddyException("The category '" + category + "' is not listed.");
+        assert category != null : "Category should not be null";
+        assert amount != null : "Amount should not be null";
+        LOGGER.info("Adding saving...");
+    
+        String matchedCategory = categories.stream()
+            .filter(existingCategory -> existingCategory.equalsIgnoreCase(category))
+            .findFirst()
+            .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
+    
+        if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up to maximum two decimal places.");
         }
-        int amountInt = Integer.parseInt(amount);
-        if (amountInt < 0) {
-            try {
-                throw new Exception("Savings should not be negative");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+    
+        double amountDouble;
+        try {
+            amountDouble = Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a number.");
         }
-        Saving saving = new Saving(category, amountInt);
+        
+        if (amountDouble < 0) {
+            throw new BudgetBuddyException("Savings should not be negative.");
+        }
+    
+        final double MAX_AMOUNT = 1_000_000_000_000.00;
+        if (amountDouble > MAX_AMOUNT) {
+            throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
+        }
+    
+        Saving saving = new Saving(matchedCategory, amountDouble);
         savings.add(saving);
-
-        if (!categories.contains(category)) {
-            categories.add(category);
-        }
     }
+    
+    
+    
 
     /**
      * Edits the saving entry at the specified index. This method updates the category and amount

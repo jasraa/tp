@@ -22,15 +22,11 @@ public class AddSavingCommand extends Command {
     @Override
     public void execute(){
         try {
-            LOGGER.log(Level.INFO, "Adding savings to category: {0} with amount: ${1}", new Object[]{category, amount});
 
             savings.addSaving(this.category, this.amount);
-
-            LOGGER.log(Level.INFO, "Savings added to: {0} of ${1}", new Object[]{category, amount});
             System.out.println("Savings Added to: " + category + " of $" + amount);
         } catch (BudgetBuddyException e) {
             System.out.println(e.getMessage());
-            LOGGER.log(Level.SEVERE, "Exception while adding savings", e);
         }
     }
 }
