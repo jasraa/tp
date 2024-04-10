@@ -24,7 +24,7 @@ public class FindExpensesCommand extends Command {
         ui = new Ui();
         this.expenses = expenses;
 
-        if(description == null) {
+        if(description == null || description.isEmpty()) {
             this.description = "";
         } else {
             this.description = description;
@@ -39,7 +39,7 @@ public class FindExpensesCommand extends Command {
         System.out.println("Looking for Expenses with the following parameters : ");
 
         System.out.println("Description : ");
-        if (description == null) {
+        if (description == null || description.isEmpty()) {
             System.out.println("N.A");
         } else {
             System.out.println(description);

@@ -4,7 +4,7 @@ import seedu.budgetbuddy.commons.Saving;
 import seedu.budgetbuddy.commons.SplitExpense;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.commons.Expense;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.commons.RecurringExpenseList;
 import seedu.budgetbuddy.commons.DefaultCurrency;
 
@@ -82,7 +82,7 @@ public class Storage {
             int indexOfStartOfListName = indexOfStartExclamation + 3;
 
             int indexOfEndExclamation = line.indexOf("!!!", 4);
-            int indexOfEndOfListName = indexOfEndExclamation - 1;
+            int indexOfEndOfListName = indexOfEndExclamation;
 
             String name = line.substring(indexOfStartOfListName, indexOfEndOfListName).trim();
             ExpenseList expenses = new RecurringExpenseList(name, new ArrayList<>());
@@ -109,7 +109,7 @@ public class Storage {
         }
 
     }
-    public RecurringExpensesList loadRecurringExpensesList() throws IOException{
+    public RecurringExpenseLists loadRecurringExpensesList() throws IOException{
         File file = new File(filePath);
         ArrayList<ExpenseList> recurringExpenses = new ArrayList<>();
 
@@ -126,30 +126,30 @@ public class Storage {
 
             scanner.close();
 
-            RecurringExpensesList recurringExpensesList = new RecurringExpensesList(recurringExpenses);
-            return recurringExpensesList;
+            RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists(recurringExpenses);
+            return recurringExpenseLists;
         } catch (Exception e) {
             LOGGER.log(Level.INFO, "Exception successfully caught. Error has been handled");
             System.out.println(e.getMessage());
             System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
             resetRecurringExpensesListFile();
-            return new RecurringExpensesList();
+            return new RecurringExpenseLists();
         }
 
     }
 
-    public void saveRecurringExpenses(RecurringExpensesList recurringExpensesList)
+    public void saveRecurringExpenses(RecurringExpenseLists recurringExpenseLists)
             throws InvalidRecurringExpensesFileException, IOException {
 
         ensureDirectoryExists();
 
         try {
             FileWriter writer = new FileWriter(filePath, false);
-            int numberOfRecurringExpenseList = recurringExpensesList.getSize();
+            int numberOfRecurringExpenseList = recurringExpenseLists.getSize();
 
             for (int i = 0; i < numberOfRecurringExpenseList; i++) {
                 int listNumber = i + 1;
-                ExpenseList expenseList = recurringExpensesList.getExpenseListAtListNumber(listNumber);
+                ExpenseList expenseList = recurringExpenseLists.getExpenseListAtListNumber(listNumber);
                 ArrayList<Expense> expenses = expenseList.getExpenses();
                 String listName = expenseList.getName();
 
