@@ -23,9 +23,14 @@ public class SplitExpense extends Transaction{
     public double calculateAmountPerPerson() {
         double amountValue = Double.parseDouble(amount);
         double numberOfPeopleValue = Double.parseDouble(numberOfPeople);
-        return amountValue / numberOfPeopleValue;
+    
+        double rawAmountPerPerson = amountValue / numberOfPeopleValue;
+        
+        double roundedAmountPerPerson = Math.round(rawAmountPerPerson * 100) / 100.0;
+        
+        return roundedAmountPerPerson;
     }
-
+    
     public Boolean isExpenseSettled() {
         return false;
     }
