@@ -9,19 +9,19 @@ import java.util.ArrayList;
  * This class provides methods to add, remove and manage the list of ExpenseList
  *
  */
-public class RecurringExpensesList {
+public class RecurringExpenseLists {
     protected ArrayList<ExpenseList> recurringExpenses;
 
     Ui ui = new Ui();
 
-    public RecurringExpensesList(ArrayList<ExpenseList> recurringExpenses) {
+    public RecurringExpenseLists(ArrayList<ExpenseList> recurringExpenses) {
         this.recurringExpenses = recurringExpenses;
     }
 
     /**
      * Constructs an RecurringExpensesList object with an empty ArrayList
      */
-    public RecurringExpensesList() {
+    public RecurringExpenseLists() {
         this.recurringExpenses = new ArrayList<>();
     }
 
@@ -109,7 +109,4 @@ public class RecurringExpensesList {
         int listNumberAsArrayPosition = listNumber - 1;
         return recurringExpenses.get(listNumberAsArrayPosition);
     }
-
-
-
 }

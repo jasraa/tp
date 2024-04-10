@@ -1,11 +1,12 @@
 package seedu.budgetbuddy.commons;
 
-public class SplitExpense {
+public class SplitExpense extends Transaction{
     private final String amount;
     private final String description;
     private final String numberOfPeople;
 
     public SplitExpense(String amount, String numberOfPeople, String description) {
+        super("Split Expense", Double.parseDouble(amount));
         this.amount = amount;
         this.numberOfPeople = numberOfPeople;
         this.description = description;
@@ -14,11 +15,7 @@ public class SplitExpense {
     public String getNumberOfPeople() {
         return numberOfPeople;
     }
-
-    public String getAmount() {
-        return amount;
-    }
-
+    
     public String getDescription() {
         return description;
     }
@@ -38,4 +35,5 @@ public class SplitExpense {
         return "Number of People: " + numberOfPeople + " Amount: " + amount + " Description: " +
                 description + " Amount per person: " + calculateAmountPerPerson();
     }
+
 }

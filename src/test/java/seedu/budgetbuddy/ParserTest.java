@@ -6,7 +6,7 @@ import seedu.budgetbuddy.command.FindExpensesCommand;
 import seedu.budgetbuddy.command.MenuCommand;
 import seedu.budgetbuddy.command.RecurringExpenseCommand;
 import seedu.budgetbuddy.commons.ExpenseList;
-import seedu.budgetbuddy.commons.RecurringExpensesList;
+import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.commons.SplitExpenseList;
 
@@ -23,7 +23,7 @@ public class ParserTest {
         Parser parser = new Parser();
         ExpenseList expenses = new ExpenseList();
         SavingList savings = new SavingList();
-        RecurringExpensesList expensesList = new RecurringExpensesList();
+        RecurringExpenseLists expensesList = new RecurringExpenseLists();
         SplitExpenseList splitExpenseList = new SplitExpenseList();
         Command invalidCommand = parser.parseCommand(expenses, savings, splitExpenseList,
                 expensesList, "NotaCommand");
@@ -36,7 +36,7 @@ public class ParserTest {
         Parser parser = new Parser();
         ExpenseList expenses = new ExpenseList();
         SavingList savings = new SavingList();
-        RecurringExpensesList expensesList = new RecurringExpensesList();
+        RecurringExpenseLists expensesList = new RecurringExpenseLists();
         SplitExpenseList splitExpenseList = new SplitExpenseList();
 
         String input = "menu 1";
@@ -51,7 +51,7 @@ public class ParserTest {
         Parser parser = new Parser();
         ExpenseList expenses = new ExpenseList();
         SavingList savings = new SavingList();
-        RecurringExpensesList expensesList = new RecurringExpensesList();
+        RecurringExpenseLists expensesList = new RecurringExpenseLists();
         SplitExpenseList splitExpenseList = new SplitExpenseList();
 
         String input = "find expenses d/hello morethan/200 lessthan/300";
@@ -66,7 +66,7 @@ public class ParserTest {
         Parser parser = new Parser();
         ExpenseList expenses = new ExpenseList();
         SavingList savings = new SavingList();
-        RecurringExpensesList expensesList = new RecurringExpensesList();
+        RecurringExpenseLists expensesList = new RecurringExpenseLists();
         SplitExpenseList splitExpenseList = new SplitExpenseList();
 
         String input = "rec newlist listname";
