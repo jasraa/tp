@@ -322,11 +322,55 @@ based on user input. The `ReduceSavingCommand` class uses a `SavingList` object 
 the reduction operation using the provided index and amount. Below is the relevance of these attributes:
 
 | Class Attribute | Variable Type | Relevance                                                                    |
-|----------------|---------------|------------------------------------------------------------------------------|
-| savings        | SavingList    | The `SavingList` object containing the list of savings which can be reduced  |
-| index          | Integer       | The `ExpenseList` object containing the list of expenses                     |
-| filterCategory | String        | The category to filter the savings by, if provided                           |
+|-----------------|---------------|------------------------------------------------------------------------------|
+| savings         | SavingList    | The `SavingList` object containing the list of savings which can be reduced  |
+| category        | String        | TThe category of savings to reduce                                           |
+| amount          | double        | The amount by which the savings in the specified category should be reduced  |
 
+When `BudgetBuddy` runs the `execute()` method through `command.execute()`, the `ReduceSavingCommand` leverages the reduceSavingsByCategory method from the `SavingList` class:
+
+| Method                      | Return Type | Relevance                                                        |
+|-----------------------------|-------------|------------------------------------------------------------------|
+| reduceSavingsByCategory()   | void        | Decreases the savings by a specified amount in a given category  |
+
+The user interaction for reducing savings follows these steps:
+
+1. The user commands to reduce savings by inputting `reduce savings c/[category] a/[amount]`.
+2. `BudgetBuddy` processes this input with the help of a `Parser`, which identifies the suitable `CommandCreator`.
+3. `Parser` constructs a `ReduceSavingCommand` object with the extracted category and amount.
+4. `BudgetBuddy` then executes the `ReduceSavingCommand`.
+5. The `execute()` method within ReduceSavingCommand calls the SavingList's reduceSavingsByCategory function.
+6. The `reduceSavingsByCategory` method performs the deduction and updates the savings amount.
+
+The following UML Sequence diagram below shows how the Reduce savings Feature Command is executed when a user
+inputs a valid reduce savings command:
+(will insert diagram soon)
+
+### 4.7 Delete Expenses Feature
+The Delete Expense feature grants users the capability to remove expenses they have previously entered. Managed by the 
+DeleteExpenseCommand class, this feature is initialized through DeleteExpenseCommandCreator. During the creation process, 
+the command is provided with an `ExpenseList` object and an `index` indicating the specific expense to be deleted. 
+The following table outlines the significance of these attributes:
+
+| Class Attribute | Variable Type | Relevance                                                              |
+|-----------------|---------------|------------------------------------------------------------------------|
+| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses that can be edited  |
+| index           | Integer        | The edited category for the expense in the specified index             |
+
+On invocation of the `execute()` method, as part of the `command.execute() `flow within BudgetBuddy, the DeleteExpenseCommand 
+object engages the deleteExpense() method from the ExpenseList class.
+
+| Method                      | Return Type | Relevance                                                 |
+|-----------------------------|-------------|-----------------------------------------------------------|
+| deleteExpense()             | void        | Removes the expense at the specified index from the list  |
+
+The user interaction for deleting expenses follows these steps:
+1. The user submits a delete command in the format `delete expense i/index`, with `index` specifying the expense to be deleted.
+2. `BudgetBuddy` receives the command and employs the Parser to deconstruct it.
+3. The `Parser` discerns the delete command, extracting the index value and forming a DeleteExpenseCommand object.
+4. `BudgetBuddy` triggers the DeleteExpenseCommand.execute() method. 
+5. Inside `execute()`, the `deleteExpense()` method is called on `ExpenseList`, with `index` indicating the targeted expense. 
+6. If the index is valid, the expense is removed, and a confirmation message is printed to the console.
 
 
 ### Listing Feature (List Savings)
