@@ -521,7 +521,35 @@ Here's the step-by-step process when the user uses the Currency Converter featur
 
 
 #### Sequence Diagram
+
+The sequence diagram would be segmented into the different features that utilises the CurrencyConverter class.
+
+Main Sequence Diagram before Execution:
 ![Sequence diagram for CurrencyConverter Feature](diagrams/CurrencyConverter_SequenceDiagram.png)
+
+Upon execution, the following respective conversion functions will run:
+
+<!-- @@author sweijie24-->
+Sequence Diagram for convertExpenseCurrency():
+![Sequence diagram for convertExpenseCurrency method](diagrams/convertExpenseCurrency_SequenceDiagram.png)
+
+<!-- @@author sweijie24-->
+Sequence Diagram for convertSavingCurrency():
+![Sequence diagram for convertSavingCurrency](diagrams/convertSavingCurrency_SequenceDiagram.png)
+
+<!-- @@author itsmejr257-->
+Sequence Diagram for convertRecurringExpensesCurrency():
+![Sequence diagram for convertRecurringExpensesCurrency](diagrams/CurrencyConverter_RecurringExpenses_SequenceDiagram.png)
+
+<!-- @@author yyangdaa-->
+Sequence Diagram for convertSplittedExpenseCurrency():
+![]()
+
+<!-- @@author dheekshitha2-->
+Sequence Diagram for convertBudgetCurrency():
+![Sequence diagram for budgetCurrencyConverter](diagrams/budgetCurrencyConverter.png)
+
+
 
 ### Menu Feature
   
