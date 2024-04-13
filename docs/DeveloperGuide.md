@@ -7,81 +7,6 @@
 
 ## Design & implementation
 
-### Budget Management
-
-#### Implementation
-The Budget Management feature allows users to set financial limits for the various categories and monitor their spending. 
-This feature's objective is to give users the ability to stay within their financial goals and avoid overspending.
-
-This feature is orchestrated by `ListBudgetCommand` and `SetBudgetCommand`, which are initialised by the `Parser` 
-class. Below is a description of the key class attributes and methods involved in the budget setting and listing 
-process:
-
-##### Class Attributes for `SetBudgetCommand`:
-| Class Attribute | Variable Type | Relevance                                                           |
-|-----------------|---------------|---------------------------------------------------------------------|
-| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
-| category        | String        | The category for which the budget is being set                      |
-| budget          | double        | The budget amount to be set for the category                        |
-
-##### Class Attributes for `ListBudgetCommand`:
-| Class Attribute | Variable Type | Relevance                                                           |
-|-----------------|---------------|---------------------------------------------------------------------|
-| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
-
-
-Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`, `SetBudgetCommand` will update the 
-budget in `ExpenseList` using `setBudget`. Similarly, `ListBudgetCommand` will fetch and display all categories with 
-their budgets using `getBudgets`, and highlight those that are above the set budget.
-
-##### Key Methods used from `ExpenseList`
-| Method                      | Return Type   | Relevance                                                          |
-|-----------------------------|---------------|--------------------------------------------------------------------|
-| setBudget(category, budget) | void          | Sets or updates the budget for a given category in the ExpenseList |
-| getBudgets()                | List<Budget>  | Retrieves the list of all budgets set                              |
-
-The `ListBudgetCommand`'s updated execution function now features an improved display that not only shows the budget, 
-spent amount, and remaining balance but also clearly indicates when the budget has been exceeded. If the expenses 
-surpass the budget, instead of showing a negative remaining balance, it displays "Exceeded", providing a straightforward
-and immediate visual cue that the budget limits have been surpassed.
-
-The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
-by what amount, making it easy for users to identify areas of concern.
-
-
-#### Sequence diagrams
-
-##### Setting a Budget
-The following UML Sequence diagram shows how `SetBudgetCommand` works when a user sets a budget for a category in the
-following format: `set budget c/<Category> b/<Amount>`
-
-<img alt="SetBSD.png" height="400" src="SetBSD.png" width="700"/>
-
-
-##### Printing Budgets
-The following UML Sequence diagram shows how `ListBudgetCommand` works when a user checks the budget status with the
-command: `print budget`
-
-<img alt="ListBSD2.png" height="400" src="ListBSD2.png" width="700"/>
-
-#### Class diagram
-The class diagram below outlines the relationships between the classes involved in the Budget Management feature:
-
-<img alt="ClassDiagram2.png" height="800" src="ClassDiagram2.png" width="700"/>
-
-#### Activity diagram
-
-The activity diagram provides an overview of the Budget Management feature's workflow:
-
-<img alt="ActivityDiagram.png" height="600" src="ActivityDiagram.png" width="700"/>
-
-#### Examples of usage
-
-1. The user types `set budget c/food b/500` to set a budget of $500 for the food category. The Parser class creates a 
-`SetBudgetCommand` object which calls `setBudget()` on the `ExpenseList` object.
-2. To view budgets, the user enters `print budget`. The Parser class creates a `ListBudgetCommand` object. This command 
-retrieves the budgets using `getBudgets()` and displays them, also indicating any categories that are over budget.
-
 ## 1. Introduction
 Welcome to the Developer Guide for BudgetBuddy! This guide has been created to help you current and future 
 developers of Budget understand how BudgetBuddy works and aid developers in easily adding new features, 
@@ -679,26 +604,23 @@ this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpen
 
 
 ### Setting Budget Feature
-The Set Budget feature allows users to allocate a specific budget to various categories. This feature is managed by the
-SetBudgetCommand class, which is instantiated by the SetBudgetCommandCreator as a result of the Parser class
-interpretation. Within the SetBudgetCommand object, the following variables are initialized:
+The Budget Management feature allows users to set financial limits for the various categories and monitor their spending.
+This feature's objective is to give users the ability to stay within their financial goals and avoid overspending.
 
-| Variable    | Variable Type | Relevance                                                               |                                                           
-|-------------|---------------|-------------------------------------------------------------------------|
-| expenseList | ExpenseList   | The ExpenseList object containing all the categories to set budgets for |
-| category    | String        | The category for which the budget is to be set                          |
-| budget      | double        | The financial limit allocated to the specified category                 |
+This feature is orchestrated by `ListBudgetCommand` and `SetBudgetCommand`, which are initialised by the `Parser`
+class. Below is a description of the key class attributes and methods involved in the budget setting and listing
+process:
 
-When the execute() method is called via command.execute(), the SetBudgetCommand utilizes methods from the ExpenseList
-class to apply the budget:
+##### Class Attributes for `SetBudgetCommand`:
+| Class Attribute | Variable Type | Relevance                                                           |
+|-----------------|---------------|---------------------------------------------------------------------|
+| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
+| category        | String        | The category for which the budget is being set                      |
+| budget          | double        | The budget amount to be set for the category                        |
 
-| Method      | Return Type | Relevance                                                |                                                           
-|-------------|-------------|----------------------------------------------------------|
-| expenseList | ExpenseList | Sets the budget for a specific category within the list  |
-
-The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid 
+The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to set a budget:
-![SeqDiagramBudget.png](SeqDiagramBudget.png)
+![sequenceDiagram_setBudget.jpg](diagrams/sequenceDiagram_setBudget.jpg)
 
 The sequence of operations for an example input, `set budget c/Transport b/500`, is as follows:
 1. BudgetBuddy receives the user input and utilizes the Parser to decipher it.
@@ -708,6 +630,33 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 5. The SetBudgetCommand object calls the setBudget() method on the ExpenseList, passing in the category and budget amount.
 6. The ExpenseList updates or creates a budget allocation for the specified category with the provided amount.
 7. A confirmation message is displayed in the console indicating the budget has been successfully set or updated.
+
+##### Class Attributes for `ListBudgetCommand`:
+| Class Attribute | Variable Type | Relevance                                                           |
+|-----------------|---------------|---------------------------------------------------------------------|
+| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
+
+The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
+command to list budgets:
+![sequenceDiagram_listBudget.png](diagrams/sequenceDiagram_listBudget.png)
+
+Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`, `SetBudgetCommand` will update the
+budget in `ExpenseList` using `setBudget`. Similarly, `ListBudgetCommand` will fetch and display all categories with
+their budgets using `getBudgets`, and highlight those that are above the set budget.
+
+##### Key Methods used from `ExpenseList`
+| Method                      | Return Type   | Relevance                                                          |
+|-----------------------------|---------------|--------------------------------------------------------------------|
+| setBudget(category, budget) | void          | Sets or updates the budget for a given category in the ExpenseList |
+| getBudgets()                | List<Budget>  | Retrieves the list of all budgets set                              |
+
+The `ListBudgetCommand`'s updated execution function now features an improved display that not only shows the budget,
+spent amount, and remaining balance but also clearly indicates when the budget has been exceeded. If the expenses
+surpass the budget, instead of showing a negative remaining balance, it displays "Exceeded", providing a straightforward
+and immediate visual cue that the budget limits have been surpassed.
+
+The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
+by what amount, making it easy for users to identify areas of concern.
 
 
 ## 5. Product scope
