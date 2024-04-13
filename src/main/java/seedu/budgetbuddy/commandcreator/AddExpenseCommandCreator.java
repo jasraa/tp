@@ -5,8 +5,6 @@ import seedu.budgetbuddy.command.AddExpenseCommand;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
-import java.util.logging.Level;
-
 /**
  * Creates an AddExpenseCommand object.
  */
