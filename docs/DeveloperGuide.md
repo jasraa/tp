@@ -100,7 +100,7 @@ This section describes how to set up the coding environment, along with the tool
 ### 3.1 Architecture
 The following diagram provides a rough overview of how BudgetBuddy is built
 
-![Diagram of overview of BudgetBuddy](diagrams/Introduction.jpg)
+![Diagram of overview of BudgetBuddy](diagrams/diagram_Introduction.jpg)
 
 `BudgetBuddy` is the main class of the application and directly interacts with the user. `BudgetBuddy` 
 passes along the input into the `Parser`. The `Parser` creates a `CommandCreator` object depending on the user's input
@@ -126,7 +126,7 @@ Here are some examples :
 The Ui Class is used to print certain elements to the CLI. In particular, it consists of the Welcome Message,
 Goodbye Message, Divider Lines and all the corresponding commands' command format.
 
-#### 3.5 CommandCreator Class
+#### 3.4 CommandCreator Class
 The CommandCreator class has multiple subclasses, which corresponds to a specific function of the application.
 Within the CommandCreator classes, it handles making sense of the user input, obtaining the relevant parameters, and finally
 creating the `Command` class to be executed.
@@ -138,12 +138,12 @@ The association between the `Command` and `CommandCreator` can be seen in their 
 create a `MenuCommand` class when its createCommand() method is called. Similarly, `FindExpensesCommandCreator` would
 create a `FindCommand` class when its createCommand() method is called.
 
-For clarity, unlike the `BudgetBudget` and `Parser` class, where only **one** instance of them is used for the entire
+For clarity, unlike the `BudgetBuddy` and `Parser` class, where only **one** instance of them is used for the entire
 application, a **new** `CommandCreator` subclass is instantiated every time a user provides an input. Hence,
 a created `CommandCreator` will always be specific to, and only handle `one` user input. This will be further illustrated in the
 UML Sequence Diagram provided in section `3.4 Command Class`
 
-#### 3.4 Command Class
+#### 3.5 Command Class
 The Command class, similar to the CommandCreator class, contains multiple subclasses, all corresponding to a specific
 function/feature of the application. Stated in section`3.5 CommandCreator Class`
 , each subclass of the `Command` Object is created by its associated `CommandCreator`. 
@@ -153,8 +153,7 @@ by its subclasses. What each Command subclass does when its `execute()` method i
 more detail in the Implementation section.
 
 For clarity, similar to the `CommandCreator` class, a **new** `Command` subclass is instantiated every time a
-user provides an input. As such a created `Command` will always be specific to, and only handle `one` user input.
-
+user provides an input. As such, a created `Command` will always be specific to, and only handle `one` user input.
 
 The following UML Sequence Diagram depicts the process of what happens
 when a user input is passed through the application, up till the point when the command gets executed :
@@ -221,15 +220,8 @@ The list provides predefined options for users to select when adding or editing 
 It helps organize expenses into meaningful groups, 
 allowing users to track and analyze their spending habits across different expense categories.
 
-This class also contains the methods to handle any user interactions with the list of expenses. The methods and a
-brief explanation on their functionality is as follows :
-
-* listExpenses(String filterCategory) :
-  * The core functionality of this class. It lists a user's total expenses, optionally filtered by category as per user
-  input.
-  * The amounts being shown are dependent on the currency being used.
-* calculateTotalExpenses() :
-  * The method used to calculate all expenses found in the expense list.
+This class also contains the methods to handle any user interactions with the list of expenses. These methods would
+be further explained in their corresponding `Implementation` sections.
 
 ##### 3.6.4 Saving
 This class holds details regarding a saving a user has. Within this class, it has 3 class-level variables :
@@ -268,24 +260,13 @@ The list provides predefined options for users to select when adding or editing 
 It helps organize savings into meaningful groups, allowing users to track and 
 manage their savings across different categories.
 
-This class also contains the methods to handle any user interactions with the list of savings. The methods and a
-brief explanation on their functionality is as follows :
-
-* `listSavings(String filterCategory, ExpenseList expenseList)` :
-  * The core functionality of this class. It prints the initial savings amount, expenses deducted, and the remaining 
-  amount. 
-  * It is able to print only the filtered category as per user input.
-  * The amounts being shown is dependent on the currency being used.
-* `findTotalSavings()` :
-  * Calculates the total savings amount by summing up the amounts of all savings.
-* `calculateRemainingSavings(double initialAmount, double totalExpenses)` :
-  * Calculates the remaining savings amount after deducting total expenses from the initial amount.
-  * Provides clarity on how much savings user has left to spend.
+This class also contains the methods to handle any user interactions with the list of savings. These methods would
+be further explained in their corresponding `Implementation` sections.
 
 ##### 3.6.6 RecurringExpenseList
 This class represents a list of recurring expenses for the Recurring Expense feature. Within this class, it has 
 1 class-level variable : `String name`. Which is used to store the name of the list. Given that its overall 
-functionality is similar to ExpenseList class, it inherits the ExpenseList class.
+functionality is similar to ExpenseList class, it **inherits** the ExpenseList class.
 
 ##### 3.6.7 RecurringExpenseLists
 This class represents the list of all lists of recurring expenses for the Recurring Expense feature. Within this class,
@@ -293,7 +274,7 @@ it has only 1 class-level variable : `ArrayList<ExpenseList> recurringExpenses`.
 ExpenseList objects. This class contains all methods required for the overall Recurring Expense feature to work. 
 The implementation of these methods would be discussed in further detail in the **Implementation** section.
 
-For clarity, the follow Class Diagram depicts the associations between RecurringExpenseLists, RecurringExpenseList and
+For clarity, the following Class Diagram depicts the associations between RecurringExpenseLists, RecurringExpenseList and
 ExpenseList.
 
 ![Class Diagram](diagrams/classDiagram_RecurringExpenseLists.jpg)
@@ -532,8 +513,11 @@ utilizes methods from the `UI` class to display the relevant menu items. The uti
 discussed in `3.4 CommandClass`, the following Sequence Diagrams would omit the initial methods prior to the 
 MenuCommandCreator being created.
 
-The following UML Sequence Diagram shows how the MenuCommandCreator for Menu Commands work, NOTING that the Parser
+The following UML Sequence Diagram shows how the MenuCommandCreator for Menu Commands work and what
+will be returned to the Parser, which will ultimately be returned to BudgetBuddy.  Note that this diagram assumes that `Parser`
 has already detected that the user input is a menu command and has initialized a MenuCommandCreator object:
+
+
 ![Sequence Diagram for MenuCommandCreator for Menu Command](diagrams/sequenceDiagram_MenuCommandCreator.jpg)
 
 The following UML Sequence Diagram shows the processes of the MenuCommand upon the call of its execute() command:
@@ -561,12 +545,12 @@ and maximum amount. This feature is orchestrated by the `FindExpensesCommand` cl
 would have initialized it with 4 variables, an `ExpenseList` object,  along with a `description`, `minAmount` , 
 `maxAmount`. The relevance of these Class Attributes in `FindExpensesCommand` is as follows : 
 
-| Class Attribute | Variable Type | Relevance                                                                 |
-|-----------------|---------------|---------------------------------------------------------------------------|
-| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses which will be filtered |
-| description     | String        | The description to match against expenses in `expenses`                   |
-| minAmount       | Double        | The minimum amount matched expenses should be                             |
-| maxAmount       | Double        | The **maximum** amount matched expenses should be                         |
+| Variable Name | Variable Type | Relevance                                                                 |
+|---------------|---------------|---------------------------------------------------------------------------|
+| expenses      | ExpenseList   | ExpenseList Object containing the list of expenses which will be filtered |
+| description   | String        | The description to match against expenses in `expenses`                   |
+| minAmount     | Double        | The **minimum** amount matched expenses should be                         |
+| maxAmount     | Double        | The **maximum** amount matched expenses should be                         |
 
 
 Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`,
@@ -583,9 +567,10 @@ discussed in `3.4 CommandClass`, the following Sequence Diagrams would omit the 
 FindCommandCreator being created.
 
 The following UML Sequence diagram below shows how FindExpensesCommandCreator works to 
-obtain the relevant inputs for the Find Feature, NOTING that the Parser has already determined the input to be a find :
+obtain the relevant inputs for the FindExpensesCommand, NOTING that the Parser has already determined the input to be a find
 expenses command, and has also created the FindExpensesCommandCreator.
-![Sequence Diagram for FindFeatureCommandCreator](diagrams/sequenceDiagram_FindCommandCreator.jpg)
+
+![Sequence Diagram for FindFeatureCommandCreator](diagrams/sequenceDiagram_FindExpensesCommandCreator.jpg)
 
 Given that multiple methods are called in `FindExpensesCommandCreator`. The following is a step-by-step explanation for the processes that occur before the FindExpensesCommand is created :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -609,8 +594,9 @@ Three variables would be initialized.
       | description   | String        | 
       | minAmount     | Double        |
       | maxAmount     | Double        |
-10. Depending on which parameters were present, the corresponding input would be extracted and placed into each variable
+10. Depending on which parameters were present, the corresponding input would be extracted from the full user input and placed into each variable
 using the `FindExpensesCommandCreator#parse*()`, where `*` represents the variable name we wish to obtain.
+11. Note that any parameters left empty, would be treated as **null**.
 11. Should the values of `minAmount` and `maxAmount` not be empty,  a check is done to ensure `minAmount` is less than
 or equals to `maxAmount`. If this check does not pass, the function immediately returns `null`
 12. Finally, `FindExpensesCommandCreator#handleFindExpensesCommand()` creates and returns a 
@@ -623,25 +609,24 @@ find expenses command upon the call of its execute() method:
 
 ![Sequence diagram for Find Feature](diagrams/sequenceDiagram_FindExpensesCommand.jpg)
 
-The following is an example of the processes that occur when the user uses the find expenses feature:
-
 
 **Important Note** : Although d/ , morethan/ and lessthan/ are optional parameters, the optional component would mean
 user has left that option empty if not in use, e.t.c `find expenses d/ morethan/ lessthan/200`. Hence, 
-unused parameters are treated a null variables instead.
+unused parameters are treated as null variables instead.
 
 **Important Note 2** : Although the UI class is also initialized, the details of its use is omitted as its functionality in the
 Find Feature is trivial. In this case, the UI class is **only** used to print dividers.
 
+The following is an example of the processes that occur when the user uses the find expenses feature:
 1. The user types `find expenses d/bruno morethan/30 lessthan/200`. This input is passed through the `Parser`
 class from `BudgetBuddy`, which constructs a `FindExpenseCommandCreator` Object. The `FindExpenseCommandCreator` then
-creates a `FindExpenseCommand` object with its variables initialized to  with `expenses : current overall ExpenseList`,
+creates a `FindExpenseCommand` object with its variables initialized to `expenses : current overall ExpenseList`,
 `description : bruno`, `minAmount : 30`, `maxAmount : 200`, by calling `FindExpenseCommandCreator#createCommand()`.
 2. `Parser` returns this created `FindExpenseCommand` Object to `BudgetBuddy` and `BudgetBuddy` calls 
 `FindExpenseCommand#execute()`
 3. `execute()` is called, which initializes a variable `filteredExpenses` of type `ArrayList<Expense>`.
 4. `execute()`then calls `ExpenseList#filterexpenses()`, which returns the filtered expenses based on the `description`,
-`minAmount` and `maxAmount` into the `filteredExpenses` variable.
+`minAmount` and `maxAmount`, into the `filteredExpenses` variable.
 5.  If `filteredExpenses` is empty, "No Matching Expenses Found" is printed and `execute` ends here.
 6. If `filteredExpenses` is not empty, `execute()` then initializes a new variable `filteredExpenseList` 
 of type `ExpenseList` with `filteredExpenses` initialized as the `expenses` Class attribute.
@@ -653,7 +638,7 @@ the overall expenses in a single command. This feature includes the creation of 
 all/each list of expenses and the removal of each list of expenses. All functions are orchestrated by the 
 `RecurringExpenseCommand` class, which would have been created by the `RecurringExpenseCommandCreator`, which is in turn
 created by the `Parser` class. When `RecurringExpenseCommand#execute()` is called by `BudgetBuddy`, it utilizes methods
-present in `ExpenseList`, `RecurringExpenseList` and `RecurringExpensesList` to facilitate the relevant features.
+present in `ExpenseList`, `RecurringExpenseList` and `RecurringExpenseLists` to facilitate the relevant features.
 
 Within the RecurringExpenseCommand, the following variables would be initialized :
 
@@ -677,16 +662,17 @@ when `RecurringExpensesCommand#execute()` is called
 
 | commandType  | Calls Method                     | Uses Methods  From                                                                                               |                                                       
 |--------------|----------------------------------|------------------------------------------------------------------------------------------------------------------|
-| newlist      | addNewList()                     | `RecurringExpensesList#addNewRecurringList()`                                                                    |
-| viewlists    | printList()                      | `RecurringExpensesList#printAllRecurringLists()`                                                                 |
-| removelist   | removeList()                     | `RecurringExpensesList#removeList()`                                                                             |
-| newexpense   | addExpenseToList()               | `RecurringExpensesList#getExpenseListAtListNumber()`, `ExpenseList#addExpense()`                                 |
-| addrec       | addRecurringExpensesToExpenses() | `RecurringExpensesList#getExpenseListAtListNumber()`, `ExpenseList#getExpenses()`, `AddExpenseCommand#execute()` |
-| viewexpenses | printExpensesAtIndex             | `RecurringExpensesList#getExpenseListAtListNumber()` , `ExpenseList#listExpenses()`                              |                             |
+| newlist      | addNewList()                     | `RecurringExpenseLists#addNewRecurringList()`                                                                    |
+| viewlists    | printList()                      | `RecurringExpenseLists#printAllRecurringLists()`                                                                 |
+| removelist   | removeList()                     | `RecurringExpenseLists#removeList()`                                                                             |
+| newexpense   | addExpenseToList()               | `RecurringExpenseLists#getExpenseListAtListNumber()`, `ExpenseList#addExpense()`                                 |
+| addrec       | addRecurringExpensesToExpenses() | `RecurringExpenseLists#getExpenseListAtListNumber()`, `ExpenseList#getExpenses()`, `AddExpenseCommand#execute()` |
+| viewexpenses | printExpensesAtIndex             | `RecurringExpenseLists#getExpenseListAtListNumber()` , `ExpenseList#listExpenses()`                              |                             |
 
-From the table above, most commandTypes have a fairly straight forward process of calling a single method from the relevant classes, and followsHowever,
+From the table above, most commandTypes have a fairly straight forward process of calling a single method from the relevant classes, and follows
 a similar process to many of the previous features too. However, the `addrec` commandType would be the most complicated to follow, given that it utilizes 3 methods from three different classes. The following
-is a UML sequence diagram to illustrate the implementation of the addRecurringExpensesToExpenses() method in `RecurringExpenseCommand`
+is a UML sequence diagram to illustrate the implementation of the addRecurringExpensesToExpenses() method in `RecurringExpenseCommand`, upon the call of the `execute()`
+from `BudgetBuddy`
 
 ![Sequence Diagram for addRecurringExpensesToExpenses()](diagrams/sequenceDiagram_RecurringExpenseCommand.jpg)
 
@@ -788,11 +774,79 @@ type fast. It also provides the ability to deal with finances on a singular plat
 
 ## Glossary
 
-* *glossary item* - Definition
+* *recurring expenses* - A set of expenses which can be added to the overall expenses at any given point in time
+* *overall expenses* - Refers to the overall expense list. Etc, the expense list which expenses get added to when performing an add expense command.
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+### Displaying Commands
+1. Test Case : `menu`    
+Expected : Prints all possible menu items in the command line interface
+2. Test Case : `menu 1`  
+Expected : Prints all commands related to Manage Expenses` in the command line interface
+3. Test Case : `menu string`  
+Expected : An error message is printed in the command line interface
+4. Test Case : `menu 999`  
+Expected : An error message is printed in the command line interface
+
+### Finding an expense
+**Prerequisites** : Some expenses has been added to the overall expense.
+1. Test Case : `find expenses d/cat morethan/ lessthan/`    
+Expected : If there are expenses matching/containing "cat", the found expenses are printed. Else, message stating no matching expenses found is printed in command line interface
+2. Test Case : `find expenses d/cat morethan/20 lessthan/`  
+Expected : If there are expenses matching/containing "cat" and is more than 20, the found expenses are printed. Else, message stating no matching expenses found is printed in command line interface
+3. Test Case : `find expenses d/cat morethan/string lessthan`  
+Expected : An error message is printed in the command line interface
+
+### Creating a new list of recurring expenses
+1. Test Case : `rec newlist streaming`  
+Expected : A new list created called `streaming`
+2. Test Case : `rec newlist  `  
+Expected : An error message will be printed in the command line interface
+3. Test Case : `rec newlist |`  
+Expected : An error message will be printed in the command line interface
+
+### Listing all lists of recurring expenses
+1. Test Case : `rec viewlists`, with already added lists    
+Expected : All lists of recurring expenses will be printed in the command line interface
+2. Test Case : `rec viewlists`, with no added lists  
+Expected : Message stated there being no recurring expenses is printed in the command line interface
+3. Test Case : `rec viewlists extra`  
+Expected : `viewlists` should still work as intended, with no exceptions being thrown
+
+### Removing a list of recurring expenses
+1. Test Case : `rec removelist 1`, with a list being present at the list number `1` during `rec viewlists`    
+Expected : List located at list number 1 will be removed, and a success message is printed in the command line interface
+2. Test Case : `rec removelist string`  
+Expected : Error message will be printed in the command line interface, along with the proper command format
+3. Test Case : `rec removelist -1`  
+Expected : Error message will be printed in the command line interface
+4. Test Case : `rec removelist  `  
+Expected : Error message will be printed in the command line interface
+
+### Adding an expense into a list of recurring expenses
+1. Test Case : `rec newexpense to/1 c/Entertainment a/200 d/description`, with a list being present at list number `1`  
+Expected : Expense with details Entertainment, 200, description will be added to list at list number `1`
+2. Test Case : `rec newexpense to/1`    
+Expected : Error message will be printed in the command line interface
+3. Test Case : `rec newexpense to/string c/Entertainment a/200 d/description`  
+Expected : Error message will be printed in the command line interface
+
+### Viewing all expenses in a list of recurring expenses
+1. Test Case : `rec viewexpenses 1`, with a list being present at list number `1` and contains expenses inside  
+Expected : Prints all expenses present in the recurring expense list 1
+2. Test Case : `rec viewexpenses 1` with a list not being present  
+Expected : Error message will be printed in the command line interface  
+3. Test Case : `rec viewexpenses 1` with a list being present at list number `1`, but does not contain any expenses inside  
+Expected : Prints an empty set of expenses to command line interface, with expenses at $0
+
+### Adding all expenses in a list of recurring expenses to the overall expenses
+1. Test Case : `rec addrec 1`, with a list being present at list number `1` and contains expense inside    
+Expected : Adds all expenses present in recurring expense list 1 to the overall expenses
+2. Test Case : `rec addrec 1`, with a list being present a list number `1` but does not contain any expenses inside  
+Expected : A message is provided in the command line interface informing the user that nothing has been added
+3. Test Case : `rec addrec 1`, with a list not being present at list number `1`  
+Expected : Error message will be printed in the command line interface
 
 ### Add Expense Feature
 
