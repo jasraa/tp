@@ -1192,6 +1192,72 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * Test Case: `add expense c/abc a/50 d/Bus fare`
   * Expected: Error message due to invalid category. Command line interface will instruct on correct format.
 
+### 2.3 Adding Savings
+
+* 2.3.1 Adding Valid Savings
+  * Test Case ID: addSaving_validInput_success
+  * Description: Tests adding a valid saving entry to the SavingList.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `Salary`, `500`
+  * Expected Outcome: The savings list size should be `1`. The category of the saved entry should be `Salary`. The amount of the saved entry should be `500`.
+
+* 2.3.2 Adding Saving with Invalid Amount Format
+  * Test Case ID: addSaving_invalidAmount_exceptionThrown
+  * Description: Tests adding a saving with a non-numeric amount.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `Salary`, `abc`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a positive number with up to maximum two decimal places.`
+
+* 2.2.3 Adding Saving with Negative Amount
+  * Test Case ID: addSaving_negativeAmount_exceptionThrown
+  * Description: Tests adding a saving with a negative amount.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `Salary`, `-1.00`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a positive number with up to maximum two decimal places.`
+
+* 2.2.4 Adding Saving with Non-Listed Category
+  * Test Case ID: addSaving_nullCategory_exceptionThrown
+  * Description: Tests adding a saving with a category that is not listed in the predefined categories.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `abc`, `500`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `The category 'abc' is not listed.`
+
+### 2.4 Add Split Expenses
+
+* 2.4.1 Adding a Valid Split Expense
+  * Test Case ID: addSplitExpense_addingsplitexpense_success
+  * Description: Tests adding a valid split expense entry to the `SplitExpenseList`.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `12`, `12`, `Lunch`
+  * Expected Outcome: The split expenses list size should be `1`. The number of people for the split expense should be `12`. The description of the split expense should be `Lunch`
+
+* 2.4.2 Adding Split Expense with Invalid Amount Format
+  * Test Case ID: addSplitExpense_invalidAmount_exceptionThrown
+  * Description: Tests adding a split expense with a non-numeric amount.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `abc`, `12`, `Lunch`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a number.`
+
+* 2.4.3 Adding Split Expense with Invalid Number of People Format
+  * Test Case ID: addSplitExpense_invalidNumberOfPeople_exceptionThrown
+  * Description: Tests adding a split expense with a non-numeric number of people.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `12`, `abc`, `Lunch`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Number of people should be a number.`
+
+* 2.4.4 Adding Split Expense with Negative Amount
+  * Test Case ID: addSplitExpense_negativeAmount_exceptionThrown
+  * Description: Tests adding a split expense with a negative amount.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `-12`, `12`, `Lunch`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Expenses should not be negative.`
+
+### 2.4.5 Adding Split Expense with Negative Number of People
+*Test Case ID: addSplitExpense_negativeNumberOfPeople_exceptionThrown
+*Description: Tests adding a split expense with a negative number of people.
+*Method: addSplitExpense(String amount, String numberOfPeople, String description)
+*Input: "12", "-12", "Lunch"
+*Expected Outcome: A BudgetBuddyException is thrown with the message "Number of people should be a positive number."
 #### 2.9 Listing Savings
 
 * 2.9.1 Listing Overall Savings
