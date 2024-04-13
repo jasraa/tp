@@ -4,32 +4,32 @@
 [1. Introduction](#1-introduction) <br>
 [2. Quick Start](#2-quick-start) <br>
 [3. Features](#3-features) <br>
-&nbsp;&nbsp;[3.1 Display Commands()]() <br>
-&nbsp;&nbsp;[3.2 Add Expense]()<br>
-&nbsp;&nbsp;[3.3 Add Savings]()<br>
-&nbsp;&nbsp;[3.4 Add Split Expenses]()<br>
-&nbsp;&nbsp;[3.5 Edit Savings]()<br>
-&nbsp;&nbsp;[3.6 Edit Expense]()<br>
-&nbsp;&nbsp;[3.7 Reduce Savings]()<br>
-&nbsp;&nbsp;[3.8 Delete Expense]()<br>
+&nbsp;&nbsp;[3.1 Display Commands()](#31-display-commands--menu) <br>
+&nbsp;&nbsp;[3.2 Add Expense](#32-add-expense)<br>
+&nbsp;&nbsp;[3.3 Add Savings](#33-add-savings)<br>
+&nbsp;&nbsp;[3.4 Add Split Expenses](#34-add-split-expenses)<br>
+&nbsp;&nbsp;[3.5 Edit Savings](#35-edit-savings-edit-savings)<br>
+&nbsp;&nbsp;[3.6 Edit Expense](#36-edit-expenses-edit-expense)<br>
+&nbsp;&nbsp;[3.7 Reduce Savings](#37-reduce-savings-reduce-savings)<br>
+&nbsp;&nbsp;[3.8 Delete Expense](#38-delete-expense-delete-expense)<br>
 &nbsp;&nbsp;[3.9 List Savings](#39-listing-savings-list-savings)<br>
 &nbsp;&nbsp;[3.10 List Expense](#310-listing-expenses-list-expenses) <br>
-&nbsp;&nbsp;[3.11 Check Splitted Expenses]()<br>
-&nbsp;&nbsp;[3.12 Settle Splitted Expenses]()<br>
-&nbsp;&nbsp;[3.13 Find Expense]()<br>
-&nbsp;&nbsp;[3.14 Recurring Bill Description]()<br>
-&nbsp;&nbsp;[3.15 Add Recurring Bill]()<br>
-&nbsp;&nbsp;[3.16 List Recurring Bills]()<br>
-&nbsp;&nbsp;[3.17 Remove Recurring Bill]()<br>
-&nbsp;&nbsp;[3.18 Add Expense to a Recurring Bill]()<br>
-&nbsp;&nbsp;[3.19 View Expenses in a Recurring Bill]()<br>
-&nbsp;&nbsp;[3.20 Add Expenses in a Recurring Bill to Overall Expenses]()<br>
+&nbsp;&nbsp;[3.11 Check Splitted Expenses](#311-check-splitted-expenses-check-splitted-expenses)<br>
+&nbsp;&nbsp;[3.12 Settle Splitted Expenses](#312-settle-splitted-expenses-settle-expense)<br>
+&nbsp;&nbsp;[3.13 Find Expense](#313-finding-expenses--find-expenses)<br>
+&nbsp;&nbsp;[3.14 Recurring Bill Description](#314-recurring-bill-description)<br>
+&nbsp;&nbsp;[3.15 Add Recurring Bill](#315-add-recurring-bill--rec-newlist)<br>
+&nbsp;&nbsp;[3.16 List Recurring Bills](#316-list-all-recurring-bills--rec-viewlists)<br>
+&nbsp;&nbsp;[3.17 Remove Recurring Bill](#317-remove-recurring-bill--rec-removelist)<br>
+&nbsp;&nbsp;[3.18 Add Expense to a Recurring Bill](#318-add-an-expense-to-a-recurring-bill--rec-newexpense)<br>
+&nbsp;&nbsp;[3.19 View Expenses in a Recurring Bill](#319-view-expenses-in-a-recurring-bill--rec-viewexpenses)<br>
+&nbsp;&nbsp;[3.20 Add Expenses in a Recurring Bill to Overall Expenses](#320-add-expenses-in-a-recurring-bill-to-overall-expenses--rec-addrec)<br>
 &nbsp;&nbsp;[3.21 Change Currency](#321-changing-currencies--change-currency-currency_code)<br>
-&nbsp;&nbsp;[3.22 Set Budget]()<br>
-&nbsp;&nbsp;[3.23 Get Budget]()<br>
-&nbsp;&nbsp;[3.24 Print Budget]()<br>
-&nbsp;&nbsp;[3.25 Get Graphical Insights for expenses]()<br>
-&nbsp;&nbsp;[3.26 Get Graphical Insights for savings]()<br>
+&nbsp;&nbsp;[3.22 Set Budget](#322-setting-budgets-)<br>
+&nbsp;&nbsp;[3.23 Get Budget](#323-getting-budget-for-specific-category)<br>
+&nbsp;&nbsp;[3.24 Print Budget](#324-print-all-the-budgets)<br>
+&nbsp;&nbsp;[3.25 Get Graphical Insights for expenses](#325-get-graphical-insights-for-expenses-get-expenses-insights)<br>
+&nbsp;&nbsp;[3.26 Get Graphical Insights for savings](#326-get-graphical-insights-for-savings-get-savings-insights)<br>
 [4. FAQ](#4-faq)<br>
 [5. Command Summary](#5-command-summary)<br>
 [6. For Advanced Users](#6-for-advanced-users)<br>
