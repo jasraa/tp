@@ -22,6 +22,7 @@ public class BudgetBuddy {
     private Storage savingsStorage;
     private Storage recurringExpensesStorage;
     private Storage defaultCurrency;
+    private Storage budgetStorage;
 
 
 
@@ -36,7 +37,7 @@ public class BudgetBuddy {
         savingsStorage = new Storage("./data/SavingsFile.txt");
         recurringExpensesStorage = new Storage("./data/RecurringExpensesFile.txt");
         defaultCurrency = new Storage("./data/DefaultCurrency.txt");
-
+        budgetStorage = new Storage("./data/BudgetFile.txt");
     }
 
     public void handleCommands(String input) {
@@ -53,7 +54,7 @@ public class BudgetBuddy {
             expensesStorage.saveExpenses(expenses.getExpenses());
             savingsStorage.saveSavings(savings.getSavings());
             recurringExpensesStorage.saveRecurringExpenses(recurringExpenseLists);
-
+            budgetStorage.saveBudgets(expenses.getBudgets());
             defaultCurrency.saveCurrency();
         } catch (IOException e) {
             System.out.println("Error saving to file.");
@@ -72,7 +73,7 @@ public class BudgetBuddy {
             this.expenses.getExpenses().addAll(expensesStorage.loadExpenses());
             this.savings.getSavings().addAll(savingsStorage.loadSavings());
             this.recurringExpenseLists = recurringExpensesStorage.loadRecurringExpensesList();
-
+            this.expenses.getBudgets().addAll(budgetStorage.loadBudgets());
 
         } catch (FileNotFoundException e) {
             System.out.println("No existing files found. Starting fresh.");

@@ -7,6 +7,7 @@ import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.commons.RecurringExpenseList;
 import seedu.budgetbuddy.commons.DefaultCurrency;
+import seedu.budgetbuddy.commons.Budget;
 
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
@@ -266,6 +267,34 @@ public class Storage {
         writer.close();
     }
 
+    public List<Budget> loadBudgets() throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        List<Budget> loadedBudgets = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split("\\|");
+            String category = parts[0].trim();
+            double budgetAmount = Double.parseDouble(parts[1].trim());
+            Budget budget = new Budget(category, budgetAmount);
+            loadedBudgets.add(budget);
+        }
+
+        scanner.close();
+        return loadedBudgets;
+    }
+
+    public void saveBudgets(List<Budget> budgets) throws IOException {
+        FileWriter writer = new FileWriter(filePath);
+
+        for (Budget budget : budgets) {
+            writer.write(String.format("%s|%.2f\n", budget.getCategory(), budget.getBudget()));
+        }
+
+        writer.flush();
+        writer.close();
+    }
 
     /**
      * Loads currency data from the specified file path and sets the default currency accordingly.
