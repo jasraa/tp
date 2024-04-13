@@ -166,7 +166,7 @@ public class ExpenseList {
             .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
     
         if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
-            throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up" +
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a positive number with up" +
                                             " to maximum two decimal places.");
         }
     
