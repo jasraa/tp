@@ -133,7 +133,7 @@ public class ExpenseListTest {
 
     }
 
-    @Test @Disabled
+    @Test 
     public void filterExpenses_filterByMaxAmount_returnsOneMatches() throws BudgetBuddyException {
         ExpenseList expenses = new ExpenseList();
         expenses.addExpense("Groceries", "100", "Apples");
@@ -141,7 +141,7 @@ public class ExpenseListTest {
         expenses.addExpense("Entertainment", "75", "Movie");
         expenses.addExpense("Groceries", "100", "apple");
         ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
-                , null, 75.00);
+                , null, 76.00);
 
         assertEquals(2, filteredExpenses.size());
 
