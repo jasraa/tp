@@ -306,7 +306,7 @@ public class Storage {
                     ", file has been reinitialized. Run a command to save your recurringexpenses");
         }
 
-    }
+    }   
 
     /**
      * Saves the default currency to the specified file path.
@@ -330,7 +330,6 @@ public class Storage {
         }
     }
 
-
     public List<SplitExpense> loadSplitExpenses() throws FileNotFoundException {
         File file = new File(filePath);
         List<SplitExpense> splitExpenses = new ArrayList<>();
@@ -338,29 +337,31 @@ public class Storage {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] parts = line.split("\\|");
-            // Assuming the order is Date|Amount|Number of People|Description
-            String amount = parts[1].trim();
-            String numberOfPeople = parts[2].trim();
+            LocalDate date = LocalDate.parse(parts[0].trim());
+            double amount = Double.parseDouble(parts[1].trim());
+            int numberOfPeople = Integer.parseInt(parts[2].trim());
             String description = parts[3].trim();
-            SplitExpense splitExpense = new SplitExpense(amount, numberOfPeople, description);
+            SplitExpense splitExpense = new SplitExpense(date, amount, numberOfPeople, description);
             splitExpenses.add(splitExpense);
         }
         scanner.close();
         return splitExpenses;
     }
+    
 
     public void saveSplitExpenses(List<SplitExpense> splitExpenses) throws IOException {
-
-        ensureDirectoryExists(); 
-        
-        FileWriter writer = new FileWriter(filePath, false); 
+        ensureDirectoryExists();
+    
+        FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
         for (SplitExpense splitExpense : splitExpenses) {
-            writer.write(String.format("%s | %s | %s\n",
-                    splitExpense.getAmount(), splitExpense.getNumberOfPeople(), splitExpense.getDescription()));
+            writer.write(String.format("%s | %.2f | %d | %s\n",
+                splitExpense.getDateAdded().toString(),
+                splitExpense.getAmount(),
+                splitExpense.getNumberOfPeople(),
+                splitExpense.getDescription()));
         }
         writer.close();
-    }
-
+    }    
 
     /**
      * Loads currency data from the specified file path and sets the default currency accordingly.

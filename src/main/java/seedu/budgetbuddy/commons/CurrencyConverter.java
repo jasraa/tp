@@ -102,6 +102,38 @@ public class CurrencyConverter {
         }
     }
 
+    public void convertSplitExpenseCurrency(Currency newCurrency, SplitExpenseList splitExpenses) {
+        if (splitExpenses == null) {
+            throw new IllegalArgumentException("SplitExpenseList cannot be null");
+        }
+
+        assert splitExpenses != null : "SplitExpenseList cannot be null";
+
+        if (DefaultCurrency.getDefaultCurrency() == newCurrency) {
+            System.out.println("Same currency for Split Expenses. No Conversion needed");
+            return;
+        } else { // Convert the currency of each split expense in the SplitExpenseList
+            for (SplitExpense splitExpense : splitExpenses.getSplitExpenses()) {
+                if (splitExpense == null) {
+                    LOGGER.warning("Skipping null split expense");
+                    System.out.println("Skipping null split expense");
+                    continue;
+                }
+
+                try {
+                    double convertedAmount = convertAmount(splitExpense.getAmount(), splitExpense.getCurrency(), 
+                        newCurrency);
+                    splitExpense.setAmount(convertedAmount);
+                    splitExpense.setCurrency(newCurrency);
+                } catch (IllegalArgumentException e) {
+                    LOGGER.severe("Error converting amount for split expense: " + e.getMessage());
+                    System.out.println("Error converting amount for split expense: " + e.getMessage());
+                }
+            }
+            System.out.println("Default currency for Split Expenses changed to " + newCurrency);
+        }
+    }
+
     /**
      * Converts the currency of savings in the given SavingList to the specified new currency.
      * No conversion necessary if trying to convert to the same currency.
@@ -139,38 +171,6 @@ public class CurrencyConverter {
         }
     }
 
-    public void convertSplitExpenseCurrency(Currency newCurrency, SplitExpenseList splitExpenses) {
-        if (splitExpenses == null) {
-            throw new IllegalArgumentException("SplitExpenseList cannot be null");
-        }
-
-        if (DefaultCurrency.getDefaultCurrency() == newCurrency) {
-            System.out.println("Same currency for Split Expenses. No Conversion needed");
-            return;
-        }
-
-        for (SplitExpense splitExpense : splitExpenses.getSplitExpenses()) {
-            if (splitExpense == null) {
-                LOGGER.warning("Skipping null split expense");
-                System.out.println("Skipping null split expense");
-                continue;
-            }
-
-            try {
-                double convertedAmount = convertAmount(splitExpense.getAmount(), splitExpense.getCurrency(), 
-                    newCurrency);
-                splitExpense.setAmount(convertedAmount);
-                splitExpense.setCurrency(newCurrency);
-            } catch (IllegalArgumentException e) {
-                // Handle any IllegalArgumentException thrown during conversion
-                LOGGER.severe("Error converting amount for split expense: " + e.getMessage());
-                System.out.println("Error converting amount for split expense: " + e.getMessage());
-            }
-        }
-
-        System.out.println("Default currency for Split Expenses changed to " + newCurrency);
-    }
-
     public void convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpenseLists recurringExpenseLists) {
         if (recurringExpenseLists == null) {
 
@@ -192,7 +192,7 @@ public class CurrencyConverter {
 
         System.out.println("Default currency for Recurring Expenses changed to " + newCurrency);
     }
-
+ 
     public void convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList) {
         if (expenseList == null) {
             throw new IllegalArgumentException("ExpenseList cannot be null");

@@ -62,10 +62,10 @@ public class EditExpenseCommandCreator extends CommandCreator {
 
 
     public static void checkForInvalidInputs (String input) throws BudgetBuddyException {
-        final String CATEGORY_PREFIX = "c/";
-        final String INDEX_PREFIX = "i/";
-        final String AMOUNT_PREFIX = "a/";
-        final String DESCRIPTION_PREFIX = "d/";
+        final String categoryPrefix = "c/";
+        final String indexPrefix = "i/";
+        final String amountPrefix = "a/";
+        final String descriptionPrefix = "d/";
 
         if (input.contains("!") || input.contains("|")) {
             throw new BudgetBuddyException("Please do not include a ! or | in your input");
@@ -74,7 +74,7 @@ public class EditExpenseCommandCreator extends CommandCreator {
             throw new IllegalArgumentException("Please Ensure that you include c/, i/, a/ and d/");
         }
 
-        String [] parameters = {CATEGORY_PREFIX, INDEX_PREFIX, AMOUNT_PREFIX, DESCRIPTION_PREFIX};
+        String [] parameters = {categoryPrefix, indexPrefix, amountPrefix, descriptionPrefix};
 
         for (String parameter : parameters) {
             if (input.indexOf(parameter) != input.lastIndexOf(parameter)) {

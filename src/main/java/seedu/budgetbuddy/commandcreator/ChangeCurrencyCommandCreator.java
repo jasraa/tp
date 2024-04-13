@@ -4,6 +4,7 @@ import seedu.budgetbuddy.commons.CurrencyConverter;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.commons.SavingList;
+import seedu.budgetbuddy.commons.SplitExpenseList;
 import seedu.budgetbuddy.command.ChangeCurrencyCommand;
 import seedu.budgetbuddy.command.Command;
 
@@ -16,16 +17,19 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private ExpenseList expenses;
     private SavingList savings;
+    private SplitExpenseList splitExpenses;
     private RecurringExpenseLists recurringExpenseLists;
     private String input;
     private CurrencyConverter newCurrency;
 
-    public ChangeCurrencyCommandCreator(String input, SavingList savings, ExpenseList expenses
-            , RecurringExpenseLists recurringExpenseLists, CurrencyConverter newCurrency) {
+    public ChangeCurrencyCommandCreator(String input, SavingList savings, ExpenseList expenses, 
+                                        SplitExpenseList splitExpenses, RecurringExpenseLists recurringExpenseLists, 
+                                        CurrencyConverter newCurrency) {
 
         this.input = input;
         this.savings = savings;
         this.expenses = expenses;
+        this.splitExpenses = splitExpenses;
         this.recurringExpenseLists = recurringExpenseLists;
         this.newCurrency = newCurrency;
 
@@ -42,6 +46,7 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
      * @return A ChangeCurrencyCommand if the input is valid; otherwise, null.
      */
     public Command handleChangeCurrencyCommand(String input, SavingList savingList, ExpenseList expenseList,
+                                               SplitExpenseList splitExpenses,
                                                RecurringExpenseLists recurringExpenseLists,
                                                CurrencyConverter currencyConverter) {
         if (input.toLowerCase().startsWith("change currency")) {
@@ -56,8 +61,8 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
                     Currency newCurrency = Currency.getInstance(currencyCode.toUpperCase());
                     assert newCurrency != null : "Currency code should be valid";
                     LOGGER.log(Level.INFO, "Default currency changed to " + newCurrency);
-                    return new ChangeCurrencyCommand(newCurrency, savingList, expenseList, recurringExpenseLists,
-                            currencyConverter);
+                    return new ChangeCurrencyCommand(newCurrency, savingList, expenseList, splitExpenses, 
+                            recurringExpenseLists, currencyConverter);
                 } catch (IllegalArgumentException e) {
                     LOGGER.log(Level.WARNING, "Invalid currency code: " + currencyCode);
                     System.out.println("Invalid currency code.");
@@ -73,6 +78,6 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
     }
     @Override
     public Command createCommand() {
-        return handleChangeCurrencyCommand(input, savings, expenses, recurringExpenseLists, newCurrency);
+        return handleChangeCurrencyCommand(input, savings, expenses, splitExpenses, recurringExpenseLists, newCurrency);
     }
 }
