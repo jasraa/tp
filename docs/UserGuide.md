@@ -459,7 +459,13 @@ Format: `set budget c/CATEGORY b/BUDGET`
 * `BUDGET` must be a positive integer
 
 Example of usage: 
-`set budget c/Housing b/1000` : Sets a budget of $1000 for Housing category
+`set budget c/Utility b/100` 
+
+Expected output (if there is no existing budget): 
+![SetBudget_New.png](userguideimages/SetBudget_New.png)
+
+Expected output (if there is already an existing budget):
+![SetBudget_Existing.png](userguideimages/SetBudget_Existing.png)
 
 ### 3.23 Getting budget for specific category:
 
@@ -483,6 +489,11 @@ in transport category in ascending order, and shows % of budget taken up by each
 
 Format: `print budget`
 
+Example of Expected Output (If there is no existing expenses):
+![ListBudget_NoExist.png](userguideimages/ListBudget_NoExist.png)
+
+Example of Expected Output (If there are existing expenses):
+![ListBudget_ExistingExpenses.png](userguideimages/ListBudget_ExistingExpenses.png)
 
 ### 3.25 Get Graphical Insights for expenses: `get expenses insights`
 * This feature provides an overview of the expenses distribution across different categories. 
