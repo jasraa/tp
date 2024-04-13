@@ -65,6 +65,12 @@ public class Storage {
         return expenses;
     }
 
+    /**
+     * Deletes the existing recurring expenses file and create a new, empty file.
+     * This method is used to reset the recurring expenses file when it has been detected to be corrupted
+     *
+     * @throws IOException If there is an error deleting the old file or creating the new file
+     */
     public void resetRecurringExpensesListFile() throws IOException {
         File file = new File(filePath);
         file.delete();
@@ -74,6 +80,16 @@ public class Storage {
         writer.close();
     }
 
+    /**
+     * Parses a line of text from the recurring expenses file, adding either a recurring expense list, or an expense
+     * into a recurring expense list. If the line begins with a `!!!`, it adds a recurring Expense List with the name
+     * being the string between the two `!!!`. Else, the line contains details on an individual expense
+     * and adds the expense to the specified list number
+     *
+     * @param recurringExpenses The list of ExpenseLists to which the parsed data will be added to
+     * @param line The line of text to be parsed
+     * @throws BudgetBuddyException If the format of the line is corrupted
+     */
     public void parseRecurringExpensesFile(ArrayList<ExpenseList> recurringExpenses, String line)
             throws BudgetBuddyException{
 
@@ -109,6 +125,13 @@ public class Storage {
         }
 
     }
+
+    /**
+     * Loads the recurring expenses from a file into a RecurringExpenseLists object.
+     *
+     * @return RecurringExpenseLists containing all parsed recurring expenses from the file.
+     * @throws IOException If there is an error when reading the file
+     */
     public RecurringExpenseLists loadRecurringExpensesList() throws IOException{
         File file = new File(filePath);
         ArrayList<ExpenseList> recurringExpenses = new ArrayList<>();
@@ -131,13 +154,21 @@ public class Storage {
         } catch (Exception e) {
             LOGGER.log(Level.INFO, "Exception successfully caught. Error has been handled");
             System.out.println(e.getMessage());
-            System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
+            System.out.println("Your Recurring Expenses File is corrupted, resetting the file....");
             resetRecurringExpensesListFile();
             return new RecurringExpenseLists();
         }
 
     }
 
+    /**
+     * Saves the details of recurring expenses into a file from a provided RecurringExpenseLists object.
+     *
+     * @param recurringExpenseLists The RecurringExpenseLists object containing all expense lists and expenses to be
+     *                              saved
+     * @throws InvalidRecurringExpensesFileException If the saving of the file was not successful
+     * @throws IOException If an error occurs when validating whether the RecurringExpensesFile.txt exists
+     */
     public void saveRecurringExpenses(RecurringExpenseLists recurringExpenseLists)
             throws InvalidRecurringExpensesFileException, IOException {
 
