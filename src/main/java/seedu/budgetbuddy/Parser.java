@@ -129,7 +129,7 @@ public class Parser {
     }
 
     public Boolean isSplitExpenseCommand(String input) {
-        return input.startsWith("add shared bills");
+        return input.startsWith("add shared bill");
     }
 
     public Boolean isListSplitExpenseCommand(String input) {

@@ -86,7 +86,7 @@ public class Ui {
             break;
         case 6:
             System.out.println("add shared bills");
-            System.out.println("add shared bills a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION");
+            System.out.println("add shared bill a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION");
             System.out.println("check split bills");
             System.out.println("settle bill i/INDEX");
             break;
