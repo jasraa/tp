@@ -17,9 +17,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Currency;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Currency;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,9 @@ public class Storage {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private final String filePath;
+
+    private ArrayList<String> expenseCategories = new ArrayList<>(Arrays.asList("Housing"
+            , "Groceries", "Utility", "Transport", "Entertainment", "Others"));
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -44,6 +48,39 @@ public class Storage {
             file.createNewFile(); // This will create the file if it doesn't exist
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void checkValidAmount(Double amount) throws BudgetBuddyException{
+        if (amount <= 0) {
+            throw new BudgetBuddyException("Invalid Amount detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidCategory(String category) throws BudgetBuddyException {
+        if (!expenseCategories.contains(category)) {
+            throw new BudgetBuddyException("Invalid Category detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidDescription(String description) throws BudgetBuddyException {
+        if (description.contains("|") || description.contains("!") || description.isEmpty()) {
+            throw new BudgetBuddyException("Invalid description detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidTitle(String line) throws BudgetBuddyException {
+        int indexOfEndExclamation = line.indexOf("!!!", 4);
+        int endIndexOfEndExclamation = indexOfEndExclamation + "!!!".length();
+
+        if (endIndexOfEndExclamation != line.length() || line.contains("|")) {
+            throw new BudgetBuddyException("Invalid ListName title detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidListName(String listName) throws BudgetBuddyException {
+        if (listName.contains("!") || listName.contains("|") || listName.isEmpty()) {
+            throw new BudgetBuddyException("Invalid listName detected. Possible Corrupted File");
         }
     }
 
@@ -214,6 +251,7 @@ public class Storage {
             throws BudgetBuddyException{
 
         if (line.startsWith("!!!")) {
+            checkValidTitle(line);
             int indexOfStartExclamation = line.indexOf("!!!", 0);
             int indexOfStartOfListName = indexOfStartExclamation + 3;
 
@@ -221,8 +259,9 @@ public class Storage {
             int indexOfEndOfListName = indexOfEndExclamation;
 
             String name = line.substring(indexOfStartOfListName, indexOfEndOfListName).trim();
-            ExpenseList expenses = new RecurringExpenseList(name, new ArrayList<>());
+            checkValidListName(name);
 
+            ExpenseList expenses = new RecurringExpenseList(name, new ArrayList<>());
             recurringExpenses.add(expenses);
         } else {
             String[] parts = line.split("\\|");
@@ -234,9 +273,16 @@ public class Storage {
 
             int listNumber = Integer.parseInt(parts[0].trim());
             LocalDate dateAdded = LocalDate.parse(parts[1].trim());
+
             String category = parts[2].trim();
+            checkValidCategory(category);
+
             double amount = Double.parseDouble(parts[3].trim());
+            checkValidAmount(amount);
+
             String description = parts[4].trim();
+            checkValidDescription(description);
+
             Expense expense = new Expense(dateAdded, category, amount, description);
 
             int listNumberAsArrayIndex = listNumber - 1;
@@ -266,7 +312,7 @@ public class Storage {
             return recurringExpenseLists;
         } catch (Exception e) {
             LOGGER.log(Level.INFO, "Exception successfully caught. Error has been handled");
-            System.out.println(e.getMessage());
+            System.out.println("Error Detected : " + e.getMessage());
             System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
             resetRecurringExpensesListFile();
             return new RecurringExpenseLists();

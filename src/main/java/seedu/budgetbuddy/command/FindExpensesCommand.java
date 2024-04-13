@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents a command that finds and lists expenses based on a provided criteria.
+ * Criteria can include description, minimum and maximum amounts
+ */
 public class FindExpensesCommand extends Command {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private ExpenseList expenses;
@@ -16,6 +20,15 @@ public class FindExpensesCommand extends Command {
     private Double maxAmount;
     private Ui ui;
 
+    /**
+     * Constructs a FindExpenseCommand with the specified expense list, description, minimum amount and maximum amount
+     *
+     *
+     * @param expenses The expenseList to filter the expenses
+     * @param description The description to be filtered, can be null or empty
+     * @param minAmount The minimum amount of expense to be filtered, can be null
+     * @param maxAmount The maximum amount of expense to be filtered, can be null
+     */
     public FindExpensesCommand(ExpenseList expenses, String description, Double minAmount, Double maxAmount) {
         if (minAmount != null && maxAmount != null) {
             assert minAmount < maxAmount : "Minimum amount cannot be larger than Maximum Amount";
@@ -33,7 +46,10 @@ public class FindExpensesCommand extends Command {
         this.maxAmount = maxAmount;
     }
 
-
+    /**
+     * Prints an initialization message that informs user of the parameters used when filtering. Diplays
+     * an N.A. for filters which would not be used
+     */
     private void printInitializationMessage() {
         ui.printDivider();
         System.out.println("Looking for Expenses with the following parameters : ");

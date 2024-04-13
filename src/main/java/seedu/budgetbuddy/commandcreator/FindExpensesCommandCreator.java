@@ -25,6 +25,13 @@ public class FindExpensesCommandCreator extends CommandCreator {
         this.expenses = expenses;
     }
 
+
+    /**
+     * Checks the order of parameters in the provided input.
+     *
+     * @param input The user input
+     * @throws BudgetBuddyException If the parameters are not in the order of d/, morethan/ , lessthan/.
+     */
     private void checkForOutOfOrderParameters(String input) throws BudgetBuddyException {
         int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
         int indexOfMinAmountPrefix = input.indexOf(MINAMOUNT_PREFIX);
@@ -40,12 +47,25 @@ public class FindExpensesCommandCreator extends CommandCreator {
 
     }
 
-    private static void checkForInvalidParameters(String input) {
+    /**
+     * Checks for the absence of the required parameters `d/`, `morethan/` and `lessthan/`
+     *
+     * @param input The user input
+     * @throws IllegalArgumentException If any of the three required parameters are missing
+     */
+    private static void checkForInvalidParameters(String input) throws IllegalArgumentException {
         if (!input.contains("d/") || !input.contains("morethan/") || !input.contains("lessthan/")) {
             throw new IllegalArgumentException("Please Ensure that you include d/, morethan/ and lessthan/");
         }
     }
 
+    /**
+     * Parses and returns the maximum amount from the `lessthan/` prefix in the input string
+     *
+     * @param input The user input
+     * @return The extracted maximum amount, or null if amount is not specified
+     * @throws NumberFormatException If the maximum amount obtained is not a valid double
+     */
     private Double parseMaxAmount(String input) throws NumberFormatException{
         int indexOfMaxAmountPrefix = input.indexOf(MAXAMOUNT_PREFIX);
         int startIndexOfMaxAmount = indexOfMaxAmountPrefix + MAXAMOUNT_PREFIX.length();
@@ -63,7 +83,14 @@ public class FindExpensesCommandCreator extends CommandCreator {
         return maxAmount;
     }
 
-    private Double parseMinAmount(String input) {
+    /**
+     * Parses and returns the minimum amount from the `morethan/` prefix in the input string
+     *
+     * @param input The user input
+     * @return The extracted minimum amount, or null if amount is not specified
+     * @throws NumberFormatException If the minimum amount obtained is not a valid double
+     */
+    private Double parseMinAmount(String input) throws NumberFormatException {
         int indexOfMinAmountPrefix = input.indexOf(MINAMOUNT_PREFIX);
         int startIndexOfMinAmount = indexOfMinAmountPrefix + MINAMOUNT_PREFIX.length();
 
@@ -80,6 +107,13 @@ public class FindExpensesCommandCreator extends CommandCreator {
 
         return minAmount;
     }
+
+    /**
+     * Parses and returns the description from the `d/` prefix in the input string
+     *
+     * @param input The user input
+     * @return The obtained description, or null if the description is empty
+     */
     private String parseDescription(String input) {
 
         int indexOfDescriptionPrefix = input.indexOf(DESCRIPTION_PREFIX);
@@ -97,7 +131,14 @@ public class FindExpensesCommandCreator extends CommandCreator {
         return description;
     }
 
-    private static void checkForDuplicateParameters(String input, String parameter) {
+    /**
+     * Checks for duplicate occurrences of a prefix in the input string
+     *
+     * @param input The user input
+     * @param parameter The parameter to check for duplicates
+     * @throws IllegalArgumentException If the parameter appears more than once
+     */
+    private static void checkForDuplicateParameters(String input, String parameter) throws IllegalArgumentException{
 
         int count = 0;
 
@@ -114,6 +155,14 @@ public class FindExpensesCommandCreator extends CommandCreator {
 
     }
 
+    /**
+     * Compares the minimum and maximum amounts and throws an exception if the minimum amount
+     * is larger than the maximum amount
+     *
+     * @param minAmount The minimum amount
+     * @param maxAmount The maximum amount
+     * @throws BudgetBuddyException If the minimum amount > maximum amount
+     */
     private static void compareMinAndMaxAmount(Double minAmount, Double maxAmount) throws BudgetBuddyException{
 
         if (minAmount != null && maxAmount != null) {
