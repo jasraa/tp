@@ -453,7 +453,7 @@ The user interaction for reducing savings follows these steps:
 
 The following UML Sequence diagram below shows how the Reduce savings Feature Command is executed when a user
 inputs a valid reduce savings command:
-(will insert diagram soon)
+![sequenceDiagram_ReduceSavings.png](diagrams/sequenceDiagram_ReduceSavings.png)
 
 ### 4.7 Delete Expenses Feature
 The Delete Expense feature grants users the capability to remove expenses they have previously entered. Managed by the 
@@ -461,10 +461,10 @@ DeleteExpenseCommand class, this feature is initialized through DeleteExpenseCom
 the command is provided with an `ExpenseList` object and an `index` indicating the specific expense to be deleted. 
 The following table outlines the significance of these attributes:
 
-| Class Attribute | Variable Type | Relevance                                                              |
-|-----------------|---------------|------------------------------------------------------------------------|
-| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses that can be edited  |
-| index           | Integer        | The edited category for the expense in the specified index             |
+| Class Attribute | Variable Type | Relevance                                                             |
+|-----------------|---------------|-----------------------------------------------------------------------|
+| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses that can be edited |
+| index           | Integer       |  The edited category for the expense in the specified index           |
 
 On invocation of the `execute()` method, as part of the `command.execute() `flow within BudgetBuddy, the DeleteExpenseCommand 
 object engages the deleteExpense() method from the ExpenseList class.
@@ -875,7 +875,7 @@ process:
 
 The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to set a budget:
-![sequenceDiagram_setBudget.jpg](diagrams/sequenceDiagram_setBudget.jpg)
+![sequenceDiagram_setBudget.jpg](diagrams/sequenceDiagram_SetBudget.jpg)
 
 The sequence of operations for an example input, `set budget c/Transport b/500`, is as follows:
 1. BudgetBuddy receives the user input and utilizes the Parser to decipher it.
@@ -893,7 +893,7 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 
 The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to list budgets:
-![sequenceDiagram_listBudget.png](diagrams/sequenceDiagram_listBudget.png)
+![sequenceDiagram_listBudget.png](diagrams/sequenceDiagram_ListBudget.png)
 
 Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`, `SetBudgetCommand` will update the
 budget in `ExpenseList` using `setBudget`. Similarly, `ListBudgetCommand` will fetch and display all categories with
