@@ -28,3 +28,17 @@ docs~functional-code~test-code~other)
 #### Enhancements to existing features:
 1. Wrote JUnit tests for the ExpenseList, SavingsList, SplitExpenseList and Parser.
 
+#### Developer Guide
+- Added implementation details of the `AddExpense`, `AddSaving` and `SplitExpense` feature. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
+- Added design details of the `AddExpense`, `AddSaving`, `SplitExpense`, `SplitExpenseList` and `SettleSplitExpenseList` classes. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
+- Added user stories for my respective features. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
+- Added Sequence Diagrams for `AddExpense`, `AddSaving` and `SplitExpense` features. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
+
+### Community
+
+#### Reported Bugs and Suggestions for Other Teams
+- Provided 4 DG Peer Review Comments for another team. ([Team #1](https://github.com/nus-cs2113-AY2324S2/tp/pull/25)).
+- Reported 5 Bugs for another team during PE-D. ([Team #1](https://github.com/nus-cs2113-AY2324S2/tp/pull/54)).
+
+### Tools
+- Usage of Draw.io for my Sequence Diagrams. ([Draw.io](https://draw.io/)).
