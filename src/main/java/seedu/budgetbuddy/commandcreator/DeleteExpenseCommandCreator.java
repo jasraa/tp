@@ -24,28 +24,25 @@ public class DeleteExpenseCommandCreator extends CommandCreator{
         assert input != null : "Input string cannot be null";
 
         String[] parts = input.split("i/", 2);
-        // Check if the input format is correct (i.e., contains "i/")
         if (parts.length < 2) {
-            LOGGER.log(Level.WARNING, "Invalid command format. Expected format: <command> i/<index>");
-            System.out.println("Error: Invalid command format. Expected format: <command> i/<index>");
-            return null;
+            // Log and notify the user about the incorrect format without returning null.
+            LOGGER.log(Level.WARNING, "Invalid command format. Expected format: delete expense i/<index>." );
+            System.out.println("Invalid command format. Expected format: delete expense i/<index>.");
+            return null; // Return null to indicate no command should be executed; assuming your loop can handle this.
         }
 
         try {
             int index = Integer.parseInt(parts[1].trim()) - 1;
-            // Check if the index is within the bounds of the expense list.
             if (index < 0 || index >= expenses.size()) {
-                LOGGER.log(Level.WARNING, "Index is out of bounds.");
-                System.out.println("Error: Index is out of bounds.");
+                LOGGER.log(Level.WARNING, "Index is out of bounds. Please try again.");
+                System.out.println("Index is out of bounds. Please try again.");
                 return null;
             }
             LOGGER.log(Level.INFO, "Successfully processed DeleteExpenseCommand");
-            // If the index is valid, return a new DeleteExpenseCommand.
             return new DeleteExpenseCommand(expenses, index);
         } catch (NumberFormatException e) {
-            LOGGER.log(Level.SEVERE, "Index is not a valid number.");
-            // Catch the NumberFormatException if the part after "i/" isn't a valid integer.
-            System.out.println("Error: Index is not a valid number.");
+            LOGGER.log(Level.WARNING, "Index is not a valid number. Please try again.");
+            System.out.println("Index is not a valid number. Please try again.");
             return null;
         }
     }

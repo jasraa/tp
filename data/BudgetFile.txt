@@ -1,0 +1,3 @@
+Transport|100.00
+Groceries|1000.00
+Housing|100.00

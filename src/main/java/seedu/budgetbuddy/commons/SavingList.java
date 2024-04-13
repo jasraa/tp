@@ -30,9 +30,6 @@ public class SavingList {
         this.initialAmount = 0;
     }
 
-    public int size() {
-        return savings.size();
-    }
 
     public double getInitialAmount() {
         return this.initialAmount;
@@ -180,6 +177,32 @@ public class SavingList {
     
     
 
+    public void reduceSavingsByCategory(String category, double amount) {
+        List<Saving> matchedSavings = savings.stream()
+                .filter(s -> s.getCategory().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
+
+        if (matchedSavings.isEmpty()) {
+            System.out.println("No savings found under category: " + category);
+            return;
+        }
+
+        boolean allReductionsSuccessful = true;
+        for (Saving saving : matchedSavings) {
+            if (saving.getAmount() >= amount) {
+                saving.setAmount(saving.getAmount() - amount);
+            } else {
+                System.out.println("Insufficient amount in " + category + " to reduce by $" + amount);
+                allReductionsSuccessful = false;
+            }
+        }
+
+        if (allReductionsSuccessful) {
+            System.out.println("Savings reduced successfully for category: " + category);
+        }
+    }
+
+
     /**
      * Edits the saving entry at the specified index. This method updates the category and amount
      * of a saving object within the savings list. If the provided category doesn't exist or the index
@@ -235,21 +258,6 @@ public class SavingList {
         }
     }
 
-    // @@author Dheekshitha2
-    public void reduceSavings(int index, double amount) {
-
-        if (index >= 0 && index < savings.size()) {
-            Saving saving = savings.get(index);
-            if (saving.getAmount() >= amount) {
-                saving.setAmount(saving.getAmount() - amount);
-                System.out.println("Savings reduced successfully!");
-            } else {
-                System.out.println("Insufficient savings amount.");
-            }
-        } else {
-            System.out.println("Invalid saving index.");
-        }
-    }
 
     public double calculateTotalSavings() {
         double totalSavings = 0;

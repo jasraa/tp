@@ -2,7 +2,6 @@ package seedu.budgetbuddy.commons;
 
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
-
 import java.util.Arrays;
 
 import java.util.List;
@@ -30,7 +29,6 @@ public class ExpenseList {
     public ExpenseList(ArrayList<Expense> expenses) {
         this.expenses = expenses;
         this.budgets = new ArrayList<>();
-        
     }
 
     public ExpenseList() {
@@ -154,41 +152,71 @@ public class ExpenseList {
         return totalExpenses;
     }
 
+    private boolean checkBudgetBeforeAddingExpense(String category, double amountAsDouble) {
+        Budget budgetForCategory = budgets.stream()
+                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
+                .findFirst()
+                .orElse(null);
+
+        if (budgetForCategory != null) {
+            double totalSpent = expenses.stream()
+                    .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
+                    .mapToDouble(Expense::getAmount)
+                    .sum();
+            return totalSpent + amountAsDouble > budgetForCategory.getBudget();
+        }
+        return false;
+    }
+
+
+
     //@@author Zhang Yangda
     public void addExpense(String category, String amount, String description) throws BudgetBuddyException {
         assert category != null : "Category should not be null";
         assert amount != null : "Amount should not be null";
         assert description != null : "Description should not be null";
-    
+
         String matchedCategory = categories.stream()
-            .filter(existingCategory -> existingCategory.equalsIgnoreCase(category))
-            .findFirst()
-            .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
-    
+                .filter(existingCategory -> existingCategory.equalsIgnoreCase(category))
+                .findFirst()
+                .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
+
         if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
             throw new BudgetBuddyException("Invalid amount format. Amount should be a positive number with up" +
-                                            " to maximum two decimal places.");
+                    " to maximum two decimal places.");
         }
-    
+
         double amountAsDouble;
         try {
             amountAsDouble = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
             throw new BudgetBuddyException("Invalid amount format. Amount should be a number.");
         }
-    
+
         if (amountAsDouble < 0) {
             throw new BudgetBuddyException("Expenses should not be negative.");
         }
-    
-        if (amountAsDouble > MAX_AMOUNT) {
-            throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
+
+        boolean budgetExceeded = checkBudgetBeforeAddingExpense(category, amountAsDouble);
+        if (budgetExceeded) {
+            System.out.println("Warning: Adding this expense will exceed your budget for " + category);
+            boolean userConfirmation = ui.getUserConfirmation();
+            if (!userConfirmation) {
+                System.out.println("Expense not added due to budget constraints.");
+                return;
+            }
+
+            if (amountAsDouble > MAX_AMOUNT) {
+                throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
+            }
         }
-    
+
         Expense expense = new Expense(matchedCategory, amountAsDouble, description);
         expenses.add(expense);
+        System.out.println("Expense added: " + category + " ->z $" + String.format("%.2f", amountAsDouble));
     }
     
+
 
     /**
      * Edits an expense entry in the expenses list at the specified index. Updates the category,
