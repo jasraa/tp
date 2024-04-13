@@ -11,6 +11,7 @@ import seedu.budgetbuddy.exception.BudgetBuddyException;
 import java.util.Currency;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//@@author sweijie24
 public class CurrencyConverterTest {
 
     @Test

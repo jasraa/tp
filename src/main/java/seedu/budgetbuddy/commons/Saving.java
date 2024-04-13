@@ -1,4 +1,6 @@
 package seedu.budgetbuddy.commons;
+
+//@author sweijie24
 public class Saving extends Transaction{
 
     public Saving(String category, double amount) {

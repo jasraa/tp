@@ -389,6 +389,7 @@ public class Storage {
     /**
      * Saves the default currency to the specified file path.
      *
+     * @author sweijie24
      * @throws IOException if an I/O error occurs while writing to the file
      */
     public void saveCurrency() throws IOException {
@@ -473,6 +474,7 @@ public class Storage {
     /**
      * Loads currency data from the specified file path and sets the default currency accordingly.
      *
+     * @author sweijie24
      * @throws FileNotFoundException if the specified file path does not exist
      */
     public void loadCurrency() throws FileNotFoundException {

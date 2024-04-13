@@ -75,6 +75,7 @@ public class ListCommandCreator extends CommandCreator {
      * Parses the user input to create a ListCommand for listing expenses or savings.
      * If the input is valid, a ListCommand is returned with the specified list type and optional filter category.
      *
+     * @author sweijie24
      * @param input        The user input to be parsed.
      * @param expenseList  The ExpenseList containing expenses data.
      * @param savingList   The SavingList containing savings data.

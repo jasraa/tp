@@ -2,6 +2,7 @@ package seedu.budgetbuddy.commons;
 
 import java.time.LocalDate;
 
+//@author sweijie24
 public class Expense extends Transaction{
     protected String description;
     private LocalDate dateAdded;
