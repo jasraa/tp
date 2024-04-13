@@ -79,7 +79,6 @@ Example of Usage:
 
 `add expense c/Entertainment a/167 d/Bruno Mars`
 
-
 ### Add Savings
 Adds a specified amount to the savings under a particular category.
 
@@ -268,6 +267,9 @@ Format `settle i/Index`
 
 * The system will settle the splitted expense corresponding to `Index`
 * `Index` must be a positive integer
+
+Example of usage:
+`settle i/2`: Delete splitexpense of index 2 listed in splittedexpenses tracker
 
 ### Finding expenses : `find expenses`
 
