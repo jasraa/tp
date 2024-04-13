@@ -1,9 +1,58 @@
-# Developer Guide
+# Developer Guide for Budget Buddy
+
+## Table of Contents
+[1. Introduction](#1-introduction) <br>
+[2. Setting up](#2-setup-guide) <br>
+&nbsp;&nbsp;[2.1 Prerequisites](#21-prerequisites) <br>
+&nbsp;&nbsp;[2.2 Setting up the project](#2) <br>
+&nbsp;&nbsp;[2.3 Verify the setup](#2) <br>
+[3. Design](#3design) <br>
+&nbsp;&nbsp;[3.1 Architecture](#31-architecture) <br>
+&nbsp;&nbsp;[3.2 Parser Class](#32-parser-class) <br>
+&nbsp;&nbsp;[3.3 Ui Class](#33-ui-class)<br>
+&nbsp;&nbsp;[3.4 CommandCreator](#35-commandcreator-class) <br>
+&nbsp;&nbsp;[3.5 CommandClass](#34-command-class)<br>
+&nbsp;&nbsp;[3.6 Storage Class]()<br>
+&nbsp;&nbsp;[3.7 Commons]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.1 Transaction]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.2 Expense]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.3 ExpenseList]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.4 Saving]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.5 SavingList]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.6 RecurringExpenseList]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.7 RecurringExpensesList]() <br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.8 DefaultCurrency]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.9 CurrencyConverter]()<br>
+[4. Implementation](#4-implementation) <br>
+&nbsp;&nbsp;[4.1 Menu Feature]() <br>
+&nbsp;&nbsp;[4.2 Add Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Add Savings Feature]() <br>
+&nbsp;&nbsp;[4.4 Add Split Expenses Feature]() <br>
+&nbsp;&nbsp;[4.5 Edit Savings Feature]() <br>
+&nbsp;&nbsp;[4.6 Edit Expenses Feature]() <br>
+&nbsp;&nbsp;[4.7 Reduce Savings Feature]() <br>
+&nbsp;&nbsp;[4.8 Delete Expenses Feature]() <br>
+&nbsp;&nbsp;[4.9 List Savings Feature]() <br>
+&nbsp;&nbsp;[4.10 List Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Settle Splitted Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Find Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Currency Converter Feature]() <br>
+[5. Documentation]() <br>
+[6. Testing]() <br>
+[Appendix A: Product Scope](#5-product-scope) <br>
+[Appendix B: User Stories](#6-user-stories) <br>
+[Appendix C: Use Cases]() <br>
+[Appendix D: Non-Functional Requirements](#non-functional-requirements) <br>
+[Appendix E: Glossary]() <br>
+[Appendix F: Instructions for Manual Testing](#instructions-for-manual-testing) <br>
+
 
 
 ## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+Diagrams have been created on [Draw.io](https://draw.io/).
 
 ## Design & implementation
 
@@ -89,7 +138,7 @@ these steps have been left out as they have no relevance to the process of creat
 
 ![UML Sequence Diagram of Command](diagrams/sequenceDiagram_Command.jpg)
 
-#### 3.5 Storage Class
+#### 3.6 Storage Class
 The Storage Class handles the loading and saving of the features in BudgetBuddy. Different features are saved in
 different files corresponding to their data type.
 
@@ -99,16 +148,17 @@ are always up-to-date.
 Similarly, the **Loading** methods present in the Storage Class is always called **before** the application is fully
 initialized.
 
-### 3.6 Commons
+### 3.7 Commons
 The classes present in this group of `Commons` refers to a collection of classes used by multiple other components
 . They represent data of the user's financial transactions, including expenses and savings, along with methods 
 for organizing and managing this data.
 
-##### 3.6.1 Transaction
+##### 3.7.1 Transaction
 This is an abstract class, which is the superclass for both the Expense and Saving Classes. It contains common variables
 such as Currency, Category and Amount.
 
-##### 3.6.2 Expense
+<!-- @@author sweijie24-->
+##### 3.7.2 Expense
 This class holds details regarding an expense a user has. Within this class, it has 4 class-level variables :
 `String category`, `LocalDate dateAdded` , `String description` and `Double amount`.
 
@@ -130,7 +180,8 @@ It represents the cost or value of the expense, typically in the currency used b
 Storing the amount allows users to track how much money was spent on each expense, 
 aiding in budgeting and financial planning.
 
-##### 3.6.3 ExpenseList
+<!-- @@author sweijie24-->
+##### 3.7.3 ExpenseList
 This class represents a list of expenses. Within this class, it has 2 class-level variables :
 `ArrayList<Expense> expenses` and `ArrayList<String> categories`, The variables and there relevance are as follows :
 
@@ -148,7 +199,8 @@ allowing users to track and analyze their spending habits across different expen
 This class also contains the methods to handle any user interactions with the list of expenses. These methods would
 be further explained in their corresponding `Implementation` sections.
 
-##### 3.6.4 Saving
+<!-- @@author sweijie24-->
+##### 3.7.4 Saving
 This class holds details regarding a saving a user has. Within this class, it has 3 class-level variables :
 `String category`, `LocalDate dateAdded`, `Double amount`. The variables and their relevance
 are as follows :
@@ -169,7 +221,8 @@ The amount indicates how much money has been set aside or accumulated towards ac
 Users can track their progress towards savings targets and 
 monitor their overall financial health based on the amount saved.
 
-##### 3.6.5 SavingList
+<!-- @@author sweijie24-->
+##### 3.7.5 SavingList
 This class represents a list of savings. Within this class, it has 2 class-level variables :
 `ArrayList<Saving> savings` and `ArrayList<String> categories`, The variables and there relevance are as follows :
 
@@ -188,12 +241,12 @@ manage their savings across different categories.
 This class also contains the methods to handle any user interactions with the list of savings. These methods would
 be further explained in their corresponding `Implementation` sections.
 
-##### 3.6.6 RecurringExpenseList
+##### 3.7.6 RecurringExpenseList
 This class represents a list of recurring expenses for the Recurring Expense feature. Within this class, it has 
 1 class-level variable : `String name`. Which is used to store the name of the list. Given that its overall 
 functionality is similar to ExpenseList class, it **inherits** the ExpenseList class.
 
-##### 3.6.7 RecurringExpenseLists
+##### 3.7.7 RecurringExpenseLists
 This class represents the list of all lists of recurring expenses for the Recurring Expense feature. Within this class,
 it has only 1 class-level variable : `ArrayList<ExpenseList> recurringExpenses`. Which is used to store a list of
 ExpenseList objects. This class contains all methods required for the overall Recurring Expense feature to work. 
@@ -204,21 +257,17 @@ ExpenseList.
 
 ![Class Diagram](diagrams/classDiagram_RecurringExpenseLists.jpg)
 
-
-##### 3.6.8 DefaultCurrency
+<!-- @@author sweijie24-->
+##### 3.7.8 DefaultCurrency
 The `DefaultCurrency` class manages the application's default currency setting. It contains a static variable:
 
 - `Currency defaultCurrency`: Holds the current default currency setting, initialized to the Singapore Dollar (SGD) using the `Currency.getInstance("SGD")` method.
 
-The class provides two static methods:
-
-- `getDefaultCurrency()`: Returns the `defaultCurrency` currently set for the application. This allows different parts of the application to retrieve the default currency consistently.
-
-- `setDefaultCurrency(Currency currency)`: Assigns a new `Currency` object to `defaultCurrency`. This method enables the application to update the default currency based on user actions or preferences.
-
+This class provides two static methods that are further explained in detail in the **Implementation** section. <br>
 This class ensures a consistent default currency is used throughout the application, essential for functions like displaying amounts and performing currency conversions.
 
-##### 3.6.9 CurrencyConverter
+<!-- @@author sweijie24-->
+##### 3.7.9 CurrencyConverter
 The `CurrencyConverter` class provides functionality for converting amounts between different currencies. It includes two class-level variables:
 
 `Map<Currency, Double> exchangeRates`: This variable represents a map where the keys are instances of 
@@ -227,23 +276,7 @@ The map stores exchange rates for various currencies relative to a base currency
 The exchange rates are initialized with default values for common currencies such as 
 USD, EUR, JPY, KRW, MYR, CNY, and HKD.
 
-The class includes several methods to handle currency conversion tasks:
-
-* `convertAmount(double amount, Currency fromCurrency, Currency toCurrency)`: 
-This method converts an amount from one currency to another using exchange rates stored in the `exchangeRates` map. 
-It takes the original amount, the currency of the original amount (`fromCurrency`), 
-and the target currency (`toCurrency`) as parameters and returns the converted amount. 
-The method ensures that exchange rates are available for both currencies and that they are positive numbers.
-
-* `convertExpenseCurrency(Currency newCurrency, ExpenseList expenses)`: 
-This method converts the currency of expenses in a given `ExpenseList` to a specified new currency (`newCurrency`). 
-It iterates through the expenses in the list, converts each expense amount to the new currency 
-using the `convertAmount` method, and updates the expense amounts and currencies accordingly.
-
-* `convertSavingCurrency(Currency newCurrency, SavingList savings)`: Similar to `convertExpenseCurrency`, 
-this method converts the currency of savings in a given `SavingList` to a specified new currency (`newCurrency`). 
-It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount` 
-method, and updates the saving amounts and currencies accordingly.
+The class includes several methods to handle currency conversion tasks, with its relevance explained in the **Implementation** section. <br>
 
 * `convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList)`:
 This method is responsible for converting the currency of all budgets within `ExpenseList` to a specified new currency (`newCurrency`). It 
@@ -449,6 +482,7 @@ The user interaction for deleting expenses follows these steps:
 6. If the index is valid, the expense is removed, and a confirmation message is printed to the console.
 
 
+<!-- @@author sweijie24-->
 ### Listing Feature (List Savings)
 
 The Listing Savings Feature enables users to view their savings, potentially filtered by a specific category. This functionality is orchestrated by the `ListSavingsCommand` class, which is initialized by the `ListCommandCreator` class. Within the `ListSavingsCommand` object, the `ListCommandCreator` provides it with a `SavingList` object, an `ExpenseList` object, along with an optional `filterCategory`. The relevance of these class attributes in `ListSavingsCommand` is detailed in the following table:
@@ -481,6 +515,8 @@ The Listing Savings feature follows these steps when a user inputs a command to 
 The UML Sequence diagram for the Listing Savings feature would illustrate the interactions between the `User`, `BudgetBuddy`, `Parser`, `ListSavingsCommand`, and `SavingList` classes, showing the method calls and returns between these objects to complete the operation.
 ![Sequence diagram for List Expense Feature](diagrams/SavingList_SequenceDiagram.png)
 
+
+<!-- @@author sweijie24-->
 ### Listing Feature (List Expenses)
 The Listing Expenses Feature provides users with the ability to view their expenses, which can be filtered by category. The `ListExpenseCommand` class, generated by the `ListCommandCreator`, is responsible for this feature. The class utilizes the `ExpenseList` object to access and manipulate expense records, optionally applying a filter based on the category. The significance of the `ListExpenseCommand` class's attributes is outlined below:
 
@@ -508,7 +544,8 @@ The sequence diagram for the Listing Expenses feature would illustrate the above
 ![Sequence diagram for List Expense Feature](diagrams/ExpenseList_SequenceDiagram.png)
 
 
-### Currency Converter feature
+<!-- @@author sweijie24-->
+### Currency Converter Feature
 The Currency Converter Feature allows users to convert the currency of expenses and savings. This feature is facilitated by the `ChangeCurrencyCommand` class, initialized by the `Parser` class with `CurrencyConverter`, `ExpenseList`, and `SavingList` objects, alongside the `newCurrency` to convert to. The importance of these class attributes is as follows:
 
 | Class Attribute   | Variable Type          | Relevance                                                   |
@@ -530,6 +567,22 @@ When `BudgetBuddy` calls `command.execute()`, `ChangeCurrencyCommand` employs th
 
 The Currency Converter feature also includes a mechanism for managing a default currency across the application, facilitated by the `DefaultCurrency` class. This enhancement allows for seamless conversion of financial records to a user-specified default currency.
 
+* `convertAmount(double amount, Currency fromCurrency, Currency toCurrency)`:
+  This method converts an amount from one currency to another using exchange rates stored in the `exchangeRates` map.
+  It takes the original amount, the currency of the original amount (`fromCurrency`),
+  and the target currency (`toCurrency`) as parameters and returns the converted amount.
+  The method ensures that exchange rates are available for both currencies and that they are positive numbers.
+
+* `convertExpenseCurrency(Currency newCurrency, ExpenseList expenses)`:
+  This method converts the currency of expenses in a given `ExpenseList` to a specified new currency (`newCurrency`).
+  It iterates through the expenses in the list, converts each expense amount to the new currency
+  using the `convertAmount` method, and updates the expense amounts and currencies accordingly.
+
+* `convertSavingCurrency(Currency newCurrency, SavingList savings)`: Similar to `convertExpenseCurrency`,
+  this method converts the currency of savings in a given `SavingList` to a specified new currency (`newCurrency`).
+  It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount`
+  method, and updates the saving amounts and currencies accordingly.
+
 The `DefaultCurrency` class is designed to maintain and update the application-wide default currency setting. It provides static methods to get and set the default currency:
 
 | Method               | Return Type | Relevance                                                    |
@@ -549,7 +602,35 @@ Here's the step-by-step process when the user uses the Currency Converter featur
 
 
 #### Sequence Diagram
+
+The sequence diagram would be segmented into the different features that utilises the CurrencyConverter class.
+
+Main Sequence Diagram before Execution:
 ![Sequence diagram for CurrencyConverter Feature](diagrams/CurrencyConverter_SequenceDiagram.png)
+
+Upon execution, the following respective conversion functions will run:
+
+<!-- @@author sweijie24-->
+Sequence Diagram for convertExpenseCurrency():
+![Sequence diagram for convertExpenseCurrency method](diagrams/convertExpenseCurrency_SequenceDiagram.png)
+
+<!-- @@author sweijie24-->
+Sequence Diagram for convertSavingCurrency():
+![Sequence diagram for convertSavingCurrency](diagrams/convertSavingCurrency_SequenceDiagram.png)
+
+<!-- @@author itsmejr257-->
+Sequence Diagram for convertRecurringExpensesCurrency():
+![Sequence diagram for convertRecurringExpensesCurrency](diagrams/CurrencyConverter_RecurringExpenses_SequenceDiagram.png)
+
+<!-- @@author yyangdaa-->
+Sequence Diagram for convertSplittedExpenseCurrency():
+![]()
+
+<!-- @@author dheekshitha2-->
+Sequence Diagram for convertBudgetCurrency():
+![Sequence diagram for budgetCurrencyConverter](diagrams/budgetCurrencyConverter.png)
+
+
 
 ### Menu Feature
   
@@ -833,7 +914,28 @@ The "Categories above budget" section offers a concise table summarizing which c
 by what amount, making it easy for users to identify areas of concern.
 
 
-## 5. Product scope
+## 5. Documentation
+
+The following section describes how documentation for the project was written. Documentation Format follows GitHub-Flavoured Markdown.
+
+### 5.1 Documentation Style
+- We followed the style similar to the example provided [here](https://se-education.org/addressbook-level3/DeveloperGuide.html).
+
+### 5.2 Diagrams
+- We use [Draw.io](https://draw.io/) for our diagrams, exported as PNG with light theme.
+
+### 5.3 PDF Conversion
+- We use **Chrome** for converting documentations to PDF format as per recommendations [here](https://se-education.org/guides/tutorials/savingPdf.html).
+
+## 6. Testing
+
+The following section describes the testing methodologies followed in this project to ensure the project is of the highest standard and as bug-free as possible.
+
+### 6.1 Running Tests
+
+
+
+## Appendix A: Product scope
 
 ### Target user profile
 This product is for users who can type fast, and wishes to handle and track their current and future
@@ -843,7 +945,7 @@ expenses on a singular platform.
 BudgetBuddy is faster and more efficient way to track and calculate current and future expenses if a user is able to
 type fast. It also provides the ability to deal with finances on a singular platform.
 
-## 6. User Stories
+## Appendix B: User Stories
 
 ## User Stories
 
@@ -870,18 +972,142 @@ type fast. It also provides the ability to deal with finances on a singular plat
 | v2.0    | user              | save my expenses in my recurring expenses                       | make sure i do not have to retype all expenses again after closing the application            |
 | v2.0    | user              | load my expenses in my recurring expenses                       | i can access previously added expenses in my recurring expenses when i reopen the application |
 
-## Non-Functional Requirements
+## Appendix C: Use Cases
+(For all use cases below, the System is `BudgetBuddy` and the Actor is the `user`, unless specified otherwise).
 
-{Give non-functional requirements}
+<!-- @@author sweijie24-->
+### Use Case: Listing Savings
 
-## Glossary
+1. User requests to list savings.
+2. BudgetBuddy retrieves the stored savings and expenses.
+3. BudgetBuddy calculates the remaining savings left.
+4. BudgetBuddy displays the existing savings along with the initial savings amount and remaining savings left.
 
-* *recurring expenses* - A set of expenses which can be added to the overall expenses at any given point in time
-* *overall expenses* - Refers to the overall expense list. Etc, the expense list which expenses get added to when performing an add expense command.
+#### Extensions
+* 1.1 User requests to list savings by a specific category.
+  * 1.1.1 BudgetBuddy retrieves the stored savings and expenses.
+  * 1.1.2 BudgetBuddy calculates remaining savings left.
+  * 1.1.3 BudgetBuddy displays only the existing savings with the filtered category.
+  * 1.1.4 BudgetBuddy displays the overall initial savings and remaining savings left. <br>
+  Use case ends
+* 1.2 The user entered an invalid category.
+  * 1.2.1 BudgetBuddy shows an error message. <br>
+  Use case ends
+* 2.1 BudgetBuddy retrieves an empty savings list but existing expenses list.
+  * 2.1.1 BudgetBuddy calculates savings required to pay off expenses.
+  * 2.1.2 BudgetBuddy displays savings user is short of. <br>
+  Use case ends
+* 2.2 BudgetBuddy retrieves an existing savings list but an empty expenses list.
+  * 2.2.1 BudgetBuddy displays all existing entries in savings list.
+  * 2.2.2 BudgetBuddy still calculates remaining savings left, with 0 expenses deducted.
+  * 2.2.3 BudgetBuddy displays overall initial savings and remaining savings left. <br>
+  Use case ends
+* 2.3 BudgetBuddy retrieves both empty savings and expenses list.
+  * 2.3.1 BudgetBuddy displays an empty list for both savings and expenses. <br>
+  Use case ends
 
-## Instructions for manual testing
 
-### Displaying Commands
+<!-- @@author sweijie24-->
+### Use Case: Listing Expenses
+
+1. User requests to list expenses.
+2. BudgetBuddy retrieves stored expenses.
+3. BudgetBuddy calculates total overall expenses.
+4. BudgetBuddy displays existing expenses along with the overall total expenses.
+
+#### Extensions
+
+* 1.1 User requests to list expenses by a specific category.
+  * 1.1.1 BudgetBuddy retrieves stored expenses.
+  * 1.1.2 BudgetBuddy calculates total overall expenses.
+  * 1.1.3 BudgetBuddy displays only the existing expenses with the filtered category, along with overall total expenses. <br>
+  Use case ends
+* 1.2 User entered an invalid category.
+  * 1.2.1 BudgetBuddy shows an error message. <br>
+  Use case ends
+* 2.1 BudgetBuddy retrieves an empty expense list.
+  * 2.1.1 BudgetBuddy displays an empty expense list. <br>
+  Use case ends
+
+<!-- @@author sweijie24-->
+### Use Case: Currency Converter
+
+1. User requests to change currency.
+2. BudgetBuddy converts existing amounts in lists to new currency.
+3. BudgetBuddy sets default currency to the new changed currency.
+4. BudgetBuddy displays currency changed.
+
+#### Extensions
+* 1.1 User inputs an invalid currency code.
+  * 1.1.1 BudgetBuddy shows an error message. <br>
+  Use case ends
+* 1.2 User inputs the same currency code.
+  * 1.2.1 BudgetBuddy notifies user of the same conversion. <br>
+  Use case ends
+
+## Appendix D: Non-Functional Requirements
+
+1. Should work on any *mainstream OS* as long as it has Java `11` or above installed.
+2. Should be able to hold up to 1000 entries without a noticeable sluggishness in performance for typical usage.
+3. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+
+## Appendix E: Glossary
+
+* **Mainstream OS**: Windows, Linux, macOS.
+* **Securring Expenses*: A set of expenses which can be added to the overall expenses at any given point in time
+* **Overall Expenses**: Refers to the overall expense list. Etc, the expense list which expenses get added to when performing an add expense command.
+
+## Appendix F: Instructions for manual testing
+
+### 1. Launch and Shutdown
+* 1.1 Initial Launch
+  * Download the `jar` file and copy into an empty folder.
+  * Navigate to the `jar` file via a Terminal/PowerShell window.
+  * Start the `jar` file with the following command: `java -jar BudgetBuddy.jar`
+  * Expected: Command Line Interface should launch with the Menu being shown.
+
+### 2. Test Cases
+
+#### 2.1 
+
+#### 2.9 Listing Savings
+
+* 2.9.1 Listing Overall Savings
+  * Prerequisites: There must be existing savings and expenses in the list.
+  * Test Case: `list savings`
+  * Expected: All existing savings will be printed, along with the initial amount and remaining amount after deducting expenses if necessary.
+
+* 2.9.2 Listing Savings by a specific category
+  * Prerequisites: There must be existing savings of `Salary` category and expenses in the list.
+  * Test Case: `list savings Salary`
+  * Expected: Savings that have the `Salary` category will be printed, along with the overall remaining savings deducting expenses.
+
+#### 2.10 Listing Expenses
+
+* 2.10.1 Listing Overall Expenses
+  * Prerequisites: There must be existing expenses in the list.
+  * Test Case: `list expenses`
+  * Expected: All existing expenses will be printed, along with the overall amount.
+
+* 2.10.2 Listing Expenses by a specific category
+  * Prerequisites: there must be existing expenses of `Transport` category in the list.
+  * Test Case: `list expenses Transport`
+  * Expected: Expenses relating to the `Transport` category will be printed, along with the overall amount.
+
+#### 2.21 Changing Currency
+
+* 2.21.1 Changing Currency
+  * Prerequisite: There must be existing savings and expenses in the list.
+  * Test Case: `change currency USD`
+  * Expected: All existing savings and expenses will be converted to the USD equivalent pricing.
+
+* 2.21.2 Changing Default Currency
+  * Prerequisite: There need not be existing savings or expenses in the list.
+  * Test Case: `change currency USD`
+  * Expected: Default Currency would be changed to USD. Future amounts added will be in USD.
+
+#### Displaying Commands
 1. Test Case : `menu`    
 Expected : Prints all possible menu items in the command line interface
 2. Test Case : `menu 1`  
@@ -891,7 +1117,7 @@ Expected : An error message is printed in the command line interface
 4. Test Case : `menu 999`  
 Expected : An error message is printed in the command line interface
 
-### Finding an expense
+#### Finding an expense
 **Prerequisites** : Some expenses has been added to the overall expense.
 1. Test Case : `find expenses d/cat morethan/ lessthan/`    
 Expected : If there are expenses matching/containing "cat", the found expenses are printed. Else, message stating no matching expenses found is printed in command line interface
@@ -900,7 +1126,7 @@ Expected : If there are expenses matching/containing "cat" and is more than 20, 
 3. Test Case : `find expenses d/cat morethan/string lessthan`  
 Expected : An error message is printed in the command line interface
 
-### Creating a new list of recurring expenses
+#### Creating a new list of recurring expenses
 1. Test Case : `rec newlist streaming`  
 Expected : A new list created called `streaming`
 2. Test Case : `rec newlist  `  
@@ -908,7 +1134,7 @@ Expected : An error message will be printed in the command line interface
 3. Test Case : `rec newlist |`  
 Expected : An error message will be printed in the command line interface
 
-### Listing all lists of recurring expenses
+#### Listing all lists of recurring expenses
 1. Test Case : `rec viewlists`, with already added lists    
 Expected : All lists of recurring expenses will be printed in the command line interface
 2. Test Case : `rec viewlists`, with no added lists  
@@ -916,7 +1142,7 @@ Expected : Message stated there being no recurring expenses is printed in the co
 3. Test Case : `rec viewlists extra`  
 Expected : `viewlists` should still work as intended, with no exceptions being thrown
 
-### Removing a list of recurring expenses
+#### Removing a list of recurring expenses
 1. Test Case : `rec removelist 1`, with a list being present at the list number `1` during `rec viewlists`    
 Expected : List located at list number 1 will be removed, and a success message is printed in the command line interface
 2. Test Case : `rec removelist string`  
@@ -926,7 +1152,7 @@ Expected : Error message will be printed in the command line interface
 4. Test Case : `rec removelist  `  
 Expected : Error message will be printed in the command line interface
 
-### Adding an expense into a list of recurring expenses
+#### Adding an expense into a list of recurring expenses
 1. Test Case : `rec newexpense to/1 c/Entertainment a/200 d/description`, with a list being present at list number `1`  
 Expected : Expense with details Entertainment, 200, description will be added to list at list number `1`
 2. Test Case : `rec newexpense to/1`    
@@ -934,7 +1160,7 @@ Expected : Error message will be printed in the command line interface
 3. Test Case : `rec newexpense to/string c/Entertainment a/200 d/description`  
 Expected : Error message will be printed in the command line interface
 
-### Viewing all expenses in a list of recurring expenses
+#### Viewing all expenses in a list of recurring expenses
 1. Test Case : `rec viewexpenses 1`, with a list being present at list number `1` and contains expenses inside  
 Expected : Prints all expenses present in the recurring expense list 1
 2. Test Case : `rec viewexpenses 1` with a list not being present  
@@ -942,7 +1168,7 @@ Expected : Error message will be printed in the command line interface
 3. Test Case : `rec viewexpenses 1` with a list being present at list number `1`, but does not contain any expenses inside  
 Expected : Prints an empty set of expenses to command line interface, with expenses at $0
 
-### Adding all expenses in a list of recurring expenses to the overall expenses
+#### Adding all expenses in a list of recurring expenses to the overall expenses
 1. Test Case : `rec addrec 1`, with a list being present at list number `1` and contains expense inside    
 Expected : Adds all expenses present in recurring expense list 1 to the overall expenses
 2. Test Case : `rec addrec 1`, with a list being present a list number `1` but does not contain any expenses inside  
@@ -950,7 +1176,7 @@ Expected : A message is provided in the command line interface informing the use
 3. Test Case : `rec addrec 1`, with a list not being present at list number `1`  
 Expected : Error message will be printed in the command line interface
 
-### Loading recurring expenses
+#### Loading recurring expenses
 **Prerequisite** : The `RecurringExpensesFile.txt` should be empty prior to each Test Case  
 1. Test Case : Add a line in `RecurringExpensesFile.txt` called `!!! newlist !!!`
 Expected : A recurring expense list named `newlist` will be present when doing a `rec viewlists`
@@ -959,8 +1185,9 @@ Expected : Error is printed in the CLI, RecurringExpensesFile will be reset to a
 3. Test Case : Add a line in `RecurringExpensesFile.txt` called `!!! newlist !!!` and another line below it `1 | 2024-04-13 | Entertainment | 203.35 | movies`  
 Expected : A recurring expense list named `newlist` will be present at list number 1 when doing a `rec viewlists` and an expense with the above description is present when doing a `rec viewexpenses 1`
 
-### Saving recurring expenses
+#### Saving recurring expenses
 1. Test Case : `rec newlist streaming services` followed by a `bye`  
 Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming services !!!`. The list will also still be present after Relaunching application.
 2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
 Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
+

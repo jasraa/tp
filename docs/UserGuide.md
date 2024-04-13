@@ -1,12 +1,47 @@
 # User Guide
 
-## Introduction
+## Table of Contents
+[1. Introduction](#1-introduction) <br>
+[2. Quick Start](#2-quick-start) <br>
+[3. Features](#3-features) <br>
+&nbsp;&nbsp;[3.1 Display Commands()](#31-display-commands--menu) <br>
+&nbsp;&nbsp;[3.2 Add Expense](#32-add-expense)<br>
+&nbsp;&nbsp;[3.3 Add Savings](#33-add-savings)<br>
+&nbsp;&nbsp;[3.4 Add Split Expenses](#34-add-split-expenses)<br>
+&nbsp;&nbsp;[3.5 Edit Savings](#35-edit-savings-edit-savings)<br>
+&nbsp;&nbsp;[3.6 Edit Expense](#36-edit-expenses-edit-expense)<br>
+&nbsp;&nbsp;[3.7 Reduce Savings](#37-reduce-savings-reduce-savings)<br>
+&nbsp;&nbsp;[3.8 Delete Expense](#38-delete-expense-delete-expense)<br>
+&nbsp;&nbsp;[3.9 List Savings](#39-listing-savings-list-savings)<br>
+&nbsp;&nbsp;[3.10 List Expense](#310-listing-expenses-list-expenses) <br>
+&nbsp;&nbsp;[3.11 Check Splitted Expenses](#311-check-splitted-expenses-check-splitted-expenses)<br>
+&nbsp;&nbsp;[3.12 Settle Splitted Expenses](#312-settle-splitted-expenses-settle-expense)<br>
+&nbsp;&nbsp;[3.13 Find Expense](#313-finding-expenses--find-expenses)<br>
+&nbsp;&nbsp;[3.14 Recurring Bill Description](#314-recurring-bill-description)<br>
+&nbsp;&nbsp;[3.15 Add Recurring Bill](#315-add-recurring-bill--rec-newlist)<br>
+&nbsp;&nbsp;[3.16 List Recurring Bills](#316-list-all-recurring-bills--rec-viewlists)<br>
+&nbsp;&nbsp;[3.17 Remove Recurring Bill](#317-remove-recurring-bill--rec-removelist)<br>
+&nbsp;&nbsp;[3.18 Add Expense to a Recurring Bill](#318-add-an-expense-to-a-recurring-bill--rec-newexpense)<br>
+&nbsp;&nbsp;[3.19 View Expenses in a Recurring Bill](#319-view-expenses-in-a-recurring-bill--rec-viewexpenses)<br>
+&nbsp;&nbsp;[3.20 Add Expenses in a Recurring Bill to Overall Expenses](#320-add-expenses-in-a-recurring-bill-to-overall-expenses--rec-addrec)<br>
+&nbsp;&nbsp;[3.21 Change Currency](#321-changing-currencies--change-currency-currency_code)<br>
+&nbsp;&nbsp;[3.22 Set Budget](#322-setting-budgets-)<br>
+&nbsp;&nbsp;[3.23 Get Budget](#323-getting-budget-for-specific-category)<br>
+&nbsp;&nbsp;[3.24 Print Budget](#324-print-all-the-budgets)<br>
+&nbsp;&nbsp;[3.25 Get Graphical Insights for expenses](#325-get-graphical-insights-for-expenses-get-expenses-insights)<br>
+&nbsp;&nbsp;[3.26 Get Graphical Insights for savings](#326-get-graphical-insights-for-savings-get-savings-insights)<br>
+[4. FAQ](#4-faq)<br>
+[5. Command Summary](#5-command-summary)<br>
+[6. For Advanced Users](#6-for-advanced-users)<br>
+
+
+## 1. Introduction
 BudgetBuddy is a product for users who wish to handle and track any current/future expenses on a singular platform. 
 BudgetBuddy provides a faster and more efficient way to track and calculate expenses and provides the ability 
 to deal with finances on a singular platform with ease as long as you can type fast.
 
 
-## Quick Start
+## 2. Quick Start
 1. Ensure that you have Java 11 installed.
 2. Download the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/v2.0).
 3. Copy the file to the folder you want to use as the home folder.
@@ -14,35 +49,9 @@ to deal with finances on a singular platform with ease as long as you can type f
 command to run the application.
 
 
-## Features
-1. Display Commands()
-2. Add Expense
-3. Add Savings
-4. Add Split Expenses
-5. Edit Savings
-6. Edit Expense
-7. Reduce Savings
-8. Delete Expense
-9. List Savings
-10. List Expense
-11. Check Splitted Expenses
-12. Settle Splitted Expenses
-13. Find Expense
-14. Recurring Bill Description
-15. Add Recurring Bill
-16. List Recurring Bills
-17. Remove Recurring Bill
-18. Add Expense to a Recurring Bill
-19. View Expenses in a Recurring Bill
-20. Add Expenses in a Recurring Bill to Overall Expenses
-21. Change Currency
-22. Set Budget
-23. Get Budget
-24. Print Budget
-25. Get Graphical Insights for expenses
-26. Get Graphical Insights for savings
+## 3. Features
 
-### Display Commands : `menu`
+### 3.1 Display Commands : `menu`
 Displays the corresponding features of BudgetBuddy
 
 Format: `menu [INDEX]`
@@ -57,7 +66,8 @@ Example of usage:
 
 `menu 1` : Displays commands related to feature associated to menu list item 1
 
-### Add Expense
+
+### 3.2 Add Expense
 Records a new expense under a specific category with a detailed description.
 
 Format: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
@@ -79,7 +89,7 @@ Example of Usage:
 
 `add expense c/Entertainment a/167 d/Bruno Mars`
 
-### Add Savings
+### 3.3 Add Savings
 Adds a specified amount to the savings under a particular category.
 
 Format:  `add savings c/CATEGORY a/AMOUNT`
@@ -98,7 +108,7 @@ Example of Usage:
 
 `add savings c/Salary a/500.50`
 
-### Add Split Expenses
+### 3.4 Add Split Expenses
 Add expenses that are meant for splitting among friends or colleague
 
 Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
@@ -112,7 +122,7 @@ Example of usage:
 
 `split expenses a/100 n/10 d/Lunch
 
-### Edit Savings: `edit savings`
+### 3.5 Edit Savings: `edit savings`
 Edit Savings that have been added previously.
 
 Format: `edit savings c/CATEGORY i/INDEX a/AMOUNT`
@@ -130,7 +140,7 @@ Expected Output:
 
 `Saving edited successfully.`
 
-### Edit Expenses: `edit expense`
+### 3.6 Edit Expenses: `edit expense`
 Edit expenses that have been added previously.
 
 Format: `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
@@ -149,7 +159,7 @@ Expected Output:
 
 `Expense edited successfully.`
 
-### Reduce Savings: `reduce savings`
+### 3.7 Reduce Savings: `reduce savings`
 
 Reduces the amount saved in a particular category
 
@@ -164,7 +174,7 @@ Example of usage:
 Reduces the savings of category of index 4 listed in the savings tracker by $10
 
 
-### Delete Expense: `delete expense`
+### 3.8 Delete Expense: `delete expense`
 
 Deletes expenses that have been added wrongly or are no longer relevant.
 
@@ -181,7 +191,7 @@ Deletes the expense of at index 4 listed in the expenditure tracker.
 - Once an expense is deleted, it cannot be recovered.
 
 
-### Listing Savings: `list savings`
+### 3.9 Listing Savings: `list savings`
 
 Lists savings
 
@@ -189,6 +199,7 @@ Format: `list savings CATEGORY`
 
 * The `CATEGORY` is optional and can be left blank.
 * The `CATEGORY` must be a pre-existing category if inputted.
+* The command is not case-sensitive.
 * Similar to listing expenses, users can view their savings with optional category filtering.
 * Savings are listed along with their respective categories and amounts.
 * Filtered Categories will only display savings with that Category.
@@ -217,7 +228,7 @@ Expected Output (Filtered Category) :
 ![ListSavings_FilterCategory.PNG](userguideimages/ListSavings_FilterCategory.PNG)
 
 
-### Listing Expenses: `list expenses`
+### 3.10 Listing Expenses: `list expenses`
 
 Lists expenses
 
@@ -225,6 +236,7 @@ Format: `list expenses CATEGORY`
 
 * The `CATEGORY` is optional and can be left blank.
 * The `CATEGORY` must be a pre-existing category if inputted.
+* The command is not case-sensitive.
 * When listing expenses, users have the option to filter expenses based on categories.
 * Users can specify a category to view expenses related to that category only.
   * Index is **NOT** affected so as to facilitate easier identification for deletion.
@@ -250,7 +262,7 @@ Expected Output (Expense Recorded):
 Expected Output (Filtered Category) :
 ![ListExpenses_FilteredCategory.PNG](userguideimages/ListExpenses_FilteredCategory.PNG)
 
-### Check splitted expenses `check splitted expenses`
+### 3.11 Check splitted expenses `check splitted expenses`
 
 Check expenses
 
@@ -259,7 +271,7 @@ Format: `check splitted expenses`
 * the system will list all splitted expenses.
 * The listed splitted expenses include details such as the total amount spent, number of people in the bill, description and the amount payable by each person.
 
-### Settle splitted expenses `settle expense`
+### 3.12 Settle splitted expenses `settle expense`
 
 Settle splitted expenses
 
@@ -271,7 +283,7 @@ Format `settle i/Index`
 Example of usage:
 `settle i/2`: Delete splitexpense of index 2 listed in splittedexpenses tracker
 
-### Finding expenses : `find expenses`
+### 3.13 Finding expenses : `find expenses`
 
 Finds expenses based on their description or amount
 
@@ -292,7 +304,7 @@ Examples of usage :
 `find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than $200
 `find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than $200, but lesser than $400
 
-### Recurring Bill Description
+### 3.14 Recurring Bill Description
 The next few features in the user guide would be related to the Recurring Bill Feature. The commands associated to
 this overall feature would start with the `rec` command, followed by the relevant `commandType` and parameters. This
 feature allows the user to create and manage multiple lists of expenses **separate** from the user's overall expenses
@@ -303,7 +315,7 @@ overall expenses at **any** given point in time. Hence, this could range from su
 etc.
 
 
-### Add Recurring Bill : `rec newlist`
+### 3.15 Add Recurring Bill : `rec newlist`
 
 Adds a new recurring Bill.
 
@@ -318,7 +330,7 @@ Examples of usage :
 
 `rec newlist Subscriptions` : Creates a new empty recurring bill named `Subscriptions`
 
-### List all Recurring Bills : `rec viewlists`
+### 3.16 List all Recurring Bills : `rec viewlists`
 
 Lists all recurring bill names, along with their associated list number
 
@@ -338,7 +350,7 @@ When there are no added recurring bills
 
 ![Output of viewlists where there are no recurring bills](userguideimages/rec_viewlists_emptyOutput.png)
 
-### Remove Recurring Bill : `rec removelist`
+### 3.17 Remove Recurring Bill : `rec removelist`
 
 Removes a recurring bill
 
@@ -351,7 +363,7 @@ Examples of usage :
 
 `rec removelist 2` : Removes the 2nd recurring bill in the list of recurring bills
 
-### Add an expense to a recurring bill : `rec newexpense`
+### 3.18 Add an expense to a recurring bill : `rec newexpense`
 
 Adds an expense to a specified recurring bill
 
@@ -371,7 +383,7 @@ Examples of usage :
 `rec newexpense to/1 c/Entertainment a/200 d/movies` : Adds a new expense to the 1st recurring bill 
 , with category as Entertainment, amount as 200 and description as Movies
 
-### View expenses in a recurring bill : `rec viewexpenses`
+### 3.19 View expenses in a recurring bill : `rec viewexpenses`
 
 Views all expenses in a specified recurring bill
 
@@ -389,10 +401,9 @@ Here are some expected outputs for different situations :
 
 When the list to view contains expenses : ![View Expenses Command when List is Non-Empty](userguideimages/rec_viewexpenses_NonEmptyList.png)
 
-
 When the list to view does not contain any expenses : ![View Expenses Command when List is Empty](userguideimages/rec_viewexpenses_EmptyList.png)
 
-### Add expenses in a recurring bill to overall expenses : `rec addrec`
+### 3.20 Add expenses in a recurring bill to overall expenses : `rec addrec`
 
 Adds all expenses in a specified recurring bill to the overall expenses
 
@@ -412,7 +423,7 @@ When the list to add contains expenses : ![Add Recurring Expenses Command when L
 
 When the list to add is empty: ![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_EmptyList.png)
 
-### Changing Currencies : `change currency [CURRENCY_CODE]`
+### 3.21 Changing Currencies : `change currency [CURRENCY_CODE]`
 
 Converts current currency to targeted currency
 
@@ -422,6 +433,7 @@ Format : `change currency [CURRENCY_CODE]`
 * Current Currency can be identified when listing savings/expenses.
 * `CURRENCY_CODE` consists of the following currencies: 'SGD', 'USD', 'EUR', 'MYR', 'JPY', 'KRW', 'CNY', 'HKD'
 * `CURRENCY_CODE` cannot be null. 
+* `CURRENCY_CODE` is not case-sensitive.
 * Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY).
 * Future additions to Expenses/Savings will be using the current currency displayed.
   * (i.e. **ALL** Expenses/Savings will be converted to the new currency.)
@@ -437,7 +449,7 @@ Expected Output (SGD -> USD) :
 Expected Output (USD -> USD) :
 ![CurrencyConverter_SameCurrency.PNG](userguideimages%2FCurrencyConverter_SameCurrency.PNG)
 
-### Setting Budgets: 
+### 3.22 Setting Budgets: 
 
 Sets budget for specified category
 
@@ -449,7 +461,7 @@ Format: `set budget c/CATEGORY b/BUDGET`
 Example of usage: 
 `set budget c/Housing b/1000` : Sets a budget of $1000 for Housing category
 
-### Getting budget for specific category:
+### 3.23 Getting budget for specific category:
 
 Retrieves the budget for the specified category, also lists expenses in descending order,
 and shows the percentage of budget that each expense takes up.
@@ -462,7 +474,7 @@ Example of usage:
 `get budget c/Transport`: Retrieves the set budget for transport (if any), lists expenses 
 in transport category in ascending order, and shows % of budget taken up by each of them.
 
-### Print all the budgets
+### 3.24 Print all the budgets
 
 * Prints all the budgets in a table (Table 1)
 * Table 1 contains information about amount spent, remaining amount and % of budget spent for each category
@@ -472,7 +484,7 @@ in transport category in ascending order, and shows % of budget taken up by each
 Format: `print budget`
 
 
-### Get Graphical Insights for expenses: `get expenses insights`
+### 3.25 Get Graphical Insights for expenses: `get expenses insights`
 * This feature provides an overview of the expenses distribution across different categories. 
 * A horizontal bar graph showing the percentage of total expenses attributed to each category.
 * It highlights the category with the highest expenses, the one with the lowest (excluding categories with no expenses),
@@ -484,7 +496,8 @@ Example of usage: `get expenses insights`
 Example of Expected Output:
 ![GetExpenseInsights.png](userguideimages%2FGetExpenseInsights.png)
 
-### Get Graphical Insights for savings: `get savings insights`
+### 3.26 Get Graphical Insights for savings: `get savings insights`
+
 * This feature offers a comprehensive look at how your savings are allocated across various categories. 
 * A horizontal bar graph showing the percentage of total savings attributed to each category.
 * It highlights the category with the highest savings, the one with the lowest (excluding categories with no savings),
@@ -497,26 +510,30 @@ Example of Expected Output:
 ![GetSavingsInsights.png](userguideimages%2FGetSavingsInsights.png)
 
 
-### Saving the data
+## 4. FAQ
 
-BudgetBuddy data is automatically saved to the hard disk after any command that changes the data. There is no need to save manually.
+This section answers some frequently asked questions.
 
-However, the exceptions to these are the following features. Where no implementation of saving and loading has been added for these features :
-* Setting Budgets
-* Splitted Expenses
+### How do I transfer my data to another computer.
 
-### Editing the data file
+The save files for BudgetBuddy are stored in `[JAR file location]/data/`. <br>
+Copy all contents found in the `data` folder to the new location.
 
-BudgetBuddy data is saved automatically as a text file `[JAR file location]/data/*.txt`. Where * represents the different names of the files
-. Four files should be created upon first startup of BudgetBuddy : `SavingsFile.txt`, `ExpenseFile.txt`, `RecurringExpensesFile.txt` and `DefaultCurrency.txt`
-Advanced users are welcome to update the data directly by editing this file. However, caution is advised as certain edits may cause JunBot to behave unexpectedly.
+### Can I include my own category?
+
+As of current version (v2.1), the feature to include your own category has not been implemented yet. It may come in a future release.
+
+### Why are there only so little currency codes available?
+
+As of the current version (v2.1), we plan to include more conversion codes in future updates as we expand on the program.
+
+### Are the conversion values accurate in real-time?
+
+As our program does not require Internet access, the conversion ratios are taken as of the release date for each version of BudgetBuddy. <br>
+(i.e. v2.1 released on 15 Apr 2024, so conversion ratios are taken as of that date) <br>
 
 
-> ⚠️ **Caution:** Certain edits can cause BudgetBuddy to behave in unexpected ways (e.g. if value entered is outside of acceptable range, or the entries are not in the right format). Therefore, edit the data file only
-> if you are confident that you can update it correctly
-
-
-## Command Summary
+## 5. Command Summary
 * Display Commands : `menu INDEX`
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
@@ -529,6 +546,27 @@ Advanced users are welcome to update the data directly by editing this file. How
 * Set Budget `set budget c/CATEGORY b/BUDGET`
 * Get Budget `get budget c/CATEGORY`
 * Print Budgets `print budget`
-* Get Graphical Insights for expenses `get expenses insights` 
+* Get Graphical Insights for expenses `get expenses insights`
 * Get Graphical Insights for savings `get savings insights`
+
+## 6. For Advanced Users:
+
+### 6.1 Saving the data
+
+BudgetBuddy data is automatically saved to the hard disk after any command that changes the data. There is no need to save manually.
+
+However, the exceptions to these are the following features. Where no implementation of saving and loading has been added for these features :
+* Setting Budgets
+* Splitted Expenses
+
+### 6.2 Editing the data file
+
+BudgetBuddy data is saved automatically as a text file `[JAR file location]/data/*.txt`. Where * represents the different names of the files
+. Four files should be created upon first startup of BudgetBuddy : `SavingsFile.txt`, `ExpenseFile.txt`, `RecurringExpensesFile.txt` and `DefaultCurrency.txt`
+Advanced users are welcome to update the data directly by editing this file. However, caution is advised as certain edits may cause JunBot to behave unexpectedly.
+
+
+> ⚠️ **Caution:** Certain edits can cause BudgetBuddy to behave in unexpected ways (e.g. if value entered is outside of acceptable range, or the entries are not in the right format). Therefore, edit the data file only
+> if you are confident that you can update it correctly
+
 
