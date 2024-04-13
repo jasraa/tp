@@ -462,19 +462,25 @@ Format: `print budget`
 * This feature provides an overview of the expenses distribution across different categories. 
 * A horizontal bar graph showing the percentage of total expenses attributed to each category.
 * It highlights the category with the highest expenses, the one with the lowest (excluding categories with no expenses),
-* and lists any categories where no expenses have been recorded.
+and lists any categories where no expenses have been recorded.
 * Categories are Housing, Groceries, Utility, Transport, Entertainment, and Others.
 
 Example of usage: `get expenses insights`
+
+Example of Expected Output:
+![GetExpenseInsights.png](userguideimages%2FGetExpenseInsights.png)
 
 ### Get Graphical Insights for savings: `get savings insights`
 * This feature offers a comprehensive look at how your savings are allocated across various categories. 
 * A horizontal bar graph showing the percentage of total savings attributed to each category.
 * It highlights the category with the highest savings, the one with the lowest (excluding categories with no savings),
-* and lists any categories where no savings have been added.
+and lists any categories where no savings have been added.
 * Categories are Salary, Investments, Gifts, and Others
 
 Example of Usage: `get savings insights`
+
+Example of Expected Output:
+![GetSavingsInsights.png](userguideimages%2FGetSavingsInsights.png)
 
 
 ### Saving the data
