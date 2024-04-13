@@ -7,7 +7,7 @@
 &nbsp;&nbsp;[3.1 Display Commands()](#31-display-commands--menu) <br>
 &nbsp;&nbsp;[3.2 Add Expense](#32-add-expense)<br>
 &nbsp;&nbsp;[3.3 Add Savings](#33-add-savings)<br>
-&nbsp;&nbsp;[3.4 Add Split Expenses](#34-add-split-expenses)<br>
+&nbsp;&nbsp;[3.4 Add Split Expenses](#34-add-shared-bill)<br>
 &nbsp;&nbsp;[3.5 Edit Savings](#35-edit-savings-edit-savings)<br>
 &nbsp;&nbsp;[3.6 Edit Expense](#36-edit-expenses-edit-expense)<br>
 &nbsp;&nbsp;[3.7 Reduce Savings](#37-reduce-savings-reduce-savings)<br>
@@ -15,7 +15,7 @@
 &nbsp;&nbsp;[3.9 List Savings](#39-listing-savings-list-savings)<br>
 &nbsp;&nbsp;[3.10 List Expense](#310-listing-expenses-list-expenses) <br>
 &nbsp;&nbsp;[3.11 Check Splitted Expenses](#311-check-splitted-expenses-check-splitted-expenses)<br>
-&nbsp;&nbsp;[3.12 Settle Splitted Expenses](#312-settle-splitted-expenses-settle-expense)<br>
+&nbsp;&nbsp;[3.12 Settle Splitted Expenses](#312-settle-bill-settle-bill)<br>
 &nbsp;&nbsp;[3.13 Find Expense](#313-finding-expenses--find-expenses)<br>
 &nbsp;&nbsp;[3.14 Recurring Bill Description](#314-recurring-bill-description)<br>
 &nbsp;&nbsp;[3.15 Add Recurring Bill](#315-add-recurring-bill--rec-newlist)<br>

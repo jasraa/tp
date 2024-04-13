@@ -4,51 +4,50 @@
 [1. Introduction](#1-introduction) <br>
 [2. Setting up](#2-setup-guide) <br>
 &nbsp;&nbsp;[2.1 Prerequisites](#21-prerequisites) <br>
-&nbsp;&nbsp;[2.2 Setting up the project](#2) <br>
-&nbsp;&nbsp;[2.3 Verify the setup](#2) <br>
 [3. Design](#3design) <br>
 &nbsp;&nbsp;[3.1 Architecture](#31-architecture) <br>
 &nbsp;&nbsp;[3.2 Parser Class](#32-parser-class) <br>
 &nbsp;&nbsp;[3.3 Ui Class](#33-ui-class)<br>
-&nbsp;&nbsp;[3.4 CommandCreator](#35-commandcreator-class) <br>
-&nbsp;&nbsp;[3.5 CommandClass](#34-command-class)<br>
-&nbsp;&nbsp;[3.6 Storage Class]()<br>
-&nbsp;&nbsp;[3.7 Commons]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.1 Transaction]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.2 Expense]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.3 ExpenseList]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.4 Saving]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.5 SavingList]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.6 RecurringExpenseList]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.7 RecurringExpensesList]() <br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.8 DefaultCurrency]()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[3.7.9 CurrencyConverter]()<br>
+&nbsp;&nbsp;[3.4 CommandCreator](#34-commandcreator-class) <br>
+&nbsp;&nbsp;[3.5 CommandClass](#35-command-class)<br>
+&nbsp;&nbsp;[3.6 Storage Class](#36-storage-class)<br>
+&nbsp;&nbsp;[3.7 Commons](#37-commons)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.1 Transaction](#371-transaction)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.2 Expense](#372-expense)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.3 ExpenseList](#373-expenselist)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.4 Saving](#374-saving)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.5 SavingList](#375-savinglist)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.6 RecurringExpenseList](#376-recurringexpenselist)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.7 RecurringExpensesList](#377-recurringexpenselists) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.8 DefaultCurrency](#378-defaultcurrency)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.9 CurrencyConverter](#379-currencyconverter)<br>
 [4. Implementation](#4-implementation) <br>
-&nbsp;&nbsp;[4.1 Menu Feature]() <br>
-&nbsp;&nbsp;[4.2 Add Expenses Feature]() <br>
-&nbsp;&nbsp;[4.3 Add Savings Feature]() <br>
-&nbsp;&nbsp;[4.4 Add Split Expenses Feature]() <br>
-&nbsp;&nbsp;[4.5 Edit Savings Feature]() <br>
-&nbsp;&nbsp;[4.6 Edit Expenses Feature]() <br>
-&nbsp;&nbsp;[4.7 Reduce Savings Feature]() <br>
-&nbsp;&nbsp;[4.8 Delete Expenses Feature]() <br>
-&nbsp;&nbsp;[4.9 List Savings Feature]() <br>
-&nbsp;&nbsp;[4.10 List Expenses Feature]() <br>
-&nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
-&nbsp;&nbsp;[4.3 Settle Splitted Expenses Feature]() <br>
-&nbsp;&nbsp;[4.13 Find Expenses Feature]() <br>
-&nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
-&nbsp;&nbsp;[4.3 Currency Converter Feature]() <br>
-&nbsp;&nbsp;[4.25 Get Graphical Insights for expenses]() <br>
-&nbsp;&nbsp;[4.26 Get Graphical Insights for savings]() <br>
-[5. Documentation]() <br>
-[6. Testing]() <br>
-[Appendix A: Product Scope](#5-product-scope) <br>
-[Appendix B: User Stories](#6-user-stories) <br>
-[Appendix C: Use Cases]() <br>
-[Appendix D: Non-Functional Requirements](#non-functional-requirements) <br>
-[Appendix E: Glossary]() <br>
-[Appendix F: Instructions for Manual Testing](#instructions-for-manual-testing) <br>
+&nbsp;&nbsp;[4.1 Menu Feature](#41-menu-feature) <br>
+&nbsp;&nbsp;[4.2 Add Expenses Feature](#42-add-expense-feature) <br>
+&nbsp;&nbsp;[4.3 Add Savings Feature](#43-add-savings-feature) <br>
+&nbsp;&nbsp;[4.4 Add Split Expenses Feature](#44-add-shared-bill-feature) <br>
+&nbsp;&nbsp;[4.5 Edit Savings Feature](#45-edit-savings-feature) <br>
+&nbsp;&nbsp;[4.6 Edit Expenses Feature](#46-edit-expense-feature) <br>
+&nbsp;&nbsp;[4.7 Reduce Savings Feature](#47-reduce-savings-feature) <br>
+&nbsp;&nbsp;[4.8 Delete Expenses Feature](#48-delete-expenses-feature) <br>
+&nbsp;&nbsp;[4.9 List Savings Feature](#49-listing-feature-list-savings) <br>
+&nbsp;&nbsp;[4.10 List Expenses Feature](#410-listing-feature-list-expenses) <br>
+&nbsp;&nbsp;[4.11 Check Splitted Expenses Feature](#411-check-split-bill-feature) <br>
+&nbsp;&nbsp;[4.12 Settle Splitted Expenses Feature](#412-settle-bill-feature) <br>
+&nbsp;&nbsp;[4.13 Find Expenses Feature](#413-find-feature) <br>
+&nbsp;&nbsp;[4.14 Recurring Expenses Feature](#414-recurring-expenses-feature) <br>
+&nbsp;&nbsp;[4.15 Currency Converter Feature](#415-currency-converter-feature) <br>
+&nbsp;&nbsp;[4.16 Setting Budget Feature](#416-setting-budget-feature) <br>
+&nbsp;&nbsp;[4.17 Get Graphical Insights for expenses](#417-get-expense-insights-feature) <br>
+&nbsp;&nbsp;[4.18 Get Graphical Insights for savings](#418-get-savings-insights-feature) <br>
+[5. Documentation](#5-documentation) <br>
+[6. Testing](#6-testing) <br>
+[Appendix A: Product Scope](#appendix-a-product-scope) <br>
+[Appendix B: User Stories](#appendix-b-user-stories) <br>
+[Appendix C: Use Cases](#appendix-c-use-cases) <br>
+[Appendix D: Non-Functional Requirements](#appendix-d-non-functional-requirements) <br>
+[Appendix E: Glossary](#appendix-e-glossary) <br>
+[Appendix F: Instructions for Manual Testing](#appendix-f-instructions-for-manual-testing) <br>
 
 
 
@@ -361,7 +360,7 @@ Given below is an example usage scenario and how the full Menu feature works :
 9. `showMenuItem()` in `Ui` then prints all commands for `case 1` which is for `Manage Expenses`
 
 <!-- @@author yyangdaa-->
-### Add Expense Feature
+### 4.2 Add Expense Feature
 
 The Add Expense Feature allows users to add expenses to different categories. `AddExpenseCommand` class enables this feature, 
 after initialized by the `Parser` class. Within the `AddExpense` object, the `Parser` would have initialized it with
@@ -409,7 +408,7 @@ using the `Parser#extractDetailsForAdd(input, "parameter")`
 then returned to `BudgetBuddy`
 
 <!-- @@author yyangdaa-->
-### Add Savings Feature
+### 4.3 Add Savings Feature
 
 The Add Savings Feature allows users to add savings to different categories. `AddSavingCommandCreator` class intialises the `AddSavingCommand`, after initialised by the `Parser` class. Within the `AddSavings` object, the `Parser` would have initialized it with
 4 variables, a `SavingList` object,  along with a `category`, `amount`. 
@@ -450,6 +449,45 @@ user input.
 6. Depending on which parameters were present, the corresponding input would be extracted and placed into each variable
 using the `Parser#extractDetailsForAdd(input, "parameter")`
 7. Finally, `Parser#handleAddExpenseCommand()` intialises a `AddExpensesCommandCreator` which then returns `AddSavingCommand` to `Parser#parseCommand()`, which is then returned to `BudgetBuddy`.
+
+<!-- @@author yyangdaa-->
+### 4.4 Add Shared Bill feature
+
+The Add Shared Bill Feature allows users to enter expenses that are shared among multiple parties, facilitating easy splitting and tracking of such expenses. The feature is managed by the `SplitExpenseCommand` class, which is initialized by the `SplitExpenseCommandCreator` as a result of the Parser class interpretation.
+
+Class Attributes for SplitExpenseCommand:
+
+|   Class Attribute	| Variable Type	    | Relevance                                                    |
+|-------------------|-------------------|--------------------------------------------------------------|
+| splitExpenseList	| SplitExpenseList	 | SplitExpenseList O bject where the shared bill will be added |     |
+| amount	          | double	           | The total amount of the shared bill                          |
+| numerOfPeople     | int               | The number of people that are meant for splitting the bill   | 
+| description	      | String	           | Description of the shared bill                               |
+
+Upon the call of the execute() method via command.execute(), SplitExpenseCommand performs the following key actions:
+
+1. It adds the shared bill as an expense to the ExpenseList.
+2. Calculates each participant's share based on the total amount divided by the number of participants.
+
+Key Methods used from SplitExpenseList
+
+|    Method	             | Return Type	          | Relevance                                            | 
+|------------------------|------------------------|------------------------------------------------------|
+|  addSplitExpense()	   | void	                  | Adds the splitexpense to the list of splitexpenses   |
+
+The SplitExpenseCommand also provides an output summarizing the shared expense, each participant's share.
+
+Sequence Diagram for Adding a Shared Bill
+The sequence diagram illustrates the flow from when a user inputs a command to add a shared bill to its execution:
+![Sequence Diagram for Parser for addSplitExpense Feature](diagrams/sequenceDiagram_SplitExpense.jpg)
+
+User Input: The user inputs a command in the format `add shared bill a/<Amount> n/<NumberOfPeople> d/<Description>`
+
+Parsing: The `Parser` class identifies the input as a shared bill command and extracts the necessary parameters (`amount`, `number of people`, `description`).
+Command Initialization: The `Parser` initializes a `SplitExpenseCommand` with the extracted parameters.
+Execution: The `SplitExpenseCommand` is executed, which calls `addSplitExpense()` on the `SplitExpenseList` to add the shared bill.
+Calculation: The command calculates each participant's share of the bill and records it.
+
 
 <!-- @@author jasraa-->
 ### 4.5 Edit Savings Feature
@@ -533,7 +571,7 @@ category to "Transport," amount to 40.0, and description to "GRAB."
 7. A message "Expense edited successfully." is printed to the console.
 
 <!-- @@author Dheekshitha2-->
-### 4.6 Reduce Savings Feature
+### 4.7 Reduce Savings Feature
 The Reduce Savings feature enables users to decrement a specified amount from their savings at a given index. This 
 functionality is controlled by the `ReduceSavingCommand` class, which is produced by the `ReduceSavingCommandCreator` 
 based on user input. The `ReduceSavingCommand` class uses a `SavingList` object to access the relevant saving and performs 
@@ -565,7 +603,7 @@ inputs a valid reduce savings command:
 ![sequenceDiagram_ReduceSavings.png](diagrams/sequenceDiagram_ReduceSavings.png)
 
 <!-- @@author Dheekshitha2-->
-### 4.7 Delete Expenses Feature
+### 4.8 Delete Expenses Feature
 The Delete Expense feature grants users the capability to remove expenses they have previously entered. Managed by the 
 DeleteExpenseCommand class, this feature is initialized through DeleteExpenseCommandCreator. During the creation process, 
 the command is provided with an `ExpenseList` object and an `index` indicating the specific expense to be deleted. 
@@ -594,7 +632,7 @@ The user interaction for deleting expenses follows these steps:
 
 
 <!-- @@author sweijie24-->
-### Listing Feature (List Savings)
+### 4.9 Listing Feature (List Savings)
 
 The Listing Savings Feature enables users to view their savings, potentially filtered by a specific category. This functionality is orchestrated by the `ListSavingsCommand` class, which is initialized by the `ListCommandCreator` class. Within the `ListSavingsCommand` object, the `ListCommandCreator` provides it with a `SavingList` object, an `ExpenseList` object, along with an optional `filterCategory`. The relevance of these class attributes in `ListSavingsCommand` is detailed in the following table:
 
@@ -628,7 +666,7 @@ The UML Sequence diagram for the Listing Savings feature would illustrate the in
 
 
 <!-- @@author sweijie24-->
-### Listing Feature (List Expenses)
+### 4.10 Listing Feature (List Expenses)
 The Listing Expenses Feature provides users with the ability to view their expenses, which can be filtered by category. The `ListExpenseCommand` class, generated by the `ListCommandCreator`, is responsible for this feature. The class utilizes the `ExpenseList` object to access and manipulate expense records, optionally applying a filter based on the category. The significance of the `ListExpenseCommand` class's attributes is outlined below:
 
 | Class Attribute | Variable Type | Relevance                                                                         |
@@ -655,45 +693,7 @@ The sequence diagram for the Listing Expenses feature would illustrate the above
 ![Sequence diagram for List Expense Feature](diagrams/ExpenseList_SequenceDiagram.png)
 
 <!-- @@author yyangdaa-->
-### Add Shared Bill feature
-
-The Add Shared Bill Feature allows users to enter expenses that are shared among multiple parties, facilitating easy splitting and tracking of such expenses. The feature is managed by the `SplitExpenseCommand` class, which is initialized by the `SplitExpenseCommandCreator` as a result of the Parser class interpretation.
-
-Class Attributes for SplitExpenseCommand:
-
-|   Class Attribute	| Variable Type	    | Relevance                                                    |
-|-------------------|-------------------|--------------------------------------------------------------|
-| splitExpenseList	| SplitExpenseList	 | SplitExpenseList O bject where the shared bill will be added |     |
-| amount	          | double	           | The total amount of the shared bill                          |
-| numerOfPeople     | int               | The number of people that are meant for splitting the bill   | 
-| description	      | String	           | Description of the shared bill                               |
-
-Upon the call of the execute() method via command.execute(), SplitExpenseCommand performs the following key actions:
-
-1. It adds the shared bill as an expense to the ExpenseList.
-2. Calculates each participant's share based on the total amount divided by the number of participants.
-
-Key Methods used from SplitExpenseList
-
-|    Method	             | Return Type	          | Relevance                                            | 
-|------------------------|------------------------|------------------------------------------------------|
-|  addSplitExpense()	   | void	                  | Adds the splitexpense to the list of splitexpenses   |
-
-The SplitExpenseCommand also provides an output summarizing the shared expense, each participant's share.
-
-Sequence Diagram for Adding a Shared Bill
-The sequence diagram illustrates the flow from when a user inputs a command to add a shared bill to its execution:
-![Sequence Diagram for Parser for addSplitExpense Feature](diagrams/sequenceDiagram_SplitExpense.jpg)
-
-User Input: The user inputs a command in the format `add shared bill a/<Amount> n/<NumberOfPeople> d/<Description>`
-
-Parsing: The `Parser` class identifies the input as a shared bill command and extracts the necessary parameters (`amount`, `number of people`, `description`).
-Command Initialization: The `Parser` initializes a `SplitExpenseCommand` with the extracted parameters.
-Execution: The `SplitExpenseCommand` is executed, which calls `addSplitExpense()` on the `SplitExpenseList` to add the shared bill.
-Calculation: The command calculates each participant's share of the bill and records it.
-
-<!-- @@author yyangdaa-->
-### Check Split Bill feature
+### 4.11 Check Split Bill feature
 
 The Check Split Bills Feature allows users to view a list of all bills that have been marked as split among multiple parties. This is particularly useful for tracking shared expenses in scenarios like shared accommodations, group trips, or joint projects.
 
@@ -723,7 +723,7 @@ The sequence diagram for the Check Split Expenses feature would illustrate the i
 ![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_ListSplitExpense.jpg)
 
 <!-- @@author yyangdaa-->
-### Settle Bill feature
+### 4.12 Settle Bill feature
 
 The Settle Bill Feature allows users to mark shared bills as settled, which is crucial for tracking repayments in scenarios such as shared accommodations or group outings.
 Class Attributes for `SettleBillCommand`:
@@ -753,95 +753,7 @@ The sequence diagram for the Settle Bill feature would illustrate the interactio
 ![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_SettleSplitExpense.jpg)
 
 
-
-<!-- @@author sweijie24-->
-### Currency Converter Feature
-The Currency Converter Feature allows users to convert the currency of expenses and savings. This feature is facilitated by the `ChangeCurrencyCommand` class, initialized by the `Parser` class with `CurrencyConverter`, `ExpenseList`, and `SavingList` objects, alongside the `newCurrency` to convert to. The importance of these class attributes is as follows:
-
-| Class Attribute   | Variable Type          | Relevance                                                   |
-|-------------------|------------------------|-------------------------------------------------------------|
-| currencyConverter | CurrencyConverter      | The object responsible for currency conversion calculations |
-| expenseList       | ExpenseList            | Contains the expenses whose currency will be converted      |
-| savingList        | SavingList             | Contains the savings whose currency will be converted       |
-| newCurrency       | Currency               | The new currency to which the amounts will be converted     | 
-| exchangeRates     | Map<Currency, Double>  | Stores exchange rates with currencies as keys               |
-
-When `BudgetBuddy` calls `command.execute()`, `ChangeCurrencyCommand` employs the following methods from `CurrencyConverter` to convert the currency of all financial records:
-
-| Method                   | Return Type | Relevance                                                                |
-|--------------------------|-------------|--------------------------------------------------------------------------|
-| convertExpenseCurrency() | void        | Converts the currency of each `Expense` object to `newCurrency`          |
-| convertSavingCurrency()  | void        | Converts the currency of each `Saving` object to `newCurrency`           |
-| convertBudgetCurrency()  | void        | Converts the currency of each `Budget` object to `newCurrency`           |
-| convertAmount()          | double      | Converts an amount from one currency to another using the exchange rates |
-
-The Currency Converter feature also includes a mechanism for managing a default currency across the application, facilitated by the `DefaultCurrency` class. This enhancement allows for seamless conversion of financial records to a user-specified default currency.
-
-* `convertAmount(double amount, Currency fromCurrency, Currency toCurrency)`:
-  This method converts an amount from one currency to another using exchange rates stored in the `exchangeRates` map.
-  It takes the original amount, the currency of the original amount (`fromCurrency`),
-  and the target currency (`toCurrency`) as parameters and returns the converted amount.
-  The method ensures that exchange rates are available for both currencies and that they are positive numbers.
-
-* `convertExpenseCurrency(Currency newCurrency, ExpenseList expenses)`:
-  This method converts the currency of expenses in a given `ExpenseList` to a specified new currency (`newCurrency`).
-  It iterates through the expenses in the list, converts each expense amount to the new currency
-  using the `convertAmount` method, and updates the expense amounts and currencies accordingly.
-
-* `convertSavingCurrency(Currency newCurrency, SavingList savings)`: Similar to `convertExpenseCurrency`,
-  this method converts the currency of savings in a given `SavingList` to a specified new currency (`newCurrency`).
-  It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount`
-  method, and updates the saving amounts and currencies accordingly.
-
-The `DefaultCurrency` class is designed to maintain and update the application-wide default currency setting. It provides static methods to get and set the default currency:
-
-| Method               | Return Type | Relevance                                                    |
-|----------------------|-------------|--------------------------------------------------------------|
-| getDefaultCurrency   | Currency    | Retrieves the current default currency for the application   |
-| setDefaultCurrency   | void        | Updates the default currency to a new value                  |
-
-
-Here's the step-by-step process when the user uses the Currency Converter feature:
-1. The user inputs `change currency [newCurrencyCode]`. `Parser` processes this input and constructs a `ChangeCurrencyCommand` object with the necessary attributes.
-2. The `ChangeCurrencyCommand` object is returned to `BudgetBuddy`, which calls `ChangeCurrencyCommand.execute()`.
-3. `execute()` invokes `CurrencyConverter.convertExpenseCurrency(newCurrency, expenseList)` and `CurrencyConverter.convertSavingCurrency(newCurrency, savingList)`.
-4. Within the `convertExpenseCurrency` and `convertSavingCurrency` call, the amounts of `Expense`, `Saving` or `Budget` objects are converted to the `newCurrency` using the `convertAmount` method.
-5. The `DefaultCurrency.setDefaultCurrency(newCurrency)` method is called to update the application's default currency setting to `newCurrency`.
-6. The `setAmount` and `setCurrency` methods of `ExpenseList` and `SavingList` are used to update the amounts and currency codes.
-7. After successful conversion of savings, expenses and budgets, the default currency of the application is updated, reflecting the new choice across BudgetBuddy.
-
-
-#### Sequence Diagram
-
-The sequence diagram would be segmented into the different features that utilises the CurrencyConverter class.
-
-Main Sequence Diagram before Execution:
-![Sequence diagram for CurrencyConverter Feature](diagrams/CurrencyConverter_SequenceDiagram.png)
-
-Upon execution, the following respective conversion functions will run:
-
-<!-- @@author sweijie24-->
-Sequence Diagram for convertExpenseCurrency():
-![Sequence diagram for convertExpenseCurrency method](diagrams/convertExpenseCurrency_SequenceDiagram.png)
-
-<!-- @@author sweijie24-->
-Sequence Diagram for convertSavingCurrency():
-![Sequence diagram for convertSavingCurrency](diagrams/convertSavingCurrency_SequenceDiagram.png)
-
-<!-- @@author itsmejr257-->
-Sequence Diagram for convertRecurringExpensesCurrency():
-![Sequence diagram for convertRecurringExpensesCurrency](diagrams/CurrencyConverter_RecurringExpenses_SequenceDiagram.png)
-
-<!-- @@author yyangdaa-->
-Sequence Diagram for convertSplittedExpenseCurrency():
-![]()
-
-<!-- @@author dheekshitha2-->
-Sequence Diagram for convertBudgetCurrency():
-![Sequence diagram for budgetCurrencyConverter](diagrams/budgetCurrencyConverter.png)
-
-
-### Find Feature
+### 4.13 Find Feature
 The Find Feature allows users to search for expenses based on a specific criteria such as description, minimum amount
 and maximum amount. This feature is orchestrated by the `FindExpensesCommand` class, which is created by the `FindExpensesCommandCreator`
 , which is in turn created by the `Parser`. Within the `FindExpensesCommand` object, the `FindExpensesCommandCreator` 
@@ -936,7 +848,7 @@ of type `ExpenseList` with `filteredExpenses` initialized as the `expenses` Clas
 7. Finally `execute()` calls `filteredExpenseList#listexpenses()` to print filtered expenses into the CLI.
 
 <!-- @@author itsmejr257-->
-### Recurring Expenses Feature
+### 4.14 Recurring Expenses Feature
 The Recurring Expenses feature allows users to create list(s) of expenses, where each list can be added to
 the overall expenses in a single command. This feature includes the creation of a list of expenses, the viewing of
 all/each list of expenses and the removal of each list of expenses. All functions are orchestrated by the 
@@ -1001,8 +913,95 @@ and adding them one by one into the `overallExpenses`. This is done so by creati
 this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpenseCommand`.
 10. Finally, a success message is printed to the User.
 
+<!-- @@author sweijie24-->
+### 4.15 Currency Converter Feature
+The Currency Converter Feature allows users to convert the currency of expenses and savings. This feature is facilitated by the `ChangeCurrencyCommand` class, initialized by the `Parser` class with `CurrencyConverter`, `ExpenseList`, and `SavingList` objects, alongside the `newCurrency` to convert to. The importance of these class attributes is as follows:
+
+| Class Attribute   | Variable Type          | Relevance                                                   |
+|-------------------|------------------------|-------------------------------------------------------------|
+| currencyConverter | CurrencyConverter      | The object responsible for currency conversion calculations |
+| expenseList       | ExpenseList            | Contains the expenses whose currency will be converted      |
+| savingList        | SavingList             | Contains the savings whose currency will be converted       |
+| newCurrency       | Currency               | The new currency to which the amounts will be converted     | 
+| exchangeRates     | Map<Currency, Double>  | Stores exchange rates with currencies as keys               |
+
+When `BudgetBuddy` calls `command.execute()`, `ChangeCurrencyCommand` employs the following methods from `CurrencyConverter` to convert the currency of all financial records:
+
+| Method                   | Return Type | Relevance                                                                |
+|--------------------------|-------------|--------------------------------------------------------------------------|
+| convertExpenseCurrency() | void        | Converts the currency of each `Expense` object to `newCurrency`          |
+| convertSavingCurrency()  | void        | Converts the currency of each `Saving` object to `newCurrency`           |
+| convertBudgetCurrency()  | void        | Converts the currency of each `Budget` object to `newCurrency`           |
+| convertAmount()          | double      | Converts an amount from one currency to another using the exchange rates |
+
+The Currency Converter feature also includes a mechanism for managing a default currency across the application, facilitated by the `DefaultCurrency` class. This enhancement allows for seamless conversion of financial records to a user-specified default currency.
+
+* `convertAmount(double amount, Currency fromCurrency, Currency toCurrency)`:
+  This method converts an amount from one currency to another using exchange rates stored in the `exchangeRates` map.
+  It takes the original amount, the currency of the original amount (`fromCurrency`),
+  and the target currency (`toCurrency`) as parameters and returns the converted amount.
+  The method ensures that exchange rates are available for both currencies and that they are positive numbers.
+
+* `convertExpenseCurrency(Currency newCurrency, ExpenseList expenses)`:
+  This method converts the currency of expenses in a given `ExpenseList` to a specified new currency (`newCurrency`).
+  It iterates through the expenses in the list, converts each expense amount to the new currency
+  using the `convertAmount` method, and updates the expense amounts and currencies accordingly.
+
+* `convertSavingCurrency(Currency newCurrency, SavingList savings)`: Similar to `convertExpenseCurrency`,
+  this method converts the currency of savings in a given `SavingList` to a specified new currency (`newCurrency`).
+  It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount`
+  method, and updates the saving amounts and currencies accordingly.
+
+The `DefaultCurrency` class is designed to maintain and update the application-wide default currency setting. It provides static methods to get and set the default currency:
+
+| Method               | Return Type | Relevance                                                    |
+|----------------------|-------------|--------------------------------------------------------------|
+| getDefaultCurrency   | Currency    | Retrieves the current default currency for the application   |
+| setDefaultCurrency   | void        | Updates the default currency to a new value                  |
+
+
+Here's the step-by-step process when the user uses the Currency Converter feature:
+1. The user inputs `change currency [newCurrencyCode]`. `Parser` processes this input and constructs a `ChangeCurrencyCommand` object with the necessary attributes.
+2. The `ChangeCurrencyCommand` object is returned to `BudgetBuddy`, which calls `ChangeCurrencyCommand.execute()`.
+3. `execute()` invokes `CurrencyConverter.convertExpenseCurrency(newCurrency, expenseList)` and `CurrencyConverter.convertSavingCurrency(newCurrency, savingList)`.
+4. Within the `convertExpenseCurrency` and `convertSavingCurrency` call, the amounts of `Expense`, `Saving` or `Budget` objects are converted to the `newCurrency` using the `convertAmount` method.
+5. The `DefaultCurrency.setDefaultCurrency(newCurrency)` method is called to update the application's default currency setting to `newCurrency`.
+6. The `setAmount` and `setCurrency` methods of `ExpenseList` and `SavingList` are used to update the amounts and currency codes.
+7. After successful conversion of savings, expenses and budgets, the default currency of the application is updated, reflecting the new choice across BudgetBuddy.
+
+
+#### Sequence Diagram
+
+The sequence diagram would be segmented into the different features that utilises the CurrencyConverter class.
+
+Main Sequence Diagram before Execution:
+![Sequence diagram for CurrencyConverter Feature](diagrams/CurrencyConverter_SequenceDiagram.png)
+
+Upon execution, the following respective conversion functions will run:
+
+<!-- @@author sweijie24-->
+Sequence Diagram for convertExpenseCurrency():
+![Sequence diagram for convertExpenseCurrency method](diagrams/convertExpenseCurrency_SequenceDiagram.png)
+
+<!-- @@author sweijie24-->
+Sequence Diagram for convertSavingCurrency():
+![Sequence diagram for convertSavingCurrency](diagrams/convertSavingCurrency_SequenceDiagram.png)
+
+<!-- @@author itsmejr257-->
+Sequence Diagram for convertRecurringExpensesCurrency():
+![Sequence diagram for convertRecurringExpensesCurrency](diagrams/CurrencyConverter_RecurringExpenses_SequenceDiagram.png)
+
+<!-- @@author yyangdaa-->
+Sequence Diagram for convertSplittedExpenseCurrency():
+![]()
+
+<!-- @@author dheekshitha2-->
+Sequence Diagram for convertBudgetCurrency():
+![Sequence diagram for budgetCurrencyConverter](diagrams/budgetCurrencyConverter.png)
+
+
 <!-- @@author Dheekshitha2-->
-### Setting Budget Feature
+### 4.16 Setting Budget Feature
 The Budget Management feature allows users to set financial limits for the various categories and monitor their spending.
 This feature's objective is to give users the ability to stay within their financial goals and avoid overspending.
 
@@ -1058,7 +1057,7 @@ The "Categories above budget" section offers a concise table summarizing which c
 by what amount, making it easy for users to identify areas of concern.
 
 <!-- @@author jasraa-->
-### 4.25 Get Expense Insights Feature
+### 4.17 Get Expense Insights Feature
 
 The Get Expense Insights feature allows users to analyze their spending patterns and understand where their money goes.
 This feature is managed by the `GetExpenseInsightsCommand` class, which is initialized by the `Parser` class.
@@ -1090,7 +1089,7 @@ Here's a step-by-step explanation of the processes that occur when a user invoke
 6. Insights such as the categories with the highest and lowest spending are then printed to the user.
 
 <!-- @@author jasraa-->
-### 4.26 Get Savings Insights Feature
+### 4.18 Get Savings Insights Feature
 
 The Get Savings Insights feature enables users to analyze their savings distribution across various categories and 
 understand their saving habits. This feature is facilitated by the `GetSavingsInsightsCommand` class, which is
@@ -1536,9 +1535,19 @@ type fast. It also provides the ability to deal with finances on a singular plat
 
 ### 2. Test Cases
 
-#### 2.1 
+<!-- @@author itsmejr257-->
+#### 2.1 Displaying Commands
+1. Test Case : `menu`    
+   Expected : Prints all possible menu items in the command line interface
+2. Test Case : `menu 1`  
+   Expected : Prints all commands related to Manage Expenses` in the command line interface
+3. Test Case : `menu string`  
+   Expected : An error message is printed in the command line interface
+4. Test Case : `menu 999`  
+   Expected : An error message is printed in the command line interface
 
-### 2.2 Adding Expenses
+
+#### 2.2 Adding Expenses
 
 * 2.2.1 Adding an Expense
   * Prerequisites: None.
@@ -1557,7 +1566,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * Test Case: `add expense c/abc a/50 d/Bus fare`
   * Expected: Error message due to invalid category. Command line interface will instruct on correct format.
 
-### 2.3 Adding Savings
+#### 2.3 Adding Savings
 
 * 2.3.1 Adding Valid Savings
   * Test Case ID: addSaving_validInput_success
@@ -1573,21 +1582,21 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * Input: `Salary`, `abc`
   * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a positive number with up to maximum two decimal places.`
 
-* 2.2.3 Adding Saving with Negative Amount
+* 2.3.3 Adding Saving with Negative Amount
   * Test Case ID: addSaving_negativeAmount_exceptionThrown
   * Description: Tests adding a saving with a negative amount.
   * Method: `addSaving(String category, String amount)`
   * Input: `Salary`, `-1.00`
   * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a positive number with up to maximum two decimal places.`
 
-* 2.2.4 Adding Saving with Non-Listed Category
+* 2.3.4 Adding Saving with Non-Listed Category
   * Test Case ID: addSaving_nullCategory_exceptionThrown
   * Description: Tests adding a saving with a category that is not listed in the predefined categories.
   * Method: `addSaving(String category, String amount)`
   * Input: `abc`, `500`
   * Expected Outcome: A BudgetBuddyException is thrown with the message `The category 'abc' is not listed.`
 
-### 2.4 Add Split Expenses
+#### 2.4 Add Split Expenses
 
 * 2.4.1 Adding a Valid Split Expense
   * Test Case ID: addSplitExpense_addingsplitexpense_success
@@ -1617,12 +1626,12 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * Input: `-12`, `12`, `Lunch`
   * Expected Outcome: A BudgetBuddyException is thrown with the message `Expenses should not be negative.`
 
-### 2.4.5 Adding Split Expense with Negative Number of People
-*Test Case ID: addSplitExpense_negativeNumberOfPeople_exceptionThrown
-*Description: Tests adding a split expense with a negative number of people.
-*Method: addSplitExpense(String amount, String numberOfPeople, String description)
-*Input: "12", "-12", "Lunch"
-*Expected Outcome: A BudgetBuddyException is thrown with the message "Number of people should be a positive number."
+* 2.4.5 Adding Split Expense with Negative Number of People 
+  * Test Case ID: addSplitExpense_negativeNumberOfPeople_exceptionThrown 
+  * Description: Tests adding a split expense with a negative number of people. 
+  * Method: addSplitExpense(String amount, String numberOfPeople, String description)
+  * Input: "12", "-12", "Lunch"
+  * Expected Outcome: A BudgetBuddyException is thrown with the message "Number of people should be a positive number."
 
 #### 2.5 Edit Savings
 **Prerequisites** : Some savings has been added to the overall savings.
@@ -1633,7 +1642,7 @@ Expected : An error message mentioning invalid saving category will be printed.
 3. Test Case : `edit savings c/Salary i/2 a/-2000`
 Expected : An error message mentioning invalid amount will be printed.
 
-#### 2.5 Edit Expenses
+#### 2.6 Edit Expenses
 **Prerequisites** : Some savings has been added to the overall savings.
 1. Test Case : `edit expense c/Transport i/2 a/2000 d/GRAB`
    Expected : if there is an expense with index 2, it edits the expense at index 2. Else, an error message stating invalid index will be printed.
@@ -1641,6 +1650,27 @@ Expected : An error message mentioning invalid amount will be printed.
    Expected : An error message mentioning invalid saving category will be printed.
 3. Test Case : `edit savings c/Entertainment i/2 a/-2000`
    Expected : An error message mentioning invalid amount will be printed.
+
+<!-- @@author Dheekshitha2-->
+#### 2.7 Reducing savings
+
+1. Test case: `reduce savings c/Salary a/100`
+   Expected: The savings under 'Salary' are reduced by $100, and a confirmation message is displayed.
+   **Prerequisites** :  No savings under the category 'Investments' exist.
+2. Test case: `reduce savings c/Investments a/100`
+   Expected: An error message is displayed indicating no savings found under the category 'Investments'.
+   **Prerequisites** :  Savings under the category 'Salary' exist but are less than $500
+3. Test case: `reduce savings c/Salary a/500`
+   Expected: An error message is displayed indicating insufficient amount in 'Salary' to reduce by $500.
+
+<!-- @@author Dheekshitha2-->
+#### 2.8 Deleting an expense
+
+1. Test case: `delete expense i/1`
+   Expected:  The first expense in the list, if any, is deleted and a confirmation message is displayed.
+2. Test case: `delete expense i/999`
+   Expected: An error message is displayed stating that the index is out of bounds
+
 
 #### 2.9 Listing Savings
 
@@ -1666,31 +1696,8 @@ Expected : An error message mentioning invalid amount will be printed.
   * Test Case: `list expenses Transport`
   * Expected: Expenses relating to the `Transport` category will be printed, along with the overall amount.
 
-#### 2.21 Changing Currency
-
-* 2.21.1 Changing Currency
-  * Prerequisite: There must be existing savings and expenses in the list.
-  * Test Case: `change currency USD`
-  * Expected: All existing savings and expenses will be converted to the USD equivalent pricing.
-
-* 2.21.2 Changing Default Currency
-  * Prerequisite: There need not be existing savings or expenses in the list.
-  * Test Case: `change currency USD`
-  * Expected: Default Currency would be changed to USD. Future amounts added will be in USD.
-
 <!-- @@author itsmejr257-->
-#### 2.1 Displaying Commands
-1. Test Case : `menu`    
-Expected : Prints all possible menu items in the command line interface
-2. Test Case : `menu 1`  
-Expected : Prints all commands related to Manage Expenses` in the command line interface
-3. Test Case : `menu string`  
-Expected : An error message is printed in the command line interface
-4. Test Case : `menu 999`  
-Expected : An error message is printed in the command line interface
-
-<!-- @@author itsmejr257-->
-#### 2.13 Finding an expense
+#### 2.11 Finding an expense
 **Prerequisites** : Some expenses has been added to the overall expense.
 1. Test Case : `find expenses d/cat morethan/ lessthan/`    
 Expected : If there are expenses matching/containing "cat", the found expenses are printed. Else, message stating no matching expenses found is printed in command line interface
@@ -1699,48 +1706,9 @@ Expected : If there are expenses matching/containing "cat" and is more than 20, 
 3. Test Case : `find expenses d/cat morethan/string lessthan`  
 Expected : An error message is printed in the command line interface
 
-<!-- @@author Dheekshitha2-->
-#### Deleting an expense
-
-1. Test case: `delete expense i/1`
-Expected:  The first expense in the list, if any, is deleted and a confirmation message is displayed.
-2. Test case: `delete expense i/999`
-Expected: An error message is displayed stating that the index is out of bounds
-
-<!-- @@author Dheekshitha2-->
-#### Reducing savings
-
-1. Test case: `reduce savings c/Salary a/100`
-Expected: The savings under 'Salary' are reduced by $100, and a confirmation message is displayed.
-**Prerequisites** :  No savings under the category 'Investments' exist.
-2. Test case: `reduce savings c/Investments a/100`
-Expected: An error message is displayed indicating no savings found under the category 'Investments'.
-**Prerequisites** :  Savings under the category 'Salary' exist but are less than $500
-3. Test case: `reduce savings c/Salary a/500`
-Expected: An error message is displayed indicating insufficient amount in 'Salary' to reduce by $500.
-
-<!-- @@author Dheekshitha2-->
-#### Setting budget
-
-1. Test case: `set budget c/Groceries b/200`
-Expected: A budget of $200 is set for 'Groceries', and a confirmation message is displayed.
-2. Test case: `set budget c/Transport b/-50`
-Expected: An error message is displayed indicating the budget cannot be negative.
-**Prerequisites** : A budget for 'Transport' exists.
-3. Test case: `set budget c/Transport b/300`
-Expected: The budget for 'Transport' is updated to $300, and a message confirming the update is displayed.
-
-<!-- @@author Dheekshitha2-->
-#### List Budget
-**Prerequisites** : Budgets must be set for multiple categories.
-1. Test case: `print budget`
-Expected: All existing budgets are listed with their respective categories and amounts.
-**Prerequisites** : No Budgets are set
-2. Test case: `print budget`
-Expected: A message is displayed indicating no budgets have been set.
 
 <!-- @@author itsmejr257-->
-#### 2.15 Creating a new list of recurring expenses
+#### 2.12 Creating a new list of recurring expenses
 1. Test Case : `rec newlist streaming`  
 Expected : A new list created called `streaming`
 2. Test Case : `rec newlist  `  
@@ -1749,7 +1717,7 @@ Expected : An error message will be printed in the command line interface
 Expected : An error message will be printed in the command line interface
 
 <!-- @@author itsmejr257-->
-#### 2.16 Listing all lists of recurring expenses
+#### 2.13 Listing all lists of recurring expenses
 1. Test Case : `rec viewlists`, with already added lists    
 Expected : All lists of recurring expenses will be printed in the command line interface
 2. Test Case : `rec viewlists`, with no added lists  
@@ -1758,7 +1726,7 @@ Expected : Message stated there being no recurring expenses is printed in the co
 Expected : `viewlists` should still work as intended, with no exceptions being thrown
 
 <!-- @@author itsmejr257-->
-#### 2.17 Removing a list of recurring expenses
+#### 2.14 Removing a list of recurring expenses
 1. Test Case : `rec removelist 1`, with a list being present at the list number `1` during `rec viewlists`    
 Expected : List located at list number 1 will be removed, and a success message is printed in the command line interface
 2. Test Case : `rec removelist string`  
@@ -1769,7 +1737,7 @@ Expected : Error message will be printed in the command line interface
 Expected : Error message will be printed in the command line interface
 
 <!-- @@author itsmejr257-->
-#### 2.18 Adding an expense into a list of recurring expenses
+#### 2.15 Adding an expense into a list of recurring expenses
 1. Test Case : `rec newexpense to/1 c/Entertainment a/200 d/description`, with a list being present at list number `1`  
 Expected : Expense with details Entertainment, 200, description will be added to list at list number `1`
 2. Test Case : `rec newexpense to/1`    
@@ -1778,7 +1746,7 @@ Expected : Error message will be printed in the command line interface
 Expected : Error message will be printed in the command line interface
 
 <!-- @@author itsmejr257-->
-#### 2.19 Viewing all expenses in a list of recurring expenses
+#### 2.16 Viewing all expenses in a list of recurring expenses
 1. Test Case : `rec viewexpenses 1`, with a list being present at list number `1` and contains expenses inside  
 Expected : Prints all expenses present in the recurring expense list 1
 2. Test Case : `rec viewexpenses 1` with a list not being present  
@@ -1787,7 +1755,7 @@ Expected : Error message will be printed in the command line interface
 Expected : Prints an empty set of expenses to command line interface, with expenses at $0
 
 <!-- @@author itsmejr257-->
-#### 2.20 Adding all expenses in a list of recurring expenses to the overall expenses
+#### 2.17 Adding all expenses in a list of recurring expenses to the overall expenses
 1. Test Case : `rec addrec 1`, with a list being present at list number `1` and contains expense inside    
 Expected : Adds all expenses present in recurring expense list 1 to the overall expenses
 2. Test Case : `rec addrec 1`, with a list being present a list number `1` but does not contain any expenses inside  
@@ -1796,7 +1764,7 @@ Expected : A message is provided in the command line interface informing the use
 Expected : Error message will be printed in the command line interface
 
 <!-- @@author itsmejr257-->
-#### Loading recurring expenses
+#### 2.18 Loading recurring expenses
 **Prerequisite** : The `RecurringExpensesFile.txt` should be empty prior to each Test Case  
 1. Test Case : Add a line in `RecurringExpensesFile.txt` called `!!! newlist !!!`
 Expected : A recurring expense list named `newlist` will be present when doing a `rec viewlists`
@@ -1806,21 +1774,54 @@ Expected : Error is printed in the CLI, RecurringExpensesFile will be reset to a
 Expected : A recurring expense list named `newlist` will be present at list number 1 when doing a `rec viewlists` and an expense with the above description is present when doing a `rec viewexpenses 1`
 
 <!-- @@author itsmejr257-->
-#### Saving recurring expenses
+#### 2.19 Saving recurring expenses
 1. Test Case : `rec newlist streaming services` followed by a `bye`  
 Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming services !!!`. The list will also still be present after Relaunching application.
 2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
 Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
 
+#### 2.20 Changing Currency
 
+* 2.20.1 Changing Currency
+    * Prerequisite: There must be existing savings and expenses in the list.
+    * Test Case: `change currency USD`
+    * Expected: All existing savings and expenses will be converted to the USD equivalent pricing.
+
+* 2.20.2 Changing Default Currency
+    * Prerequisite: There need not be existing savings or expenses in the list.
+    * Test Case: `change currency USD`
+    * Expected: Default Currency would be changed to USD. Future amounts added will be in USD.
+
+
+<!-- @@author Dheekshitha2-->
+#### 2.21 Setting budget
+
+1. Test case: `set budget c/Groceries b/200`
+   Expected: A budget of $200 is set for 'Groceries', and a confirmation message is displayed.
+2. Test case: `set budget c/Transport b/-50`
+   Expected: An error message is displayed indicating the budget cannot be negative.
+   **Prerequisites** : A budget for 'Transport' exists.
+3. Test case: `set budget c/Transport b/300`
+   Expected: The budget for 'Transport' is updated to $300, and a message confirming the update is displayed.
+
+<!-- @@author Dheekshitha2-->
+#### 2.22 List Budget
+**Prerequisites** : Budgets must be set for multiple categories.
+1. Test case: `print budget`
+   Expected: All existing budgets are listed with their respective categories and amounts.
+   **Prerequisites** : No Budgets are set
+2. Test case: `print budget`
+   Expected: A message is displayed indicating no budgets have been set.
+
+   
 <!-- @@author jasraa-->
-#### 2.25 Get Graphical Insights for Expenses
+#### 2.23 Get Graphical Insights for Expenses
 * Prerequisites: There must be existing expenses in the list.
 * Test Case: `get expenses insights`
 * Expected: Bar graph will be printed for each category.
 
 <!-- @@author jasraa-->
-#### 2.26 Get Graphical Insights for Savings
+#### 2.24 Get Graphical Insights for Savings
 * Prerequisites: There must be existing savings in the list.
 * Test Case: `get savings insights`
 * Expected: Bar graph will be printed for each category.
