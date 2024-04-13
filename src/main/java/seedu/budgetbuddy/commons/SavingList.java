@@ -237,7 +237,7 @@ public class SavingList {
         if (index <= 0 || index > savings.size()) {
             LOGGER.warning(String.format("Invalid index: %d. Valid index range " +
                     "is 1 to %d.", index, savings.size()));
-            System.out.println("Invalid index.");
+            System.out.println("Invalid index. Enter \"list savings\" to view index");
             return;
         }
 
