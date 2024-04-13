@@ -33,7 +33,7 @@ public class SplitExpenseCommand extends Command {
     public void execute() {
         try {
             splitexpenses.addSplitExpense(this.amount, this.numberOfPeople, this.description);
-            System.out.println("SplitExpense Added: " + "$" + amount + " spent by " +
+            System.out.println("Shared Bill Added: " + "$" + amount + " spent by " +
                     numberOfPeople + " persons. Description: " + description);
         } catch (BudgetBuddyException e) {
             System.out.println("An error occurred while adding expense.");

@@ -85,10 +85,10 @@ public class Ui {
                     "(Choose the parameters according to what you wish to search for)");
             break;
         case 6:
-            System.out.println("Split Expenses");
-            System.out.println("split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION");
-            System.out.println("check splitted expenses");
-            System.out.println("settle i/INDEX");
+            System.out.println("add shared bills");
+            System.out.println("add shared bills a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION");
+            System.out.println("check split bills");
+            System.out.println("settle bill i/INDEX");
             break;
         case 7:
             System.out.println("Recurring Bills");

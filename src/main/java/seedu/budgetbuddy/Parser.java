@@ -129,11 +129,11 @@ public class Parser {
     }
 
     public Boolean isSplitExpenseCommand(String input) {
-        return input.startsWith("split expenses");
+        return input.startsWith("add shared bills");
     }
 
     public Boolean isListSplitExpenseCommand(String input) {
-        return input.contentEquals("check splitted expenses");
+        return input.contentEquals("check split bills");
     }
 
     public Boolean isSetBudgetCommand(String input){
@@ -149,7 +149,7 @@ public class Parser {
     }
 
     public Boolean isSettleSplitExpenseCommand(String input) {
-        return input.startsWith("settle");
+        return input.startsWith("settle bill");
     }
 
     public Command handleListBudgetCommand(ExpenseList expenseList) {
