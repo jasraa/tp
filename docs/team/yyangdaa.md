@@ -27,12 +27,15 @@ docs~functional-code~test-code~other)
 
 #### Enhancements to existing features:
 1. Wrote JUnit tests for the ExpenseList, SavingsList, SplitExpenseList and Parser.
+- Implemented Logging/Assertions for improved error handling. (Pull Requests : [#45](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/45), 
+[#56](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/56)).
 
 #### Developer Guide
-- Added implementation details of the `AddExpense`, `AddSaving` and `SplitExpense` feature. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
-- Added design details of the `AddExpense`, `AddSaving`, `SplitExpense`, `SplitExpenseList` and `SettleSplitExpenseList` classes. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
-- Added user stories for my respective features. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
-- Added Sequence Diagrams for `AddExpense`, `AddSaving` and `SplitExpense` features. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
+- Added implementation details of the `AddExpense`, `AddSaving` and `SplitExpense` feature. (Pull Requests : [#207](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/207)).
+- Added design details of the `AddExpense`, `AddSaving`, `SplitExpense`, `SplitExpenseList` and `SettleSplitExpenseList` classes. 
+(Pull Requests : [#207](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/207)).
+- Added user stories for my respective features. (Pull Requests : [#207](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/207)).
+- Added Sequence Diagrams for `AddExpense`, `AddSaving` and `SplitExpense` features. (Pull Requests : [#207](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/207)).
 
 ### Community
 
