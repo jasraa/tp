@@ -385,7 +385,7 @@ list of `expenses` matching against the corresponding `category`.
 | addExpense() | void        | Add expense to the existing list of `expenses`  |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.jpg)
+![Sequence Diagram for Parser for Add Expense Feature](diagrams/sequenceDiagram_AddExpense.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -661,12 +661,12 @@ The Add Shared Bill Feature allows users to enter expenses that are shared among
 
 Class Attributes for SplitExpenseCommand:
 
-|   Class Attribute	| Variable Type	          |  Relevance                       |
-|-------------------|-------------------------|--------------------------------------------------------------|
-| splitExpenseList	| SplitExpenseList	      | SplitExpenseList Object where the shared bill will be added  |     |
-| amount	          | double	                | The total amount of the shared bill                          |
-| numerOfPeople     | int                     | The number of people that are meant for splitting the bill   | 
-| description	      | String	                | Description of the shared bill
+|   Class Attribute	| Variable Type	    | Relevance                                                    |
+|-------------------|-------------------|--------------------------------------------------------------|
+| splitExpenseList	| SplitExpenseList	 | SplitExpenseList O bject where the shared bill will be added |     |
+| amount	          | double	           | The total amount of the shared bill                          |
+| numerOfPeople     | int               | The number of people that are meant for splitting the bill   | 
+| description	      | String	           | Description of the shared bill                               |
 
 Upon the call of the execute() method via command.execute(), SplitExpenseCommand performs the following key actions:
 
@@ -674,6 +674,7 @@ Upon the call of the execute() method via command.execute(), SplitExpenseCommand
 2. Calculates each participant's share based on the total amount divided by the number of participants.
 
 Key Methods used from SplitExpenseList
+
 |    Method	             | Return Type	          | Relevance                                            | 
 |------------------------|------------------------|------------------------------------------------------|
 |  addSplitExpense()	   | void	                  | Adds the splitexpense to the list of splitexpenses   |
@@ -682,7 +683,7 @@ The SplitExpenseCommand also provides an output summarizing the shared expense, 
 
 Sequence Diagram for Adding a Shared Bill
 The sequence diagram illustrates the flow from when a user inputs a command to add a shared bill to its execution:
-![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_AddSplitExpense.jpg)
+![Sequence Diagram for Parser for addSplitExpense Feature](diagrams/sequenceDiagram_SplitExpense.jpg)
 
 User Input: The user inputs a command in the format `add shared bill a/<Amount> n/<NumberOfPeople> d/<Description>`
 
@@ -697,6 +698,7 @@ Calculation: The command calculates each participant's share of the bill and rec
 The Check Split Bills Feature allows users to view a list of all bills that have been marked as split among multiple parties. This is particularly useful for tracking shared expenses in scenarios like shared accommodations, group trips, or joint projects.
 
 Class Attributes for CheckSplitExpensesCommand:
+
 | Class Attribute     | Variable Type                     | Relevance                                             |
 |---------------------|-----------------------------------|-------------------------------------------------------| 
 | splitExpenseList    | splitExpenseList                  | Object containing the list of split bills to display  |
