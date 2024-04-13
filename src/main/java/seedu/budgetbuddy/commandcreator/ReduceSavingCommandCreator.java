@@ -45,27 +45,26 @@ public class ReduceSavingCommandCreator extends CommandCreator{
                 // Validate the index range and that the amount is positive.
                 if (indexToReduce < 0 || indexToReduce >= savings.size()) {
                     LOGGER.log(Level.WARNING, "Index is out of bounds.");
-                    System.out.println("Error: Index is out of bounds.");
+                    System.out.println("Index is out of bounds. Please try again.");
                     return null;
                 }
                 if (amountToReduce <= 0) {
                     LOGGER.log(Level.WARNING, "Amount must be a positive value.");
-                    System.out.println("Error: Amount must be a positive value.");
+                    System.out.println("Amount must be a positive value.");
                     return null;
                 }
 
                 LOGGER.log(Level.INFO, "Successfully processed ReduceSavingCommand!");
                 return new ReduceSavingCommand(savings, indexToReduce, amountToReduce);
             } catch (NumberFormatException e){
-                LOGGER.log(Level.SEVERE, "Index and amount must be valid numbers.");
-                // Catch and handle incorrect number formats for index or amount.
-                System.out.println("Error: Index and amount must be valid numbers.");
+                LOGGER.log(Level.WARNING, "Index and amount must be valid numbers. Please try again.");
+                System.out.println("Index and amount must be valid numbers.");
                 return null;
             }
         } else {
             LOGGER.log(Level.WARNING, "Invalid command format. Expected format: reduce i/<index> a/<amount>");
             // Handle the case where the input does not contain the required markers.
-            System.out.println("Error: Invalid command format. Expected format: reduce i/<index> a/<amount>");
+            System.out.println("Invalid command format. Expected format: reduce savings i/<index> a/<amount>");
             return null;
         }
     }
