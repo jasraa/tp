@@ -278,12 +278,6 @@ The exchange rates are initialized with default values for common currencies suc
 USD, EUR, JPY, KRW, MYR, CNY, and HKD.
 
 The class includes several methods to handle currency conversion tasks, with its relevance explained in the **Implementation** section. <br>
-<!-- @@author Dheekshitha2-->
-* `convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList)`:
-This method is responsible for converting the currency of all budgets within `ExpenseList` to a specified new currency (`newCurrency`). It 
-accepts the new `Currency` object representing the target currency and the `ExpenseList` containing the budgets, and updates
-the budget amounts and currencies accordingly.
-
 
 These methods facilitate currency conversion tasks by handling the conversion logic, validating input parameters, 
 and logging relevant messages. They provide essential functionality for managing expenses and savings in different 
@@ -952,6 +946,12 @@ The Currency Converter feature also includes a mechanism for managing a default 
   It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount`
   method, and updates the saving amounts and currencies accordingly.
 
+<!-- @@author Dheekshitha2-->
+* `convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList)`:
+  This method is responsible for converting the currency of all budgets within `ExpenseList` to a specified new currency (`newCurrency`). It
+  accepts the new `Currency` object representing the target currency and the `ExpenseList` containing the budgets, and updates
+  the budget amounts and currencies accordingly.
+
 The `DefaultCurrency` class is designed to maintain and update the application-wide default currency setting. It provides static methods to get and set the default currency:
 
 | Method               | Return Type | Relevance                                                    |
@@ -993,7 +993,7 @@ Sequence Diagram for convertRecurringExpensesCurrency():
 
 <!-- @@author yyangdaa-->
 Sequence Diagram for convertSplittedExpenseCurrency():
-![]()
+![Sequence diagram for convertSplittedExpenseCurrency](diagrams/sequenceDiagram_CurrencyConverter_SplitExpense.png)
 
 <!-- @@author dheekshitha2-->
 Sequence Diagram for convertBudgetCurrency():
