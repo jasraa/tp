@@ -156,7 +156,8 @@ public class FindExpensesCommandCreator extends CommandCreator {
     }
 
     /**
-     * Compares the minimum and maximum amounts and throws an exception if the minimum amount is larger than the maximum amount
+     * Compares the minimum and maximum amounts and throws an exception if the minimum amount
+     * is larger than the maximum amount
      *
      * @param minAmount The minimum amount
      * @param maxAmount The maximum amount
