@@ -1,0 +1,7 @@
+Salary | 1500.00
+Investments | 500.00
+Gifts | 200.00
+Salary | 1000.00
+Investments | 2000.00
+Gifts | 250.00
+Salary | 400.00
