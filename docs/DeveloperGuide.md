@@ -8,18 +8,37 @@
 &nbsp;&nbsp;[2.3 Verify the setup](#2) <br>
 [3. Design](#3design) <br>
 &nbsp;&nbsp;[3.1 Architecture](#31-architecture) <br>
+&nbsp;&nbsp;[3.2 Parser Class](#32-parser-class) <br>
+&nbsp;&nbsp;[3.3 Ui Class](#33-ui-class)<br>
+&nbsp;&nbsp;[3.4 CommandCreator](#35-commandcreator-class) <br>
+&nbsp;&nbsp;[3.5 CommandClass](#34-command-class)<br>
+&nbsp;&nbsp;[3.6 Storage Class]()<br>
+&nbsp;&nbsp;[3.7 Commons]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.1 Transaction]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.2 Expense]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.3 ExpenseList]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.4 Saving]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.5 SavingList]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.6 RecurringExpenseList]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.7 RecurringExpensesList]() <br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.8 DefaultCurrency]()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7.9 CurrencyConverter]()<br>
 [4. Implementation](#4-implementation) <br>
 &nbsp;&nbsp;[4.1 Menu Feature]() <br>
-&nbsp;&nbsp;[4.2 Add Savings Feature]() <br>
-&nbsp;&nbsp;[4.3 Add Expenses Feature]() <br>
-&nbsp;&nbsp;[4.4 Edit Savings Feature]() <br>
-&nbsp;&nbsp;[4.5 Edit Expenses Feature]() <br>
-&nbsp;&nbsp;[4.6 Reduce Savings Feature]() <br>
-&nbsp;&nbsp;[4.7 Delete Expenses Feature]() <br>
-&nbsp;&nbsp;[4.8 List Savings Feature]() <br>
-&nbsp;&nbsp;[4.9 List Expenses Feature]() <br>
-
-
+&nbsp;&nbsp;[4.2 Add Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Add Savings Feature]() <br>
+&nbsp;&nbsp;[4.4 Add Split Expenses Feature]() <br>
+&nbsp;&nbsp;[4.5 Edit Savings Feature]() <br>
+&nbsp;&nbsp;[4.6 Edit Expenses Feature]() <br>
+&nbsp;&nbsp;[4.7 Reduce Savings Feature]() <br>
+&nbsp;&nbsp;[4.8 Delete Expenses Feature]() <br>
+&nbsp;&nbsp;[4.9 List Savings Feature]() <br>
+&nbsp;&nbsp;[4.10 List Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Settle Splitted Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Find Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
+&nbsp;&nbsp;[4.3 Currency Converter Feature]() <br>
 [5. Documentation]() <br>
 [6. Testing]() <br>
 [Appendix A: Product Scope](#5-product-scope) <br>
@@ -28,8 +47,6 @@
 [Appendix D: Non-Functional Requirements](#non-functional-requirements) <br>
 [Appendix E: Glossary]() <br>
 [Appendix F: Instructions for Manual Testing](#instructions-for-manual-testing) <br>
-
-
 
 
 
@@ -196,6 +213,7 @@ for organizing and managing this data.
 This is an abstract class, which is the superclass for both the Expense and Saving Classes. It contains common variables
 such as Currency, Category and Amount.
 
+<!-- @@author sweijie24-->
 ##### 3.6.2 Expense
 This class holds details regarding an expense a user has. Within this class, it has 4 class-level variables :
 `String category`, `LocalDate dateAdded` , `String description` and `Double amount`.
@@ -218,6 +236,7 @@ It represents the cost or value of the expense, typically in the currency used b
 Storing the amount allows users to track how much money was spent on each expense, 
 aiding in budgeting and financial planning.
 
+<!-- @@author sweijie24-->
 ##### 3.6.3 ExpenseList
 This class represents a list of expenses. Within this class, it has 2 class-level variables :
 `ArrayList<Expense> expenses` and `ArrayList<String> categories`, The variables and there relevance are as follows :
@@ -243,6 +262,7 @@ brief explanation on their functionality is as follows :
 * calculateTotalExpenses() :
   * The method used to calculate all expenses found in the expense list.
 
+<!-- @@author sweijie24-->
 ##### 3.6.4 Saving
 This class holds details regarding a saving a user has. Within this class, it has 3 class-level variables :
 `String category`, `LocalDate dateAdded`, `Double amount`. The variables and their relevance
@@ -264,6 +284,7 @@ The amount indicates how much money has been set aside or accumulated towards ac
 Users can track their progress towards savings targets and 
 monitor their overall financial health based on the amount saved.
 
+<!-- @@author sweijie24-->
 ##### 3.6.5 SavingList
 This class represents a list of savings. Within this class, it has 2 class-level variables :
 `ArrayList<Saving> savings` and `ArrayList<String> categories`, The variables and there relevance are as follows :
@@ -310,20 +331,16 @@ ExpenseList.
 
 ![Class Diagram](diagrams/RecurringExpensesListClassDiagram.jpg)
 
-
+<!-- @@author sweijie24-->
 ##### 3.6.8 DefaultCurrency
 The `DefaultCurrency` class manages the application's default currency setting. It contains a static variable:
 
 - `Currency defaultCurrency`: Holds the current default currency setting, initialized to the Singapore Dollar (SGD) using the `Currency.getInstance("SGD")` method.
 
-The class provides two static methods:
-
-- `getDefaultCurrency()`: Returns the `defaultCurrency` currently set for the application. This allows different parts of the application to retrieve the default currency consistently.
-
-- `setDefaultCurrency(Currency currency)`: Assigns a new `Currency` object to `defaultCurrency`. This method enables the application to update the default currency based on user actions or preferences.
-
+This class provides two static methods that are further explained in detail in the **Implementation** section. <br>
 This class ensures a consistent default currency is used throughout the application, essential for functions like displaying amounts and performing currency conversions.
 
+<!-- @@author sweijie24-->
 ##### 3.6.9 CurrencyConverter
 The `CurrencyConverter` class provides functionality for converting amounts between different currencies. It includes two class-level variables:
 
@@ -333,23 +350,7 @@ The map stores exchange rates for various currencies relative to a base currency
 The exchange rates are initialized with default values for common currencies such as 
 USD, EUR, JPY, KRW, MYR, CNY, and HKD.
 
-The class includes several methods to handle currency conversion tasks:
-
-* `convertAmount(double amount, Currency fromCurrency, Currency toCurrency)`: 
-This method converts an amount from one currency to another using exchange rates stored in the `exchangeRates` map. 
-It takes the original amount, the currency of the original amount (`fromCurrency`), 
-and the target currency (`toCurrency`) as parameters and returns the converted amount. 
-The method ensures that exchange rates are available for both currencies and that they are positive numbers.
-
-* `convertExpenseCurrency(Currency newCurrency, ExpenseList expenses)`: 
-This method converts the currency of expenses in a given `ExpenseList` to a specified new currency (`newCurrency`). 
-It iterates through the expenses in the list, converts each expense amount to the new currency 
-using the `convertAmount` method, and updates the expense amounts and currencies accordingly.
-
-* `convertSavingCurrency(Currency newCurrency, SavingList savings)`: Similar to `convertExpenseCurrency`, 
-this method converts the currency of savings in a given `SavingList` to a specified new currency (`newCurrency`). 
-It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount` 
-method, and updates the saving amounts and currencies accordingly.
+The class includes several methods to handle currency conversion tasks, with its relevance explained in the **Implementation** section. <br>
 
 These methods facilitate currency conversion tasks by handling the conversion logic, validating input parameters, 
 and logging relevant messages. They provide essential functionality for managing expenses and savings in different 
@@ -401,7 +402,7 @@ amount (`a/40`), and description (`d/GRAB`).
 category to "Transport," amount to 40.0, and description to "GRAB."
 7. A message "Expense edited successfully." is printed to the console.
 
-
+<!-- @@author sweijie24-->
 ### Listing Feature (List Savings)
 
 The Listing Savings Feature enables users to view their savings, potentially filtered by a specific category. This functionality is orchestrated by the `ListSavingsCommand` class, which is initialized by the `ListCommandCreator` class. Within the `ListSavingsCommand` object, the `ListCommandCreator` provides it with a `SavingList` object, an `ExpenseList` object, along with an optional `filterCategory`. The relevance of these class attributes in `ListSavingsCommand` is detailed in the following table:
@@ -434,6 +435,8 @@ The Listing Savings feature follows these steps when a user inputs a command to 
 The UML Sequence diagram for the Listing Savings feature would illustrate the interactions between the `User`, `BudgetBuddy`, `Parser`, `ListSavingsCommand`, and `SavingList` classes, showing the method calls and returns between these objects to complete the operation.
 ![Sequence diagram for List Expense Feature](diagrams/SavingList_SequenceDiagram.png)
 
+
+<!-- @@author sweijie24-->
 ### Listing Feature (List Expenses)
 The Listing Expenses Feature provides users with the ability to view their expenses, which can be filtered by category. The `ListExpenseCommand` class, generated by the `ListCommandCreator`, is responsible for this feature. The class utilizes the `ExpenseList` object to access and manipulate expense records, optionally applying a filter based on the category. The significance of the `ListExpenseCommand` class's attributes is outlined below:
 
@@ -461,6 +464,7 @@ The sequence diagram for the Listing Expenses feature would illustrate the above
 ![Sequence diagram for List Expense Feature](diagrams/ExpenseList_SequenceDiagram.png)
 
 
+<!-- @@author sweijie24-->
 ### Currency Converter Feature
 The Currency Converter Feature allows users to convert the currency of expenses and savings. This feature is facilitated by the `ChangeCurrencyCommand` class, initialized by the `Parser` class with `CurrencyConverter`, `ExpenseList`, and `SavingList` objects, alongside the `newCurrency` to convert to. The importance of these class attributes is as follows:
 
@@ -481,6 +485,22 @@ When `BudgetBuddy` calls `command.execute()`, `ChangeCurrencyCommand` employs th
 | convertAmount()          | double      | Converts an amount from one currency to another using the exchange rates  |
 
 The Currency Converter feature also includes a mechanism for managing a default currency across the application, facilitated by the `DefaultCurrency` class. This enhancement allows for seamless conversion of financial records to a user-specified default currency.
+
+* `convertAmount(double amount, Currency fromCurrency, Currency toCurrency)`:
+  This method converts an amount from one currency to another using exchange rates stored in the `exchangeRates` map.
+  It takes the original amount, the currency of the original amount (`fromCurrency`),
+  and the target currency (`toCurrency`) as parameters and returns the converted amount.
+  The method ensures that exchange rates are available for both currencies and that they are positive numbers.
+
+* `convertExpenseCurrency(Currency newCurrency, ExpenseList expenses)`:
+  This method converts the currency of expenses in a given `ExpenseList` to a specified new currency (`newCurrency`).
+  It iterates through the expenses in the list, converts each expense amount to the new currency
+  using the `convertAmount` method, and updates the expense amounts and currencies accordingly.
+
+* `convertSavingCurrency(Currency newCurrency, SavingList savings)`: Similar to `convertExpenseCurrency`,
+  this method converts the currency of savings in a given `SavingList` to a specified new currency (`newCurrency`).
+  It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount`
+  method, and updates the saving amounts and currencies accordingly.
 
 The `DefaultCurrency` class is designed to maintain and update the application-wide default currency setting. It provides static methods to get and set the default currency:
 
@@ -742,6 +762,27 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 7. A confirmation message is displayed in the console indicating the budget has been successfully set or updated.
 
 
+## 5. Documentation
+
+The following section describes how documentation for the project was written. Documentation Format follows GitHub-Flavoured Markdown.
+
+### 5.1 Documentation Style
+- We followed the style similar to the example provided [here](https://se-education.org/addressbook-level3/DeveloperGuide.html).
+
+### 5.2 Diagrams
+- We use [Draw.io](https://draw.io/) for our diagrams, exported as PNG with light theme.
+
+### 5.3 PDF Conversion
+- We use **Chrome** for converting documentations to PDF format as per recommendations [here](https://se-education.org/guides/tutorials/savingPdf.html).
+
+## 6. Testing
+
+The following section describes the testing methodologies followed in this project to ensure the project is of the highest standard and as bug-free as possible.
+
+### 6.1 Running Tests
+
+
+
 ## Appendix A: Product scope
 
 ### Target user profile
@@ -865,10 +906,15 @@ type fast. It also provides the ability to deal with finances on a singular plat
 ## Appendix F: Instructions for manual testing
 
 ### 1. Launch and Shutdown
+* 1.1 Initial Launch
+  * Download the `jar` file and copy into an empty folder.
+  * Navigate to the `jar` file via a Terminal/PowerShell window.
+  * Start the `jar` file with the following command: `java -jar BudgetBuddy.jar`
+  * Expected: Command Line Interface should launch with the Menu being shown.
 
 ### 2. Test Cases
 
-#### 2.1 Adding a Task
+#### 2.1 
 
 #### 2.9 Listing Savings
 
