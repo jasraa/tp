@@ -11,11 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SplitExpenseList {
-
-    Ui ui = new Ui();
-
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected ArrayList <SplitExpense> splitexpenses;
+    
+    Ui ui = new Ui();
+
     public SplitExpenseList(ArrayList<SplitExpense> splitexpenses){
         this.splitexpenses = splitexpenses;
     }
@@ -39,11 +39,6 @@ public class SplitExpenseList {
 
     /**
      * Lists all the expenses in the list
-     * @return void
-     * @throws BudgetBuddyException if there is an error while listing expenses
-     * @param void
-     * @return void
-     * @throws BudgetBuddyException if there is an error while listing expenses
      */
 
     public void listSplitExpenses() {

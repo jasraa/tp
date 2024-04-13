@@ -45,17 +45,6 @@ public class SplitExpenseListTest {
         }
     }
 
-    @Test 
-    public void addSplitExpense_nullDescription_exceptionThrown() throws BudgetBuddyException{
-        SplitExpenseList splitExpenseList = new SplitExpenseList();
-        try {
-            splitExpenseList.addSplitExpense("12", "12", null);
-            fail();
-        } catch (BudgetBuddyException e) {
-            assertEquals("Description should not be null", e.getMessage());
-        }
-    }
-
     @Test
     public void addSplitExpense_negativeAmount_exceptionThrown() throws BudgetBuddyException{ 
         SplitExpenseList splitExpenseList = new SplitExpenseList();

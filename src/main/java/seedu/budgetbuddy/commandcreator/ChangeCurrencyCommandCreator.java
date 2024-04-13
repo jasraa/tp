@@ -22,8 +22,9 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
     private String input;
     private CurrencyConverter newCurrency;
 
-    public ChangeCurrencyCommandCreator(String input, SavingList savings, ExpenseList expenses, SplitExpenseList splitExpenses, 
-        RecurringExpenseLists recurringExpenseLists, CurrencyConverter newCurrency) {
+    public ChangeCurrencyCommandCreator(String input, SavingList savings, ExpenseList expenses, 
+                                        SplitExpenseList splitExpenses, RecurringExpenseLists recurringExpenseLists, 
+                                        CurrencyConverter newCurrency) {
 
         this.input = input;
         this.savings = savings;
@@ -60,8 +61,8 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
                     Currency newCurrency = Currency.getInstance(currencyCode.toUpperCase());
                     assert newCurrency != null : "Currency code should be valid";
                     LOGGER.log(Level.INFO, "Default currency changed to " + newCurrency);
-                    return new ChangeCurrencyCommand(newCurrency, savingList, expenseList, splitExpenses, recurringExpenseLists 
-                            , currencyConverter);
+                    return new ChangeCurrencyCommand(newCurrency, savingList, expenseList, splitExpenses, 
+                            recurringExpenseLists, currencyConverter);
                 } catch (IllegalArgumentException e) {
                     LOGGER.log(Level.WARNING, "Invalid currency code: " + currencyCode);
                     System.out.println("Invalid currency code.");

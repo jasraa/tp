@@ -18,8 +18,9 @@ public class ChangeCurrencyCommand extends Command {
     private RecurringExpenseLists recurringExpenseLists;
     private CurrencyConverter currencyConverter;
 
-    public ChangeCurrencyCommand(Currency newCurrency, SavingList savings, ExpenseList expenses, SplitExpenseList splitExpenses,
-                                 RecurringExpenseLists recurringExpenseLists, CurrencyConverter currencyConverter) {
+    public ChangeCurrencyCommand(Currency newCurrency, SavingList savings, ExpenseList expenses, SplitExpenseList 
+                                 splitExpenses, RecurringExpenseLists recurringExpenseLists, 
+                                 CurrencyConverter currencyConverter) {
         this.newCurrency = newCurrency;
         this.savings = savings;
         this.expenses = expenses;

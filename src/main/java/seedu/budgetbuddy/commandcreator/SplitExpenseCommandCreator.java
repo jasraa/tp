@@ -25,7 +25,7 @@ public class SplitExpenseCommandCreator extends CommandCreator {
         String numberOfPeople = extractDetail(input, "n/", "d/");
         String description = extractDetail(input, "d/", null); // Description is last, so no nextPrefix
 
-        if (amount.isEmpty() || numberOfPeople.isEmpty() || description.isEmpty()) {
+        if (amount.isEmpty()|| numberOfPeople.isEmpty() || description.isEmpty()) {
             System.out.println("Missing details.");
             return null;
         }
