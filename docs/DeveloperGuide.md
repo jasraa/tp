@@ -383,6 +383,7 @@ user input.
 using the `Parser#extractDetailsForAdd(input, "parameter")`
 7. Finally, `Parser#handleAddExpenseCommand()` intialises a `AddExpensesCommandCreator` which then returns `AddSavingCommand` to `Parser#parseCommand()`, which is then returned to `BudgetBuddy`.
 
+<!-- @@author jasraa-->
 ### 4.5 Edit Savings Feature
 The Edit Savings feature allows users to update their previously saved financial contributions, specifically adjusting
 the `category` and `amount`. This feature is facilitated by the `EditSavingCommand` class, which is prepared and issued
@@ -419,6 +420,7 @@ Here is a step-by-step narrative of the actions taken for a sample input:
 6. `SavingList` locates the first saving entry in its array (adjusting for zero-based indexing with index - 1) and updates the entry's category to "Salary" and the amount to 3000.0.
 7. Finally, the console outputs a confirmation message: "Saving updated successfully."
 
+<!-- @@author jasraa-->
 ### 4.6 Edit Expense Feature
 The Edit Expense feature allows users to edit their previously added expenses, specifically the `category`, `amount`, 
 and `description`. This feature is managed by the `EditExpenseCommand` class, which is initialized by the 
@@ -951,6 +953,7 @@ and immediate visual cue that the budget limits have been surpassed.
 The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
 by what amount, making it easy for users to identify areas of concern.
 
+<!-- @@author jasraa-->
 ### 4.25 Get Expense Insights Feature
 
 The Get Expense Insights feature allows users to analyze their spending patterns and understand where their money goes.
@@ -982,6 +985,7 @@ Here's a step-by-step explanation of the processes that occur when a user invoke
 5. The `ExpenseList` analyzes the expenses, calculating total spendings, average amount, and categorizing the expenses.
 6. Insights such as the categories with the highest and lowest spending are then printed to the user.
 
+<!-- @@author jasraa-->
 ### 4.26 Get Savings Insights Feature
 
 The Get Savings Insights feature enables users to analyze their savings distribution across various categories and 
@@ -1136,6 +1140,51 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * 2.1.1 BudgetBuddy displays an empty expense list. <br>
   Use case ends
 
+<!-- @@author jasraa-->
+### Use Case: Edit Savings
+
+1. User requests to edit a savings entry by specifying the index of the saving and the details to be updated.
+2. BudgetBuddy prompts the user for the category, amount, and optionally, a description.
+3. BudgetBuddy validates the provided index and updates the savings entry if the index is valid.
+4. BudgetBuddy displays a confirmation message indicating the savings entry has been updated.
+
+#### Extensions
+
+* 1.1 User specifies an index that does not exist.
+    * 1.1.1 BudgetBuddy displays an error message indicating the index is out of bounds.
+      Use case ends.
+
+* 1.2 User enters an invalid or non-numeric amount.
+    * 1.2.1 BudgetBuddy shows an error message and prompts the user to enter a valid numerical amount.
+      Use case ends.
+
+* 1.3 User attempts to update savings with a negative amount.
+    * 1.3.1 BudgetBuddy displays an error message indicating the savings amount must be positive.
+      Use case ends.
+
+<!-- @@author jasraa-->
+### Use Case: Edit Expenses
+
+1. User requests to edit an expense entry by specifying the index of the expense and the details to be updated.
+2. BudgetBuddy prompts the user for the category, amount, and description for the expense.
+3. BudgetBuddy checks if the expense index provided is valid.
+4. If valid, BudgetBuddy updates the expense entry with the new details.
+5. BudgetBuddy displays a confirmation message indicating the expense entry has been updated.
+
+#### Extensions
+
+* 1.1 User specifies an index that does not exist in the expense list.
+    * 1.1.1 BudgetBuddy displays an error message indicating the index is out of bounds.
+      Use case ends.
+
+* 1.2 User enters an invalid or non-numeric amount for the expense.
+    * 1.2.1 BudgetBuddy shows an error message and prompts the user to enter a valid numerical amount.
+      Use case ends.
+
+* 1.3 User enters a negative number for the expense amount.
+    * 1.3.1 BudgetBuddy displays an error message indicating the expense amount must be positive.
+      Use case ends.
+
 <!-- @@author sweijie24-->
 ### Use Case: Currency Converter
 
@@ -1216,6 +1265,33 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * 1.2.1 BudgetBuddy shows an error message indicating the budget amount must be positive. <br>
       Use case ends.
 
+<!-- @@author jasraa-->
+### Use Case: Get Expenses Insights
+
+1. User requests to get insights into their expenses.
+2. BudgetBuddy retrieves all expenses from the ExpenseList.
+3. BudgetBuddy calculates and displays insights, including highest and lowest expense categories, and categories with no expenses.
+4. BudgetBuddy displays a visual representation of expense distribution across different categories.
+
+#### Extensions
+
+* 1.1 ExpenseList is empty.
+    * 1.1.1 BudgetBuddy displays a message indicating no expense data is available to analyze.
+      Use case ends.
+
+<!-- @@author jasraa-->
+### Use Case: Get Savings Insights
+
+1. User requests to get insights into their savings.
+2. BudgetBuddy retrieves all savings from the SavingList.
+3. BudgetBuddy calculates and displays insights, such as highest and lowest savings categories, and categories with no savings.
+4. BudgetBuddy displays a visual representation of savings distribution across different categories.
+
+#### Extensions
+
+* 1.1 SavingList is empty.
+    * 1.1.1 BudgetBuddy displays a message indicating no savings data is available to analyze.
+      Use case ends.
 
 ## Appendix D: Non-Functional Requirements
 
@@ -1381,11 +1457,13 @@ Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming s
 2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
 Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
 
+<!-- @@author jasraa-->
 #### 2.25 Get Graphical Insights for Expenses
 * Prerequisites: There must be existing expenses in the list.
 * Test Case: `get expenses insights`
 * Expected: Bar graph will be printed for each category.
 
+<!-- @@author jasraa-->
 #### 2.26 Get Graphical Insights for Savings
 * Prerequisites: There must be existing savings in the list.
 * Test Case: `get savings insights`
