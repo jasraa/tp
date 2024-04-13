@@ -16,6 +16,49 @@ public class SavingListTest {
 
     private static final Logger LOGGER = Logger.getLogger(SavingListTest.class.getName());
 
+
+    @Test 
+    public void addSaving_validInput_success() throws BudgetBuddyException {
+        SavingList savingList = new SavingList();
+        savingList.addSaving("Salary", "500");
+
+        assertEquals(1, savingList.getSavings().size());
+        assertEquals("Salary", savingList.getSavings().get(0).getCategory());
+        assertEquals(500, savingList.getSavings().get(0).getAmount());
+    }
+
+    @Test 
+    public void addSaving_invalidAmount_exceptionThrown() {
+        SavingList savingList = new SavingList();
+        try {
+            savingList.addSaving("Salary", "abc");
+        } catch (BudgetBuddyException e) {
+            assertEquals("Invalid amount format. Amount should be a positive number with up to maximum two decimal " + 
+                         "places.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void addSaving_negativeAmount_exceptionThrown() {
+        SavingList savingList = new SavingList();
+        try {
+            savingList.addSaving("Salary", "-1.00");
+        } catch (BudgetBuddyException e) {
+            assertEquals("Invalid amount format. Amount should be a positive number with up to maximum "+
+                         "two decimal places.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void addSaving_nullCategory_exceptionThrown() {
+        SavingList savingList = new SavingList();
+        try {
+            savingList.addSaving("abc", "500");
+        } catch (BudgetBuddyException e) {
+            assertEquals("The category 'abc' is not listed.", e.getMessage());
+        }
+    }
+
     @Test
     public void calculateRemainingSavings_sufficientFunds_success() {
         SavingList savingList = new SavingList();
@@ -79,20 +122,30 @@ public class SavingListTest {
     }
 
     @Test
-    public void reduceSavings_validIndexAndAmount_success() throws BudgetBuddyException {
-
+    public void reduceSavingsByCategory_nonExistentCategory_failure() throws BudgetBuddyException {
         SavingList savingList = new SavingList();
-        savingList.addSaving("Salary", "500"); // Adding initial savings to work with
-        savingList.addSaving("Investments", "300");
+        savingList.addSaving("Salary", "1000"); // Add a valid category for clarity
 
-        int indexToReduce = 2;
-        double amountToReduce = 100;
-        double expectedAmountAfterReduction = 200;
+        // Set up to capture System.out output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
 
-        savingList.reduceSavings(indexToReduce - 1, amountToReduce);
+        // Attempt to reduce savings for a non-existent category
+        String nonExistentCategory = "NonExistent";
+        savingList.reduceSavingsByCategory(nonExistentCategory, 50);
 
-        // Assert that the amount after reduction is as expected
-        assertEquals(expectedAmountAfterReduction, savingList.getSavings().get(indexToReduce - 1).getAmount());
+        // Restore System.out output to original stream
+        System.setOut(originalOut);
+
+        String output = outContent.toString();
+        assertTrue(output.contains("No savings found under category: " + nonExistentCategory),
+                "Expected message for non-existent category not found.");
+
+        // Check that no other category was reduced
+        assertTrue(savingList.getSavings().stream()
+                        .allMatch(saving -> saving.getAmount() == 1000 && saving.getCategory().equals("Salary")),
+                "No savings should be reduced under a non-existent category.");
     }
 
     @Test

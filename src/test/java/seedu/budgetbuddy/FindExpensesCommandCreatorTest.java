@@ -47,6 +47,13 @@ public class FindExpensesCommandCreatorTest {
     }
 
     @Test
+    public void createCommand_outOfOrderParameters_returnsNull() {
+        String inputWithOutOfOrderAmountParameters = "find expenses d/23 lessthan/40 morethan/";
+        String inputWithOutOfOrderDescriptionParameter = "find expenses morethan/ d/23 lessthan/40";
+        assertNull(initializeFindExpensesCommandCreator(inputWithOutOfOrderAmountParameters).createCommand());
+        assertNull(initializeFindExpensesCommandCreator(inputWithOutOfOrderDescriptionParameter).createCommand());
+    }
+    @Test
     public void createCommand_invalidMinAmount_returnsNull() {
         String validInputWithEmptyDescription = "find expenses d/hello morethan/dsfefew lessthan/20";
 
