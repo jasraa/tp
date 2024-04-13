@@ -39,12 +39,12 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
      * Parses the user input to create a ChangeCurrencyCommand for changing the default currency.
      * If the input is valid, a ChangeCurrencyCommand is returned with the specified new currency.
      *
+     * @author sweijie24
      * @param input             The user input to be parsed.
      * @param savingList        The SavingList containing savings data.
      * @param expenseList       The ExpenseList containing expenses data.
      * @param currencyConverter The CurrencyConverter object for currency conversion.
      * @return A ChangeCurrencyCommand if the input is valid; otherwise, null.
-     * @author sweijie24
      */
     public Command handleChangeCurrencyCommand(String input, SavingList savingList, ExpenseList expenseList,
                                                SplitExpenseList splitExpenses,

@@ -89,8 +89,8 @@ public class ExpenseList {
      * Lists expenses based on the provided filter category.
      * If no filter category is specified, all expenses are listed.
      *
-     * @param filterCategory the category by which to filter the expenses (optional)
      * @author sweijie24
+     * @param filterCategory the category by which to filter the expenses (optional)
      */
     public void listExpenses(String filterCategory) {
         LOGGER.info("Listing expenses...");
@@ -131,9 +131,9 @@ public class ExpenseList {
      * Calculates the total expenses from the list of expenses.
      * Negative expense amounts are considered invalid.
      *
+     * @author sweijie24
      * @return The total expenses.
      * @throws IllegalArgumentException If any expense amount is negative.
-     * @author sweijie24
      */
     public double calculateTotalExpenses() {
         double totalExpenses = 0;
