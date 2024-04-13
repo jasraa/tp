@@ -1,14 +1,18 @@
 package seedu.budgetbuddy.commons;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SplitExpenseList {
+
+    Ui ui = new Ui();
 
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected ArrayList <SplitExpense> splitexpenses;
@@ -33,10 +37,22 @@ public class SplitExpenseList {
         return splitexpenses.get(listNumberAsArrayPosition);
     }
 
+    /**
+     * Lists all the expenses in the list
+     * @return void
+     * @throws BudgetBuddyException if there is an error while listing expenses
+     * @param void
+     * @return void
+     * @throws BudgetBuddyException if there is an error while listing expenses
+     */
+
     public void listSplitExpenses() {
         LOGGER.info("Listing splitexpenses...");
 
         try {
+            ui.printDivider();
+            System.out.println(String.format("Current Currency: %s\n", DefaultCurrency.getDefaultCurrency()));
+
             System.out.println("Shared Bills: ");
             for (int i = 0; i < splitexpenses.size(); i++) {
                 SplitExpense splitexpense = splitexpenses.get(i);
@@ -48,9 +64,9 @@ public class SplitExpenseList {
                 System.out.print(i+1 + " | ");
                 System.out.print(" Description: " + splitexpense.getDescription());
                 System.out.print(" Number of People: " + splitexpense.getNumberOfPeople());
-                System.out.println(" Amount per person: " + splitexpense.getAmount());
+                System.out.print(" Amount: $" + String.format("%.2f", splitexpense.getAmount()) + "\n");
             }
-            System.out.println("-----------------------------------------------------------------------------");
+            ui.printDivider();
             
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "An error occurred while listing expenses.", e);

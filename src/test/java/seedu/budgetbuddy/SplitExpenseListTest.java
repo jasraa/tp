@@ -3,7 +3,6 @@ package seedu.budgetbuddy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import seedu.budgetbuddy.commons.SplitExpenseList;
@@ -20,7 +19,7 @@ public class SplitExpenseListTest {
         splitExpenseList.addSplitExpense("12", "12", "Lunch");
 
         assertEquals(1, splitExpenseList.getSplitExpenses().size());
-        assertEquals("12", splitExpenseList.getSplitExpenses().get(0).getNumberOfPeople());
+        assertEquals(12, splitExpenseList.getSplitExpenses().get(0).getNumberOfPeople());
         assertEquals("Lunch", splitExpenseList.getSplitExpenses().get(0).getDescription());
     }
 
@@ -46,7 +45,7 @@ public class SplitExpenseListTest {
         }
     }
 
-    @Test @Disabled
+    @Test 
     public void addSplitExpense_nullDescription_exceptionThrown() throws BudgetBuddyException{
         SplitExpenseList splitExpenseList = new SplitExpenseList();
         try {

@@ -234,7 +234,7 @@ public class Parser {
         }
 
         if (isConvertCurrencyCommand(input.toLowerCase())) {
-            CommandCreator commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses, expensesList,
+            CommandCreator commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses, splitexpenses, expensesList, 
                     new CurrencyConverter());
             return commandCreator.createCommand();
         }
