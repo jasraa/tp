@@ -848,6 +848,21 @@ Expected : A message is provided in the command line interface informing the use
 3. Test Case : `rec addrec 1`, with a list not being present at list number `1`  
 Expected : Error message will be printed in the command line interface
 
+### Loading recurring expenses
+**Prerequisite** : The `RecurringExpensesFile.txt` should be empty prior to each Test Case  
+1. Test Case : Add a line in `RecurringExpensesFile.txt` called `!!! newlist !!!`
+Expected : A recurring expense list named `newlist` will be present when doing a `rec viewlists`
+2. Test Case : Add an invalid line in `RecurringExpensesFile.txt` called `!!! new!!!list !!!`  
+Expected : Error is printed in the CLI, RecurringExpensesFile will be reset to an empty file
+3. Test Case : Add a line in `RecurringExpensesFile.txt` called `!!! newlist !!!` and another line below it `1 | 2024-04-13 | Entertainment | 203.35 | movies`  
+Expected : A recurring expense list named `newlist` will be present at list number 1 when doing a `rec viewlists` and an expense with the above description is present when doing a `rec viewexpenses 1`
+
+### Saving recurring expenses
+1. Test Case : `rec newlist streaming services` followed by a `bye`  
+Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming services !!!`. The list will also still be present after Relaunching application.
+2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
+Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
+
 ### Add Expense Feature
 
 #### Implementation
