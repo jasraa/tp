@@ -2,21 +2,26 @@ package seedu.budgetbuddy.command;
 
 import seedu.budgetbuddy.commons.SavingList;
 
-public class ReduceSavingCommand extends Command{
-
-    SavingList savings;
-    private int index;
+public class ReduceSavingCommand extends Command {
+    private String category;
     private double amount;
+    private SavingList savings;
 
-    public ReduceSavingCommand(SavingList savings, int index, double amount) {
+
+    public ReduceSavingCommand(SavingList savings, String category, double amount) {
         this.savings = savings;
-        this.index = index;
+        this.category = category;
         this.amount = amount;
     }
 
     @Override
     public void execute() {
-        savings.reduceSavings(index, amount);
+        if (savings != null) {
+            savings.reduceSavingsByCategory(category, amount);
+        } else {
+            System.out.println("Savings list not initialized.");
+        }
     }
-
 }
+
+

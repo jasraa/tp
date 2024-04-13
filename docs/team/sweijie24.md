@@ -42,6 +42,8 @@ Given below are my contributions to the project.
 - Added design details of the `Expense`, `Saving`, `ExpenseList`, `SavingList`, `DefaultCurrency` and `CurrencyConverter` classes. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
 - Added user stories for my respective features. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
 - Added Sequence Diagrams for `Listing Savings`, `Listing Expenses` and `Currency Converter` features. (Pull Requests : [#107](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/107)).
+- Organised the structure and added miscellaneous details. (Pull Requests : [#213](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/213)).
+- Added use cases and instructions for manual testing for my respective features. (Pull Requests : [#213](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/213)).
 
 ### Community
 

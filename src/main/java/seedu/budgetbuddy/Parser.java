@@ -1,7 +1,7 @@
 package seedu.budgetbuddy;
 
 import seedu.budgetbuddy.command.Command;
-import seedu.budgetbuddy.command.ListBudgetCommand;
+import seedu.budgetbuddy.commandcreator.ListBudgetCommandCreator;
 import seedu.budgetbuddy.commandcreator.CommandCreator;
 import seedu.budgetbuddy.commandcreator.AddExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.AddSavingCommandCreator;
@@ -152,10 +152,6 @@ public class Parser {
         return input.startsWith("settle bill");
     }
 
-    public Command handleListBudgetCommand(ExpenseList expenseList) {
-        return new ListBudgetCommand(expenseList);
-    }
-
     public Boolean isGetExpensesInsightsCommand(String input) {
         return input.equalsIgnoreCase("get expenses insights");
     }
@@ -258,9 +254,9 @@ public class Parser {
             return commandCreator.createCommand();
         }
         if (isListBudgetCommand(input)){
-            return handleListBudgetCommand(expenses);
+            CommandCreator commandCreator = new ListBudgetCommandCreator(expenses);
+            return commandCreator.createCommand();
         }
-
         if (isGetExpensesInsightsCommand(input)) {
             CommandCreator commandCreator = new GetExpenseInsightsCommandCreator(expenses);
             return commandCreator.createCommand();
