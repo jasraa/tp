@@ -1,12 +1,9 @@
 package seedu.budgetbuddy.commons;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import seedu.budgetbuddy.Ui;
@@ -240,69 +237,6 @@ public class SavingList {
         return totalSavings;
     }
 
-
-    /**
-     * Analyzes and displays insights into the saved amounts across different categories.
-     * It prints out the highest and lowest savings categories and lists categories with no savings.
-     * A bar graph representing the distribution of savings is also displayed.
-     */
-//    public void getSavingsInsights() {
-//        findTotalSavings(); // Make sure total savings are updated
-//
-//        if (initialAmount == 0) {
-//            System.out.println("No savings to display.");
-//            return;
-//        }
-//
-//        // Calculate the highest savings value
-//        double highestSavings = savings.stream()
-//                .mapToDouble(Saving::getAmount)
-//                .max().orElse(0);
-//
-//        // Identify the categories with the highest savings
-//        List<String> highestCategories = savings.stream()
-//                .filter(s -> Double.compare(s.getAmount(), highestSavings) == 0) // Use Double.compare for precision
-//                .map(Saving::getCategory)
-//                .distinct() // Ensure that there are no duplicates
-//                .collect(Collectors.toList());
-//
-//        // Calculate the lowest savings value excluding the highest if it's the only value
-//        double lowestSavings = savings.stream()
-//                .filter(s -> !highestCategories.contains(s.getCategory()))
-//                .mapToDouble(Saving::getAmount)
-//                .min().orElse(0);
-//
-//        // Identify the categories with the lowest savings, excluding those with no savings
-//        List<String> lowestCategories = savings.stream()
-//                .filter(s -> s.getAmount() == lowestSavings && lowestSavings != 0)
-//                .map(Saving::getCategory)
-//                .collect(Collectors.toList());
-//
-//        // If lowestSavings is 0, then this list should be empty
-//        if (lowestSavings == 0) {
-//            lowestCategories.clear();
-//        }
-//
-//        // Identify categories with no savings
-//        List<String> noSavingsCategories = categories.stream()
-//                .filter(c -> savings.stream().noneMatch(s -> s.getCategory().equals(c)))
-//                .collect(Collectors.toList());
-//
-//        // Add categories with zero amount saved
-//        noSavingsCategories.addAll(savings.stream()
-//                .filter(s -> s.getAmount() == 0)
-//                .map(Saving::getCategory)
-//                .collect(Collectors.toList()));
-//
-//        ui.printDivider();
-//        printSavingsDistribution();
-//        ui.printDivider();
-//        System.out.println("Highest Savings Category: " + formatCategoryList(highestCategories));
-//        System.out.println("Lowest Savings Category: " + formatCategoryList(lowestCategories));
-//        System.out.println("Categories with no savings added: " + formatCategoryList(noSavingsCategories));
-//        ui.printDivider();
-//    }
-
     /**
      * Analyzes and displays insights into the saved amounts across different categories.
      * It prints out the highest and lowest savings categories and lists categories with no savings.
@@ -353,6 +287,10 @@ public class SavingList {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Prints a distribution of savings as a horizontal bar graph.
+     * Each category's bar length is proportional to its percentage of the total savings.
+     */
     private void printSavingsDistribution(Map<String, Double> sumsByCategory, double totalSavings) {
         double maxPercentage = sumsByCategory.values().stream()
                 .mapToDouble(amount -> (amount / totalSavings) * 100)
@@ -399,23 +337,5 @@ public class SavingList {
             return allButLast + " and " + categories.get(categories.size() - 1);
         }
     }
-
-
-    /**
-     * Prints a distribution of savings as a horizontal bar graph.
-     * Each category's bar length is proportional to its percentage of the total savings.
-     */
-//    private void printSavingsDistribution() {
-//        Map<String, Double> sumsByCategory = calculateSumsByCategory();
-//        double totalSavings = sumsByCategory.values().stream().mapToDouble(Double::doubleValue).sum();
-//
-//        for (String category : categories) {
-//            Double sum = sumsByCategory.getOrDefault(category, 0.0);
-//            double percentage = (sum / totalSavings) * 100;
-//            int barLength = (int) (percentage / (100.0 / 50)); // Assuming a bar max length of 50 characters
-//            String bar = "[" + "#".repeat(Math.max(0, barLength)) + "]";
-//            System.out.println(String.format("%-15s: %6.2f%% %s", category, percentage, bar));
-//        }
-//    }
 
 }

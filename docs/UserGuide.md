@@ -462,6 +462,9 @@ and lists any categories where no savings have been added.
 
 Example of Usage: `get savings insights`
 
+Example of Expected Output:
+![GetSavingsInsights.png](userguideimages%2FGetSavingsInsights.png)
+
 
 ### Saving the data
 
