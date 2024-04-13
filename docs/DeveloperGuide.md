@@ -279,7 +279,7 @@ The exchange rates are initialized with default values for common currencies suc
 USD, EUR, JPY, KRW, MYR, CNY, and HKD.
 
 The class includes several methods to handle currency conversion tasks, with its relevance explained in the **Implementation** section. <br>
-
+<!-- @@author Dheekshitha2-->
 * `convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList)`:
 This method is responsible for converting the currency of all budgets within `ExpenseList` to a specified new currency (`newCurrency`). It 
 accepts the new `Currency` object representing the target currency and the `ExpenseList` containing the budgets, and updates
@@ -462,6 +462,7 @@ amount (`a/40`), and description (`d/GRAB`).
 category to "Transport," amount to 40.0, and description to "GRAB."
 7. A message "Expense edited successfully." is printed to the console.
 
+<!-- @@author Dheekshitha2-->
 ### 4.6 Reduce Savings Feature
 The Reduce Savings feature enables users to decrement a specified amount from their savings at a given index. This 
 functionality is controlled by the `ReduceSavingCommand` class, which is produced by the `ReduceSavingCommandCreator` 
@@ -493,6 +494,7 @@ The following UML Sequence diagram below shows how the Reduce savings Feature Co
 inputs a valid reduce savings command:
 ![sequenceDiagram_ReduceSavings.png](diagrams/sequenceDiagram_ReduceSavings.png)
 
+<!-- @@author Dheekshitha2-->
 ### 4.7 Delete Expenses Feature
 The Delete Expense feature grants users the capability to remove expenses they have previously entered. Managed by the 
 DeleteExpenseCommand class, this feature is initialized through DeleteExpenseCommandCreator. During the creation process, 
@@ -895,7 +897,7 @@ and adding them one by one into the `overallExpenses`. This is done so by creati
 this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpenseCommand`.
 10. Finally, a success message is printed to the User.
 
-
+<!-- @@author Dheekshitha2-->
 ### Setting Budget Feature
 The Budget Management feature allows users to set financial limits for the various categories and monitor their spending.
 This feature's objective is to give users the ability to stay within their financial goals and avoid overspending.
@@ -1315,6 +1317,47 @@ Expected : If there are expenses matching/containing "cat", the found expenses a
 Expected : If there are expenses matching/containing "cat" and is more than 20, the found expenses are printed. Else, message stating no matching expenses found is printed in command line interface
 3. Test Case : `find expenses d/cat morethan/string lessthan`  
 Expected : An error message is printed in the command line interface
+
+<!-- @@author Dheekshitha2-->
+#### Deleting an expense
+
+1. Test case: `delete expense i/1`
+Expected:  The first expense in the list, if any, is deleted and a confirmation message is displayed.
+2. Test case: `delete expense i/999`
+Expected: An error message is displayed stating that the index is out of bounds
+
+<!-- @@author Dheekshitha2-->
+#### Reducing savings
+
+1. Test case: `reduce savings c/Salary a/100`
+Expected: The savings under 'Salary' are reduced by $100, and a confirmation message is displayed.
+**Prerequisites** :  No savings under the category 'Investments' exist.
+2. Test case: `reduce savings c/Investments a/100`
+Expected: An error message is displayed indicating no savings found under the category 'Investments'.
+**Prerequisites** :  Savings under the category 'Salary' exist but are less than $500
+3. Test case: `reduce savings c/Salary a/500`
+Expected: An error message is displayed indicating insufficient amount in 'Salary' to reduce by $500.
+
+<!-- @@author Dheekshitha2-->
+#### Setting budget
+
+1. Test case: `set budget c/Groceries b/200`
+Expected: A budget of $200 is set for 'Groceries', and a confirmation message is displayed.
+2. Test case: `set budget c/Transport b/-50`
+Expected: An error message is displayed indicating the budget cannot be negative.
+**Prerequisites** : A budget for 'Transport' exists.
+3. Test case: `set budget c/Transport b/300`
+Expected: The budget for 'Transport' is updated to $300, and a message confirming the update is displayed.
+
+<!-- @@author Dheekshitha2-->
+#### List Budget
+**Prerequisites** : Budgets must be set for multiple categories.
+1. Test case: `print budget`
+Expected: All existing budgets are listed with their respective categories and amounts.
+**Prerequisites** : No Budgets are set
+2. Test case: `print budget`
+Expected: A message is displayed indicating no budgets have been set.
+
 
 #### Creating a new list of recurring expenses
 1. Test Case : `rec newlist streaming`  
