@@ -50,7 +50,7 @@ public class EditExpenseCommandCreator extends CommandCreator {
                 description = part.substring(2);
             }
         }
-        // Validate required fields
+
         if (category != null && index != -1 && amount != -1 && description != null) {
             return new EditExpenseCommand(expenses, category, index, amount, description);
         } else {

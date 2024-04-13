@@ -39,6 +39,8 @@
 &nbsp;&nbsp;[4.3 Find Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Currency Converter Feature]() <br>
+&nbsp;&nbsp;[4.25 Get Graphical Insights for expenses]() <br>
+&nbsp;&nbsp;[4.26 Get Graphical Insights for savings]() <br>
 [5. Documentation]() <br>
 [6. Testing]() <br>
 [Appendix A: Product Scope](#5-product-scope) <br>
@@ -277,7 +279,7 @@ The exchange rates are initialized with default values for common currencies suc
 USD, EUR, JPY, KRW, MYR, CNY, and HKD.
 
 The class includes several methods to handle currency conversion tasks, with its relevance explained in the **Implementation** section. <br>
-
+<!-- @@author Dheekshitha2-->
 * `convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList)`:
 This method is responsible for converting the currency of all budgets within `ExpenseList` to a specified new currency (`newCurrency`). It 
 accepts the new `Currency` object representing the target currency and the `ExpenseList` containing the budgets, and updates
@@ -383,7 +385,45 @@ user input.
 using the `Parser#extractDetailsForAdd(input, "parameter")`
 7. Finally, `Parser#handleAddExpenseCommand()` intialises a `AddExpensesCommandCreator` which then returns `AddSavingCommand` to `Parser#parseCommand()`, which is then returned to `BudgetBuddy`.
 
-### Edit Expense Feature
+<!-- @@author jasraa-->
+### 4.5 Edit Savings Feature
+The Edit Savings feature allows users to update their previously saved financial contributions, specifically adjusting
+the `category` and `amount`. This feature is facilitated by the `EditSavingCommand` class, which is prepared and issued
+by the `Parser` class. An `EditSavingCommand` object encapsulates several variables that are instantiated within the
+`Parser`: a `SavingList` object, `category`, `index`, and `amount`. The significance of these Class Attributes within
+`EditSavingCommand` is detailed below:
+
+| Class Attribute | Variable Type | Relevance                                                             |
+|-----------------|---------------|-----------------------------------------------------------------------|
+| savings         | SavingList    | SavingList Object containing the list of savings that can be modified |
+| category        | String        | The updated category for the saving entry at the specified index      |
+| index           | Integer       | The index of the saving entry to be updated within `SavingList`       |
+| amount          | Double        | The updated monetary value for the saving entry at the specified index|
+
+Upon invoking the `execute()` method in `BudgetBuddy` through `command.execute()`, the `EditSavingCommand` object
+leverages the following method from the `SavingList` class to carry out the modification:
+
+| Method       | Return Type | Relevance                                                                                   |
+|--------------|-------------|---------------------------------------------------------------------------------------------|
+| editSaving() | void        | Adjusts the `category` and `amount` for the saving entry at the provided `index`            |
+
+The following UML Sequence diagram illustrates the execution process of the Edit Savings Feature Command when a user enters a valid edit savings command:
+
+![EditSavingsDiagram.png](diagrams%2FEditSavingsDiagram.png)
+
+Here is a step-by-step narrative of the actions taken for a sample input:
+`edit savings c/Salary i/1 a/3000`
+
+1. BudgetBuddy receives the command `edit savings c/Salary i/1 a/3000` and passes it to the `Parser` for interpretation.
+2. The `Parser` splits the command into components and constructs an `EditSavingCommand` object with the category (`c/Salary`), index (`i/1`), and amount (`a/3000`).
+3. The `Parser` returns the constructed `EditSavingCommand` object to BudgetBuddy.
+4. BudgetBuddy then executes the `execute()` method on the `EditSavingCommand` object.
+5. Inside its `execute()` method, `EditSavingCommand` calls the `editSaving` method of `SavingList`, supplying the relevant parameters.
+6. `SavingList` locates the first saving entry in its array (adjusting for zero-based indexing with index - 1) and updates the entry's category to "Salary" and the amount to 3000.0.
+7. Finally, the console outputs a confirmation message: "Saving updated successfully."
+
+<!-- @@author jasraa-->
+### 4.6 Edit Expense Feature
 The Edit Expense feature allows users to edit their previously added expenses, specifically the `category`, `amount`, 
 and `description`. This feature is managed by the `EditExpenseCommand` class, which is initialized by the 
 `Parser` class. Within the `EditExpenseCommand` object, 5 variables would have been initialized in the `Parser` class:
@@ -408,7 +448,7 @@ utilizes the following method from the `ExpenseList` class to edit the expense.
 The following UML Sequence diagram below shows how the Edit Expense Feature Command is executed when a user
 inputs a valid edit expense command:
 
-![EditExpenseSequence.png](team/EditExpenseSequence.png)
+![EditExpenseDiagram.drawio.png](diagrams%2FEditExpenseDiagram.drawio.png)
 
 The following is a step by step explanation of the processes that occur for an example input:
 `edit expense c/Transport i/2 a/40 d/GRAB`
@@ -426,6 +466,7 @@ amount (`a/40`), and description (`d/GRAB`).
 category to "Transport," amount to 40.0, and description to "GRAB."
 7. A message "Expense edited successfully." is printed to the console.
 
+<!-- @@author Dheekshitha2-->
 ### 4.6 Reduce Savings Feature
 The Reduce Savings feature enables users to decrement a specified amount from their savings at a given index. This 
 functionality is controlled by the `ReduceSavingCommand` class, which is produced by the `ReduceSavingCommandCreator` 
@@ -455,18 +496,20 @@ The user interaction for reducing savings follows these steps:
 
 The following UML Sequence diagram below shows how the Reduce savings Feature Command is executed when a user
 inputs a valid reduce savings command:
-(will insert diagram soon)
+![sequenceDiagram_ReduceSavings.png](diagrams/sequenceDiagram_ReduceSavings.png)
 
+<!-- @@author Dheekshitha2-->
 ### 4.7 Delete Expenses Feature
 The Delete Expense feature grants users the capability to remove expenses they have previously entered. Managed by the 
 DeleteExpenseCommand class, this feature is initialized through DeleteExpenseCommandCreator. During the creation process, 
 the command is provided with an `ExpenseList` object and an `index` indicating the specific expense to be deleted. 
 The following table outlines the significance of these attributes:
 
-| Class Attribute | Variable Type | Relevance                                                              |
-|-----------------|---------------|------------------------------------------------------------------------|
-| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses that can be edited  |
-| index           | Integer       | The edited category for the expense in the specified index             |
+| Class Attribute | Variable Type | Relevance                                                             |
+|-----------------|---------------|-----------------------------------------------------------------------|
+| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses that can be edited |
+| index           | Integer       | The edited category for the expense in the specified index            |
+
 
 On invocation of the `execute()` method, as part of the `command.execute() `flow within BudgetBuddy, the DeleteExpenseCommand 
 object engages the deleteExpense() method from the ExpenseList class.
@@ -957,7 +1000,7 @@ and adding them one by one into the `overallExpenses`. This is done so by creati
 this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpenseCommand`.
 10. Finally, a success message is printed to the User.
 
-
+<!-- @@author Dheekshitha2-->
 ### Setting Budget Feature
 The Budget Management feature allows users to set financial limits for the various categories and monitor their spending.
 This feature's objective is to give users the ability to stay within their financial goals and avoid overspending.
@@ -975,7 +1018,7 @@ process:
 
 The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to set a budget:
-![sequenceDiagram_setBudget.jpg](diagrams/sequenceDiagram_setBudget.jpg)
+![sequenceDiagram_setBudget.jpg](diagrams/sequenceDiagram_SetBudget.jpg)
 
 The sequence of operations for an example input, `set budget c/Transport b/500`, is as follows:
 1. BudgetBuddy receives the user input and utilizes the Parser to decipher it.
@@ -993,7 +1036,7 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 
 The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to list budgets:
-![sequenceDiagram_listBudget.png](diagrams/sequenceDiagram_listBudget.png)
+![sequenceDiagram_listBudget.png](diagrams/sequenceDiagram_ListBudget.png)
 
 Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`, `SetBudgetCommand` will update the
 budget in `ExpenseList` using `setBudget`. Similarly, `ListBudgetCommand` will fetch and display all categories with
@@ -1012,6 +1055,72 @@ and immediate visual cue that the budget limits have been surpassed.
 
 The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
 by what amount, making it easy for users to identify areas of concern.
+
+<!-- @@author jasraa-->
+### 4.25 Get Expense Insights Feature
+
+The Get Expense Insights feature allows users to analyze their spending patterns and understand where their money goes.
+This feature is managed by the `GetExpenseInsightsCommand` class, which is initialized by the `Parser` class.
+The `GetExpenseInsightsCommand` holds an `ExpenseList` object which contains all expenses added by the user. 
+The relevance of this Class Attribute in `GetExpenseInsightsCommand` is as follows:
+
+| Class Attribute | Variable Type | Relevance                                                            |
+|-----------------|---------------|----------------------------------------------------------------------|
+| expenseList     | ExpenseList   | ExpenseList object containing the list of expenses to be analyzed    |
+
+Upon invocation of the `execute()` method in `BudgetBuddy`, the `GetExpenseInsightsCommand` leverages methods from the 
+`ExpenseList` class to calculate and display spending insights.
+
+| Method            | Return Type | Relevance                                                                                    |
+|-------------------|-------------|----------------------------------------------------------------------------------------------|
+| getExpenseInsights| void        | Analyzes expenses and prints insights on spending distribution, highest and lowest spending |
+
+The following UML Sequence diagram illustrates the execution process of the Get Expenses Insights Command when a user enters a valid command:
+
+![getExpenseInsightsDiagram.drawio.png](diagrams%2FgetExpenseInsightsDiagram.drawio.png)
+
+Here's a step-by-step explanation of the processes that occur when a user invokes the Get Expense Insights feature:
+
+1. The BudgetBuddy application receives the command `get expenses insights` and passes it to the `Parser`.
+2. The `Parser` interprets the input and creates a new `GetExpenseInsightsCommand` object with the `ExpenseList`.
+3. The `BudgetBuddy` application then calls `execute()` on the `GetExpenseInsightsCommand` object.
+4. The `GetExpenseInsightsCommand` object calls the `getExpenseInsights` method on the `ExpenseList`.
+5. The `ExpenseList` analyzes the expenses, calculating total spendings, average amount, and categorizing the expenses.
+6. Insights such as the categories with the highest and lowest spending are then printed to the user.
+
+<!-- @@author jasraa-->
+### 4.26 Get Savings Insights Feature
+
+The Get Savings Insights feature enables users to analyze their savings distribution across various categories and 
+understand their saving habits. This feature is facilitated by the `GetSavingsInsightsCommand` class, which is
+instantiated by the `Parser` class. In this class, a `SavingList` object is maintained, which contains all the savings
+added by the user. The significance of the class attribute in `GetSavingsInsightsCommand` is as detailed below:
+
+| Class Attribute | Variable Type | Relevance                                                           |
+|-----------------|---------------|---------------------------------------------------------------------|
+| savingList      | SavingList    | SavingList object containing the list of savings to be scrutinized. |
+
+When the `execute()` method in `BudgetBuddy` is invoked via `command.execute()`, the `GetSavingsInsightsCommand` 
+leverages methods from the `SavingList` class to calculate and exhibit insights about savings.
+
+| Method               | Return Type | Relevance                                                                        |
+|----------------------|-------------|----------------------------------------------------------------------------------|
+| getSavingsInsights() | void        | Analyzes savings and displays insights on savings distribution, highest and lowest savings, etc. |
+
+The following UML Sequence diagram illustrates the execution process of the Get Savings Insights Command when a user enters a valid command:
+
+![getSavingsInsightsDiagram.drawio.png](diagrams%2FgetSavingsInsightsDiagram.drawio.png)
+
+The sequential flow of execution when a user commands to get savings insights is as follows:
+
+1. The user inputs the command 'get savings insights' and `BudgetBuddy` captures it.
+2. `BudgetBuddy` employs `Parser` to decode the input.
+3. `Parser` constructs a new `GetSavingsInsightsCommand` object with the `SavingList`.
+4. `Parser` sends this `GetSavingsInsightsCommand` object back to `BudgetBuddy`.
+5. `BudgetBuddy` calls the `execute()` method on the `GetSavingsInsightsCommand` object.
+6. `GetSavingsInsightsCommand` invokes the `getSavingsInsights()` method from the `SavingList`.
+7. `SavingList` computes and prints the insights, such as the categories with the highest and lowest savings and the overall distribution.
+8. The insights are shown to the user.
 
 
 ## 5. Documentation
@@ -1069,10 +1178,15 @@ type fast. It also provides the ability to deal with finances on a singular plat
 | v2.0    | user              | have multiple lists of recurring expenses                       | separate associated recurring expenses together                                               |
 | v2.0    | user              | view what expenses i have in each of my recurring expenses list | know what expenses i have put into each list                                                  |
 | v2.0    | user              | remove a list from my recurring expenses list                   | remove underutilized lists or wrongly added lists                                             |
+| v2.0    | user              | save my expenses                                                | make sure i do not have to retype all expenses again after closing the application            |
+| v2.0    | user              | load my expenses                                                | i can access previously added expenses when i reopen the application                          |
 | v2.0    | user              | save my expenses in my recurring expenses                       | make sure i do not have to retype all expenses again after closing the application            |
 | v2.0    | user              | load my expenses in my recurring expenses                       | i can access previously added expenses in my recurring expenses when i reopen the application |
 | v2.0    | user              | divide bills that are meant for splitting                       | know how much others should pay me                                                            |
 | v2.0    | user              | settle bills that others have repaid me                         | see which bills have not been settled                                                         |                 
+| v2.0    | user              | view my expenses in a graphical representation                  | to analyse my highest and lowest expense categories                                           |
+| v2.0    | user              | view my savings in a graphical representation                   | to analyse my highest and lowest saving categories                                            |
+
 
 ## Appendix C: Use Cases
 (For all use cases below, the System is `BudgetBuddy` and the Actor is the `user`, unless specified otherwise).
@@ -1131,6 +1245,51 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * 2.1.1 BudgetBuddy displays an empty expense list. <br>
   Use case ends
 
+<!-- @@author jasraa-->
+### Use Case: Edit Savings
+
+1. User requests to edit a savings entry by specifying the index of the saving and the details to be updated.
+2. BudgetBuddy prompts the user for the category, amount, and optionally, a description.
+3. BudgetBuddy validates the provided index and updates the savings entry if the index is valid.
+4. BudgetBuddy displays a confirmation message indicating the savings entry has been updated.
+
+#### Extensions
+
+* 1.1 User specifies an index that does not exist.
+    * 1.1.1 BudgetBuddy displays an error message indicating the index is out of bounds.
+      Use case ends.
+
+* 1.2 User enters an invalid or non-numeric amount.
+    * 1.2.1 BudgetBuddy shows an error message and prompts the user to enter a valid numerical amount.
+      Use case ends.
+
+* 1.3 User attempts to update savings with a negative amount.
+    * 1.3.1 BudgetBuddy displays an error message indicating the savings amount must be positive.
+      Use case ends.
+
+<!-- @@author jasraa-->
+### Use Case: Edit Expenses
+
+1. User requests to edit an expense entry by specifying the index of the expense and the details to be updated.
+2. BudgetBuddy prompts the user for the category, amount, and description for the expense.
+3. BudgetBuddy checks if the expense index provided is valid.
+4. If valid, BudgetBuddy updates the expense entry with the new details.
+5. BudgetBuddy displays a confirmation message indicating the expense entry has been updated.
+
+#### Extensions
+
+* 1.1 User specifies an index that does not exist in the expense list.
+    * 1.1.1 BudgetBuddy displays an error message indicating the index is out of bounds.
+      Use case ends.
+
+* 1.2 User enters an invalid or non-numeric amount for the expense.
+    * 1.2.1 BudgetBuddy shows an error message and prompts the user to enter a valid numerical amount.
+      Use case ends.
+
+* 1.3 User enters a negative number for the expense amount.
+    * 1.3.1 BudgetBuddy displays an error message indicating the expense amount must be positive.
+      Use case ends.
+
 <!-- @@author sweijie24-->
 ### Use Case: Currency Converter
 
@@ -1147,6 +1306,98 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * 1.2.1 BudgetBuddy notifies user of the same conversion. <br>
   Use case ends
 
+<!-- @@author Dheekshitha2-->
+### Use Case: Delete expenses
+
+1. User requests to delete a specific expense by specifying the index
+2. BudgetBuddy retrieves the specified expense from the stored expenses list. 
+3. BudgetBuddy deletes the specified expense. 
+4. BudgetBuddy displays a confirmation message indicating the expense has been deleted.
+
+#### Extensions
+* 1.1 User specifies an invalid or out-of-bounds index
+  * 1.1.1 BudgetBuddy shows an error message and prompts the user to enter a valid index. <br>
+    Use case ends.
+* 2.1 BudgetBuddy retrieves an empty expense list
+  * 2.1.1 BudgetBuddy displays an error message indicating there are no expenses to delete. <br>
+    Use case ends.
+
+<!-- @@author Dheekshitha2-->
+### Use Case: Reduce Savings
+
+1. User requests to reduce savings by specifying a category and amount.
+2. BudgetBuddy retrieves savings associated with the specified category.
+3. BudgetBuddy reduces the savings by the specified amount.
+4. BudgetBuddy displays a confirmation message indicating the savings have been reduced.
+
+#### Extensions
+* 1.1 User specifies a category not present in the savings list. 
+  * 1.1.1 BudgetBuddy shows an error message indicating the category does not exist. <br>
+  Use case ends.
+* 1.2 User specifies an amount that exceeds the available savings in the category. 
+  * 1.2.1 BudgetBuddy shows an error message indicating insufficient savings for the reduction. <br>
+    Use case ends.
+* 2.1 BudgetBuddy retrieves an empty savings list. 
+  * 2.1.1 BudgetBuddy displays an error message indicating there are no savings to reduce. <br>
+      Use case ends.
+
+<!-- @@author Dheekshitha2-->
+### Use Case: Listing Budget
+
+1. User requests to list budgets. 
+2. BudgetBuddy retrieves all set budgets along with their associated categories. 
+3. BudgetBuddy displays each category with its corresponding budget limit. 
+4. BudgetBuddy also displays the total of all budgets combined.
+
+#### Extensions
+* 2.1 BudgetBuddy retrieves an empty budget list.
+    * 2.1.1 BudgetBuddy displays a message indicating no budgets have been set. <br>
+      Use case ends.
+
+<!-- @@author Dheekshitha2-->
+### Use Case: Setting Budget
+
+1. User requests to set a budget for a specific category by specifying the category and the budget amount. 
+2. BudgetBuddy checks if the category exists; if not, it adds the category. 
+3. BudgetBuddy sets or updates the budget for the specified category. 
+4. BudgetBuddy displays a confirmation message indicating the budget has been set or updated.
+
+#### Extensions
+* 1.1 User specifies an invalid or non-numeric budget amount. 
+  * 1.1.1 BudgetBuddy shows an error message and prompts the user to enter a valid numerical amount. <br>
+    Use case ends.
+* 1.2 User sets a budget amount to zero or a negative number. 
+  * 1.2.1 BudgetBuddy shows an error message indicating the budget amount must be positive. <br>
+      Use case ends.
+
+<!-- @@author jasraa-->
+### Use Case: Get Expenses Insights
+
+1. User requests to get insights into their expenses.
+2. BudgetBuddy retrieves all expenses from the ExpenseList.
+3. BudgetBuddy calculates and displays insights, including highest and lowest expense categories, and categories with no expenses.
+4. BudgetBuddy displays a visual representation of expense distribution across different categories.
+
+#### Extensions
+
+* 1.1 ExpenseList is empty.
+    * 1.1.1 BudgetBuddy displays a message indicating no expense data is available to analyze.
+      Use case ends.
+
+<!-- @@author jasraa-->
+### Use Case: Get Savings Insights
+
+1. User requests to get insights into their savings.
+2. BudgetBuddy retrieves all savings from the SavingList.
+3. BudgetBuddy calculates and displays insights, such as highest and lowest savings categories, and categories with no savings.
+4. BudgetBuddy displays a visual representation of savings distribution across different categories.
+
+#### Extensions
+
+* 1.1 SavingList is empty.
+    * 1.1.1 BudgetBuddy displays a message indicating no savings data is available to analyze.
+      Use case ends.
+
 ## Appendix D: Non-Functional Requirements
 
 1. Should work on any *mainstream OS* as long as it has Java `11` or above installed.
@@ -1157,7 +1408,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
 ## Appendix E: Glossary
 
 * **Mainstream OS**: Windows, Linux, macOS.
-* **Securring Expenses*: A set of expenses which can be added to the overall expenses at any given point in time
+* **Securing Expenses*: A set of expenses which can be added to the overall expenses at any given point in time
 * **Overall Expenses**: Refers to the overall expense list. Etc, the expense list which expenses get added to when performing an add expense command.
 
 ## Appendix F: Instructions for manual testing
@@ -1258,6 +1509,25 @@ type fast. It also provides the ability to deal with finances on a singular plat
 *Method: addSplitExpense(String amount, String numberOfPeople, String description)
 *Input: "12", "-12", "Lunch"
 *Expected Outcome: A BudgetBuddyException is thrown with the message "Number of people should be a positive number."
+
+#### 2.5 Edit Savings
+**Prerequisites** : Some savings has been added to the overall savings.
+1. Test Case : `edit savings c/Salary i/2 a/2000`
+Expected : if there is an saving with index 2, it edits the saving at index 2. Else, an error message stating invalid index will be printed.
+2. Test Case : `edit savings c/Allowance i/2 a/2000`
+Expected : An error message mentioning invalid saving category will be printed.
+3. Test Case : `edit savings c/Salary i/2 a/-2000`
+Expected : An error message mentioning invalid amount will be printed.
+
+#### 2.5 Edit Expenses
+**Prerequisites** : Some savings has been added to the overall savings.
+1. Test Case : `edit expense c/Transport i/2 a/2000 d/GRAB`
+   Expected : if there is an expense with index 2, it edits the expense at index 2. Else, an error message stating invalid index will be printed.
+2. Test Case : `edit expense c/MRT i/2 a/2 d/work`
+   Expected : An error message mentioning invalid saving category will be printed.
+3. Test Case : `edit savings c/Entertainment i/2 a/-2000`
+   Expected : An error message mentioning invalid amount will be printed.
+
 #### 2.9 Listing Savings
 
 * 2.9.1 Listing Overall Savings
@@ -1312,6 +1582,47 @@ Expected : If there are expenses matching/containing "cat", the found expenses a
 Expected : If there are expenses matching/containing "cat" and is more than 20, the found expenses are printed. Else, message stating no matching expenses found is printed in command line interface
 3. Test Case : `find expenses d/cat morethan/string lessthan`  
 Expected : An error message is printed in the command line interface
+
+<!-- @@author Dheekshitha2-->
+#### Deleting an expense
+
+1. Test case: `delete expense i/1`
+Expected:  The first expense in the list, if any, is deleted and a confirmation message is displayed.
+2. Test case: `delete expense i/999`
+Expected: An error message is displayed stating that the index is out of bounds
+
+<!-- @@author Dheekshitha2-->
+#### Reducing savings
+
+1. Test case: `reduce savings c/Salary a/100`
+Expected: The savings under 'Salary' are reduced by $100, and a confirmation message is displayed.
+**Prerequisites** :  No savings under the category 'Investments' exist.
+2. Test case: `reduce savings c/Investments a/100`
+Expected: An error message is displayed indicating no savings found under the category 'Investments'.
+**Prerequisites** :  Savings under the category 'Salary' exist but are less than $500
+3. Test case: `reduce savings c/Salary a/500`
+Expected: An error message is displayed indicating insufficient amount in 'Salary' to reduce by $500.
+
+<!-- @@author Dheekshitha2-->
+#### Setting budget
+
+1. Test case: `set budget c/Groceries b/200`
+Expected: A budget of $200 is set for 'Groceries', and a confirmation message is displayed.
+2. Test case: `set budget c/Transport b/-50`
+Expected: An error message is displayed indicating the budget cannot be negative.
+**Prerequisites** : A budget for 'Transport' exists.
+3. Test case: `set budget c/Transport b/300`
+Expected: The budget for 'Transport' is updated to $300, and a message confirming the update is displayed.
+
+<!-- @@author Dheekshitha2-->
+#### List Budget
+**Prerequisites** : Budgets must be set for multiple categories.
+1. Test case: `print budget`
+Expected: All existing budgets are listed with their respective categories and amounts.
+**Prerequisites** : No Budgets are set
+2. Test case: `print budget`
+Expected: A message is displayed indicating no budgets have been set.
+
 
 #### Creating a new list of recurring expenses
 1. Test Case : `rec newlist streaming`  
@@ -1377,5 +1688,18 @@ Expected : A recurring expense list named `newlist` will be present at list numb
 Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming services !!!`. The list will also still be present after Relaunching application.
 2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
 Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
+
+
+<!-- @@author jasraa-->
+#### 2.25 Get Graphical Insights for Expenses
+* Prerequisites: There must be existing expenses in the list.
+* Test Case: `get expenses insights`
+* Expected: Bar graph will be printed for each category.
+
+<!-- @@author jasraa-->
+#### 2.26 Get Graphical Insights for Savings
+* Prerequisites: There must be existing savings in the list.
+* Test Case: `get savings insights`
+* Expected: Bar graph will be printed for each category.
 
 

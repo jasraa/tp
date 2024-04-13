@@ -287,10 +287,10 @@ public class ExpenseList {
         return "placeholder";
     }
 
-    public void setBudget(String category, double budget){
+    public void setBudget(String category, double budget) {
         LOGGER.info("Setting budget - Category: " + category + ", Budget: $" + budget);
-        for (Budget b : budgets){
-            if (b.getCategory().equalsIgnoreCase(category)){
+        for (Budget b : budgets) {
+            if (b.getCategory().equalsIgnoreCase(category)) {
                 LOGGER.info("Updating budget for category: " + category);
                 b.setBudget(budget);
                 System.out.println("Updated budget for " + category + " to $" + budget);
@@ -299,6 +299,7 @@ public class ExpenseList {
         }
         LOGGER.info("Creating new budget for category: " + category);
         budgets.add(new Budget(category, budget));
+        System.out.println("New budget set for " + category + ": $" + budget);
     }
 
     /**
