@@ -164,7 +164,7 @@ public class RecurringExpenseCommand extends Command{
             System.out.println("|Details of Expense");
             System.out.println("--------------------");
             System.out.println("|Category : " + category);
-            System.out.println("|Amount : " + amount);
+            System.out.println("|Amount : " + String.format("%.2f", amount));
             System.out.println("|Description : " + description);
             ui.printDivider();
 
