@@ -1,10 +1,13 @@
 package seedu.budgetbuddy.commons;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
@@ -270,7 +273,8 @@ public class SavingList {
         // Print insights
         System.out.println("Highest Savings Category: " + formatCategoryList(highestCategories));
         System.out.println("Lowest Savings Category: " + formatCategoryList(lowestCategories));
-        System.out.println("Categories with no savings added: " + formatCategoryList(getNoSavingsCategories(sumsByCategory)));
+        System.out.println("Categories with no savings added: " +
+                formatCategoryList(getNoSavingsCategories(sumsByCategory)));
         ui.printDivider();
     }
 
