@@ -5,6 +5,8 @@ import seedu.budgetbuddy.command.AddExpenseCommand;
 import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
+import java.util.logging.Level;
+
 /**
  * Creates an AddExpenseCommand object.
  */
@@ -44,6 +46,10 @@ public class AddExpenseCommandCreator extends CommandCreator {
         String amount = extractDetailsForAdd(details, "a/");
         if (amount.isEmpty()) {
             System.out.println("amount is missing.");
+            return null;
+        }
+        if (input.contains("!") || input.contains("|")) {
+            System.out.println("Please do not include a ! or | in your input");
             return null;
         }
 
