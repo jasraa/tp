@@ -1045,6 +1045,71 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * 1.2.1 BudgetBuddy notifies user of the same conversion. <br>
   Use case ends
 
+<!-- @@author Dheekshitha2-->
+### Use Case: Delete expenses
+
+1. User requests to delete a specific expense by specifying the index
+2. BudgetBuddy retrieves the specified expense from the stored expenses list. 
+3. BudgetBuddy deletes the specified expense. 
+4. BudgetBuddy displays a confirmation message indicating the expense has been deleted.
+
+#### Extensions
+* 1.1 User specifies an invalid or out-of-bounds index
+  * 1.1.1 BudgetBuddy shows an error message and prompts the user to enter a valid index. <br>
+    Use case ends.
+* 2.1 BudgetBuddy retrieves an empty expense list
+  * 2.1.1 BudgetBuddy displays an error message indicating there are no expenses to delete. <br>
+    Use case ends.
+
+<!-- @@author Dheekshitha2-->
+### Use Case: Reduce Savings
+
+1. User requests to reduce savings by specifying a category and amount.
+2. BudgetBuddy retrieves savings associated with the specified category.
+3. BudgetBuddy reduces the savings by the specified amount.
+4. BudgetBuddy displays a confirmation message indicating the savings have been reduced.
+
+#### Extensions
+* 1.1 User specifies a category not present in the savings list. 
+  * 1.1.1 BudgetBuddy shows an error message indicating the category does not exist. <br>
+  Use case ends.
+* 1.2 User specifies an amount that exceeds the available savings in the category. 
+  * 1.2.1 BudgetBuddy shows an error message indicating insufficient savings for the reduction. <br>
+    Use case ends.
+* 2.1 BudgetBuddy retrieves an empty savings list. 
+  * 2.1.1 BudgetBuddy displays an error message indicating there are no savings to reduce. <br>
+      Use case ends.
+
+<!-- @@author Dheekshitha2-->
+### Use Case: Listing Budget
+
+1. User requests to list budgets. 
+2. BudgetBuddy retrieves all set budgets along with their associated categories. 
+3. BudgetBuddy displays each category with its corresponding budget limit. 
+4. BudgetBuddy also displays the total of all budgets combined.
+
+#### Extensions
+* 2.1 BudgetBuddy retrieves an empty budget list.
+    * 2.1.1 BudgetBuddy displays a message indicating no budgets have been set. <br>
+      Use case ends.
+
+<!-- @@author Dheekshitha2-->
+### Use Case: Setting Budget
+
+1. User requests to set a budget for a specific category by specifying the category and the budget amount. 
+2. BudgetBuddy checks if the category exists; if not, it adds the category. 
+3. BudgetBuddy sets or updates the budget for the specified category. 
+4. BudgetBuddy displays a confirmation message indicating the budget has been set or updated.
+
+#### Extensions
+* 1.1 User specifies an invalid or non-numeric budget amount. 
+  * 1.1.1 BudgetBuddy shows an error message and prompts the user to enter a valid numerical amount. <br>
+    Use case ends.
+* 1.2 User sets a budget amount to zero or a negative number. 
+  * 1.2.1 BudgetBuddy shows an error message indicating the budget amount must be positive. <br>
+      Use case ends.
+
+
 ## Appendix D: Non-Functional Requirements
 
 1. Should work on any *mainstream OS* as long as it has Java `11` or above installed.
@@ -1055,7 +1120,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
 ## Appendix E: Glossary
 
 * **Mainstream OS**: Windows, Linux, macOS.
-* **Securring Expenses*: A set of expenses which can be added to the overall expenses at any given point in time
+* **Securing Expenses*: A set of expenses which can be added to the overall expenses at any given point in time
 * **Overall Expenses**: Refers to the overall expense list. Etc, the expense list which expenses get added to when performing an add expense command.
 
 ## Appendix F: Instructions for manual testing
