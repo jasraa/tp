@@ -1417,7 +1417,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
 ## Appendix E: Glossary
 
 * **Mainstream OS**: Windows, Linux, macOS.
-* **Securing Expenses*: A set of expenses which can be added to the overall expenses at any given point in time
+* **Recurring Expenses**: A set of expenses which can be added to the overall expenses at any given point in time
 * **Overall Expenses**: Refers to the overall expense list. Etc, the expense list which expenses get added to when performing an add expense command.
 
 ## Appendix F: Instructions for manual testing
