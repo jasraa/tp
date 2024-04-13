@@ -36,7 +36,7 @@
 &nbsp;&nbsp;[4.10 List Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Settle Splitted Expenses Feature]() <br>
-&nbsp;&nbsp;[4.3 Find Expenses Feature]() <br>
+&nbsp;&nbsp;[4.13 Find Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Currency Converter Feature]() <br>
 &nbsp;&nbsp;[4.25 Get Graphical Insights for expenses]() <br>
@@ -294,6 +294,72 @@ currencies within the budget management application.
 
 ## 4. Implementation
 
+<!-- @@author itsmejr257-->
+### 4.1 Menu Feature
+
+The menu feature is designed to allow users to view the relevant command formats by inputting the relevant menu
+indexes. This feature is orchestrated by the `MenuCommand` class, which is initialized by the `MenuCommandCreator`
+class. Which is in turn, created by the `Parser` class. Within the `MenuCommand` object, the
+`MenuCommandCreator` would initialize one class-level variable `index` of type `String`. The relevance of
+this class-level variable in `MenuCommand` is as follows
+
+| Variable Name | Variable Type | Relevance                                              |
+|---------------|---------------|--------------------------------------------------------|
+| index         | int           | Refers to the corresponding item in the displayed menu |
+
+For Clarity, the menu items and their corresponding indexes are as follows :
+
+| index   | Menu Item               |
+|---------|-------------------------|
+| Empty/0 | Displays all Menu Items |
+| 1       | Manage Expenses         |
+| 2       | Manage Savings          |
+| 3       | View Expenses           |
+| 4       | View Savings            |
+| 5       | Find Expenses           |
+| 6       | Split Expenses          |
+| 7       | Manage Recurring Bills  |
+| 8       | Change Currency         |
+| 9       | Manage Budget           |
+| 10      | Get Graphical Insights  | 
+
+Upon the call of the `execute()` method in BudgetBuddy using `command.execute()`, the `MenuCommand` object
+utilizes methods from the `UI` class to display the relevant menu items. The utilized methods are as follows :
+
+| methodName          | Return Type | Relevance                           |
+|---------------------|-------------|-------------------------------------|
+| showMenuTitles()    | void        | Prints all Menu Items               |
+| showMenuItem(INDEX) | void        | Prints commands associated at INDEX |
+
+
+**Important Note** : As the process of how the CommandCreator is created upon the receipt of a user input has already been
+discussed in `3.4 CommandClass`, the following Sequence Diagrams would omit the initial methods prior to the
+MenuCommandCreator being created.
+
+The following UML Sequence Diagram shows how the MenuCommandCreator for Menu Commands work and what
+will be returned to the Parser, which will ultimately be returned to BudgetBuddy.  Note that this diagram assumes that `Parser`
+has already detected that the user input is a menu command and has initialized a MenuCommandCreator object:
+
+
+![Sequence Diagram for MenuCommandCreator for Menu Command](diagrams/sequenceDiagram_MenuCommandCreator.jpg)
+
+The following UML Sequence Diagram shows the processes of the MenuCommand upon the call of its execute() command:
+![Sequence Diagram for Menu Command](diagrams/sequenceDiagram_MenuCommand.jpg)
+
+Given below is an example usage scenario and how the full Menu feature works :
+1. The user types `menu 1`. This input passed from `BudgetBuddy` into `Parser#parseCommands()`.
+2. Within the `Parser` , it determines that the input is a menu command from `isMenuCommand()`, and creates a new
+   `MenuCommandCreator` object.
+3. The `Parser` then calls `MenuCommandCreator#createCommand()`
+4. The checks for whether the input is valid, in particular whether it is a valid integer,
+   along with obtaining the value of `index` is done in `MenuCommandCreator#handleMenuCommand()`
+5. `MenuCommandCreator` creates a constructor for `MenuCommand` with the parameter `1`, which in turn
+   also constructs a new `Ui` object
+6. `MenuCommandCreator` returns this created `MenuCommand` to `Parser`, which is then returned to `BudgetBuddy`
+7. `BudgetBuddy` then calls `MenuCommand#execute()`
+8. `execute()` then calls `Ui#showMenuItem(1)`
+9. `showMenuItem()` in `Ui` then prints all commands for `case 1` which is for `Manage Expenses`
+
 <!-- @@author yyangdaa-->
 ### Add Expense Feature
 
@@ -319,7 +385,7 @@ list of `expenses` matching against the corresponding `category`.
 | addExpense() | void        | Add expense to the existing list of `expenses`  |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.jpg)
+![Sequence Diagram for Parser for Add Expense Feature](diagrams/sequenceDiagram_AddExpense.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -595,12 +661,12 @@ The Add Shared Bill Feature allows users to enter expenses that are shared among
 
 Class Attributes for SplitExpenseCommand:
 
-|   Class Attribute	| Variable Type	          |  Relevance                       |
-|-------------------|-------------------------|--------------------------------------------------------------|
-| splitExpenseList	| SplitExpenseList	      | SplitExpenseList Object where the shared bill will be added  |     |
-| amount	          | double	                | The total amount of the shared bill                          |
-| numerOfPeople     | int                     | The number of people that are meant for splitting the bill   | 
-| description	      | String	                | Description of the shared bill
+|   Class Attribute	| Variable Type	    | Relevance                                                    |
+|-------------------|-------------------|--------------------------------------------------------------|
+| splitExpenseList	| SplitExpenseList	 | SplitExpenseList O bject where the shared bill will be added |     |
+| amount	          | double	           | The total amount of the shared bill                          |
+| numerOfPeople     | int               | The number of people that are meant for splitting the bill   | 
+| description	      | String	           | Description of the shared bill                               |
 
 Upon the call of the execute() method via command.execute(), SplitExpenseCommand performs the following key actions:
 
@@ -608,6 +674,7 @@ Upon the call of the execute() method via command.execute(), SplitExpenseCommand
 2. Calculates each participant's share based on the total amount divided by the number of participants.
 
 Key Methods used from SplitExpenseList
+
 |    Method	             | Return Type	          | Relevance                                            | 
 |------------------------|------------------------|------------------------------------------------------|
 |  addSplitExpense()	   | void	                  | Adds the splitexpense to the list of splitexpenses   |
@@ -616,7 +683,7 @@ The SplitExpenseCommand also provides an output summarizing the shared expense, 
 
 Sequence Diagram for Adding a Shared Bill
 The sequence diagram illustrates the flow from when a user inputs a command to add a shared bill to its execution:
-![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_AddSplitExpense.jpg)
+![Sequence Diagram for Parser for addSplitExpense Feature](diagrams/sequenceDiagram_SplitExpense.jpg)
 
 User Input: The user inputs a command in the format `add shared bill a/<Amount> n/<NumberOfPeople> d/<Description>`
 
@@ -631,6 +698,7 @@ Calculation: The command calculates each participant's share of the bill and rec
 The Check Split Bills Feature allows users to view a list of all bills that have been marked as split among multiple parties. This is particularly useful for tracking shared expenses in scenarios like shared accommodations, group trips, or joint projects.
 
 Class Attributes for CheckSplitExpensesCommand:
+
 | Class Attribute     | Variable Type                     | Relevance                                             |
 |---------------------|-----------------------------------|-------------------------------------------------------| 
 | splitExpenseList    | splitExpenseList                  | Object containing the list of split bills to display  |
@@ -773,74 +841,6 @@ Sequence Diagram for convertBudgetCurrency():
 ![Sequence diagram for budgetCurrencyConverter](diagrams/budgetCurrencyConverter.png)
 
 
-
-### Menu Feature
-  
-The menu feature is designed to allow users to view the relevant command formats by inputting the relevant menu
-indexes. This feature is orchestrated by the `MenuCommand` class, which is initialized by the `MenuCommandCreator` 
-class. Which is in turn, created by the `Parser` class. Within the `MenuCommand` object, the 
-`MenuCommandCreator` would initialize one class-level variable `index` of type `String`. The relevance of
-this class-level variable in `MenuCommand` is as follows
-
-| Variable Name | Variable Type | Relevance                                              |
-|---------------|---------------|--------------------------------------------------------|
-| index         | int           | Refers to the corresponding item in the displayed menu |
-
-For Clarity, the menu items and their corresponding indexes are as follows :
-
-
-| index   | Menu Item               |
-|---------|-------------------------|
-| Empty/0 | Displays all Menu Items |
-| 1       | Manage Expenses         |
-| 2       | Manage Savings          |
-| 3       | View Expenses           |
-| 4       | View Savings            |
-| 5       | Find Expenses           |
-| 6       | Divide Bills            |
-| 7       | Manage Recurring Bills  |
-| 8       | Change Currency         |
-| 9       | Manage Budget           |
-| 10      | Get Graphical Insights  | 
-
-Upon the call of the `execute()` method in BudgetBuddy using `command.execute()`, the `MenuCommand` object
-utilizes methods from the `UI` class to display the relevant menu items. The utilized methods are as follows :
-
-| methodName          | Return Type | Relevance                           |
-|---------------------|-------------|-------------------------------------|
-| showMenuTitles()    | void        | Prints all Menu Items               |
-| showMenuItem(INDEX) | void        | Prints commands associated at INDEX |
-
-
-**Important Note** : As the process of how the CommandCreator is created upon the receipt of a user input has already been
-discussed in `3.4 CommandClass`, the following Sequence Diagrams would omit the initial methods prior to the 
-MenuCommandCreator being created.
-
-The following UML Sequence Diagram shows how the MenuCommandCreator for Menu Commands work and what
-will be returned to the Parser, which will ultimately be returned to BudgetBuddy.  Note that this diagram assumes that `Parser`
-has already detected that the user input is a menu command and has initialized a MenuCommandCreator object:
-
-
-![Sequence Diagram for MenuCommandCreator for Menu Command](diagrams/sequenceDiagram_MenuCommandCreator.jpg)
-
-The following UML Sequence Diagram shows the processes of the MenuCommand upon the call of its execute() command:
-![Sequence Diagram for Menu Command](diagrams/sequenceDiagram_MenuCommand.jpg)
-
-Given below is an example usage scenario and how the full Menu feature works :
-1. The user types `menu 1`. This input passed from `BudgetBuddy` into `Parser#parseCommands()`.
-2. Within the `Parser` , it determines that the input is a menu command from `isMenuCommand()`, and creates a new
-`MenuCommandCreator` object.
-3. The `Parser` then calls `MenuCommandCreator#createCommand()`
-4. The checks for whether the input is valid, in particular whether it is a valid integer, 
-along with obtaining the value of `index` is done in `MenuCommandCreator#handleMenuCommand()`
-5. `MenuCommandCreator` creates a constructor for `MenuCommand` with the parameter `1`, which in turn 
-also constructs a new `Ui` object
-6. `MenuCommandCreator` returns this created `MenuCommand` to `Parser`, which is then returned to `BudgetBuddy`
-7. `BudgetBuddy` then calls `MenuCommand#execute()`
-8. `execute()` then calls `Ui#showMenuItem(1)`
-9. `showMenuItem()` in `Ui` then prints all commands for `case 1` which is for `Manage Expenses`
-
-  
 ### Find Feature
 The Find Feature allows users to search for expenses based on a specific criteria such as description, minimum amount
 and maximum amount. This feature is orchestrated by the `FindExpensesCommand` class, which is created by the `FindExpensesCommandCreator`
@@ -935,6 +935,7 @@ creates a `FindExpenseCommand` object with its variables initialized to `expense
 of type `ExpenseList` with `filteredExpenses` initialized as the `expenses` Class attribute.
 7. Finally `execute()` calls `filteredExpenseList#listexpenses()` to print filtered expenses into the CLI.
 
+<!-- @@author itsmejr257-->
 ### Recurring Expenses Feature
 The Recurring Expenses feature allows users to create list(s) of expenses, where each list can be added to
 the overall expenses in a single command. This feature includes the creation of a list of expenses, the viewing of
@@ -1141,8 +1142,10 @@ The following section describes how documentation for the project was written. D
 The following section describes the testing methodologies followed in this project to ensure the project is of the highest standard and as bug-free as possible.
 
 ### 6.1 Running Tests
-
-
+JUnit tests have been added to the project, which can be found under `src/test`. These JUnit tests aid in testing the respective commands and features against
+both valid and invalid inputs. To run these tests, on `IntelliJ IDE`, simply 
+`right-click` the `test` folder followed by `More Run/Debug` -> `Run Tests with Coverage`. This would run all the pre-defined tests, and also display the 
+coverage for each file of the main application.
 
 ## Appendix A: Product scope
 
@@ -1370,6 +1373,116 @@ type fast. It also provides the ability to deal with finances on a singular plat
   * 1.2.1 BudgetBuddy shows an error message indicating the budget amount must be positive. <br>
       Use case ends.
 
+<!-- @@author itsmejr257-->
+### Use Case : Add a Recurring Expense List
+1. User requests to add a recurring expense list with a specific name
+2. BudgetBuddy creates a recurring expense list with the specified name 
+   3. Use Case Ends.
+
+#### Extensions
+* 1a. Name is Empty
+  * 1a1. BudgetBuddy shows an error message
+    * use case ends
+
+<!-- @@author itsmejr257-->
+### Use Case : List all recurring expense lists
+1. User requests to list all recurring expense lists
+2. BudgetBuddy shows all lists of recurring expense list. 
+   3. use case ends
+
+#### Extensions
+* 1a. The list of all recurring expense lists is empty
+  * 1a1. BudgetBuddy states that no recurring expense lists has been added yet 
+    * user case ends
+
+<!-- @@author itsmejr257-->
+### Use Case : Remove a recurring expense list
+1. User requests to list all recurring expense lists
+2. BudgetBuddy shows all lists of recurring expense list
+3. User Requests to delete a specific list
+4. BudgetBuddy deletes the list 
+   5. use case ends
+
+#### Extensions
+* 2a. The list is empty
+  * use case ends
+
+
+* 3a. The given index is invalid
+  * 3a.1 BudgetBuddy shows an error message
+    * use case resumes at step 2
+
+<!-- @@author itsmejr257-->
+### Use Case : Add an expense to a Recurring Expense List
+1. User requests to list all recurring expense lists
+2. BudgetBuddy shows all lists of recurring expense list.
+3. User requests to add an expense to a specific list
+4. BudgetBuddy adds the expense to the list 
+   5. use case ends
+
+#### Extensions
+* 2a. The list is empty
+  * use case ends
+
+* 3a. The given index is invalid 
+  * 3a1. BudgetBuddy shows an error message
+    * use case resumes at step 2
+
+* 3b. The given category is invalid
+  * 3b1. BudgetBuddy shows an error message
+    * use case resumes at step 2  
+
+
+* 3c. The given amount is invalid
+  * 3c1. BudgetBuddy shows an error message
+    * use case resumes at step 2  
+
+* 3d. The given description is invalid
+  * 3d1. BudgetBuddy shows an error message
+    * use case resumes at step 2  
+
+<!-- @@author itsmejr257-->
+### Use Case : List all expenses in a recurring expense list
+1. User requests to list all recurring expense lists
+2. BudgetBuddy shows all lists of recurring expense list
+3. User requests to view all expenses in a specific list
+4. BudgetBuddy shows all expenses in the specific list
+   5. use case ends
+
+#### Extensions
+* 2a. The list is empty
+  * use case ends  
+
+* 3a. The index is invalid
+  * 3a1. BudgetBuddy shows an error message
+    * use case resumes at step 2  
+
+* 3b. The list at index is empty
+  * 3b1. BudgetBuddy shows no expenses
+    * use case ends  
+
+<!-- @@author itsmejr257-->
+### Use Case : Add all expenses in a recurring expense list to the overall expenses  
+1. User requests to list all recurring expense lists
+2. BudgetBuddy shows all lists of recurring expense list
+3. User requests to add all expenses in a specific list to the overall expenses
+4. BudgetBuddy adds all expenses in the specific list to the overall expenses
+   5. use case ends
+   
+#### Extensions
+
+* 2a. The list is empty
+  * use case ends  
+
+* 3a. The index is invalid
+  * 3a1. BudgetBuddy shows an error message
+    * use case resumes at step 2  
+
+* 3b. The list at index is empty
+  * 3b1. BuddyBuddy shows message stating nothing is added to overall expenses
+    * use case ends  
+
+
 <!-- @@author jasraa-->
 ### Use Case: Get Expenses Insights
 
@@ -1398,6 +1511,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
     * 1.1.1 BudgetBuddy displays a message indicating no savings data is available to analyze.
       Use case ends.
 
+
 ## Appendix D: Non-Functional Requirements
 
 1. Should work on any *mainstream OS* as long as it has Java `11` or above installed.
@@ -1408,7 +1522,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
 ## Appendix E: Glossary
 
 * **Mainstream OS**: Windows, Linux, macOS.
-* **Securing Expenses*: A set of expenses which can be added to the overall expenses at any given point in time
+* **Recurring Expenses**: A set of expenses which can be added to the overall expenses at any given point in time
 * **Overall Expenses**: Refers to the overall expense list. Etc, the expense list which expenses get added to when performing an add expense command.
 
 ## Appendix F: Instructions for manual testing
@@ -1564,7 +1678,8 @@ Expected : An error message mentioning invalid amount will be printed.
   * Test Case: `change currency USD`
   * Expected: Default Currency would be changed to USD. Future amounts added will be in USD.
 
-#### Displaying Commands
+<!-- @@author itsmejr257-->
+#### 2.1 Displaying Commands
 1. Test Case : `menu`    
 Expected : Prints all possible menu items in the command line interface
 2. Test Case : `menu 1`  
@@ -1574,7 +1689,8 @@ Expected : An error message is printed in the command line interface
 4. Test Case : `menu 999`  
 Expected : An error message is printed in the command line interface
 
-#### Finding an expense
+<!-- @@author itsmejr257-->
+#### 2.13 Finding an expense
 **Prerequisites** : Some expenses has been added to the overall expense.
 1. Test Case : `find expenses d/cat morethan/ lessthan/`    
 Expected : If there are expenses matching/containing "cat", the found expenses are printed. Else, message stating no matching expenses found is printed in command line interface
@@ -1623,8 +1739,8 @@ Expected: All existing budgets are listed with their respective categories and a
 2. Test case: `print budget`
 Expected: A message is displayed indicating no budgets have been set.
 
-
-#### Creating a new list of recurring expenses
+<!-- @@author itsmejr257-->
+#### 2.15 Creating a new list of recurring expenses
 1. Test Case : `rec newlist streaming`  
 Expected : A new list created called `streaming`
 2. Test Case : `rec newlist  `  
@@ -1632,7 +1748,8 @@ Expected : An error message will be printed in the command line interface
 3. Test Case : `rec newlist |`  
 Expected : An error message will be printed in the command line interface
 
-#### Listing all lists of recurring expenses
+<!-- @@author itsmejr257-->
+#### 2.16 Listing all lists of recurring expenses
 1. Test Case : `rec viewlists`, with already added lists    
 Expected : All lists of recurring expenses will be printed in the command line interface
 2. Test Case : `rec viewlists`, with no added lists  
@@ -1640,7 +1757,8 @@ Expected : Message stated there being no recurring expenses is printed in the co
 3. Test Case : `rec viewlists extra`  
 Expected : `viewlists` should still work as intended, with no exceptions being thrown
 
-#### Removing a list of recurring expenses
+<!-- @@author itsmejr257-->
+#### 2.17 Removing a list of recurring expenses
 1. Test Case : `rec removelist 1`, with a list being present at the list number `1` during `rec viewlists`    
 Expected : List located at list number 1 will be removed, and a success message is printed in the command line interface
 2. Test Case : `rec removelist string`  
@@ -1650,7 +1768,8 @@ Expected : Error message will be printed in the command line interface
 4. Test Case : `rec removelist  `  
 Expected : Error message will be printed in the command line interface
 
-#### Adding an expense into a list of recurring expenses
+<!-- @@author itsmejr257-->
+#### 2.18 Adding an expense into a list of recurring expenses
 1. Test Case : `rec newexpense to/1 c/Entertainment a/200 d/description`, with a list being present at list number `1`  
 Expected : Expense with details Entertainment, 200, description will be added to list at list number `1`
 2. Test Case : `rec newexpense to/1`    
@@ -1658,7 +1777,8 @@ Expected : Error message will be printed in the command line interface
 3. Test Case : `rec newexpense to/string c/Entertainment a/200 d/description`  
 Expected : Error message will be printed in the command line interface
 
-#### Viewing all expenses in a list of recurring expenses
+<!-- @@author itsmejr257-->
+#### 2.19 Viewing all expenses in a list of recurring expenses
 1. Test Case : `rec viewexpenses 1`, with a list being present at list number `1` and contains expenses inside  
 Expected : Prints all expenses present in the recurring expense list 1
 2. Test Case : `rec viewexpenses 1` with a list not being present  
@@ -1666,7 +1786,8 @@ Expected : Error message will be printed in the command line interface
 3. Test Case : `rec viewexpenses 1` with a list being present at list number `1`, but does not contain any expenses inside  
 Expected : Prints an empty set of expenses to command line interface, with expenses at $0
 
-#### Adding all expenses in a list of recurring expenses to the overall expenses
+<!-- @@author itsmejr257-->
+#### 2.20 Adding all expenses in a list of recurring expenses to the overall expenses
 1. Test Case : `rec addrec 1`, with a list being present at list number `1` and contains expense inside    
 Expected : Adds all expenses present in recurring expense list 1 to the overall expenses
 2. Test Case : `rec addrec 1`, with a list being present a list number `1` but does not contain any expenses inside  
@@ -1674,6 +1795,7 @@ Expected : A message is provided in the command line interface informing the use
 3. Test Case : `rec addrec 1`, with a list not being present at list number `1`  
 Expected : Error message will be printed in the command line interface
 
+<!-- @@author itsmejr257-->
 #### Loading recurring expenses
 **Prerequisite** : The `RecurringExpensesFile.txt` should be empty prior to each Test Case  
 1. Test Case : Add a line in `RecurringExpensesFile.txt` called `!!! newlist !!!`
@@ -1683,6 +1805,7 @@ Expected : Error is printed in the CLI, RecurringExpensesFile will be reset to a
 3. Test Case : Add a line in `RecurringExpensesFile.txt` called `!!! newlist !!!` and another line below it `1 | 2024-04-13 | Entertainment | 203.35 | movies`  
 Expected : A recurring expense list named `newlist` will be present at list number 1 when doing a `rec viewlists` and an expense with the above description is present when doing a `rec viewexpenses 1`
 
+<!-- @@author itsmejr257-->
 #### Saving recurring expenses
 1. Test Case : `rec newlist streaming services` followed by a `bye`  
 Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming services !!!`. The list will also still be present after Relaunching application.
