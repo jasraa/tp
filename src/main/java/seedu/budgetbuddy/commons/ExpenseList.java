@@ -2,8 +2,6 @@ package seedu.budgetbuddy.commons;
 
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
-import seedu.budgetbuddy.exception.BudgetExceededException;
-
 import java.util.Arrays;
 
 import java.util.List;
