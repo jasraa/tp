@@ -44,6 +44,7 @@ public class ChangeCurrencyCommandCreator extends CommandCreator {
      * @param expenseList       The ExpenseList containing expenses data.
      * @param currencyConverter The CurrencyConverter object for currency conversion.
      * @return A ChangeCurrencyCommand if the input is valid; otherwise, null.
+     * @author sweijie24
      */
     public Command handleChangeCurrencyCommand(String input, SavingList savingList, ExpenseList expenseList,
                                                SplitExpenseList splitExpenses,

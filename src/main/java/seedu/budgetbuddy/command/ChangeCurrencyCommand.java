@@ -9,6 +9,9 @@ import seedu.budgetbuddy.commons.RecurringExpenseLists;
 
 import java.util.Currency;
 
+/**
+ * @@author sweijie24
+ */
 public class ChangeCurrencyCommand extends Command {
 
     private Currency newCurrency;

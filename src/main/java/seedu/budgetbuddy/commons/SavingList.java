@@ -68,6 +68,7 @@ public class SavingList {
      *
      * @param filterCategory The category to filter savings by (optional). If null, all savings are listed.
      * @param expenseList    The ExpenseList object containing the expenses to deduct from savings.
+     * @author sweijie24
      */
     public void listSavings(String filterCategory, ExpenseList expenseList) {
         LOGGER.info("Listing savings...");
@@ -116,6 +117,7 @@ public class SavingList {
      * @param initialAmount The initial amount of savings.
      * @param totalExpenses The total amount of expenses to be deducted.
      * @return The remaining savings amount after deducting total expenses.
+     * @author sweijie24
      */
     public double calculateRemainingSavings(double initialAmount, double totalExpenses) {
         try {

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+//@author sweijie24
 public class CurrencyConverter {
 
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -36,6 +37,7 @@ public class CurrencyConverter {
      * @return The converted amount in the target currency.
      * @throws IllegalArgumentException If exchange rates are not available for one or both currencies,
      *                                  or if exchange rates are not positive numbers.
+     * @author sweijie24
      */
     public double convertAmount(double amount, Currency fromCurrency, Currency toCurrency) {
         if (!exchangeRates.containsKey(fromCurrency) || !exchangeRates.containsKey(toCurrency)) {
@@ -77,6 +79,7 @@ public class CurrencyConverter {
      * @param newCurrency The new currency to convert expenses to.
      * @param expenses    The ExpenseList containing the expenses to be converted.
      * @throws IllegalArgumentException If the ExpenseList is null.
+     * @author sweijie24
      */
     public void convertExpenseCurrency(Currency newCurrency, ExpenseList expenses) {
         if (expenses == null) {
@@ -146,6 +149,7 @@ public class CurrencyConverter {
      * @param newCurrency The new currency to convert savings to.
      * @param savings     The SavingList containing the savings to be converted.
      * @throws IllegalArgumentException If the SavingList is null.
+     * @author sweijie24
      */
     public void convertSavingCurrency(Currency newCurrency, SavingList savings) {
         if (savings == null) {

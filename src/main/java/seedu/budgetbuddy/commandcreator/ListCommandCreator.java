@@ -79,6 +79,7 @@ public class ListCommandCreator extends CommandCreator {
      * @param expenseList  The ExpenseList containing expenses data.
      * @param savingList   The SavingList containing savings data.
      * @return A ListCommand if the input is valid; otherwise, null.
+     * @author sweijie24
      */
     public Command handleListCommand(String input, ExpenseList expenseList, SavingList savingList) {
         assert input != null : "Input should not be null";
