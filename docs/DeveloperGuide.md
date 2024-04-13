@@ -39,6 +39,8 @@
 &nbsp;&nbsp;[4.3 Find Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Check Splitted Expenses Feature]() <br>
 &nbsp;&nbsp;[4.3 Currency Converter Feature]() <br>
+&nbsp;&nbsp;[4.25 Get Graphical Insights for expenses]() <br>
+&nbsp;&nbsp;[4.26 Get Graphical Insights for savings]() <br>
 [5. Documentation]() <br>
 [6. Testing]() <br>
 [Appendix A: Product Scope](#5-product-scope) <br>
@@ -381,7 +383,43 @@ user input.
 using the `Parser#extractDetailsForAdd(input, "parameter")`
 7. Finally, `Parser#handleAddExpenseCommand()` intialises a `AddExpensesCommandCreator` which then returns `AddSavingCommand` to `Parser#parseCommand()`, which is then returned to `BudgetBuddy`.
 
-### Edit Expense Feature
+### 4.5 Edit Savings Feature
+The Edit Savings feature allows users to update their previously saved financial contributions, specifically adjusting
+the `category` and `amount`. This feature is facilitated by the `EditSavingCommand` class, which is prepared and issued
+by the `Parser` class. An `EditSavingCommand` object encapsulates several variables that are instantiated within the
+`Parser`: a `SavingList` object, `category`, `index`, and `amount`. The significance of these Class Attributes within
+`EditSavingCommand` is detailed below:
+
+| Class Attribute | Variable Type | Relevance                                                             |
+|-----------------|---------------|-----------------------------------------------------------------------|
+| savings         | SavingList    | SavingList Object containing the list of savings that can be modified |
+| category        | String        | The updated category for the saving entry at the specified index      |
+| index           | Integer       | The index of the saving entry to be updated within `SavingList`       |
+| amount          | Double        | The updated monetary value for the saving entry at the specified index|
+
+Upon invoking the `execute()` method in `BudgetBuddy` through `command.execute()`, the `EditSavingCommand` object
+leverages the following method from the `SavingList` class to carry out the modification:
+
+| Method       | Return Type | Relevance                                                                                   |
+|--------------|-------------|---------------------------------------------------------------------------------------------|
+| editSaving() | void        | Adjusts the `category` and `amount` for the saving entry at the provided `index`            |
+
+The following UML Sequence diagram illustrates the execution process of the Edit Savings Feature Command when a user enters a valid edit savings command:
+
+![EditSavingsDiagram.png](diagrams%2FEditSavingsDiagram.png)
+
+Here is a step-by-step narrative of the actions taken for a sample input:
+`edit savings c/Salary i/1 a/3000`
+
+1. BudgetBuddy receives the command `edit savings c/Salary i/1 a/3000` and passes it to the `Parser` for interpretation.
+2. The `Parser` splits the command into components and constructs an `EditSavingCommand` object with the category (`c/Salary`), index (`i/1`), and amount (`a/3000`).
+3. The `Parser` returns the constructed `EditSavingCommand` object to BudgetBuddy.
+4. BudgetBuddy then executes the `execute()` method on the `EditSavingCommand` object.
+5. Inside its `execute()` method, `EditSavingCommand` calls the `editSaving` method of `SavingList`, supplying the relevant parameters.
+6. `SavingList` locates the first saving entry in its array (adjusting for zero-based indexing with index - 1) and updates the entry's category to "Salary" and the amount to 3000.0.
+7. Finally, the console outputs a confirmation message: "Saving updated successfully."
+
+### 4.6 Edit Expense Feature
 The Edit Expense feature allows users to edit their previously added expenses, specifically the `category`, `amount`, 
 and `description`. This feature is managed by the `EditExpenseCommand` class, which is initialized by the 
 `Parser` class. Within the `EditExpenseCommand` object, 5 variables would have been initialized in the `Parser` class:
@@ -406,7 +444,7 @@ utilizes the following method from the `ExpenseList` class to edit the expense.
 The following UML Sequence diagram below shows how the Edit Expense Feature Command is executed when a user
 inputs a valid edit expense command:
 
-![EditExpenseSequence.png](team/EditExpenseSequence.png)
+![EditExpenseDiagram.drawio.png](diagrams%2FEditExpenseDiagram.drawio.png)
 
 The following is a step by step explanation of the processes that occur for an example input:
 `edit expense c/Transport i/2 a/40 d/GRAB`
@@ -913,6 +951,70 @@ and immediate visual cue that the budget limits have been surpassed.
 The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
 by what amount, making it easy for users to identify areas of concern.
 
+### 4.25 Get Expense Insights Feature
+
+The Get Expense Insights feature allows users to analyze their spending patterns and understand where their money goes.
+This feature is managed by the `GetExpenseInsightsCommand` class, which is initialized by the `Parser` class.
+The `GetExpenseInsightsCommand` holds an `ExpenseList` object which contains all expenses added by the user. 
+The relevance of this Class Attribute in `GetExpenseInsightsCommand` is as follows:
+
+| Class Attribute | Variable Type | Relevance                                                            |
+|-----------------|---------------|----------------------------------------------------------------------|
+| expenseList     | ExpenseList   | ExpenseList object containing the list of expenses to be analyzed    |
+
+Upon invocation of the `execute()` method in `BudgetBuddy`, the `GetExpenseInsightsCommand` leverages methods from the 
+`ExpenseList` class to calculate and display spending insights.
+
+| Method            | Return Type | Relevance                                                                                    |
+|-------------------|-------------|----------------------------------------------------------------------------------------------|
+| getExpenseInsights| void        | Analyzes expenses and prints insights on spending distribution, highest and lowest spending |
+
+The following UML Sequence diagram illustrates the execution process of the Get Expenses Insights Command when a user enters a valid command:
+
+![getExpenseInsightsDiagram.drawio.png](diagrams%2FgetExpenseInsightsDiagram.drawio.png)
+
+Here's a step-by-step explanation of the processes that occur when a user invokes the Get Expense Insights feature:
+
+1. The BudgetBuddy application receives the command `get expenses insights` and passes it to the `Parser`.
+2. The `Parser` interprets the input and creates a new `GetExpenseInsightsCommand` object with the `ExpenseList`.
+3. The `BudgetBuddy` application then calls `execute()` on the `GetExpenseInsightsCommand` object.
+4. The `GetExpenseInsightsCommand` object calls the `getExpenseInsights` method on the `ExpenseList`.
+5. The `ExpenseList` analyzes the expenses, calculating total spendings, average amount, and categorizing the expenses.
+6. Insights such as the categories with the highest and lowest spending are then printed to the user.
+
+### 4.26 Get Savings Insights Feature
+
+The Get Savings Insights feature enables users to analyze their savings distribution across various categories and 
+understand their saving habits. This feature is facilitated by the `GetSavingsInsightsCommand` class, which is
+instantiated by the `Parser` class. In this class, a `SavingList` object is maintained, which contains all the savings
+added by the user. The significance of the class attribute in `GetSavingsInsightsCommand` is as detailed below:
+
+| Class Attribute | Variable Type | Relevance                                                           |
+|-----------------|---------------|---------------------------------------------------------------------|
+| savingList      | SavingList    | SavingList object containing the list of savings to be scrutinized. |
+
+When the `execute()` method in `BudgetBuddy` is invoked via `command.execute()`, the `GetSavingsInsightsCommand` 
+leverages methods from the `SavingList` class to calculate and exhibit insights about savings.
+
+| Method               | Return Type | Relevance                                                                        |
+|----------------------|-------------|----------------------------------------------------------------------------------|
+| getSavingsInsights() | void        | Analyzes savings and displays insights on savings distribution, highest and lowest savings, etc. |
+
+The following UML Sequence diagram illustrates the execution process of the Get Savings Insights Command when a user enters a valid command:
+
+![getSavingsInsightsDiagram.drawio.png](diagrams%2FgetSavingsInsightsDiagram.drawio.png)
+
+The sequential flow of execution when a user commands to get savings insights is as follows:
+
+1. The user inputs the command 'get savings insights' and `BudgetBuddy` captures it.
+2. `BudgetBuddy` employs `Parser` to decode the input.
+3. `Parser` constructs a new `GetSavingsInsightsCommand` object with the `SavingList`.
+4. `Parser` sends this `GetSavingsInsightsCommand` object back to `BudgetBuddy`.
+5. `BudgetBuddy` calls the `execute()` method on the `GetSavingsInsightsCommand` object.
+6. `GetSavingsInsightsCommand` invokes the `getSavingsInsights()` method from the `SavingList`.
+7. `SavingList` computes and prints the insights, such as the categories with the highest and lowest savings and the overall distribution.
+8. The insights are shown to the user.
+
 
 ## 5. Documentation
 
@@ -969,8 +1071,13 @@ type fast. It also provides the ability to deal with finances on a singular plat
 | v2.0    | user              | have multiple lists of recurring expenses                       | separate associated recurring expenses together                                               |
 | v2.0    | user              | view what expenses i have in each of my recurring expenses list | know what expenses i have put into each list                                                  |
 | v2.0    | user              | remove a list from my recurring expenses list                   | remove underutilized lists or wrongly added lists                                             |
+| v2.0    | user              | save my expenses                                                | make sure i do not have to retype all expenses again after closing the application            |
+| v2.0    | user              | load my expenses                                                | i can access previously added expenses when i reopen the application                          |
 | v2.0    | user              | save my expenses in my recurring expenses                       | make sure i do not have to retype all expenses again after closing the application            |
 | v2.0    | user              | load my expenses in my recurring expenses                       | i can access previously added expenses in my recurring expenses when i reopen the application |
+| v2.0    | user              | view my expenses in a graphical representation                  | to analyse my highest and lowest expense categories                                           |
+| v2.0    | user              | view my savings in a graphical representation                   | to analyse my highest and lowest saving categories                                            |
+
 
 ## Appendix C: Use Cases
 (For all use cases below, the System is `BudgetBuddy` and the Actor is the `user`, unless specified otherwise).
@@ -1136,6 +1243,24 @@ type fast. It also provides the ability to deal with finances on a singular plat
 
 #### 2.1 
 
+#### 2.5 Edit Savings
+**Prerequisites** : Some savings has been added to the overall savings.
+1. Test Case : `edit savings c/Salary i/2 a/2000`
+Expected : if there is an saving with index 2, it edits the saving at index 2. Else, an error message stating invalid index will be printed.
+2. Test Case : `edit savings c/Allowance i/2 a/2000`
+Expected : An error message mentioning invalid saving category will be printed.
+3. Test Case : `edit savings c/Salary i/2 a/-2000`
+Expected : An error message mentioning invalid amount will be printed.
+
+#### 2.5 Edit Expenses
+**Prerequisites** : Some savings has been added to the overall savings.
+1. Test Case : `edit expense c/Transport i/2 a/2000 d/GRAB`
+   Expected : if there is an expense with index 2, it edits the expense at index 2. Else, an error message stating invalid index will be printed.
+2. Test Case : `edit expense c/MRT i/2 a/2 d/work`
+   Expected : An error message mentioning invalid saving category will be printed.
+3. Test Case : `edit savings c/Entertainment i/2 a/-2000`
+   Expected : An error message mentioning invalid amount will be printed.
+
 #### 2.9 Listing Savings
 
 * 2.9.1 Listing Overall Savings
@@ -1255,4 +1380,14 @@ Expected : A recurring expense list named `newlist` will be present at list numb
 Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming services !!!`. The list will also still be present after Relaunching application.
 2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
 Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
+
+#### 2.25 Get Graphical Insights for Expenses
+* Prerequisites: There must be existing expenses in the list.
+* Test Case: `get expenses insights`
+* Expected: Bar graph will be printed for each category.
+
+#### 2.26 Get Graphical Insights for Savings
+* Prerequisites: There must be existing savings in the list.
+* Test Case: `get savings insights`
+* Expected: Bar graph will be printed for each category.
 
