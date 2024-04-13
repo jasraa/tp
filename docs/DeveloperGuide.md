@@ -1,9 +1,41 @@
-# Developer Guide
+# Developer Guide for Budget Buddy
+
+## Table of Contents
+[1. Introduction](#1-introduction) <br>
+[2. Setting up](#2-setup-guide) <br>
+&nbsp;&nbsp;[2.1 Prerequisites](#21-prerequisites) <br>
+&nbsp;&nbsp;[2.2 Setting up the project](#2) <br>
+&nbsp;&nbsp;[2.3 Verify the setup](#2) <br>
+[3. Design](#3design) <br>
+&nbsp;&nbsp;[3.1 Architecture](#31-architecture) <br>
+[4. Implementation](#4-implementation) <br>
+&nbsp;&nbsp;[4.1 Menu Feature]() <br>
+&nbsp;&nbsp;[4.2 Add Savings Feature]() <br>
+&nbsp;&nbsp;[4.3 Add Expenses Feature]() <br>
+&nbsp;&nbsp;[4.4 Edit Savings Feature]() <br>
+&nbsp;&nbsp;[4.5 Edit Expenses Feature]() <br>
+&nbsp;&nbsp;[4.6 Reduce Savings Feature]() <br>
+&nbsp;&nbsp;[4.7 Delete Expenses Feature]() <br>
+&nbsp;&nbsp;[4.8 List Savings Feature]() <br>
+&nbsp;&nbsp;[4.9 List Expenses Feature]() <br>
+
+
+[5. Documentation]() <br>
+[6. Testing]() <br>
+[Appendix A: Product Scope](#5-product-scope) <br>
+[Appendix B: User Stories](#6-user-stories) <br>
+[Appendix C: Use Cases]() <br>
+[Appendix D: Non-Functional Requirements](#non-functional-requirements) <br>
+[Appendix E: Glossary]() <br>
+[Appendix F: Instructions for Manual Testing](#instructions-for-manual-testing) <br>
+
+
+
 
 
 ## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+Diagrams have been created on [Draw.io](https://draw.io/).
 
 ## Design & implementation
 
@@ -429,7 +461,7 @@ The sequence diagram for the Listing Expenses feature would illustrate the above
 ![Sequence diagram for List Expense Feature](diagrams/ExpenseList_SequenceDiagram.png)
 
 
-### Currency Converter feature
+### Currency Converter Feature
 The Currency Converter Feature allows users to convert the currency of expenses and savings. This feature is facilitated by the `ChangeCurrencyCommand` class, initialized by the `Parser` class with `CurrencyConverter`, `ExpenseList`, and `SavingList` objects, alongside the `newCurrency` to convert to. The importance of these class attributes is as follows:
 
 | Class Attribute   | Variable Type          | Relevance                                                   |
@@ -710,7 +742,7 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 7. A confirmation message is displayed in the console indicating the budget has been successfully set or updated.
 
 
-## 5. Product scope
+## Appendix A: Product scope
 
 ### Target user profile
 This product is for users who can type fast, and wishes to handle and track their current and future
@@ -720,7 +752,7 @@ expenses on a singular platform.
 BudgetBuddy is faster and more efficient way to track and calculate current and future expenses if a user is able to
 type fast. It also provides the ability to deal with finances on a singular platform.
 
-## 6. User Stories
+## Appendix B: User Stories
 
 ## User Stories
 
@@ -746,18 +778,135 @@ type fast. It also provides the ability to deal with finances on a singular plat
 | v2.0    | user              | remove a list from my recurring expenses list                   | remove underutilized lists or wrongly added lists                |
 
 
-## Non-Functional Requirements
+## Appendix C: Use Cases
+(For all use cases below, the System is `BudgetBuddy` and the Actor is the `user`, unless specified otherwise).
 
-{Give non-functional requirements}
+<!-- @@author sweijie24-->
+### Use Case: Listing Savings
 
-## Glossary
+1. User requests to list savings.
+2. BudgetBuddy retrieves the stored savings and expenses.
+3. BudgetBuddy calculates the remaining savings left.
+4. BudgetBuddy displays the existing savings along with the initial savings amount and remaining savings left.
 
-* *glossary item* - Definition
+#### Extensions
+* 1.1 User requests to list savings by a specific category.
+  * 1.1.1 BudgetBuddy retrieves the stored savings and expenses.
+  * 1.1.2 BudgetBuddy calculates remaining savings left.
+  * 1.1.3 BudgetBuddy displays only the existing savings with the filtered category.
+  * 1.1.4 BudgetBuddy displays the overall initial savings and remaining savings left. <br>
+  Use case ends
+* 1.2 The user entered an invalid category.
+  * 1.2.1 BudgetBuddy shows an error message. <br>
+  Use case ends
+* 2.1 BudgetBuddy retrieves an empty savings list but existing expenses list.
+  * 2.1.1 BudgetBuddy calculates savings required to pay off expenses.
+  * 2.1.2 BudgetBuddy displays savings user is short of. <br>
+  Use case ends
+* 2.2 BudgetBuddy retrieves an existing savings list but an empty expenses list.
+  * 2.2.1 BudgetBuddy displays all existing entries in savings list.
+  * 2.2.2 BudgetBuddy still calculates remaining savings left, with 0 expenses deducted.
+  * 2.2.3 BudgetBuddy displays overall initial savings and remaining savings left. <br>
+  Use case ends
+* 2.3 BudgetBuddy retrieves both empty savings and expenses list.
+  * 2.3.1 BudgetBuddy displays an empty list for both savings and expenses. <br>
+  Use case ends
 
-## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+<!-- @@author sweijie24-->
+### Use Case: Listing Expenses
 
+1. User requests to list expenses.
+2. BudgetBuddy retrieves stored expenses.
+3. BudgetBuddy calculates total overall expenses.
+4. BudgetBuddy displays existing expenses along with the overall total expenses.
+
+#### Extensions
+
+* 1.1 User requests to list expenses by a specific category.
+  * 1.1.1 BudgetBuddy retrieves stored expenses.
+  * 1.1.2 BudgetBuddy calculates total overall expenses.
+  * 1.1.3 BudgetBuddy displays only the existing expenses with the filtered category, along with overall total expenses. <br>
+  Use case ends
+* 1.2 User entered an invalid category.
+  * 1.2.1 BudgetBuddy shows an error message. <br>
+  Use case ends
+* 2.1 BudgetBuddy retrieves an empty expense list.
+  * 2.1.1 BudgetBuddy displays an empty expense list. <br>
+  Use case ends
+
+<!-- @@author sweijie24-->
+### Use Case: Currency Converter
+
+1. User requests to change currency.
+2. BudgetBuddy converts existing amounts in lists to new currency.
+3. BudgetBuddy sets default currency to the new changed currency.
+4. BudgetBuddy displays currency changed.
+
+#### Extensions
+* 1.1 User inputs an invalid currency code.
+  * 1.1.1 BudgetBuddy shows an error message. <br>
+  Use case ends
+* 1.2 User inputs the same currency code.
+  * 1.2.1 BudgetBuddy notifies user of the same conversion. <br>
+  Use case ends
+
+## Appendix D: Non-Functional Requirements
+
+1. Should work on any *mainstream OS* as long as it has Java `11` or above installed.
+2. Should be able to hold up to 1000 entries without a noticeable sluggishness in performance for typical usage.
+3. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+
+## Appendix E: Glossary
+
+* **Mainstream OS**: Windows, Linux, macOS.
+
+## Appendix F: Instructions for manual testing
+
+### 1. Launch and Shutdown
+
+### 2. Test Cases
+
+#### 2.1 Adding a Task
+
+#### 2.9 Listing Savings
+
+* 2.9.1 Listing Overall Savings
+  * Prerequisites: There must be existing savings and expenses in the list.
+  * Test Case: `list savings`
+  * Expected: All existing savings will be printed, along with the initial amount and remaining amount after deducting expenses if necessary.
+
+* 2.9.2 Listing Savings by a specific category
+  * Prerequisites: There must be existing savings of `Salary` category and expenses in the list.
+  * Test Case: `list savings Salary`
+  * Expected: Savings that have the `Salary` category will be printed, along with the overall remaining savings deducting expenses.
+
+#### 2.10 Listing Expenses
+
+* 2.10.1 Listing Overall Expenses
+  * Prerequisites: There must be existing expenses in the list.
+  * Test Case: `list expenses`
+  * Expected: All existing expenses will be printed, along with the overall amount.
+
+* 2.10.2 Listing Expenses by a specific category
+  * Prerequisites: there must be existing expenses of `Transport` category in the list.
+  * Test Case: `list expenses Transport`
+  * Expected: Expenses relating to the `Transport` category will be printed, along with the overall amount.
+
+#### 2.21 Changing Currency
+
+* 2.21.1 Changing Currency
+  * Prerequisite: There must be existing savings and expenses in the list.
+  * Test Case: `change currency USD`
+  * Expected: All existing savings and expenses will be converted to the USD equivalent pricing.
+
+* 2.21.2 Changing Default Currency
+  * Prerequisite: There need not be existing savings or expenses in the list.
+  * Test Case: `change currency USD`
+  * Expected: Default Currency would be changed to USD. Future amounts added will be in USD.
+
+    
 ### Add Expense Feature
 
 #### Implementation
