@@ -34,7 +34,9 @@ public class SplitExpenseCommandCreator extends CommandCreator {
         try {
             amountValue = Double.parseDouble(amount);
             if (amountValue <= 0 || amountValue > 1_000_000_000_000D) {
-                throw new BudgetBuddyException(amount + " is not a valid amount. Amount must be positive and less than or equal to 1,000,000,000,000.");
+                throw new BudgetBuddyException(amount + " is not a valid amount. Amount must be positive and" +
+                                                " less than or equal" + 
+                                                " to 1,000,000,000,000.");
             }
             if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
                 throw new BudgetBuddyException("Amount must be a number with up to 2 decimal places.");
@@ -62,7 +64,9 @@ public class SplitExpenseCommandCreator extends CommandCreator {
         try {
             int startIndex = input.indexOf(prefix) + prefix.length();
             int endIndex = nextPrefix != null ? input.indexOf(nextPrefix, startIndex) : input.length();
-            if (endIndex == -1) endIndex = input.length();
+            if (endIndex == -1) {
+                endIndex = input.length();
+            }
             String detail = input.substring(startIndex, endIndex).trim(); 
             return detail.isEmpty() ? "" : detail;
         } catch (Exception e) {

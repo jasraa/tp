@@ -14,7 +14,8 @@ import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 public class SavingList {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+    private static final double MAX_AMOUNT = 1_000_000_000_000.0;
+    
     protected ArrayList<Saving> savings;
     protected ArrayList<String> categories;
     protected double initialAmount;
@@ -142,7 +143,8 @@ public class SavingList {
             .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
     
         if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
-            throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up to maximum two decimal places.");
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up" +
+                                            " to maximum two decimal places.");
         }
     
         double amountDouble;
@@ -156,7 +158,6 @@ public class SavingList {
             throw new BudgetBuddyException("Savings should not be negative.");
         }
     
-        final double MAX_AMOUNT = 1_000_000_000_000.00;
         if (amountDouble > MAX_AMOUNT) {
             throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
         }

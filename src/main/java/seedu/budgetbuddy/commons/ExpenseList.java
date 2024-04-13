@@ -18,11 +18,12 @@ import java.util.Comparator;
 
 public class ExpenseList {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+    private static final double MAX_AMOUNT = 1_000_000_000_000.00; 
     protected ArrayList<Expense> expenses;
     protected ArrayList<String> categories = new ArrayList<>(Arrays.asList("Housing",
             "Groceries", "Utility", "Transport", "Entertainment", "Others"));
     protected List<Budget> budgets;
+    
 
     Ui ui = new Ui();
 
@@ -165,7 +166,8 @@ public class ExpenseList {
             .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
     
         if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
-            throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up to maximum two decimal places.");
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up" +
+                                            " to maximum two decimal places.");
         }
     
         double amountAsDouble;
@@ -179,7 +181,6 @@ public class ExpenseList {
             throw new BudgetBuddyException("Expenses should not be negative.");
         }
     
-        final double MAX_AMOUNT = 1_000_000_000_000.00;
         if (amountAsDouble > MAX_AMOUNT) {
             throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
         }
