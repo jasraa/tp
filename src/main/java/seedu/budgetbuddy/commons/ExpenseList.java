@@ -209,11 +209,11 @@ public class ExpenseList {
             if (amountAsDouble > MAX_AMOUNT) {
                 throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
             }
-
-            Expense expense = new Expense(matchedCategory, amountAsDouble, description);
-            expenses.add(expense);
-            System.out.println("Expense added: " + category + " ->z $" + String.format("%.2f", amountAsDouble));
         }
+
+        Expense expense = new Expense(matchedCategory, amountAsDouble, description);
+        expenses.add(expense);
+        System.out.println("Expense added: " + category + " ->z $" + String.format("%.2f", amountAsDouble));
     }
     
 
