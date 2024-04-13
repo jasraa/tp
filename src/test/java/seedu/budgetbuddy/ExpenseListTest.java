@@ -155,7 +155,7 @@ public class ExpenseListTest {
         expenses.addExpense("Entertainment", "75", "Movie");
         expenses.addExpense("Groceries", "100", "apple");
         ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
-                , 49.00, 76.00);
+                , 49.00, 75.00);
 
         assertEquals(2, filteredExpenses.size());
 

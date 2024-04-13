@@ -15,7 +15,7 @@ import seedu.budgetbuddy.exception.BudgetBuddyException;
 public class SavingList {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final double MAX_AMOUNT = 1_000_000_000_000.0;
-    
+
     protected ArrayList<Saving> savings;
     protected ArrayList<String> categories;
     protected double initialAmount;
@@ -161,9 +161,20 @@ public class SavingList {
         if (amountDouble > MAX_AMOUNT) {
             throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
         }
-    
-        Saving saving = new Saving(matchedCategory, amountDouble);
-        savings.add(saving);
+        
+        boolean found = false;
+        for (Saving saving : savings) {
+            if (saving.getCategory().equalsIgnoreCase(category)) {
+                saving.setAmount(saving.getAmount() + amountDouble);
+                found = true;
+                LOGGER.info("Updated existing saving for category: " + category);
+                break;
+            }
+        }
+        if (!found) {
+            Saving saving = new Saving(category, amountDouble);
+            savings.add(saving);
+        }
     }
     
     
