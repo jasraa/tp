@@ -177,10 +177,7 @@ public class CurrencyConverter {
     }
 
     public void convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpenseLists recurringExpenseLists) {
-        if (recurringExpenseLists == null) {
-
-            throw new IllegalArgumentException("SavingList cannot be null");
-        }
+        assert recurringExpenseLists != null : "RecurringExpenseLists cannot be null";
 
         if (DefaultCurrency.getDefaultCurrency() == newCurrency) {
             System.out.println("Same currency for Recurring Expenses. No Conversion needed");

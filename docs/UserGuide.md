@@ -277,12 +277,14 @@ Finds expenses based on their description or amount
 
 Format : `find expenses d/DESCRIPTION morethan/MINAMOUNT lessthan/MAXAMOUNT`
 
-* All prefixes `d/`, `morethan/` and `lessthan` **must be** present
+* All prefixes `d/`, `morethan/` and `lessthan/` **must be** present
 * `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` are optional to use as long as *at least* one parameter used.
 * Leaving either `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` empty assumes that the parameter is not considered when finding expenses
 * `DESCRIPTION` is the description associated with the expenses the user wishes to find
-* `MINAMOUNT` is the filter for expenses with amounts higher than specified value
-* `MAXAMOUNT` is the filter for expenses with amounts lower than specified value
+* `MINAMOUNT` is the filter for expenses with amounts higher than or equal to the specified value
+* `MAXAMOUNT` is the filter for expenses with amounts lower than or equal to the specified value
+* **Note** Although the user is able to combine the prefixes without any spaces, etc.
+  `find expenses d/descriptionmorethan/10lessthan/20`, it is strongly recommended to ensure spaces for clarity.
 
 Examples of usage :
 
@@ -293,11 +295,11 @@ Examples of usage :
 ### Recurring Bill Description
 The next few features in the user guide would be related to the Recurring Bill Feature. The commands associated to
 this overall feature would start with the `rec` command, followed by the relevant `commandType` and parameters. This
-feature allows user to create and manage multiple lists of expenses **separate** from the user's overall expenses
+feature allows the user to create and manage multiple lists of expenses **separate** from the user's overall expenses
 , which can be added to the users overall expenses.
 
 The term **recurring** here is to indicate that a user is able to **add** a set of pre-defined expenses to their
-overall expenses at any given point in time. Hence, this could range from subscription payments, a future grocery list,
+overall expenses at **any** given point in time. Hence, this could range from subscription payments, a future grocery list,
 etc.
 
 
@@ -324,7 +326,7 @@ Format : `rec viewlists`
 
 * This command is **space sensitive**, in particular, the space between `rec` and `viewlists` must be
 **exactly** one space apart for the command to be recognised 
-* **Note** Anything typed after `rec viewlists` will be ignored.
+* **Note** Anything typed after `rec viewlists ` will be ignored.
 
 Examples of Output : 
 
@@ -383,6 +385,13 @@ Format : `rec viewexpenses LISTNUMBER`
 Examples of usage :
 `rec viewexpenses 1` : Prints all expenses in the 1st recurring bill
 
+Here are some expected outputs for different situations :
+
+When the list to view contains expenses : ![View Expenses Command when List is Non-Empty](userguideimages/rec_viewexpenses_NonEmptyList.png)
+
+
+When the list to view does not contain any expenses : ![View Expenses Command when List is Empty](userguideimages/rec_viewexpenses_EmptyList.png)
+
 ### Add expenses in a recurring bill to overall expenses : `rec addrec`
 
 Adds all expenses in a specified recurring bill to the overall expenses
@@ -397,6 +406,11 @@ overall list of expenses
 Examples of usage :
 `rec addrec 1` : Adds all expenses in the 1st recurring bill into the overall expenses
 
+Here are some expected outputs for different situations : 
+
+When the list to add contains expenses : ![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_NonEmptyList.png)
+
+When the list to add is empty: ![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_EmptyList.png)
 
 ### Changing Currencies : `change currency [CURRENCY_CODE]`
 
@@ -510,7 +524,7 @@ Advanced users are welcome to update the data directly by editing this file. How
 * Edit Savings `edit savings c/CATEGORY i/INDEX a/AMOUNT`
 * List Expenses: `list expenses [CATEGORY]`
 * List Savings: `list savings [CATEGORY]`
-* Find Expenses `find expenses [d/DESCRIPTION] [morethan/MINAMOUNT] [lessthan/MAXAMOUNT]`
+* Find Expenses `find expenses d/DESCRIPTION morethan/MINAMOUNT lessthan/MAXAMOUNT`
 * Change Currency `change currency [CURRENCY_CODE]`
 * Set Budget `set budget c/CATEGORY b/BUDGET`
 * Get Budget `get budget c/CATEGORY`
