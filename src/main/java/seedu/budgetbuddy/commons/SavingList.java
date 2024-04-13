@@ -137,10 +137,10 @@ public class SavingList {
         assert amount != null : "Amount should not be null";
         LOGGER.info("Adding saving...");
     
-        String matchedCategory = categories.stream()
-            .filter(existingCategory -> existingCategory.equalsIgnoreCase(category))
-            .findFirst()
-            .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
+        if (categories.stream().noneMatch(existingCategory -> existingCategory.equalsIgnoreCase(category))) {
+            throw new BudgetBuddyException("The category '" + category + "' is not listed.");
+        }
+        
     
         if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
             throw new BudgetBuddyException("Invalid amount format. Amount should be a number with up" +

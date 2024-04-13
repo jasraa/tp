@@ -1,18 +1,34 @@
 package seedu.budgetbuddy.commons;
 
-public class SplitExpense extends Transaction{
-    private final String amount;
-    private final String description;
-    private final String numberOfPeople;
+import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-    public SplitExpense(String amount, String numberOfPeople, String description) {
-        super("Split Expense", Double.parseDouble(amount));
-        this.amount = amount;
+public class SplitExpense extends Transaction {
+    protected String description;
+    private int numberOfPeople;
+    private LocalDate dateAdded;
+
+    public SplitExpense(LocalDate dateAdded, double totalAmount, int numberOfPeople, String description) {
+        super("Shared Bill", calculateAmountPerPerson(totalAmount, numberOfPeople));
+        this.dateAdded = dateAdded;
         this.numberOfPeople = numberOfPeople;
         this.description = description;
     }
 
-    public String getNumberOfPeople() {
+    public SplitExpense(double totalAmount, int numberOfPeople, String description) {
+        super("Shared Bill", calculateAmountPerPerson(totalAmount, numberOfPeople));
+        this.numberOfPeople = numberOfPeople;
+        this.description = description;
+        this.dateAdded = LocalDate.now();
+    }
+
+    private static double calculateAmountPerPerson(double totalAmount, int numberOfPeople) {
+        BigDecimal amount = BigDecimal.valueOf(totalAmount);
+        return amount.divide(BigDecimal.valueOf(numberOfPeople), 2, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public int getNumberOfPeople() {
         return numberOfPeople;
     }
     
@@ -20,25 +36,26 @@ public class SplitExpense extends Transaction{
         return description;
     }
 
-    public double calculateAmountPerPerson() {
-        double amountValue = Double.parseDouble(amount);
-        double numberOfPeopleValue = Double.parseDouble(numberOfPeople);
-    
-        double rawAmountPerPerson = amountValue / numberOfPeopleValue;
-        
-        double roundedAmountPerPerson = Math.round(rawAmountPerPerson * 100) / 100.0;
-        
-        return roundedAmountPerPerson;
+    public LocalDate getDateAdded() {
+        return dateAdded;
     }
     
     public Boolean isExpenseSettled() {
         return false;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
     @Override
     public String toString() {
-        return "Number of People: " + numberOfPeople + " Amount: " + amount + " Description: " +
-                description + " Amount per person: " + calculateAmountPerPerson();
+        return "Number of People: " + numberOfPeople + " Amount per person: " + amount + " Description: " +
+                description + " Total Amount: " + getTotalAmount();
+    }
+    
+    public double getTotalAmount() {
+        return amount * numberOfPeople;
     }
 
 }

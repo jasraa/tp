@@ -37,7 +37,7 @@ public class SplitExpenseList {
         LOGGER.info("Listing splitexpenses...");
 
         try {
-            System.out.println("Split Expenses: ");
+            System.out.println("Shared Bills: ");
             for (int i = 0; i < splitexpenses.size(); i++) {
                 SplitExpense splitexpense = splitexpenses.get(i);
 
@@ -46,10 +46,9 @@ public class SplitExpenseList {
                     continue;
                 }
                 System.out.print(i+1 + " | ");
-                System.out.print("Amount: " + splitexpense.getAmount());
-                System.out.print(" Number of People: " + splitexpense.getNumberOfPeople());
                 System.out.print(" Description: " + splitexpense.getDescription());
-                System.out.println(" Amount per person: " + splitexpense.calculateAmountPerPerson());
+                System.out.print(" Number of People: " + splitexpense.getNumberOfPeople());
+                System.out.println(" Amount per person: " + splitexpense.getAmount());
             }
             System.out.println("-----------------------------------------------------------------------------");
             
@@ -64,6 +63,7 @@ public class SplitExpenseList {
         LOGGER.info("Adding split expense...");
 
         double amountDouble;
+        int numberOfPeopleInt;
         try{
             amountDouble = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
@@ -75,7 +75,7 @@ public class SplitExpenseList {
         }
 
         try {
-            Integer.parseInt(numberOfPeople);
+            numberOfPeopleInt = Integer.parseInt(numberOfPeople);
             if (Integer.parseInt(numberOfPeople) < 0) {
                 throw new BudgetBuddyException("Number of people should be a positive number");
             }
@@ -83,7 +83,7 @@ public class SplitExpenseList {
             throw new BudgetBuddyException("Number of people should be a number");
         }
 
-        SplitExpense splitexpense = new SplitExpense(amount, numberOfPeople, description);
+        SplitExpense splitexpense = new SplitExpense(amountDouble, numberOfPeopleInt, description);
         splitexpenses.add(splitexpense);
     }
 
