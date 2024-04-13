@@ -41,16 +41,58 @@ public class ExpenseListTest {
         assertEquals("Bus Fare", expenseList.getExpenses().get(0).getDescription());
     }
 
-    @Test @Disabled
+    @Test 
     public void addExpense_addingNegativeExpense_exceptionThrown() {
         ExpenseList expenseList = new ExpenseList();
         try {
             expenseList.addExpense("Transport", "-50", "Bus Fare");
             fail();
         } catch (Exception e) {
-            assertEquals("java.lang.Exception: Expenses should not be negative", e.getMessage());
+            assertEquals("Invalid amount format. Amount should be a positive number with up to maximum two decimal " + 
+                        "places.", e.getMessage());
         }
     }
+
+    @Test
+    public void addExpense_addingInvalidAmount_exceptionThrown() {
+        ExpenseList expenseList = new ExpenseList();
+        try {
+            expenseList.addExpense("Transport", "abc", "Bus Fare");
+            fail();
+        } catch (Exception e) {
+            assertEquals("Invalid amount format. Amount should be a positive number with up to maximum two decimal " + 
+                        "places.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void addExpense_addingNullCategory_exceptionThrown() {
+        ExpenseList expenseList = new ExpenseList();
+        try {
+            expenseList.addExpense("abc", "50", "Bus Fare");
+            fail();
+        } catch (Exception e) {
+            assertEquals("The category 'abc' is not listed.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void deleteExpense_validInput_success() throws BudgetBuddyException {
+        // Create an ExpenseList and add two expenses
+        ExpenseList expenseList = new ExpenseList();
+        expenseList.addExpense("Transport", "50", "Bus Fare");
+        expenseList.addExpense("Housing", "30", "Lunch");
+
+        // Delete the first expense
+        expenseList.deleteExpense(1);
+
+        // Assert: Check if the first expense is deleted
+        assertEquals(1, expenseList.getExpenses().size());
+        assertEquals("Transport", expenseList.getExpenses().get(0).getCategory());
+        assertEquals(50, expenseList.getExpenses().get(0).getAmount(), 0.01); // using delta for double comparison
+        assertEquals("Bus Fare", expenseList.getExpenses().get(0).getDescription());
+    }
+
 
     //@@ jasraa
     @Test
@@ -133,7 +175,7 @@ public class ExpenseListTest {
 
     }
 
-    @Test
+    @Test 
     public void filterExpenses_filterByMaxAmount_returnsOneMatches() throws BudgetBuddyException {
         ExpenseList expenses = new ExpenseList();
         expenses.addExpense("Groceries", "100", "Apples");
@@ -141,7 +183,7 @@ public class ExpenseListTest {
         expenses.addExpense("Entertainment", "75", "Movie");
         expenses.addExpense("Groceries", "100", "apple");
         ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
-                , null, 75.00);
+                , null, 76.00);
 
         assertEquals(2, filteredExpenses.size());
 
@@ -155,7 +197,7 @@ public class ExpenseListTest {
         expenses.addExpense("Entertainment", "75", "Movie");
         expenses.addExpense("Groceries", "100", "apple");
         ArrayList<Expense> filteredExpenses = expenses.filterExpenses(""
-                , 49.00, 76.00);
+                , 49.00, 75.00);
 
         assertEquals(2, filteredExpenses.size());
 

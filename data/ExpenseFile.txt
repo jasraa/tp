@@ -1,2 +1,0 @@
-2024-04-07 | Transport | 100.00 | bus
-2024-04-07 | Transport | 60.00 | train

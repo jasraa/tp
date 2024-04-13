@@ -1,17 +1,21 @@
 package seedu.budgetbuddy.commons;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SplitExpenseList {
-
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected ArrayList <SplitExpense> splitexpenses;
+    
+    Ui ui = new Ui();
+
     public SplitExpenseList(ArrayList<SplitExpense> splitexpenses){
         this.splitexpenses = splitexpenses;
     }
@@ -33,11 +37,18 @@ public class SplitExpenseList {
         return splitexpenses.get(listNumberAsArrayPosition);
     }
 
+    /**
+     * Lists all the expenses in the list
+     */
+
     public void listSplitExpenses() {
         LOGGER.info("Listing splitexpenses...");
 
         try {
-            System.out.println("Split Expenses: ");
+            ui.printDivider();
+            System.out.println(String.format("Current Currency: %s\n", DefaultCurrency.getDefaultCurrency()));
+
+            System.out.println("Shared Bills: ");
             for (int i = 0; i < splitexpenses.size(); i++) {
                 SplitExpense splitexpense = splitexpenses.get(i);
 
@@ -46,12 +57,11 @@ public class SplitExpenseList {
                     continue;
                 }
                 System.out.print(i+1 + " | ");
-                System.out.print("Amount: " + splitexpense.getAmount());
-                System.out.print(" Number of People: " + splitexpense.getNumberOfPeople());
                 System.out.print(" Description: " + splitexpense.getDescription());
-                System.out.println(" Amount per person: " + splitexpense.calculateAmountPerPerson());
+                System.out.print(" Number of People: " + splitexpense.getNumberOfPeople());
+                System.out.print(" Amount: $" + String.format("%.2f", splitexpense.getAmount()) + "\n");
             }
-            System.out.println("-----------------------------------------------------------------------------");
+            ui.printDivider();
             
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "An error occurred while listing expenses.", e);
@@ -64,6 +74,7 @@ public class SplitExpenseList {
         LOGGER.info("Adding split expense...");
 
         double amountDouble;
+        int numberOfPeopleInt;
         try{
             amountDouble = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
@@ -75,7 +86,7 @@ public class SplitExpenseList {
         }
 
         try {
-            Integer.parseInt(numberOfPeople);
+            numberOfPeopleInt = Integer.parseInt(numberOfPeople);
             if (Integer.parseInt(numberOfPeople) < 0) {
                 throw new BudgetBuddyException("Number of people should be a positive number");
             }
@@ -83,7 +94,7 @@ public class SplitExpenseList {
             throw new BudgetBuddyException("Number of people should be a number");
         }
 
-        SplitExpense splitexpense = new SplitExpense(amount, numberOfPeople, description);
+        SplitExpense splitexpense = new SplitExpense(amountDouble, numberOfPeopleInt, description);
         splitexpenses.add(splitexpense);
     }
 

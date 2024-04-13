@@ -7,6 +7,7 @@ import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.commons.RecurringExpenseList;
 import seedu.budgetbuddy.commons.DefaultCurrency;
+import seedu.budgetbuddy.commons.Budget;
 
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 import seedu.budgetbuddy.exception.InvalidRecurringExpensesFileException;
@@ -16,9 +17,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Currency;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Currency;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +30,9 @@ public class Storage {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private final String filePath;
+
+    private ArrayList<String> expenseCategories = new ArrayList<>(Arrays.asList("Housing"
+            , "Groceries", "Utility", "Transport", "Entertainment", "Others"));
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -46,25 +51,199 @@ public class Storage {
         }
     }
 
-    public List<Expense> loadExpenses() throws FileNotFoundException {
+    private void checkValidAmount(Double amount) throws BudgetBuddyException{
+        if (amount <= 0) {
+            throw new BudgetBuddyException("Invalid Amount detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidCategory(String category) throws BudgetBuddyException {
+        if (!expenseCategories.contains(category)) {
+            throw new BudgetBuddyException("Invalid Category detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidDescription(String description) throws BudgetBuddyException {
+        if (description.contains("|") || description.contains("!") || description.isEmpty()) {
+            throw new BudgetBuddyException("Invalid description detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidTitle(String line) throws BudgetBuddyException {
+        int indexOfEndExclamation = line.indexOf("!!!", 4);
+        int endIndexOfEndExclamation = indexOfEndExclamation + "!!!".length();
+
+        if (endIndexOfEndExclamation != line.length() || line.contains("|")) {
+            throw new BudgetBuddyException("Invalid ListName title detected. Possible Corrupted File");
+        }
+    }
+
+    private void checkValidListName(String listName) throws BudgetBuddyException {
+        if (listName.contains("!") || listName.contains("|") || listName.isEmpty()) {
+            throw new BudgetBuddyException("Invalid listName detected. Possible Corrupted File");
+        }
+    }
+
+    /**
+     * Loads a list of expenses from a file.
+     * If an exception occurs during the loading process (e.g., if the file is corrupted),
+     * the expenses list file will be reset.
+     *
+     * @return A list of {@link Expense} objects loaded from the file.
+     * @throws IOException If an error occurs when accessing the file.
+     */
+    public List<Expense> loadExpenses() throws IOException {
         File file = new File(filePath);
         List<Expense> expenses = new ArrayList<>();
         Scanner scanner = new Scanner(file);
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            String[] parts = line.split("\\|");
-            // Assuming the order is Date|Category|Amount|Description
-            LocalDate date = LocalDate.parse(parts[0].trim());
-            String category = parts[1].trim();
-            double amount = Double.parseDouble(parts[2].trim());
-            String description = parts[3].trim();
-            Expense expense = new Expense(date, category, amount, description);
-            expenses.add(expense);
+        try {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                LocalDate date = LocalDate.parse(parts[0].trim());
+                String category = parts[1].trim();
+                double amount = Double.parseDouble(parts[2].trim());
+                String description = parts[3].trim();
+                Expense expense = new Expense(date, category, amount, description);
+                expenses.add(expense);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.INFO, "Exception successfully caught. Error has been handled");
+            System.out.println(e.getMessage());
+            System.out.println("Your Expenses File is corrupted, resetting the file....");
+            resetExpenseListFile();
+            return expenses;
+        } finally {
+            scanner.close();
         }
-        scanner.close();
         return expenses;
     }
 
+    /**
+     * Saves a list of expenses to a file.
+     * If an IOException occurs, the expenses list file will be reset.
+     *
+     * @param expenses A list of {@link Expense} objects to save to the file.
+     * @throws IOException If an error occurs during writing to the file.
+     */
+    public void saveExpenses(List<Expense> expenses) throws IOException {
+        ensureDirectoryExists(); // Ensure directory and file exist before writing
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filePath, false);
+            for (Expense expense : expenses) {
+                writer.write(String.format("%s | %s | %.2f | %s\n",
+                        expense.getDateAdded(), expense.getCategory(), expense.getAmount(), expense.getDescription()));
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "IOException occurred while saving expenses. " +
+                    "Resetting expense list file.", e);
+            resetExpenseListFile(); // Reset the expense list file if an exception occurs
+            throw e; // Re-throw the exception to indicate that saving was not successful
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
+    }
+
+    /**
+     * Resets the expense list file. If the file exists, it is deleted and a new empty file is created.
+     *
+     * @throws IOException If deleting the existing file or creating a new file fails.
+     */
+    public void resetExpenseListFile() throws IOException {
+        File file = new File(filePath);
+        file.delete();
+        file.createNewFile();
+        FileWriter writer = new FileWriter(filePath, false);
+        writer.write("");
+        writer.close();
+    }
+
+    /**
+     * Loads a list of savings from the specified file.
+     * If an exception occurs during the loading process (e.g., if the file is corrupted),
+     * the savings list file will be reset.
+     *
+     * @return A list of {@link Saving} objects representing the savings loaded from the file.
+     * @throws IOException If there is an issue with file access that prevents the method from reading the savings.
+     */
+    public List<Saving> loadSavings() throws IOException {
+        List<Saving> savings = new ArrayList<>();
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        try {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String category = parts[0].trim();
+                double amount = Double.parseDouble(parts[1].trim());
+                Saving saving = new Saving(category, amount);
+                savings.add(saving);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.INFO, "Exception caught while loading savings. Resetting savings list file.", e);
+            System.out.println(e.getMessage());
+            System.out.println("Your Savings File is corrupted, resetting the file....");
+            resetSavingsListFile();
+            return savings;
+        } finally {
+            scanner.close();
+        }
+        return savings;
+    }
+
+    /**
+     * Saves the list of savings to the specified file.
+     * If an IOException occurs, the savings list file will be reset.
+     *
+     * @param savings A list of {@link Saving} objects that represent the savings to save to the file.
+     * @throws IOException If an IOException occurs during file writing, indicating the savings could not be saved.
+     */
+    public void saveSavings(List<Saving> savings) throws IOException {
+        ensureDirectoryExists(); // Ensure directory and file exist before writing
+        FileWriter writer = null;
+        try  {
+            writer = new FileWriter(filePath, false);
+            for (Saving saving : savings) {
+                writer.write(String.format("%s | %.2f\n",
+                        saving.getCategory(), saving.getAmount()));
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "IOException occurred while saving savings. Resetting savings list file.", e);
+            resetSavingsListFile();
+            throw e;
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
+    }
+
+    /**
+     * Resets the savings list file. If the file exists, it is deleted, and a new empty file is created.
+     * This method is typically called when the file is found to be corrupted or
+     * when an issue arises during file operations.
+     *
+     * @throws IOException If there is an issue with file access that prevents the method
+     *                     from deleting or creating the file.
+     */
+    public void resetSavingsListFile() throws IOException {
+        File file = new File(filePath);
+        file.delete();
+        file.createNewFile();
+        FileWriter writer = new FileWriter(filePath, false);
+        writer.write("");
+        writer.close();
+    }
+
+    /**
+     * Deletes the existing recurring expenses file and create a new, empty file.
+     * This method is used to reset the recurring expenses file when it has been detected to be corrupted
+     *
+     * @throws IOException If there is an error deleting the old file or creating the new file
+     */
     public void resetRecurringExpensesListFile() throws IOException {
         File file = new File(filePath);
         file.delete();
@@ -74,10 +253,21 @@ public class Storage {
         writer.close();
     }
 
+    /**
+     * Parses a line of text from the recurring expenses file, adding either a recurring expense list, or an expense
+     * into a recurring expense list. If the line begins with a `!!!`, it adds a recurring Expense List with the name
+     * being the string between the two `!!!`. Else, the line contains details on an individual expense
+     * and adds the expense to the specified list number
+     *
+     * @param recurringExpenses The list of ExpenseLists to which the parsed data will be added to
+     * @param line The line of text to be parsed
+     * @throws BudgetBuddyException If the format of the line is corrupted
+     */
     public void parseRecurringExpensesFile(ArrayList<ExpenseList> recurringExpenses, String line)
             throws BudgetBuddyException{
 
         if (line.startsWith("!!!")) {
+            checkValidTitle(line);
             int indexOfStartExclamation = line.indexOf("!!!", 0);
             int indexOfStartOfListName = indexOfStartExclamation + 3;
 
@@ -85,8 +275,9 @@ public class Storage {
             int indexOfEndOfListName = indexOfEndExclamation;
 
             String name = line.substring(indexOfStartOfListName, indexOfEndOfListName).trim();
-            ExpenseList expenses = new RecurringExpenseList(name, new ArrayList<>());
+            checkValidListName(name);
 
+            ExpenseList expenses = new RecurringExpenseList(name, new ArrayList<>());
             recurringExpenses.add(expenses);
         } else {
             String[] parts = line.split("\\|");
@@ -98,9 +289,16 @@ public class Storage {
 
             int listNumber = Integer.parseInt(parts[0].trim());
             LocalDate dateAdded = LocalDate.parse(parts[1].trim());
+
             String category = parts[2].trim();
+            checkValidCategory(category);
+
             double amount = Double.parseDouble(parts[3].trim());
+            checkValidAmount(amount);
+
             String description = parts[4].trim();
+            checkValidDescription(description);
+
             Expense expense = new Expense(dateAdded, category, amount, description);
 
             int listNumberAsArrayIndex = listNumber - 1;
@@ -109,6 +307,13 @@ public class Storage {
         }
 
     }
+
+    /**
+     * Loads the recurring expenses from a file into a RecurringExpenseLists object.
+     *
+     * @return RecurringExpenseLists containing all parsed recurring expenses from the file.
+     * @throws IOException If there is an error when reading the file
+     */
     public RecurringExpenseLists loadRecurringExpensesList() throws IOException{
         File file = new File(filePath);
         ArrayList<ExpenseList> recurringExpenses = new ArrayList<>();
@@ -130,7 +335,7 @@ public class Storage {
             return recurringExpenseLists;
         } catch (Exception e) {
             LOGGER.log(Level.INFO, "Exception successfully caught. Error has been handled");
-            System.out.println(e.getMessage());
+            System.out.println("Error Detected : " + e.getMessage());
             System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
             resetRecurringExpensesListFile();
             return new RecurringExpenseLists();
@@ -138,6 +343,14 @@ public class Storage {
 
     }
 
+    /**
+     * Saves the details of recurring expenses into a file from a provided RecurringExpenseLists object.
+     *
+     * @param recurringExpenseLists The RecurringExpenseLists object containing all expense lists and expenses to be
+     *                              saved
+     * @throws InvalidRecurringExpensesFileException If the saving of the file was not successful
+     * @throws IOException If an error occurs when validating whether the RecurringExpensesFile.txt exists
+     */
     public void saveRecurringExpenses(RecurringExpenseLists recurringExpenseLists)
             throws InvalidRecurringExpensesFileException, IOException {
 
@@ -171,47 +384,7 @@ public class Storage {
                     ", file has been reinitialized. Run a command to save your recurringexpenses");
         }
 
-    }
-
-    public void saveExpenses(List<Expense> expenses) throws IOException {
-        ensureDirectoryExists(); // Ensure directory and file exist before writing
-        FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
-        for (Expense expense : expenses) {
-            writer.write(String.format("%s | %s | %.2f | %s\n",
-                    expense.getDateAdded(), expense.getCategory(), expense.getAmount(), expense.getDescription()));
-        }
-        writer.close();
-    }
-
-
-
-    // Inside Storage.java
-    public List<Saving> loadSavings() throws FileNotFoundException {
-        File file = new File(filePath);
-        List<Saving> savings = new ArrayList<>();
-        Scanner scanner = new Scanner(file);
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            String[] parts = line.split("\\|");
-            // Assuming the order is Category|Amount
-            String category = parts[0].trim();
-            double amount = Double.parseDouble(parts[1].trim());
-            Saving saving = new Saving(category, amount);
-            savings.add(saving);
-        }
-        scanner.close();
-        return savings;
-    }
-
-    public void saveSavings(List<Saving> savings) throws IOException {
-        ensureDirectoryExists(); // Ensure directory and file exist before writing
-        FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
-        for (Saving saving : savings) {
-            writer.write(String.format("%s | %.2f\n",
-                    saving.getCategory(), saving.getAmount()));
-        }
-        writer.close();
-    }
+    }   
 
     /**
      * Saves the default currency to the specified file path.
@@ -235,7 +408,6 @@ public class Storage {
         }
     }
 
-
     public List<SplitExpense> loadSplitExpenses() throws FileNotFoundException {
         File file = new File(filePath);
         List<SplitExpense> splitExpenses = new ArrayList<>();
@@ -243,29 +415,60 @@ public class Storage {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] parts = line.split("\\|");
-            // Assuming the order is Date|Amount|Number of People|Description
-            String amount = parts[1].trim();
-            String numberOfPeople = parts[2].trim();
+            LocalDate date = LocalDate.parse(parts[0].trim());
+            double amount = Double.parseDouble(parts[1].trim());
+            int numberOfPeople = Integer.parseInt(parts[2].trim());
             String description = parts[3].trim();
-            SplitExpense splitExpense = new SplitExpense(amount, numberOfPeople, description);
+            SplitExpense splitExpense = new SplitExpense(date, amount, numberOfPeople, description);
             splitExpenses.add(splitExpense);
         }
         scanner.close();
         return splitExpenses;
     }
+    
 
     public void saveSplitExpenses(List<SplitExpense> splitExpenses) throws IOException {
-
-        ensureDirectoryExists(); 
-        
-        FileWriter writer = new FileWriter(filePath, false); 
+        ensureDirectoryExists();
+    
+        FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
         for (SplitExpense splitExpense : splitExpenses) {
-            writer.write(String.format("%s | %s | %s\n",
-                    splitExpense.getAmount(), splitExpense.getNumberOfPeople(), splitExpense.getDescription()));
+            writer.write(String.format("%s | %.2f | %d | %s\n",
+                splitExpense.getDateAdded().toString(),
+                splitExpense.getAmount(),
+                splitExpense.getNumberOfPeople(),
+                splitExpense.getDescription()));
         }
         writer.close();
     }
 
+    public List<Budget> loadBudgets() throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        List<Budget> loadedBudgets = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split("\\|");
+            String category = parts[0].trim();
+            double budgetAmount = Double.parseDouble(parts[1].trim());
+            Budget budget = new Budget(category, budgetAmount);
+            loadedBudgets.add(budget);
+        }
+
+        scanner.close();
+        return loadedBudgets;
+    }
+
+    public void saveBudgets(List<Budget> budgets) throws IOException {
+        FileWriter writer = new FileWriter(filePath);
+
+        for (Budget budget : budgets) {
+            writer.write(String.format("%s|%.2f\n", budget.getCategory(), budget.getBudget()));
+        }
+
+        writer.flush();
+        writer.close();
+    }
 
     /**
      * Loads currency data from the specified file path and sets the default currency accordingly.

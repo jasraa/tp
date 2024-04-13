@@ -164,7 +164,7 @@ public class RecurringExpenseCommand extends Command{
             System.out.println("|Details of Expense");
             System.out.println("--------------------");
             System.out.println("|Category : " + category);
-            System.out.println("|Amount : " + amount);
+            System.out.println("|Amount : " + String.format("%.2f", amount));
             System.out.println("|Description : " + description);
             ui.printDivider();
 
@@ -199,7 +199,7 @@ public class RecurringExpenseCommand extends Command{
         if (expenses.isEmpty()) {
             ui.printDivider();
             System.out.println("There are no expenses present in \"" + expenseList.getName() +
-                    "\" nothing has been added to the overall expenses");
+                    "\". Nothing has been added to the overall expenses");
             ui.printDivider();
             return;
         }
@@ -215,7 +215,7 @@ public class RecurringExpenseCommand extends Command{
         }
 
         ui.printDivider();
-        System.out.println("You Recurring Expenses in " + expenseList.getName() +
+        System.out.println("Your Recurring Expenses in " + expenseList.getName() +
                 " has been added to your overall Expenses");
         ui.printDivider();
 
