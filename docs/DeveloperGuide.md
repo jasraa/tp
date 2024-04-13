@@ -350,7 +350,7 @@ list of `expenses` matching against the corresponding `category`.
 | addExpense() | void        | Add expense to the existing list of `expenses`  |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.png)
+![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -394,7 +394,7 @@ list of `savings` matching against the corresponding `category`.
 | addSaving()  | void        | Add savings to the existing list of `savings`   |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSavings.png)
+![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSavings.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -517,6 +517,42 @@ Here's an overview of the process flow when a user employs the Listing Expenses 
 The sequence diagram for the Listing Expenses feature would illustrate the above steps, showing the interactions between the `User`, `BudgetBuddy`, `Parser`, `ListExpensesCommand`, and `ExpenseList` classes.
 ![Sequence diagram for List Expense Feature](diagrams/ExpenseList_SequenceDiagram.png)
 
+### Add Shared Bill feature
+
+The Add Shared Bill Feature allows users to enter expenses that are shared among multiple parties, facilitating easy splitting and tracking of such expenses. The feature is managed by the `SplitExpenseCommand` class, which is initialized by the `SplitExpenseCommandCreator` as a result of the Parser class interpretation.
+
+Class Attributes for SplitExpenseCommand:
+
+|   Class Attribute	| Variable Type	          |  Relevance                       |
+|-------------------|-------------------------|--------------------------------------------------------------|
+| splitExpenseList	| SplitExpenseList	      | SplitExpenseList Object where the shared bill will be added  |     |
+| amount	          | double	                | The total amount of the shared bill                          |
+| numerOfPeople     | int                     | The number of people that are meant for splitting the bill   | 
+| description	      | String	                | Description of the shared bill
+
+Upon the call of the execute() method via command.execute(), SplitExpenseCommand performs the following key actions:
+
+1. It adds the shared bill as an expense to the ExpenseList.
+2. Calculates each participant's share based on the total amount divided by the number of participants.
+
+Key Methods used from SplitExpenseList
+|    Method	             | Return Type	          | Relevance                                            | 
+|------------------------|------------------------|------------------------------------------------------|
+|  addSplitExpense()	   | void	                  | Adds the splitexpense to the list of splitexpenses   |
+
+The SplitExpenseCommand also provides an output summarizing the shared expense, each participant's share.
+
+Sequence Diagram for Adding a Shared Bill
+The sequence diagram illustrates the flow from when a user inputs a command to add a shared bill to its execution:
+![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_AddSplitExpense.jpg)
+
+User Input: The user inputs a command in the format `add shared bill a/<Amount> n/<NumberOfPeople> d/<Description>`
+
+Parsing: The `Parser` class identifies the input as a shared bill command and extracts the necessary parameters (`amount`, `number of people`, `description`).
+Command Initialization: The `Parser` initializes a `SplitExpenseCommand` with the extracted parameters.
+Execution: The `SplitExpenseCommand` is executed, which calls `addSplitExpense()` on the `SplitExpenseList` to add the shared bill.
+Calculation: The command calculates each participant's share of the bill and records it.
+
 
 ### Currency Converter feature
 The Currency Converter Feature allows users to convert the currency of expenses and savings. This feature is facilitated by the `ChangeCurrencyCommand` class, initialized by the `Parser` class with `CurrencyConverter`, `ExpenseList`, and `SavingList` objects, alongside the `newCurrency` to convert to. The importance of these class attributes is as follows:
@@ -582,7 +618,7 @@ For Clarity, the menu items and their corresponding indexes are as follows :
 | 3     | View Expenses           |
 | 4     | View Savings            |
 | 5     | Find Expenses           |
-| 6     | Split Expenses          |
+| 6     | Divide Bills         |
 | 7     | Manage Recurring Bills  |
 | 8     | Change Currency         |
 | 9     | Manage Budget           |
@@ -833,4 +869,6 @@ type fast. It also provides the ability to deal with finances on a singular plat
 | v2.0    | user              | have multiple lists of recurring expenses                       | separate associated recurring expenses together                  |
 | v2.0    | user              | view what expenses i have in each of my recurring expenses list | know what expenses i have put into each list                     |
 | v2.0    | user              | remove a list from my recurring expenses list                   | remove underutilized lists or wrongly added lists                |
+| v2.0    | user              | divide bills that are meant for splitting                       | know how much others should pay me                               |
+| v2.0    | user              | settle bills that others have repaid me                         | see which bills have not been settled                            | 
 
