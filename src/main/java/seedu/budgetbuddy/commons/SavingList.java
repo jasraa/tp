@@ -14,6 +14,7 @@ import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 public class SavingList {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final double MAX_AMOUNT = 1_000_000_000_000.0;
 
     protected ArrayList<Saving> savings;
     protected ArrayList<String> categories;
@@ -132,24 +133,52 @@ public class SavingList {
     }
 
     public void addSaving(String category, String amount) throws BudgetBuddyException{
-        if (!categories.contains(category)) {
+        assert category != null : "Category should not be null";
+        assert amount != null : "Amount should not be null";
+        LOGGER.info("Adding saving...");
+    
+        if (categories.stream().noneMatch(existingCategory -> existingCategory.equalsIgnoreCase(category))) {
             throw new BudgetBuddyException("The category '" + category + "' is not listed.");
         }
-        int amountInt = Integer.parseInt(amount);
-        if (amountInt < 0) {
-            try {
-                throw new Exception("Savings should not be negative");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        
+    
+        if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a positive number with up" +
+                                            " to maximum two decimal places.");
+        }
+    
+        double amountDouble;
+        try {
+            amountDouble = Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a number.");
+        }
+        
+        if (amountDouble < 0) {
+            throw new BudgetBuddyException("Savings should not be negative.");
+        }
+    
+        if (amountDouble > MAX_AMOUNT) {
+            throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
+        }
+        
+        boolean found = false;
+        for (Saving saving : savings) {
+            if (saving.getCategory().equalsIgnoreCase(category)) {
+                saving.setAmount(saving.getAmount() + amountDouble);
+                found = true;
+                LOGGER.info("Updated existing saving for category: " + category);
+                break;
             }
         }
-        Saving saving = new Saving(category, amountInt);
-        savings.add(saving);
-
-        if (!categories.contains(category)) {
-            categories.add(category);
+        if (!found) {
+            Saving saving = new Saving(category, amountDouble);
+            savings.add(saving);
         }
     }
+    
+    
+    
 
     /**
      * Edits the saving entry at the specified index. This method updates the category and amount

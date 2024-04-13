@@ -16,6 +16,49 @@ public class SavingListTest {
 
     private static final Logger LOGGER = Logger.getLogger(SavingListTest.class.getName());
 
+
+    @Test 
+    public void addSaving_validInput_success() throws BudgetBuddyException {
+        SavingList savingList = new SavingList();
+        savingList.addSaving("Salary", "500");
+
+        assertEquals(1, savingList.getSavings().size());
+        assertEquals("Salary", savingList.getSavings().get(0).getCategory());
+        assertEquals(500, savingList.getSavings().get(0).getAmount());
+    }
+
+    @Test 
+    public void addSaving_invalidAmount_exceptionThrown() {
+        SavingList savingList = new SavingList();
+        try {
+            savingList.addSaving("Salary", "abc");
+        } catch (BudgetBuddyException e) {
+            assertEquals("Invalid amount format. Amount should be a positive number with up to maximum two decimal " + 
+                         "places.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void addSaving_negativeAmount_exceptionThrown() {
+        SavingList savingList = new SavingList();
+        try {
+            savingList.addSaving("Salary", "-1.00");
+        } catch (BudgetBuddyException e) {
+            assertEquals("Invalid amount format. Amount should be a positive number with up to maximum "+
+                         "two decimal places.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void addSaving_nullCategory_exceptionThrown() {
+        SavingList savingList = new SavingList();
+        try {
+            savingList.addSaving("abc", "500");
+        } catch (BudgetBuddyException e) {
+            assertEquals("The category 'abc' is not listed.", e.getMessage());
+        }
+    }
+
     @Test
     public void calculateRemainingSavings_sufficientFunds_success() {
         SavingList savingList = new SavingList();

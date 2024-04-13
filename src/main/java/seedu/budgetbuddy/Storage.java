@@ -65,6 +65,16 @@ public class Storage {
         return expenses;
     }
 
+    public void saveExpenses(List<Expense> expenses) throws IOException {
+        ensureDirectoryExists(); // Ensure directory and file exist before writing
+        FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
+        for (Expense expense : expenses) {
+            writer.write(String.format("%s | %s | %.2f | %s\n",
+                    expense.getDateAdded(), expense.getCategory(), expense.getAmount(), expense.getDescription()));
+        }
+        writer.close();
+    }
+
     public void resetRecurringExpensesListFile() throws IOException {
         File file = new File(filePath);
         file.delete();
@@ -171,19 +181,29 @@ public class Storage {
                     ", file has been reinitialized. Run a command to save your recurringexpenses");
         }
 
-    }
+    }   
 
-    public void saveExpenses(List<Expense> expenses) throws IOException {
-        ensureDirectoryExists(); // Ensure directory and file exist before writing
-        FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
-        for (Expense expense : expenses) {
-            writer.write(String.format("%s | %s | %.2f | %s\n",
-                    expense.getDateAdded(), expense.getCategory(), expense.getAmount(), expense.getDescription()));
+    /**
+     * Saves the default currency to the specified file path.
+     *
+     * @throws IOException if an I/O error occurs while writing to the file
+     */
+    public void saveCurrency() throws IOException {
+        assert filePath != null : "File path should not be null";
+
+        ensureDirectoryExists();
+
+        FileWriter writer = new FileWriter(filePath, false);
+
+        try {
+            Currency currentCurrency = DefaultCurrency.getDefaultCurrency();
+            writer.write("Default Currency: " + currentCurrency);
+            writer.close();
+
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Problem saving currency code", e);
         }
-        writer.close();
     }
-
-
 
     // Inside Storage.java
     public List<Saving> loadSavings() throws FileNotFoundException {
@@ -213,29 +233,7 @@ public class Storage {
         writer.close();
     }
 
-    /**
-     * Saves the default currency to the specified file path.
-     *
-     * @throws IOException if an I/O error occurs while writing to the file
-     */
-    public void saveCurrency() throws IOException {
-        assert filePath != null : "File path should not be null";
-
-        ensureDirectoryExists();
-
-        FileWriter writer = new FileWriter(filePath, false);
-
-        try {
-            Currency currentCurrency = DefaultCurrency.getDefaultCurrency();
-            writer.write("Default Currency: " + currentCurrency);
-            writer.close();
-
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Problem saving currency code", e);
-        }
-    }
-
-
+    
     public List<SplitExpense> loadSplitExpenses() throws FileNotFoundException {
         File file = new File(filePath);
         List<SplitExpense> splitExpenses = new ArrayList<>();
@@ -243,29 +241,31 @@ public class Storage {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] parts = line.split("\\|");
-            // Assuming the order is Date|Amount|Number of People|Description
-            String amount = parts[1].trim();
-            String numberOfPeople = parts[2].trim();
+            LocalDate date = LocalDate.parse(parts[0].trim());
+            double amount = Double.parseDouble(parts[1].trim());
+            int numberOfPeople = Integer.parseInt(parts[2].trim());
             String description = parts[3].trim();
-            SplitExpense splitExpense = new SplitExpense(amount, numberOfPeople, description);
+            SplitExpense splitExpense = new SplitExpense(date, amount, numberOfPeople, description);
             splitExpenses.add(splitExpense);
         }
         scanner.close();
         return splitExpenses;
     }
+    
 
     public void saveSplitExpenses(List<SplitExpense> splitExpenses) throws IOException {
-
-        ensureDirectoryExists(); 
-        
-        FileWriter writer = new FileWriter(filePath, false); 
+        ensureDirectoryExists();
+    
+        FileWriter writer = new FileWriter(filePath, false); // Overwrite the file
         for (SplitExpense splitExpense : splitExpenses) {
-            writer.write(String.format("%s | %s | %s\n",
-                    splitExpense.getAmount(), splitExpense.getNumberOfPeople(), splitExpense.getDescription()));
+            writer.write(String.format("%s | %.2f | %d | %s\n",
+                splitExpense.getDateAdded().toString(),
+                splitExpense.getAmount(),
+                splitExpense.getNumberOfPeople(),
+                splitExpense.getDescription()));
         }
         writer.close();
-    }
-
+    }    
 
     /**
      * Loads currency data from the specified file path and sets the default currency accordingly.

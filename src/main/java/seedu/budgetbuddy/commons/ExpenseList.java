@@ -18,18 +18,19 @@ import java.util.Comparator;
 
 public class ExpenseList {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+    private static final double MAX_AMOUNT = 1_000_000_000_000.00; 
     protected ArrayList<Expense> expenses;
     protected ArrayList<String> categories = new ArrayList<>(Arrays.asList("Housing",
             "Groceries", "Utility", "Transport", "Entertainment", "Others"));
     protected List<Budget> budgets;
+    
 
     Ui ui = new Ui();
 
     public ExpenseList(ArrayList<Expense> expenses) {
         this.expenses = expenses;
         this.budgets = new ArrayList<>();
-
+        
     }
 
     public ExpenseList() {
@@ -76,7 +77,7 @@ public class ExpenseList {
         String descriptionInLowerCase = description.toLowerCase();
         ArrayList<Expense> filteredExpenses = new ArrayList<>(this.expenses.stream()
                 .filter(expense -> (expense.getDescription()
-                        .toLowerCase().contains(descriptionInLowerCase)))
+                .toLowerCase().contains(descriptionInLowerCase)))
                 .filter(expense -> (minAmount == null || expense.getAmount() >= minAmount))
                 .filter(expense -> (maxAmount == null || expense.getAmount() <= maxAmount))
                 .collect(Collectors.toList()));
@@ -102,6 +103,7 @@ public class ExpenseList {
             for (int i = 0; i < expenses.size(); i++) {
                 Expense expense = expenses.get(i);
 
+                // Checks for null expenses
                 if (expense == null) {
                     LOGGER.warning("Expense object at index " + i + " is null");
                     continue;
@@ -118,6 +120,7 @@ public class ExpenseList {
             ui.printDivider();
             System.out.println("Overall Total Expenses: $" + String.format("%.2f", calculateTotalExpenses()));
 
+            // Assertion: Check if total expenses calculation is correct
             double totalExpenses = calculateTotalExpenses();
             assert totalExpenses >= 0 : "Total expenses should be non-negative";
         } catch (Exception e) {
@@ -145,6 +148,7 @@ public class ExpenseList {
             LOGGER.log(Level.WARNING, "Negative expense amount detected", e);
         }
 
+        // Assertion: Check if total expenses is non-negative
         assert totalExpenses >= 0 : "Total expenses should be non-negative";
 
         return totalExpenses;
@@ -155,51 +159,36 @@ public class ExpenseList {
         assert category != null : "Category should not be null";
         assert amount != null : "Amount should not be null";
         assert description != null : "Description should not be null";
-
-        if (!categories.contains(category)) {
-            throw new BudgetBuddyException("The category '" + category + "' is not listed.");
+    
+        String matchedCategory = categories.stream()
+            .filter(existingCategory -> existingCategory.equalsIgnoreCase(category))
+            .findFirst()
+            .orElseThrow(() -> new BudgetBuddyException("The category '" + category + "' is not listed."));
+    
+        if (!amount.matches("^\\d+(\\.\\d{1,2})?$")) {
+            throw new BudgetBuddyException("Invalid amount format. Amount should be a positive number with up" +
+                                            " to maximum two decimal places.");
         }
+    
         double amountAsDouble;
         try {
             amountAsDouble = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
             throw new BudgetBuddyException("Invalid amount format. Amount should be a number.");
         }
-
+    
         if (amountAsDouble < 0) {
             throw new BudgetBuddyException("Expenses should not be negative.");
         }
-
-        // Check against the budget before adding the expense
-        Budget budgetForCategory = budgets.stream()
-                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
-                .findFirst()
-                .orElse(null);
-
-        if (budgetForCategory != null) {
-            double totalSpent = expenses.stream()
-                    .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
-                    .mapToDouble(Expense::getAmount)
-                    .sum();
-            double projectedTotal = totalSpent + amountAsDouble;
-
-            if (projectedTotal > budgetForCategory.getBudget()) {
-                ui.printDivider();
-                System.out.println("Warning: Adding this expense will exceed your budget for " + category);
-                ui.printDivider();
-
-                // Replace with actual user confirmation in your application context
-                if (!ui.getUserConfirmation()) {
-                    System.out.println("Expense not added due to budget constraints.");
-                    return; // Exit without adding the expense
-                }
-            }
+    
+        if (amountAsDouble > MAX_AMOUNT) {
+            throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
         }
-
-        Expense expense = new Expense(category, amountAsDouble, description);
+    
+        Expense expense = new Expense(matchedCategory, amountAsDouble, description);
         expenses.add(expense);
-
     }
+    
 
     /**
      * Edits an expense entry in the expenses list at the specified index. Updates the category,
@@ -268,21 +257,18 @@ public class ExpenseList {
         return "placeholder";
     }
 
-    public void setBudget(String category, double budget) {
+    public void setBudget(String category, double budget){
         LOGGER.info("Setting budget - Category: " + category + ", Budget: $" + budget);
-
-        for (Budget b : budgets) {
-            if (b.getCategory().equalsIgnoreCase(category)) {
+        for (Budget b : budgets){
+            if (b.getCategory().equalsIgnoreCase(category)){
                 LOGGER.info("Updating budget for category: " + category);
                 b.setBudget(budget);
                 System.out.println("Updated budget for " + category + " to $" + budget);
                 return;
             }
         }
-
         LOGGER.info("Creating new budget for category: " + category);
         budgets.add(new Budget(category, budget));
-        System.out.println("Budget Added: " + category + " of $" + budget);
     }
 
     /**
@@ -290,32 +276,29 @@ public class ExpenseList {
      * The expenses are sorted from the highest to the lowest amount, displaying the amount and what percentage
      * of the total budget each expense constitutes.
      *
-     * @param inputCategory The category for which to retrieve and print the budget and expenses.
+     * @param category The category for which to retrieve and print the budget and expenses.
      */
-    public void getBudgetAndListExpensesForCategory(String inputCategory) {
-        // Trim the input and replace multiple internal spaces with a single space
-        String normalizedCategory = inputCategory.trim().replaceAll("\\s+", " ");
-
+    public void getBudgetAndListExpensesForCategory(String category) {
         Budget budgetForCategory = budgets.stream()
-                .filter(budget -> budget.getCategory().equalsIgnoreCase(normalizedCategory))
+                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
                 .findFirst()
                 .orElse(null);
 
         if (budgetForCategory == null) {
-            System.out.println("No budget set for " + normalizedCategory);
+            System.out.println("No budget set for " + category);
             return;
         }
 
         double budgetAmount = budgetForCategory.getBudget();
-        System.out.println("Budget for " + normalizedCategory + ": $" + budgetAmount);
+        System.out.println("Budget for " + category + ": $" + budgetAmount);
 
         List<Expense> expensesForCategory = expenses.stream()
-                .filter(expense -> expense.getCategory().equalsIgnoreCase(normalizedCategory))
+                .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
                 .sorted(Comparator.comparingDouble(Expense::getAmount).reversed())
                 .collect(Collectors.toList());
 
         if (expensesForCategory.isEmpty()) {
-            System.out.println("No expenses recorded for " + normalizedCategory);
+            System.out.println("No expenses recorded for " + category);
             return;
         }
 
