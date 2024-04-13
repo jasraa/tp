@@ -128,7 +128,7 @@ Edit Savings that have been added previously.
 Format: `edit savings c/CATEGORY i/INDEX a/AMOUNT`
 
 * The `CATEGORY` must be one of the following pre-defined categories: "Salary",
-  "Investments", "Gifts" or "Others".
+  "Investments", "Gifts" or "Others". (Case Sensitive)
 * The `INDEX` must be a positive integer and a valid index in the menu list.
 * The `AMOUNT` must be a positive integer.
 
@@ -146,7 +146,7 @@ Edit expenses that have been added previously.
 Format: `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
 
 * The `CATEGORY` must be one of the following pre-defined categories: "Housing",
-  "Groceries", "Utility", "Transport", "Entertainment" or "Others".
+  "Groceries", "Utility", "Transport", "Entertainment" or "Others". (Case Sensitive)
 * The `INDEX` must be a positive integer and a valid index in the menu list.
 * The `AMOUNT` must be a positive integer.
 * The `DESCRIPTION` can be any string.
@@ -500,7 +500,7 @@ Example of Expected Output (If there are existing expenses):
 * A horizontal bar graph showing the percentage of total expenses attributed to each category.
 * It highlights the category with the highest expenses, the one with the lowest (excluding categories with no expenses),
 and lists any categories where no expenses have been recorded.
-* Categories are Housing, Groceries, Utility, Transport, Entertainment, and Others.
+* Categories are Housing, Groceries, Utility, Transport, Entertainment, and Others. (Case Sensitive)
 
 Example of usage: `get expenses insights`
 
@@ -513,7 +513,7 @@ Example of Expected Output:
 * A horizontal bar graph showing the percentage of total savings attributed to each category.
 * It highlights the category with the highest savings, the one with the lowest (excluding categories with no savings),
 and lists any categories where no savings have been added.
-* Categories are Salary, Investments, Gifts, and Others
+* Categories are Salary, Investments, Gifts, and Others (Case Sensitive)
 
 Example of Usage: `get savings insights`
 
