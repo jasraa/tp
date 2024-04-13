@@ -21,7 +21,6 @@ import seedu.budgetbuddy.commandcreator.SetBudgetCommandCreator;
 import seedu.budgetbuddy.commandcreator.SettleSplitExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.SplitExpenseCommandCreator;
 import seedu.budgetbuddy.commandcreator.GetBudgetCommandCreator;
-import seedu.budgetbuddy.commandcreator.ListBudgetCommandCreator;
 import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.commons.RecurringExpenseLists;
@@ -259,9 +258,9 @@ public class Parser {
             return commandCreator.createCommand();
         }
         if (isListBudgetCommand(input)){
-            CommandCreator commandCreator = new ListBudgetCommandCreator(expenses);
-            return commandCreator.createCommand();
+            return handleListBudgetCommand(expenses);
         }
+
         if (isGetExpensesInsightsCommand(input)) {
             CommandCreator commandCreator = new GetExpenseInsightsCommandCreator(expenses);
             return commandCreator.createCommand();
