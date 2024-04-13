@@ -16,6 +16,5 @@ public class SetBudgetCommand extends Command {
     @Override
     public void execute(){
         expenseList.setBudget(this.category, this.budget);
-        System.out.println("Budget Added :" + category + " of $" + budget);
     }
 }
