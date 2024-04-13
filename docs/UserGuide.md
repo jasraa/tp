@@ -175,6 +175,7 @@ Format: `list savings CATEGORY`
 
 * The `CATEGORY` is optional and can be left blank.
 * The `CATEGORY` must be a pre-existing category if inputted.
+* The command is not case-sensitive.
 * Similar to listing expenses, users can view their savings with optional category filtering.
 * Savings are listed along with their respective categories and amounts.
 * Filtered Categories will only display savings with that Category.
@@ -211,6 +212,7 @@ Format: `list expenses CATEGORY`
 
 * The `CATEGORY` is optional and can be left blank.
 * The `CATEGORY` must be a pre-existing category if inputted.
+* The command is not case-sensitive.
 * When listing expenses, users have the option to filter expenses based on categories.
 * Users can specify a category to view expenses related to that category only.
   * Index is **NOT** affected so as to facilitate easier identification for deletion.
@@ -391,6 +393,7 @@ Format : `change currency [CURRENCY_CODE]`
 * Current Currency can be identified when listing savings/expenses.
 * `CURRENCY_CODE` consists of the following currencies: 'SGD', 'USD', 'EUR', 'MYR', 'JPY', 'KRW', 'CNY', 'HKD'
 * `CURRENCY_CODE` cannot be null. 
+* `CURRENCY_CODE` is not case-sensitive.
 * Conversion of Currency is interchangeable (e.g. SGD -> USD -> JPY).
 * Future additions to Expenses/Savings will be using the current currency displayed.
   * (i.e. **ALL** Expenses/Savings will be converted to the new currency.)
