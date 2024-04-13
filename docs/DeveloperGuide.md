@@ -7,81 +7,6 @@
 
 ## Design & implementation
 
-### Budget Management
-
-#### Implementation
-The Budget Management feature allows users to set financial limits for the various categories and monitor their spending. 
-This feature's objective is to give users the ability to stay within their financial goals and avoid overspending.
-
-This feature is orchestrated by `ListBudgetCommand` and `SetBudgetCommand`, which are initialised by the `Parser` 
-class. Below is a description of the key class attributes and methods involved in the budget setting and listing 
-process:
-
-##### Class Attributes for `SetBudgetCommand`:
-| Class Attribute | Variable Type | Relevance                                                           |
-|-----------------|---------------|---------------------------------------------------------------------|
-| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
-| category        | String        | The category for which the budget is being set                      |
-| budget          | double        | The budget amount to be set for the category                        |
-
-##### Class Attributes for `ListBudgetCommand`:
-| Class Attribute | Variable Type | Relevance                                                           |
-|-----------------|---------------|---------------------------------------------------------------------|
-| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
-
-
-Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`, `SetBudgetCommand` will update the 
-budget in `ExpenseList` using `setBudget`. Similarly, `ListBudgetCommand` will fetch and display all categories with 
-their budgets using `getBudgets`, and highlight those that are above the set budget.
-
-##### Key Methods used from `ExpenseList`
-| Method                      | Return Type   | Relevance                                                          |
-|-----------------------------|---------------|--------------------------------------------------------------------|
-| setBudget(category, budget) | void          | Sets or updates the budget for a given category in the ExpenseList |
-| getBudgets()                | List<Budget>  | Retrieves the list of all budgets set                              |
-
-The `ListBudgetCommand`'s updated execution function now features an improved display that not only shows the budget, 
-spent amount, and remaining balance but also clearly indicates when the budget has been exceeded. If the expenses 
-surpass the budget, instead of showing a negative remaining balance, it displays "Exceeded", providing a straightforward
-and immediate visual cue that the budget limits have been surpassed.
-
-The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
-by what amount, making it easy for users to identify areas of concern.
-
-
-#### Sequence diagrams
-
-##### Setting a Budget
-The following UML Sequence diagram shows how `SetBudgetCommand` works when a user sets a budget for a category in the
-following format: `set budget c/<Category> b/<Amount>`
-
-<img alt="SetBSD.png" height="400" src="SetBSD.png" width="700"/>
-
-
-##### Printing Budgets
-The following UML Sequence diagram shows how `ListBudgetCommand` works when a user checks the budget status with the
-command: `print budget`
-
-<img alt="ListBSD2.png" height="400" src="ListBSD2.png" width="700"/>
-
-#### Class diagram
-The class diagram below outlines the relationships between the classes involved in the Budget Management feature:
-
-<img alt="ClassDiagram2.png" height="800" src="ClassDiagram2.png" width="700"/>
-
-#### Activity diagram
-
-The activity diagram provides an overview of the Budget Management feature's workflow:
-
-<img alt="ActivityDiagram.png" height="600" src="ActivityDiagram.png" width="700"/>
-
-#### Examples of usage
-
-1. The user types `set budget c/food b/500` to set a budget of $500 for the food category. The Parser class creates a 
-`SetBudgetCommand` object which calls `setBudget()` on the `ExpenseList` object.
-2. To view budgets, the user enters `print budget`. The Parser class creates a `ListBudgetCommand` object. This command 
-retrieves the budgets using `getBudgets()` and displays them, also indicating any categories that are over budget.
-
 ## 1. Introduction
 Welcome to the Developer Guide for BudgetBuddy! This guide has been created to help you current and future 
 developers of Budget understand how BudgetBuddy works and aid developers in easily adding new features, 
@@ -210,6 +135,16 @@ brief explanation on their functionality is as follows :
   * The amounts being shown are dependent on the currency being used.
 * calculateTotalExpenses() :
   * The method used to calculate all expenses found in the expense list.
+* addExpense(String category, String amount, String description) :
+  * Adds a new Expense to the list after validating the category and amount. It also checks against the budget limit
+    for the given category and seeks user confirmation if the budget would be exceeded.
+* getBudgetAndListExpensesForCategory(String inputCategory) :
+  * Retrieves and displays the budget for a given category and lists the expenses under it, sorted by amount and 
+    showing what percentage of the budget each expense constitutes.
+
+The `ExpenseList` class relies on the `Ui` class to interact with the user for confirmations and to display information.
+All exceptions related to invalid operations or data are handled by throwing specific `BudgetBuddyException` instances to
+be caught by the caller, ensuring robust error management within the application.
 
 ##### 3.6.4 Saving
 This class holds details regarding a saving a user has. Within this class, it has 3 class-level variables :
@@ -261,6 +196,10 @@ brief explanation on their functionality is as follows :
 * `calculateRemainingSavings(double initialAmount, double totalExpenses)` :
   * Calculates the remaining savings amount after deducting total expenses from the initial amount.
   * Provides clarity on how much savings user has left to spend.
+* `reduceSavingsByCategory(String category, double amount)` :
+  * Decreases the savings amount for a specified category by a given amount.
+  * It iterates through the savings list, finds the specified category, and deducts the specified amount.
+  * If any of the savings entries do not have sufficient funds to cover the reduction, it outputs a warning.
 
 ##### 3.6.6 RecurringExpenseList
 This class represents a list of recurring expenses for the Recurring Expense feature. Within this class, it has 
@@ -319,9 +258,16 @@ this method converts the currency of savings in a given `SavingList` to a specif
 It iterates through the savings in the list, converts each saving amount to the new currency using the `convertAmount` 
 method, and updates the saving amounts and currencies accordingly.
 
+* `convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList)`:
+This method is responsible for converting the currency of all budgets within `ExpenseList` to a specified new currency (`newCurrency`). It 
+accepts the new `Currency` object representing the target currency and the `ExpenseList` containing the budgets, and updates
+the budget amounts and currencies accordingly.
+
+
 These methods facilitate currency conversion tasks by handling the conversion logic, validating input parameters, 
 and logging relevant messages. They provide essential functionality for managing expenses and savings in different 
 currencies within the budget management application.
+
 
 
 ## 4. Implementation
@@ -458,16 +404,73 @@ amount (`a/40`), and description (`d/GRAB`).
 category to "Transport," amount to 40.0, and description to "GRAB."
 7. A message "Expense edited successfully." is printed to the console.
 
+### 4.6 Reduce Savings Feature
+The Reduce Savings feature enables users to decrement a specified amount from their savings at a given index. This 
+functionality is controlled by the `ReduceSavingCommand` class, which is produced by the `ReduceSavingCommandCreator` 
+based on user input. The `ReduceSavingCommand` class uses a `SavingList` object to access the relevant saving and performs 
+the reduction operation using the provided index and amount. Below is the relevance of these attributes:
+
+| Class Attribute | Variable Type | Relevance                                                                    |
+|-----------------|---------------|------------------------------------------------------------------------------|
+| savings         | SavingList    | The `SavingList` object containing the list of savings which can be reduced  |
+| category        | String        | TThe category of savings to reduce                                           |
+| amount          | double        | The amount by which the savings in the specified category should be reduced  |
+
+When `BudgetBuddy` runs the `execute()` method through `command.execute()`, the `ReduceSavingCommand` leverages the reduceSavingsByCategory method from the `SavingList` class:
+
+| Method                      | Return Type | Relevance                                                        |
+|-----------------------------|-------------|------------------------------------------------------------------|
+| reduceSavingsByCategory()   | void        | Decreases the savings by a specified amount in a given category  |
+
+The user interaction for reducing savings follows these steps:
+
+1. The user commands to reduce savings by inputting `reduce savings c/[category] a/[amount]`.
+2. `BudgetBuddy` processes this input with the help of a `Parser`, which identifies the suitable `CommandCreator`.
+3. `Parser` constructs a `ReduceSavingCommand` object with the extracted category and amount.
+4. `BudgetBuddy` then executes the `ReduceSavingCommand`.
+5. The `execute()` method within ReduceSavingCommand calls the SavingList's reduceSavingsByCategory function.
+6. The `reduceSavingsByCategory` method performs the deduction and updates the savings amount.
+
+The following UML Sequence diagram below shows how the Reduce savings Feature Command is executed when a user
+inputs a valid reduce savings command:
+(will insert diagram soon)
+
+### 4.7 Delete Expenses Feature
+The Delete Expense feature grants users the capability to remove expenses they have previously entered. Managed by the 
+DeleteExpenseCommand class, this feature is initialized through DeleteExpenseCommandCreator. During the creation process, 
+the command is provided with an `ExpenseList` object and an `index` indicating the specific expense to be deleted. 
+The following table outlines the significance of these attributes:
+
+| Class Attribute | Variable Type | Relevance                                                              |
+|-----------------|---------------|------------------------------------------------------------------------|
+| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses that can be edited  |
+| index           | Integer        | The edited category for the expense in the specified index             |
+
+On invocation of the `execute()` method, as part of the `command.execute() `flow within BudgetBuddy, the DeleteExpenseCommand 
+object engages the deleteExpense() method from the ExpenseList class.
+
+| Method                      | Return Type | Relevance                                                 |
+|-----------------------------|-------------|-----------------------------------------------------------|
+| deleteExpense()             | void        | Removes the expense at the specified index from the list  |
+
+The user interaction for deleting expenses follows these steps:
+1. The user submits a delete command in the format `delete expense i/index`, with `index` specifying the expense to be deleted.
+2. `BudgetBuddy` receives the command and employs the Parser to deconstruct it.
+3. The `Parser` discerns the delete command, extracting the index value and forming a DeleteExpenseCommand object.
+4. `BudgetBuddy` triggers the DeleteExpenseCommand.execute() method. 
+5. Inside `execute()`, the `deleteExpense()` method is called on `ExpenseList`, with `index` indicating the targeted expense. 
+6. If the index is valid, the expense is removed, and a confirmation message is printed to the console.
+
 
 ### Listing Feature (List Savings)
 
 The Listing Savings Feature enables users to view their savings, potentially filtered by a specific category. This functionality is orchestrated by the `ListSavingsCommand` class, which is initialized by the `ListCommandCreator` class. Within the `ListSavingsCommand` object, the `ListCommandCreator` provides it with a `SavingList` object, an `ExpenseList` object, along with an optional `filterCategory`. The relevance of these class attributes in `ListSavingsCommand` is detailed in the following table:
 
-| Class Attribute | Variable Type | Relevance                                                                           |
-|-----------------|---------------|-------------------------------------------------------------------------------------|
-| savings         | SavingList    | The `SavingList` object containing the list of savings to be displayed or filtered |
-| expenses        | ExpenseList   | The `ExpenseList` object containing the list of expenses                            |
-| filterCategory  | String        | The category to filter the savings by, if provided                                  |
+| Class Attribute | Variable Type | Relevance                                                                            |
+|-----------------|---------------|--------------------------------------------------------------------------------------|
+| savings         | SavingList    | The `SavingList` object containing the list of savings to be displayed or filtered   |
+| expenses        | ExpenseList   | The `ExpenseList` object containing the list of expenses                             |
+| filterCategory  | String        | The category to filter the savings by, if provided                                   |
 
 When `BudgetBuddy` invokes the `execute()` method via `command.execute()`, the `ListSavingsCommand` object uses several methods from the `SavingList` class to perform its tasks:
 
@@ -531,11 +534,12 @@ The Currency Converter Feature allows users to convert the currency of expenses 
 
 When `BudgetBuddy` calls `command.execute()`, `ChangeCurrencyCommand` employs the following methods from `CurrencyConverter` to convert the currency of all financial records:
 
-| Method                   | Return Type | Relevance                                                                 |
-|--------------------------|-------------|---------------------------------------------------------------------------|
-| convertExpenseCurrency() | void        | Converts the currency of each `Expense` object to `newCurrency`           |
-| convertSavingCurrency()  | void        | Converts the currency of each `Saving` object to `newCurrency`            |
-| convertAmount()          | double      | Converts an amount from one currency to another using the exchange rates  |
+| Method                   | Return Type | Relevance                                                                |
+|--------------------------|-------------|--------------------------------------------------------------------------|
+| convertExpenseCurrency() | void        | Converts the currency of each `Expense` object to `newCurrency`          |
+| convertSavingCurrency()  | void        | Converts the currency of each `Saving` object to `newCurrency`           |
+| convertBudgetCurrency()  | void        | Converts the currency of each `Budget` object to `newCurrency`           |
+| convertAmount()          | double      | Converts an amount from one currency to another using the exchange rates |
 
 The Currency Converter feature also includes a mechanism for managing a default currency across the application, facilitated by the `DefaultCurrency` class. This enhancement allows for seamless conversion of financial records to a user-specified default currency.
 
@@ -551,10 +555,10 @@ Here's the step-by-step process when the user uses the Currency Converter featur
 1. The user inputs `change currency [newCurrencyCode]`. `Parser` processes this input and constructs a `ChangeCurrencyCommand` object with the necessary attributes.
 2. The `ChangeCurrencyCommand` object is returned to `BudgetBuddy`, which calls `ChangeCurrencyCommand.execute()`.
 3. `execute()` invokes `CurrencyConverter.convertExpenseCurrency(newCurrency, expenseList)` and `CurrencyConverter.convertSavingCurrency(newCurrency, savingList)`.
-4. Within the `convertExpenseCurrency` and `convertSavingCurrency` call, the amounts of `Expense` or `Saving` objects are converted to the `newCurrency` using the `convertAmount` method.
+4. Within the `convertExpenseCurrency` and `convertSavingCurrency` call, the amounts of `Expense`, `Saving` or `Budget` objects are converted to the `newCurrency` using the `convertAmount` method.
 5. The `DefaultCurrency.setDefaultCurrency(newCurrency)` method is called to update the application's default currency setting to `newCurrency`.
 6. The `setAmount` and `setCurrency` methods of `ExpenseList` and `SavingList` are used to update the amounts and currency codes.
-7. After successful conversion of savings and expenses, the default currency of the application is updated, reflecting the new choice across BudgetBuddy.
+7. After successful conversion of savings, expenses and budgets, the default currency of the application is updated, reflecting the new choice across BudgetBuddy.
 
 
 #### Sequence Diagram
@@ -768,26 +772,23 @@ this `AddExpenseCommand`, do refer to the `Implementation` section for `AddExpen
 
 
 ### Setting Budget Feature
-The Set Budget feature allows users to allocate a specific budget to various categories. This feature is managed by the
-SetBudgetCommand class, which is instantiated by the SetBudgetCommandCreator as a result of the Parser class
-interpretation. Within the SetBudgetCommand object, the following variables are initialized:
+The Budget Management feature allows users to set financial limits for the various categories and monitor their spending.
+This feature's objective is to give users the ability to stay within their financial goals and avoid overspending.
 
-| Variable    | Variable Type | Relevance                                                               |                                                           
-|-------------|---------------|-------------------------------------------------------------------------|
-| expenseList | ExpenseList   | The ExpenseList object containing all the categories to set budgets for |
-| category    | String        | The category for which the budget is to be set                          |
-| budget      | double        | The financial limit allocated to the specified category                 |
+This feature is orchestrated by `ListBudgetCommand` and `SetBudgetCommand`, which are initialised by the `Parser`
+class. Below is a description of the key class attributes and methods involved in the budget setting and listing
+process:
 
-When the execute() method is called via command.execute(), the SetBudgetCommand utilizes methods from the ExpenseList
-class to apply the budget:
+##### Class Attributes for `SetBudgetCommand`:
+| Class Attribute | Variable Type | Relevance                                                           |
+|-----------------|---------------|---------------------------------------------------------------------|
+| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
+| category        | String        | The category for which the budget is being set                      |
+| budget          | double        | The budget amount to be set for the category                        |
 
-| Method      | Return Type | Relevance                                                |                                                           
-|-------------|-------------|----------------------------------------------------------|
-| expenseList | ExpenseList | Sets the budget for a specific category within the list  |
-
-The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid 
+The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to set a budget:
-![SeqDiagramBudget.png](SeqDiagramBudget.png)
+![sequenceDiagram_setBudget.jpg](diagrams/sequenceDiagram_setBudget.jpg)
 
 The sequence of operations for an example input, `set budget c/Transport b/500`, is as follows:
 1. BudgetBuddy receives the user input and utilizes the Parser to decipher it.
@@ -797,6 +798,33 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 5. The SetBudgetCommand object calls the setBudget() method on the ExpenseList, passing in the category and budget amount.
 6. The ExpenseList updates or creates a budget allocation for the specified category with the provided amount.
 7. A confirmation message is displayed in the console indicating the budget has been successfully set or updated.
+
+##### Class Attributes for `ListBudgetCommand`:
+| Class Attribute | Variable Type | Relevance                                                           |
+|-----------------|---------------|---------------------------------------------------------------------|
+| expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
+
+The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
+command to list budgets:
+![sequenceDiagram_listBudget.png](diagrams/sequenceDiagram_listBudget.png)
+
+Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`, `SetBudgetCommand` will update the
+budget in `ExpenseList` using `setBudget`. Similarly, `ListBudgetCommand` will fetch and display all categories with
+their budgets using `getBudgets`, and highlight those that are above the set budget.
+
+##### Key Methods used from `ExpenseList`
+| Method                      | Return Type   | Relevance                                                          |
+|-----------------------------|---------------|--------------------------------------------------------------------|
+| setBudget(category, budget) | void          | Sets or updates the budget for a given category in the ExpenseList |
+| getBudgets()                | List<Budget>  | Retrieves the list of all budgets set                              |
+
+The `ListBudgetCommand`'s updated execution function now features an improved display that not only shows the budget,
+spent amount, and remaining balance but also clearly indicates when the budget has been exceeded. If the expenses
+surpass the budget, instead of showing a negative remaining balance, it displays "Exceeded", providing a straightforward
+and immediate visual cue that the budget limits have been surpassed.
+
+The "Categories above budget" section offers a concise table summarizing which categories have gone over the budget and
+by what amount, making it easy for users to identify areas of concern.
 
 
 ## 5. Product scope
