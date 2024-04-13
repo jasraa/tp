@@ -234,7 +234,7 @@ public class ExpenseList {
         // Check if the index is within valid bounds
         if (index <= 0 || index > expenses.size()) {
             LOGGER.warning("Invalid index: " + index);
-            System.out.println("Invalid index.");
+            System.out.println("Invalid index. Enter \"List Expenses\" to view the index.");
             return;
         }
 
