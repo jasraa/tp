@@ -2,6 +2,7 @@ package seedu.budgetbuddy.commons;
 
 import seedu.budgetbuddy.Ui;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
+import seedu.budgetbuddy.exception.BudgetExceededException;
 
 import java.util.Arrays;
 
@@ -29,7 +30,6 @@ public class ExpenseList {
     public ExpenseList(ArrayList<Expense> expenses) {
         this.expenses = expenses;
         this.budgets = new ArrayList<>();
-
     }
 
     public ExpenseList() {
@@ -150,6 +150,24 @@ public class ExpenseList {
         return totalExpenses;
     }
 
+    private boolean checkBudgetBeforeAddingExpense(String category, double amountAsDouble) {
+        Budget budgetForCategory = budgets.stream()
+                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
+                .findFirst()
+                .orElse(null);
+
+        if (budgetForCategory != null) {
+            double totalSpent = expenses.stream()
+                    .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
+                    .mapToDouble(Expense::getAmount)
+                    .sum();
+            return totalSpent + amountAsDouble > budgetForCategory.getBudget();
+        }
+        return false;
+    }
+
+
+
     //@@author Zhang Yangda
     public void addExpense(String category, String amount, String description) throws BudgetBuddyException {
         assert category != null : "Category should not be null";
@@ -170,36 +188,21 @@ public class ExpenseList {
             throw new BudgetBuddyException("Expenses should not be negative.");
         }
 
-        // Check against the budget before adding the expense
-        Budget budgetForCategory = budgets.stream()
-                .filter(budget -> budget.getCategory().equalsIgnoreCase(category))
-                .findFirst()
-                .orElse(null);
-
-        if (budgetForCategory != null) {
-            double totalSpent = expenses.stream()
-                    .filter(expense -> expense.getCategory().equalsIgnoreCase(category))
-                    .mapToDouble(Expense::getAmount)
-                    .sum();
-            double projectedTotal = totalSpent + amountAsDouble;
-
-            if (projectedTotal > budgetForCategory.getBudget()) {
-                ui.printDivider();
-                System.out.println("Warning: Adding this expense will exceed your budget for " + category);
-                ui.printDivider();
-
-                // Replace with actual user confirmation in your application context
-                if (!ui.getUserConfirmation()) {
-                    System.out.println("Expense not added due to budget constraints.");
-                    return; // Exit without adding the expense
-                }
+        boolean budgetExceeded = checkBudgetBeforeAddingExpense(category, amountAsDouble);
+        if (budgetExceeded) {
+            System.out.println("Warning: Adding this expense will exceed your budget for " + category);
+            boolean userConfirmation = ui.getUserConfirmation();
+            if (!userConfirmation) {
+                System.out.println("Expense not added due to budget constraints.");
+                return;
             }
         }
 
         Expense expense = new Expense(category, amountAsDouble, description);
         expenses.add(expense);
-
+        System.out.println("Expense added: " + category + " ->z $" + String.format("%.2f", amountAsDouble));
     }
+
 
     /**
      * Edits an expense entry in the expenses list at the specified index. Updates the category,
