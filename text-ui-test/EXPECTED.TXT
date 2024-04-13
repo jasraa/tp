@@ -7,7 +7,7 @@ __________________________________________________
 0. Display the whole menu
 1. Manage Expenses        2. View Expenses
 3. View Expenses          4. View Savings
-5. Find Expenses          6. Split Expenses
+5. Find Expenses          6. Divide Bills
 7. Manage Recurring Bills 8. Change Currency
 9. Manage Budget          10. Get Graphical Insights
 __________________________________________________

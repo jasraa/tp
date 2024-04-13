@@ -16,7 +16,7 @@ public class Ui {
         System.out.println("0. Display the whole menu");
         System.out.println("1. Manage Expenses        2. View Expenses");
         System.out.println("3. View Expenses          4. View Savings");
-        System.out.println("5. Find Expenses          6. Split Expenses");
+        System.out.println("5. Find Expenses          6. Divide Bills");
         System.out.println("7. Manage Recurring Bills 8. Change Currency");
         System.out.println("9. Manage Budget          10. Get Graphical Insights");
         System.out.println(DIVIDER);
@@ -35,7 +35,7 @@ public class Ui {
         System.out.println("0. Display the whole menu");
         System.out.println("1. Manage Expenses        3. View Expenses");
         System.out.println("2. Manage Savings         4. View Savings");
-        System.out.println("5. Find Expenses          6. Split Expenses");
+        System.out.println("5. Find Expenses          6. Divide Bills");
         System.out.println("7. Manage Recurring Bills 8. Change Currency");
         System.out.println("9. Manage Budget          10. Get Graphical Insights");
         System.out.println("Use 'menu INDEX' to select an option");
@@ -85,10 +85,10 @@ public class Ui {
                     "(Choose the parameters according to what you wish to search for)");
             break;
         case 6:
-            System.out.println("Split Expenses");
-            System.out.println("split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION");
-            System.out.println("check splitted expenses");
-            System.out.println("settle i/INDEX");
+            System.out.println("add shared bills");
+            System.out.println("add shared bill a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION");
+            System.out.println("check split bills");
+            System.out.println("settle bill i/INDEX");
             break;
         case 7:
             System.out.println("Recurring Bills");

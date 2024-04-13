@@ -52,6 +52,7 @@ command to run the application.
 ## 3. Features
 
 ### 3.1 Display Commands : `menu`
+
 Displays the corresponding features of BudgetBuddy
 
 Format: `menu [INDEX]`
@@ -108,19 +109,21 @@ Example of Usage:
 
 `add savings c/Salary a/500.50`
 
-### 3.4 Add Split Expenses
-Add expenses that are meant for splitting among friends or colleague
+### Add Shared Bill
+Add bills that are meant for splitting among friends or colleague
+### 3.4 Add Shared Bill
+Add bills that are meant for splitting among friends or colleague
 
-Format: `split expenses a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
+Format: `add shared bill a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 
-* Increments split expenses 
+* Increments shared bills 
 * The `AMOUNT` must be a positive number
 * The `NUMER_OF_PEOPLE` must be a positive integer.
 * The `DESCRIPTION` can be any string
 
 Example of usage:
 
-`split expenses a/100 n/10 d/Lunch
+`add shared bill a/100 n/10 d/Lunch`
 
 ### 3.5 Edit Savings: `edit savings`
 Edit Savings that have been added previously.
@@ -264,24 +267,25 @@ Expected Output (Filtered Category) :
 
 ### 3.11 Check splitted expenses `check splitted expenses`
 
-Check expenses
+Check Split Bills
 
-Format: `check splitted expenses`
+Format: `check split bills`
 
-* the system will list all splitted expenses.
-* The listed splitted expenses include details such as the total amount spent, number of people in the bill, description and the amount payable by each person.
+* the system will list all bills that have been split.
+* The listed bills include details such as the description, the number of people and the amount payable by each person.
 
-### 3.12 Settle splitted expenses `settle expense`
+
+### 3.12 Settle bill `settle bill`
 
 Settle splitted expenses
 
-Format `settle i/Index`
+Format `settle bill i/Index`
 
 * The system will settle the splitted expense corresponding to `Index`
 * `Index` must be a positive integer
 
 Example of usage:
-`settle i/2`: Delete splitexpense of index 2 listed in splittedexpenses tracker
+`settle bill i/2`: Delete bill of index 2 listed in splittedexpenses tracker
 
 ### 3.13 Finding expenses : `find expenses`
 

@@ -215,7 +215,7 @@ public class ExpenseList {
         expenses.add(expense);
 
         System.out.println("Expense added: " + matchedCategory + " of $" + String.format("%.2f", amountAsDouble)
-                + " with description: " + description);
+                + " Description: " + description);
     }
     
 

@@ -294,6 +294,7 @@ currencies within the budget management application.
 
 ## 4. Implementation
 
+<!-- @@author yyangdaa-->
 ### Add Expense Feature
 
 The Add Expense Feature allows users to add expenses to different categories. `AddExpenseCommand` class enables this feature, 
@@ -318,7 +319,7 @@ list of `expenses` matching against the corresponding `category`.
 | addExpense() | void        | Add expense to the existing list of `expenses`  |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.png)
+![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -334,13 +335,14 @@ user input.
     * | Variable Name | Variable Type |                                                              
       |---------------|---------------|
       | category      | String        | 
-      | amount     | String        |
+      | amount        | String        |
       | description   | String        |
 6. Depending on which parameters were present, the corresponding input would be extracted and placed into each variable
 using the `Parser#extractDetailsForAdd(input, "parameter")`
 7. Finally, `Parser#handleAddExpenseCommand()` returns a `AddExpensesCommand` to `Parser#parseCommand()`, which is
 then returned to `BudgetBuddy`
 
+<!-- @@author yyangdaa-->
 ### Add Savings Feature
 
 The Add Savings Feature allows users to add savings to different categories. `AddSavingCommandCreator` class intialises the `AddSavingCommand`, after initialised by the `Parser` class. Within the `AddSavings` object, the `Parser` would have initialized it with
@@ -362,7 +364,7 @@ list of `savings` matching against the corresponding `category`.
 | addSaving()  | void        | Add savings to the existing list of `savings`   |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSavings.png)
+![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSavings.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -506,7 +508,8 @@ The following table outlines the significance of these attributes:
 | Class Attribute | Variable Type | Relevance                                                             |
 |-----------------|---------------|-----------------------------------------------------------------------|
 | expenses        | ExpenseList   | ExpenseList Object containing the list of expenses that can be edited |
-| index           | Integer       |  The edited category for the expense in the specified index           |
+| index           | Integer       | The edited category for the expense in the specified index            |
+
 
 On invocation of the `execute()` method, as part of the `command.execute() `flow within BudgetBuddy, the DeleteExpenseCommand 
 object engages the deleteExpense() method from the ExpenseList class.
@@ -584,6 +587,103 @@ Here's an overview of the process flow when a user employs the Listing Expenses 
 #### Sequence Diagram
 The sequence diagram for the Listing Expenses feature would illustrate the above steps, showing the interactions between the `User`, `BudgetBuddy`, `Parser`, `ListExpensesCommand`, and `ExpenseList` classes.
 ![Sequence diagram for List Expense Feature](diagrams/ExpenseList_SequenceDiagram.png)
+
+<!-- @@author yyangdaa-->
+### Add Shared Bill feature
+
+The Add Shared Bill Feature allows users to enter expenses that are shared among multiple parties, facilitating easy splitting and tracking of such expenses. The feature is managed by the `SplitExpenseCommand` class, which is initialized by the `SplitExpenseCommandCreator` as a result of the Parser class interpretation.
+
+Class Attributes for SplitExpenseCommand:
+
+|   Class Attribute	| Variable Type	          |  Relevance                       |
+|-------------------|-------------------------|--------------------------------------------------------------|
+| splitExpenseList	| SplitExpenseList	      | SplitExpenseList Object where the shared bill will be added  |     |
+| amount	          | double	                | The total amount of the shared bill                          |
+| numerOfPeople     | int                     | The number of people that are meant for splitting the bill   | 
+| description	      | String	                | Description of the shared bill
+
+Upon the call of the execute() method via command.execute(), SplitExpenseCommand performs the following key actions:
+
+1. It adds the shared bill as an expense to the ExpenseList.
+2. Calculates each participant's share based on the total amount divided by the number of participants.
+
+Key Methods used from SplitExpenseList
+|    Method	             | Return Type	          | Relevance                                            | 
+|------------------------|------------------------|------------------------------------------------------|
+|  addSplitExpense()	   | void	                  | Adds the splitexpense to the list of splitexpenses   |
+
+The SplitExpenseCommand also provides an output summarizing the shared expense, each participant's share.
+
+Sequence Diagram for Adding a Shared Bill
+The sequence diagram illustrates the flow from when a user inputs a command to add a shared bill to its execution:
+![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_AddSplitExpense.jpg)
+
+User Input: The user inputs a command in the format `add shared bill a/<Amount> n/<NumberOfPeople> d/<Description>`
+
+Parsing: The `Parser` class identifies the input as a shared bill command and extracts the necessary parameters (`amount`, `number of people`, `description`).
+Command Initialization: The `Parser` initializes a `SplitExpenseCommand` with the extracted parameters.
+Execution: The `SplitExpenseCommand` is executed, which calls `addSplitExpense()` on the `SplitExpenseList` to add the shared bill.
+Calculation: The command calculates each participant's share of the bill and records it.
+
+<!-- @@author yyangdaa-->
+### Check Split Bill feature
+
+The Check Split Bills Feature allows users to view a list of all bills that have been marked as split among multiple parties. This is particularly useful for tracking shared expenses in scenarios like shared accommodations, group trips, or joint projects.
+
+Class Attributes for CheckSplitExpensesCommand:
+| Class Attribute     | Variable Type                     | Relevance                                             |
+|---------------------|-----------------------------------|-------------------------------------------------------| 
+| splitExpenseList    | splitExpenseList                  | Object containing the list of split bills to display  |
+
+When BudgetBuddy executes the `ListSplitExpenseCommand` via `command.execute()`, the `ListSplitExpenseCommand` uses the following method from the `SplitExpenseList` class to retrieve and display all split expenses:
+
+| Method              | Return Type                       | Relevance                                                             |
+|---------------------|-----------------------------------|-----------------------------------------------------------------------|
+| listSplitExpense    | ArrayList<SplitExpense>           | Retrieves and displays a detailed list of all recoreded split expenses|
+
+Process Overview:
+1. The user issues a command to check split expenses e.g. `check split bills`.
+1 `BudgetBuddy` processes this input with the help of a `Parser`, which then initialises the `ListSplitExpenseCommandCreator`.
+3. The `Parser` constructs a `ListSplitExpenseCommand` with the split expenses list as a parameter.
+4. `BudgetBuddy` then executes the `ListSplitExpenseCommand`.
+5. The `execute()` method within the `ListExpenseCommand` calls the `listSplitExpenses()` method on the `SplitExpenseList`.
+6. The `listSplitExpenses()` method retrieves all split expenses and formats them for display.
+7. Each split expense is printed out, showing details including the description of the split expense, the number of people in the bill and the amount payable by each person.
+
+Sequence Diagram:
+The sequence diagram for the Check Split Expenses feature would illustrate the interactions between the User, BudgetBuddy, Parser, CheckSplitExpensesCommand, and SplitExpenseList classes, showing how the method calls and returns between these objects complete the operation to display all split expenses.
+![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_ListSplitExpense.jpg)
+
+<!-- @@author yyangdaa-->
+### Settle Bill feature
+
+The Settle Bill Feature allows users to mark shared bills as settled, which is crucial for tracking repayments in scenarios such as shared accommodations or group outings.
+Class Attributes for `SettleBillCommand`:
+
+| Class Attribute	            | Variable Type	         | Relevance                                               |
+|-----------------------------|------------------------|---------------------------------------------------------|
+| splitExpenseList	          | SplitExpenseList	     | Object containing the list of shared bills to be settled|
+
+When `BudgetBuddy` executes the `SettleSplitExpenseCommand` via `command.execute()`, the `SettleSplitExpensesCommand` uses the following method from the `SplitExpenseList` class to delete the bill:
+
+| Method                    | Return Tyoe                 | Relevance                                             |
+|---------------------------|-----------------------------|-------------------------------------------------------|
+| settleSplitExpense(index) | void                        | Marks the split expense at the given index as settled |
+
+Process Overview:
+
+1. The user issues a command to settle a bill, e.g., `settle bill 3`.
+2. `BudgetBuddy` processes this input with the help of a `Parser`, which initialises the `SettleSplitExpenseCommandCreator`.
+3. The `Parser` constructs a `SettleSplitExpenseCommand` with the split expense list and index as parameters.
+4. `BudgetBuddy` then executes the `SettleSplitExpenseCommand`.
+5. The `execute()` method within `SettleSplitExpenseommand` calls the `settleSplitExpense(index)` method on the `SplitExpenseList`.
+6. The `settleSplitExpense(index)` method deletes the shared bill at the specified index.
+7. A confirmation message is displayed, informing the user that the bill has been settled.
+
+Sequence Diagram:
+The sequence diagram for the Settle Bill feature would illustrate the interactions between the `User`, `BudgetBuddy`, `Parser`, `SettleSplitExpenseCommand`, and `SplitExpenseList` classes, showing how the method calls and returns between these objects complete the operation to mark a shared bill as settled.
+![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_SettleSplitExpense.jpg)
+
 
 
 <!-- @@author sweijie24-->
@@ -688,6 +788,7 @@ this class-level variable in `MenuCommand` is as follows
 
 For Clarity, the menu items and their corresponding indexes are as follows :
 
+
 | index   | Menu Item               |
 |---------|-------------------------|
 | Empty/0 | Displays all Menu Items |
@@ -696,7 +797,7 @@ For Clarity, the menu items and their corresponding indexes are as follows :
 | 3       | View Expenses           |
 | 4       | View Savings            |
 | 5       | Find Expenses           |
-| 6       | Split Expenses          |
+| 6       | Divide Bills            |
 | 7       | Manage Recurring Bills  |
 | 8       | Change Currency         |
 | 9       | Manage Budget           |
@@ -1081,6 +1182,8 @@ type fast. It also provides the ability to deal with finances on a singular plat
 | v2.0    | user              | load my expenses                                                | i can access previously added expenses when i reopen the application                          |
 | v2.0    | user              | save my expenses in my recurring expenses                       | make sure i do not have to retype all expenses again after closing the application            |
 | v2.0    | user              | load my expenses in my recurring expenses                       | i can access previously added expenses in my recurring expenses when i reopen the application |
+| v2.0    | user              | divide bills that are meant for splitting                       | know how much others should pay me                                                            |
+| v2.0    | user              | settle bills that others have repaid me                         | see which bills have not been settled                                                         |                 
 | v2.0    | user              | view my expenses in a graphical representation                  | to analyse my highest and lowest expense categories                                           |
 | v2.0    | user              | view my savings in a graphical representation                   | to analyse my highest and lowest saving categories                                            |
 
@@ -1321,6 +1424,92 @@ type fast. It also provides the ability to deal with finances on a singular plat
 
 #### 2.1 
 
+### 2.2 Adding Expenses
+
+* 2.2.1 Adding an Expense
+  * Prerequisites: None.
+  * Test Case: `add expense c/Transport a/50 d/Bus fare`
+  * Expected: Adds an expense with category `Transport`, amount $`50`, and description `Bus fare`. Confirmation message will be printed in the command line interface.
+* 2.2.2 Adding an Expense with Incomplete Information
+  * Prerequisites: None.
+  * Test Case: `add expense c/Transport a/-50 d/Bus Fare`
+  * Expected: Error message due to negative number input. Command line interface will instruct on correct format.
+* 2.2.3 Adding an Expense with Invalid Amount
+  * Prerequisites: None.
+  * Test Case: add `expense c/Transport a/abc d/Bus Fare`
+  * Expected: Error message due to invalid amount format. Command line interface will instruct on correct format.
+* 2.2.4 Adding a category that is not listed in the category
+  *  Prerequisites: None.
+  * Test Case: `add expense c/abc a/50 d/Bus fare`
+  * Expected: Error message due to invalid category. Command line interface will instruct on correct format.
+
+### 2.3 Adding Savings
+
+* 2.3.1 Adding Valid Savings
+  * Test Case ID: addSaving_validInput_success
+  * Description: Tests adding a valid saving entry to the SavingList.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `Salary`, `500`
+  * Expected Outcome: The savings list size should be `1`. The category of the saved entry should be `Salary`. The amount of the saved entry should be `500`.
+
+* 2.3.2 Adding Saving with Invalid Amount Format
+  * Test Case ID: addSaving_invalidAmount_exceptionThrown
+  * Description: Tests adding a saving with a non-numeric amount.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `Salary`, `abc`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a positive number with up to maximum two decimal places.`
+
+* 2.2.3 Adding Saving with Negative Amount
+  * Test Case ID: addSaving_negativeAmount_exceptionThrown
+  * Description: Tests adding a saving with a negative amount.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `Salary`, `-1.00`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a positive number with up to maximum two decimal places.`
+
+* 2.2.4 Adding Saving with Non-Listed Category
+  * Test Case ID: addSaving_nullCategory_exceptionThrown
+  * Description: Tests adding a saving with a category that is not listed in the predefined categories.
+  * Method: `addSaving(String category, String amount)`
+  * Input: `abc`, `500`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `The category 'abc' is not listed.`
+
+### 2.4 Add Split Expenses
+
+* 2.4.1 Adding a Valid Split Expense
+  * Test Case ID: addSplitExpense_addingsplitexpense_success
+  * Description: Tests adding a valid split expense entry to the `SplitExpenseList`.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `12`, `12`, `Lunch`
+  * Expected Outcome: The split expenses list size should be `1`. The number of people for the split expense should be `12`. The description of the split expense should be `Lunch`
+
+* 2.4.2 Adding Split Expense with Invalid Amount Format
+  * Test Case ID: addSplitExpense_invalidAmount_exceptionThrown
+  * Description: Tests adding a split expense with a non-numeric amount.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `abc`, `12`, `Lunch`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Invalid amount format. Amount should be a number.`
+
+* 2.4.3 Adding Split Expense with Invalid Number of People Format
+  * Test Case ID: addSplitExpense_invalidNumberOfPeople_exceptionThrown
+  * Description: Tests adding a split expense with a non-numeric number of people.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `12`, `abc`, `Lunch`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Number of people should be a number.`
+
+* 2.4.4 Adding Split Expense with Negative Amount
+  * Test Case ID: addSplitExpense_negativeAmount_exceptionThrown
+  * Description: Tests adding a split expense with a negative amount.
+  * Method: `addSplitExpense(String amount, String numberOfPeople, String description)`
+  * Input: `-12`, `12`, `Lunch`
+  * Expected Outcome: A BudgetBuddyException is thrown with the message `Expenses should not be negative.`
+
+### 2.4.5 Adding Split Expense with Negative Number of People
+*Test Case ID: addSplitExpense_negativeNumberOfPeople_exceptionThrown
+*Description: Tests adding a split expense with a negative number of people.
+*Method: addSplitExpense(String amount, String numberOfPeople, String description)
+*Input: "12", "-12", "Lunch"
+*Expected Outcome: A BudgetBuddyException is thrown with the message "Number of people should be a positive number."
+
 #### 2.5 Edit Savings
 **Prerequisites** : Some savings has been added to the overall savings.
 1. Test Case : `edit savings c/Salary i/2 a/2000`
@@ -1500,6 +1689,7 @@ Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming s
 2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
 Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
 
+
 <!-- @@author jasraa-->
 #### 2.25 Get Graphical Insights for Expenses
 * Prerequisites: There must be existing expenses in the list.
@@ -1511,4 +1701,5 @@ Expected : The recurring list `streaming services` which contains an expense wit
 * Prerequisites: There must be existing savings in the list.
 * Test Case: `get savings insights`
 * Expected: Bar graph will be printed for each category.
+
 
