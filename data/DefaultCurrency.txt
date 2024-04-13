@@ -1,1 +1,1 @@
-Default Currency: SGD
+Default Currency: USD

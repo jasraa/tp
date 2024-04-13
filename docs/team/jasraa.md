@@ -49,10 +49,19 @@ within the command line interface, eliminating the need for external tools or vi
 [RepoSense Link](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=jasraa&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
 
 #### Enhancements to existing features
-(to be updated)
+1. Wrote Junit tests for Edit Expenses, Edit Savings, Get Expenses Insight and Get Savings Insights
+2. Implemented Bug fixes for "Edit Expenses", "Edit Savings", "Storage", "Get Expenses Insights" and 
+"Get Savings Insights"
 
 #### Contributions to the UG
-(to be updated)
+Added documentation for the features `edit expense`, `edit savings`, `get expenses insight` 
+and `get savings insights`
 
 #### Contributions to the DG
-(to be updated)
+Added diagrams and documentation for the features `edit expense`, `edit savings`, `get expenses insight`
+and `get savings insights`
+
+#### Community 
+1. Communicated with teammates for ideation and enhancement of existing features.
+2. Provided DG Peer Review Comments for another team. [CS2113-T15-3 SplitLiang](https://github.com/nus-cs2113-AY2324S2/tp/pull/47)
+3. Reported bugs for another team during PE-D. [CS2113-T15-1 LongAh](https://github.com/AY2324S2-CS2113-T15-1/tp/releases)

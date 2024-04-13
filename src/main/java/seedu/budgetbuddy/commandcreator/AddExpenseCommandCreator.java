@@ -46,6 +46,10 @@ public class AddExpenseCommandCreator extends CommandCreator {
             System.out.println("amount is missing.");
             return null;
         }
+        if (input.contains("!") || input.contains("|")) {
+            System.out.println("Please do not include a ! or | in your input");
+            return null;
+        }
 
         try {
             double amountValue = Double.parseDouble(amount);

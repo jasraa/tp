@@ -56,7 +56,7 @@ public class AddSavingCommandCreator extends CommandCreator{
         try {
             double amountValue = Double.parseDouble(amount);
             if (amountValue <= 0) {
-                throw new BudgetBuddyException(amount + " is not a valid amount.");
+                throw new BudgetBuddyException(amount + " is negative. Please enter a positive amount.");
             }
 
         } catch (NumberFormatException e) {

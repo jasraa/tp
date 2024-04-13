@@ -21,6 +21,7 @@ public class BudgetBuddy {
     private Storage expensesStorage;
     private Storage savingsStorage;
     private Storage recurringExpensesStorage;
+    private Storage splitexpensesStorage;
     private Storage defaultCurrency;
     private Storage budgetStorage;
 
@@ -36,6 +37,7 @@ public class BudgetBuddy {
         expensesStorage = new Storage("./data/ExpenseFile.txt");
         savingsStorage = new Storage("./data/SavingsFile.txt");
         recurringExpensesStorage = new Storage("./data/RecurringExpensesFile.txt");
+        splitexpensesStorage = new Storage("./data/SplitExpensesFile.txt");
         defaultCurrency = new Storage("./data/DefaultCurrency.txt");
         budgetStorage = new Storage("./data/BudgetFile.txt");
     }
@@ -55,6 +57,8 @@ public class BudgetBuddy {
             savingsStorage.saveSavings(savings.getSavings());
             recurringExpensesStorage.saveRecurringExpenses(recurringExpenseLists);
             budgetStorage.saveBudgets(expenses.getBudgets());
+            splitexpensesStorage.saveSplitExpenses(splitexpenses.getSplitExpenses());
+
             defaultCurrency.saveCurrency();
         } catch (IOException e) {
             System.out.println("Error saving to file.");
@@ -72,6 +76,7 @@ public class BudgetBuddy {
             defaultCurrency.loadCurrency();
             this.expenses.getExpenses().addAll(expensesStorage.loadExpenses());
             this.savings.getSavings().addAll(savingsStorage.loadSavings());
+            this.splitexpenses.getSplitExpenses().addAll(splitexpensesStorage.loadSplitExpenses());
             this.recurringExpenseLists = recurringExpensesStorage.loadRecurringExpensesList();
             this.expenses.getBudgets().addAll(budgetStorage.loadBudgets());
 
