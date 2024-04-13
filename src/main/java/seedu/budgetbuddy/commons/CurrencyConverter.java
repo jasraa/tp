@@ -172,10 +172,7 @@ public class CurrencyConverter {
     }
 
     public void convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpenseLists recurringExpenseLists) {
-        if (recurringExpenseLists == null) {
-
-            throw new IllegalArgumentException("SavingList cannot be null");
-        }
+        assert recurringExpenseLists != null : "RecurringExpenseLists cannot be null";
 
         if (DefaultCurrency.getDefaultCurrency() == newCurrency) {
             System.out.println("Same currency for Recurring Expenses. No Conversion needed");
@@ -186,8 +183,8 @@ public class CurrencyConverter {
 
         for (int i = 0; i < numberOfExpenseList; i++) {
             int arrayIndexAsListNumber = i + 1;
-            ExpenseList reccuringExpenseList = recurringExpenseLists.getExpenseListAtListNumber(arrayIndexAsListNumber);
-            convertExpenseCurrency(newCurrency, reccuringExpenseList);
+            ExpenseList recurringExpenseList = recurringExpenseLists.getExpenseListAtListNumber(arrayIndexAsListNumber);
+            convertExpenseCurrency(newCurrency, recurringExpenseList);
         }
 
         System.out.println("Default currency for Recurring Expenses changed to " + newCurrency);
