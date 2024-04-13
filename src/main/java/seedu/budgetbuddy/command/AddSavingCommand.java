@@ -3,11 +3,7 @@ package seedu.budgetbuddy.command;
 import seedu.budgetbuddy.commons.SavingList;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
 public class AddSavingCommand extends Command {
-    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private SavingList savings;
     private final String category;
@@ -22,15 +18,11 @@ public class AddSavingCommand extends Command {
     @Override
     public void execute(){
         try {
-            LOGGER.log(Level.INFO, "Adding savings to category: {0} with amount: ${1}", new Object[]{category, amount});
 
             savings.addSaving(this.category, this.amount);
-
-            LOGGER.log(Level.INFO, "Savings added to: {0} of ${1}", new Object[]{category, amount});
-            System.out.println("Savings Added to:" + category + " of $" + amount);
+            System.out.println("Savings Added to: " + category + " of $" + amount);
         } catch (BudgetBuddyException e) {
             System.out.println(e.getMessage());
-            LOGGER.log(Level.SEVERE, "Exception while adding savings", e);
         }
     }
 }

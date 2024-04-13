@@ -326,6 +326,95 @@ currencies within the budget management application.
 
 ## 4. Implementation
 
+### Add Expense Feature
+
+The Add Expense Feature allows users to add expenses to different categories. `AddExpenseCommand` class enables this feature, 
+after initialized by the `Parser` class. Within the `AddExpense` object, the `Parser` would have initialized it with
+4 variables, an `ExpenseList` object,  along with a `category`, `amount` , `description`. 
+The relevance of these Class Attributes in `AddExpenseCommand` is as follows : 
+
+| Class Attribute | Variable Type | Relevance                                         |
+|-----------------|---------------|---------------------------------------------------|
+| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses|
+| category        | String        | The category that the `expense` belongs to        |
+| amount          | String        | The amount spent                                  |
+| description     | String        | The description of the expense                    |
+
+
+Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`,
+the `AddExpenseCommand` Object utilizes the following method from the `ExpenseList` class to add it to the existing
+list of `expenses` matching against the corresponding `category`.
+
+| Method       | Return Type | Relevance                                       |
+|--------------|-------------|-------------------------------------------------|
+| addExpense() | void        | Add expense to the existing list of `expenses`  |
+
+The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
+![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.png)
+
+The following is a step-by-step explanation for the Parser for the Find Feature :
+1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
+E.g `add expense c/Transport a/20 d/EZ-Link Top Up`
+2. Within the `Parser`, it will have determined that the `input` is a Find Command from the `isAddExpenseCommand(input)`
+function. 
+3. The `Parser` then self calls the method `handleAddExpenseCommand(input)` with the `input` still being the entire
+user input.
+4. Within `AddExpenseCommand(input)`, the first check would be the check for the existence of any combination of 
+`c/ , a/ and d/`. If none of these combinations were found, it immediately returns `null`. 
+5. If the checks in `4.` is passed, Three variables would be initialized.
+
+    * | Variable Name | Variable Type |                                                              
+      |---------------|---------------|
+      | category      | String        | 
+      | amount     | String        |
+      | description   | String        |
+6. Depending on which parameters were present, the corresponding input would be extracted and placed into each variable
+using the `Parser#extractDetailsForAdd(input, "parameter")`
+7. Finally, `Parser#handleAddExpenseCommand()` returns a `AddExpensesCommand` to `Parser#parseCommand()`, which is
+then returned to `BudgetBuddy`
+
+### Add Savings Feature
+
+The Add Savings Feature allows users to add savings to different categories. `AddSavingCommandCreator` class intialises the `AddSavingCommand`, after initialised by the `Parser` class. Within the `AddSavings` object, the `Parser` would have initialized it with
+4 variables, a `SavingList` object,  along with a `category`, `amount`. 
+The relevance of these Class Attributes in `AddExpenseCommand` is as follows : 
+
+| Class Attribute | Variable Type | Relevance                                         |
+|-----------------|---------------|---------------------------------------------------|
+| savings         | SavingList    | SavingList Object containing the list of savings  |
+| category        | String        | The category that the `expense` belongs to        |
+| amount          | String        | The amount spent                                  |
+
+Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`,
+the `AddSavingCommand` Object utilizes the following method from the `SavingList` class to add it to the existing
+list of `savings` matching against the corresponding `category`.
+
+| Method       | Return Type | Relevance                                       |
+|--------------|-------------|-------------------------------------------------|
+| addSaving()  | void        | Add savings to the existing list of `savings`   |
+
+The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
+![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSavings.png)
+
+The following is a step-by-step explanation for the Parser for the Find Feature :
+1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
+E.g `add savings c/Allowance a/20`
+2. Within the `Parser`, it will have determined that the `input` is a Find Command from the `isAddSavingsCommand(input)`
+function. 
+3. The `Parser` then self calls the method `handleAddExpenseCommand(input)` with the `input` still being the entire
+user input.
+4. Within `AddExpenseCommand(input)`, the first check would be the check for the existence of any combination of 
+`c/ , and a/`. If none of these combinations were found, it immediately returns `null`. 
+5. If the checks in `4.` is passed, two variables would be initialized.
+
+    * | Variable Name | Variable Type |                                                              
+      |---------------|---------------|
+      | category      | String        | 
+      | amount        | String        |
+6. Depending on which parameters were present, the corresponding input would be extracted and placed into each variable
+using the `Parser#extractDetailsForAdd(input, "parameter")`
+7. Finally, `Parser#handleAddExpenseCommand()` intialises a `AddExpensesCommandCreator` which then returns `AddSavingCommand` to `Parser#parseCommand()`, which is then returned to `BudgetBuddy`.
+
 ### Edit Expense Feature
 The Edit Expense feature allows users to edit their previously added expenses, specifically the `category`, `amount`, 
 and `description`. This feature is managed by the `EditExpenseCommand` class, which is initialized by the 
@@ -745,108 +834,3 @@ type fast. It also provides the ability to deal with finances on a singular plat
 | v2.0    | user              | view what expenses i have in each of my recurring expenses list | know what expenses i have put into each list                     |
 | v2.0    | user              | remove a list from my recurring expenses list                   | remove underutilized lists or wrongly added lists                |
 
-
-## Non-Functional Requirements
-
-{Give non-functional requirements}
-
-## Glossary
-
-* *glossary item* - Definition
-
-## Instructions for manual testing
-
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
-
-### Add Expense Feature
-
-#### Implementation
-
-The Add Expense Feature allows users to add expenses to different categories. `AddExpenseCommand` class enables this feature, 
-after initialized by the `Parser` class. Within the `AddExpense` object, the `Parser` would have initialized it with
-4 variables, an `ExpenseList` object,  along with a `category`, `amount` , `description`. 
-The relevance of these Class Attributes in `AddExpenseCommand` is as follows : 
-
-| Class Attribute | Variable Type | Relevance                                         |
-|-----------------|---------------|---------------------------------------------------|
-| expenses        | ExpenseList   | ExpenseList Object containing the list of expenses|
-| category        | String        | The category that the `expense` belongs to        |
-| amount          | String        | The amount spent                                  |
-| description     | String        | The description of the expense                    |
-
-
-Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`,
-the `AddExpenseCommand` Object utilizes the following method from the `ExpenseList` class to add it to the existing
-list of `expenses` matching against the corresponding `category`.
-
-| Method       | Return Type | Relevance                                       |
-|--------------|-------------|-------------------------------------------------|
-| addExpense() | void        | Add expense to the existing list of `expenses`  |
-
-The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddExpense.png)
-
-The following is a step-by-step explanation for the Parser for the Find Feature :
-1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
-E.g `add expense c/Transport a/20 d/EZ-Link Top Up`
-2. Within the `Parser`, it will have determined that the `input` is a Find Command from the `isAddExpenseCommand(input)`
-function. 
-3. The `Parser` then self calls the method `handleAddExpenseCommand(input)` with the `input` still being the entire
-user input.
-4. Within `AddExpenseCommand(input)`, the first check would be the check for the existence of any combination of 
-`c/ , a/ and d/`. If none of these combinations were found, it immediately returns `null`. 
-5. If the checks in `4.` is passed, Three variables would be initialized.
-
-    * | Variable Name | Variable Type |                                                              
-      |---------------|---------------|
-      | category      | String        | 
-      | amount     | String        |
-      | description   | String        |
-6. Depending on which parameters were present, the corresponding input would be extracted and placed into each variable
-using the `Parser#extractDetailsForAdd(input, "parameter")`
-7. Finally, `Parser#handleAddExpenseCommand()` returns a `AddExpensesCommand` to `Parser#parseCommand()`, which is
-then returned to `BudgetBuddy`
-
-### Add Savings Feature
-
-#### Implementation
-
-The Add Savings Feature allows users to add savings to different categories. `AddSavingCommandCreator` class intialises the `AddSavingCommand`, after initialised by the `Parser` class. Within the `AddSavings` object, the `Parser` would have initialized it with
-4 variables, a `SavingList` object,  along with a `category`, `amount`. 
-The relevance of these Class Attributes in `AddExpenseCommand` is as follows : 
-
-| Class Attribute | Variable Type | Relevance                                         |
-|-----------------|---------------|---------------------------------------------------|
-| savings         | SavingList    | SavingList Object containing the list of savings  |
-| category        | String        | The category that the `expense` belongs to        |
-| amount          | String        | The amount spent                                  |
-
-Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`,
-the `AddSavingCommand` Object utilizes the following method from the `SavingList` class to add it to the existing
-list of `savings` matching against the corresponding `category`.
-
-| Method       | Return Type | Relevance                                       |
-|--------------|-------------|-------------------------------------------------|
-| addSaving()  | void        | Add savings to the existing list of `savings`   |
-
-The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSavings.png)
-
-The following is a step-by-step explanation for the Parser for the Find Feature :
-1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
-E.g `add savings c/Allowance a/20`
-2. Within the `Parser`, it will have determined that the `input` is a Find Command from the `isAddSavingsCommand(input)`
-function. 
-3. The `Parser` then self calls the method `handleAddExpenseCommand(input)` with the `input` still being the entire
-user input.
-4. Within `AddExpenseCommand(input)`, the first check would be the check for the existence of any combination of 
-`c/ , and a/`. If none of these combinations were found, it immediately returns `null`. 
-5. If the checks in `4.` is passed, two variables would be initialized.
-
-    * | Variable Name | Variable Type |                                                              
-      |---------------|---------------|
-      | category      | String        | 
-      | amount        | String        |
-6. Depending on which parameters were present, the corresponding input would be extracted and placed into each variable
-using the `Parser#extractDetailsForAdd(input, "parameter")`
-7. Finally, `Parser#handleAddExpenseCommand()` intialises a `AddExpensesCommandCreator` which then returns `AddSavingCommand` to `Parser#parseCommand()`, which is then returned to `BudgetBuddy`.
