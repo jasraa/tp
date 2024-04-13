@@ -297,7 +297,7 @@ public class ExpenseList {
         }
         LOGGER.info("Creating new budget for category: " + category);
         budgets.add(new Budget(category, budget));
-        System.out.println("New budget set for " + category + ": $" + budget); // This line ensures message only on new budget
+        System.out.println("New budget set for " + category + ": $" + budget);
     }
 
     /**
