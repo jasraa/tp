@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 public class Storage {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    private static final double MAX_AMOUNT = 1_000_000_000_000.00;
     private final String filePath;
 
     private ArrayList<String> expenseCategories = new ArrayList<>(Arrays.asList("Housing"
@@ -52,23 +53,41 @@ public class Storage {
     }
 
     private void checkValidAmount(Double amount) throws BudgetBuddyException{
-        if (amount <= 0) {
+        if (amount <= 0 || amount > MAX_AMOUNT) {
             throw new BudgetBuddyException("Invalid Amount detected. Possible Corrupted File");
         }
     }
 
+    /**
+     * Checks if the provided category is a valid category
+     *
+     * @param category The category to be checked
+     * @throws BudgetBuddyException If category does not match any of the expense categories exactly
+     */
     private void checkValidCategory(String category) throws BudgetBuddyException {
         if (!expenseCategories.contains(category)) {
             throw new BudgetBuddyException("Invalid Category detected. Possible Corrupted File");
         }
     }
 
+    /**
+     * Checks for the presence of the `!`, `|`, or empty string in the description
+     *
+     * @param description The description to be checked
+     * @throws BudgetBuddyException If the description contains a `|`, `!` or is empty
+     */
     private void checkValidDescription(String description) throws BudgetBuddyException {
         if (description.contains("|") || description.contains("!") || description.isEmpty()) {
             throw new BudgetBuddyException("Invalid description detected. Possible Corrupted File");
         }
     }
 
+    /**
+     * Checks for the proper format for the title of the recurring expense list.
+     *
+     * @param line The line to be checked
+     * @throws BudgetBuddyException If the end `!!!` is not found at the end of the line
+     */
     private void checkValidTitle(String line) throws BudgetBuddyException {
         int indexOfEndExclamation = line.indexOf("!!!", 4);
         int endIndexOfEndExclamation = indexOfEndExclamation + "!!!".length();
@@ -78,6 +97,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Checks for the presence of the `!`, `|`, or empty string in the provided `listName`
+     *
+     * @param listName The description to be checked
+     * @throws BudgetBuddyException If the `listName` contains a `|`, `!` or is empty
+     */
     private void checkValidListName(String listName) throws BudgetBuddyException {
         if (listName.contains("!") || listName.contains("|") || listName.isEmpty()) {
             throw new BudgetBuddyException("Invalid listName detected. Possible Corrupted File");
