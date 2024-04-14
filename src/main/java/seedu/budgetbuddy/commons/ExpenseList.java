@@ -171,10 +171,11 @@ public class ExpenseList {
     }
 
     //@@author itsmejr257
-
     /**
      * Adds an expense to the overall expense list. Takes in 2 strings, category and description, and one double
-     * value. This method assumes that the provide category, amount and description is always valid
+     * value.
+     * This method is an overloaded method, where this method takes in an amount as a Double attribute and
+     * assumes that the provide category, amount and description is always valid.
      *
      * @param category The category of the expense to be added
      * @param amount The amount of the expense to be added
