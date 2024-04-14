@@ -586,10 +586,15 @@ As our program does not require Internet access, the conversion ratios are taken
 * Display Commands : `menu [INDEX]`
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
+* Add Shared Bill: `a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 * Edit Expenses `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
 * Edit Savings `edit savings c/CATEGORY i/INDEX a/AMOUNT`
+* Reduce Savings `educe savings i/INDEX a/AMOUNT`
+* Delete Expense `delete expense i/INDEX`
 * List Expenses: `list expenses [CATEGORY]`
 * List Savings: `list savings [CATEGORY]`
+* Check Splitted Expenses `check split bills`
+* Settle Bill `settle bill i/Index`
 * Find Expenses `find expenses d/[DESCRIPTION] morethan/[MINAMOUNT] lessthan/[MAXAMOUNT]`
 * Add Recurring Bill : `rec newlist LISTNAME`
 * List all Recurring Bills : `rec viewlists`
