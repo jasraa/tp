@@ -20,7 +20,6 @@ public class AddSavingCommand extends Command {
         try {
 
             savings.addSaving(this.category, this.amount);
-            System.out.println("Savings Added to: " + category + " of $" + amount);
         } catch (BudgetBuddyException e) {
             System.out.println(e.getMessage());
         }
