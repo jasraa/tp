@@ -29,14 +29,12 @@ amount
 1. What it does : Allows user to add all expenses in a specified list to the overall expenses
 
 #### New Feature : Add the ability for recurring expenses to work with the currency converter (Pull Requests [#132](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/132))
-1. What it does : Allows all expenses in recurring expenses to be updated to the new currency upon a convert currency command.
-2. Justification : This feature improves the product significantly, as it helps to make the app more cohesive in terms of its features
+1. Justification : This feature improves the product significantly, as it helps to make the app more cohesive in terms of its features
 
 #### New Feature : Add saving and loading from a file for recurring expenses (Pull Requests [#105](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/105))
 1. What it does : Allows all expenses / lists in the recurring expenses to be saved and loaded from a file
 
-#### Code Contributed
-[RepoSenseLink](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=itsmejr257&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
+#### Code Contributed : [RepoSenseLink](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=itsmejr257&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
 
 #### Project Management
 1. Managed releases v1.0-v2.1 (3 releases) on Github
