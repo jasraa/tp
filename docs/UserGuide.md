@@ -136,12 +136,11 @@ Example of usage:
 ### 3.5 Edit Savings: `edit savings`
 Edit Savings that have been added previously.
 
-Format: `edit savings c/CATEGORY i/INDEX a/AMOUNT`
+Format: `edit savings c/CATEGORY a/AMOUNT`
 
 * The `CATEGORY` must be one of the following pre-defined categories: "Salary",
   "Investments", "Gifts" or "Others". (Case Sensitive)
-* The `INDEX` must be a positive integer and a valid index in the menu list.
-* The `AMOUNT` must be a positive integer.
+* The `AMOUNT` must be a positive float.
 
 Example of usage:
 
@@ -174,15 +173,15 @@ Expected Output:
 
 Reduces the amount saved in a particular category
 
-Format: `reduce savings i/INDEX a/AMOUNT`
+Format: `reduce savings c/CATEGORY a/AMOUNT`
 
-* The `INDEX` must be a positive integer and a valid index in the menu list.
+* The `CATEGORY` must be a string and a valid category in the menu list.
 * The `AMOUNT` to be reduced must be a positive integer
 
 Example of usage:
 
-`reduce savings i/4 a/10`
-Reduces the savings of category of index 4 listed in the savings tracker by $10
+`reduce savings c/Investments a/10`
+Reduces the savings of category Investments listed in the savings tracker by $10
 
 
 ### 3.8 Delete Expense: `delete expense`

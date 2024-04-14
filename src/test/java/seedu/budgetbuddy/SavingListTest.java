@@ -121,7 +121,7 @@ public class SavingListTest {
         savingList.addSaving("Investments", String.valueOf(200));
 
         // Edit one of the savings
-        savingList.editSaving("Salary", 1, 150);
+        savingList.editSaving("Salary", 150);
 
         // Verify that the saving was edited successfully
         assertEquals(150, savingList.getSavings().get(0).getAmount(), 0.001);
