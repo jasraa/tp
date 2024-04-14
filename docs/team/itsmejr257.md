@@ -5,18 +5,18 @@ The product created is a finance-tracking application named BudgetBuddy.It is a 
 to handle and track any current/future expenses on a singular platform.
 ### Summary of Contributions
 Given below are my contributions to the project
+
 #### New Feature : Add the Ability to view Menu Commands 
 Pull Requests [#91](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/91), [#8](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/8),
 1. What it does : Allows user to view the respective commands of a certain item displayed in the menu.
 2. Justification : This features improves the overall usability of the product. Allowing users to utilize the
-application without have to refer to a user guide to know what commands are there to use
+application without have to refer to a user guide
+
 #### New Feature : Add the Ability to Find expenses of a specific name/amount
 Pull Requests [#41](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/41), [#90](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/90), [#55](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/55)
 1. What it does : Allows user to view all expenses that match a user's provided description, minimum amount and maximum
 amount
-2. Justification : This feature improves the product by allowing the user quickly look for specific expenses, especially
-when there are many different expenses added at different times. It also allows the user to identify large/small expenses
-with a single search.
+2. Justification : This feature improves the product by allowing the user quickly look for specific expenses
 4. Credits : sweijie24 for his `listExpenses()` method which aided in displaying the found expenses.
 
 #### New Feature : Add the Ability to create a named list of recurring expenses
@@ -29,8 +29,7 @@ the user to be able to differentiate and create different lists of expenses, all
 Pull Requests [#68](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/68), [#92](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/92)
 1. What it does : Allows user to remove a list of expenses from the overall lists of Recurring Expenses
 2. Justification : This feature improve the product significantly because a user can make typos in the naming
-of their list, which can be reversed by removing the list, and creating it again. It also allows the user to remove
-any unneeded list of expenses that they would not use anymore.
+of their list.
 
 #### New Feature : Add the ability to view all names of lists of recurring expenses
 Pull Requests [#68](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/68), [#92](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/92)
@@ -38,18 +37,19 @@ Pull Requests [#68](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/68), [#92](
 #### New Feature : Add the ability to add an expense to a specific list of recurring expenses
 Pull Requests [#68](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/68), [#92](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/92)
 1. What is does : Allows user to add an expense to a specified list in the overall list of recurring expenses
+
 #### New Feature : Add the ability to add all expenses in a specific list to the overall expenses
 Pull Requests [#68](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/68), [#92](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/92)
 1. What it does : Allows user to add all expenses in a specified list to the overall expenses
+
 #### New Feature : Add the ability for recurring expenses to work with the currency converter
 Pull Requests [#132](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/132)
 1. What it does : Allows all expenses in recurring expenses to be updated to the new currency upon a convert currency command.
 2. Justification : This feature improves the product significantly, as it helps to make the app more cohesive in terms of its features
+
 #### New Feature : Add saving and loading from a file for recurring expenses
 Pull Requests [#105](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/105)
 1. What it does : Allows all expenses / lists in the recurring expenses to be saved and loaded from a file
-2. Justification : This feature improves the product significantly because a user does not have to retype their recurring expenses
-everytime they leave/reopen the application
 
 #### Code Contributed
 [RepoSenseLink](https://nus-cs2113-ay2324s2.github.io/tp-dashboard/?search=itsmejr257&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2024-02-23&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
