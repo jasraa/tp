@@ -59,8 +59,8 @@ Diagrams have been created on [Draw.io](https://draw.io/).
 
 ## 1. Introduction
 Welcome to the Developer Guide for BudgetBuddy! This guide has been created to help you current and future 
-developers of Budget understand how BudgetBuddy works and aid developers in easily adding new features, 
-fix bugs. In this guide, it will go over the main parts of the app, how they work together, 
+developers of BudgetBuddy understand how BudgetBuddy works and aid you in easily adding new features and 
+fixing bugs. In this guide, it will go over the main parts of the app, how they work together, 
 and why we made them that way.
 
 ## 2. Setup Guide
@@ -337,6 +337,7 @@ has already detected that the user input is a menu command and has initialized a
 ![Sequence Diagram for MenuCommandCreator for Menu Command](diagrams/sequenceDiagram_MenuCommandCreator.jpg)
 
 The following UML Sequence Diagram shows the processes of the MenuCommand upon the call of its execute() command:
+
 ![Sequence Diagram for Menu Command](diagrams/sequenceDiagram_MenuCommand.jpg)
 
 Given below is an example usage scenario and how the full Menu feature works :
@@ -923,12 +924,13 @@ The Currency Converter Feature allows users to convert the currency of expenses 
 
 When `BudgetBuddy` calls `command.execute()`, `ChangeCurrencyCommand` employs the following methods from `CurrencyConverter` to convert the currency of all financial records:
 
-| Method                   | Return Type | Relevance                                                                |
-|--------------------------|-------------|--------------------------------------------------------------------------|
-| convertExpenseCurrency() | void        | Converts the currency of each `Expense` object to `newCurrency`          |
-| convertSavingCurrency()  | void        | Converts the currency of each `Saving` object to `newCurrency`           |
-| convertBudgetCurrency()  | void        | Converts the currency of each `Budget` object to `newCurrency`           |
-| convertAmount()          | double      | Converts an amount from one currency to another using the exchange rates |
+| Method                             | Return Type | Relevance                                                                                                                           |
+|------------------------------------|-------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| convertExpenseCurrency()           | void        | Converts the currency of each `Expense` object to `newCurrency`                                                                     |
+| convertSavingCurrency()            | void        | Converts the currency of each `Saving` object to `newCurrency`                                                                      |
+| convertBudgetCurrency()            | void        | Converts the currency of each `Budget` object to `newCurrency`                                                                      |
+| convertRecurringExpensesCurrency() | void        | Converts the currency of each `Expense` object in each `ExpenseList` object of the `RecurringExpenseLists` object to `newCurrency`  |
+| convertAmount()                    | double      | Converts an amount from one currency to another using the exchange rates                                                            |
 
 The Currency Converter feature also includes a mechanism for managing a default currency across the application, facilitated by the `DefaultCurrency` class. This enhancement allows for seamless conversion of financial records to a user-specified default currency.
 
@@ -953,6 +955,11 @@ The Currency Converter feature also includes a mechanism for managing a default 
   This method is responsible for converting the currency of all budgets within `ExpenseList` to a specified new currency (`newCurrency`). It
   accepts the new `Currency` object representing the target currency and the `ExpenseList` containing the budgets, and updates
   the budget amounts and currencies accordingly.
+
+<!-- @@author itsmejr257-->
+* `convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpenseLists recurringExpenseLists)`
+   This Method converts the currency of expenses of each `ExpenseList` within `recurringExpenseLists` by continuously calling the method `convertExpenseCurrency` for each `ExpenseList`.
+<!-- @@author -->
 
 The `DefaultCurrency` class is designed to maintain and update the application-wide default currency setting. It provides static methods to get and set the default currency:
 
@@ -1147,6 +1154,10 @@ JUnit tests have been added to the project, which can be found under `src/test`.
 both valid and invalid inputs. To run these tests, on `IntelliJ IDE`, simply 
 `right-click` the `test` folder followed by `More Run/Debug` -> `Run Tests with Coverage`. This would run all the pre-defined tests, and also display the 
 coverage for each file of the main application.
+
+### 6.2 Logger
+A Global Logger is utilized in certain method and features which are more prone to errors, etc, methods that may potentially deal with invalid inputs. In the releases, this Logger is disabled using the command
+`Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).setLevel(Level.OFF);` before `run()` is called in `BudgetBuddy` . However, in the code files, the Logger is still enabled and aids in tracing the code when testing for errors.
 
 ## Appendix A: Product scope
 
