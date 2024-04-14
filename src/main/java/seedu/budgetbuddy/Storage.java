@@ -263,6 +263,7 @@ public class Storage {
         writer.close();
     }
 
+    // @@author itsmejr257
     /**
      * Deletes the existing recurring expenses file and create a new, empty file.
      * This method is used to reset the recurring expenses file when it has been detected to be corrupted
@@ -409,7 +410,9 @@ public class Storage {
                     ", file has been reinitialized. Run a command to save your recurringexpenses");
         }
 
-    }   
+    }
+    // @@author
+
 
     /**
      * Saves the default currency to the specified file path.

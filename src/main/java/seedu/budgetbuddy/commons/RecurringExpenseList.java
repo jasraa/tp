@@ -2,7 +2,7 @@ package seedu.budgetbuddy.commons;
 
 import java.util.ArrayList;
 
-
+// @@author itsmejr257
 /**
  * Represents a list of expenses for recurring expenses. This class extends
  * the ExpenseList class.

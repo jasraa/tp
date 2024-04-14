@@ -53,6 +53,7 @@ public class ExpenseList {
     }
 
 
+    // @@author itsmejr257
     /**
      * Filters this.expenses based on the provided description, minimum amount and maximum amount.
      * This method uses Java streams to perform a case-insensitive search for the description
@@ -84,6 +85,7 @@ public class ExpenseList {
         return filteredExpenses;
 
     }
+    // @@author
 
     /**
      * Lists expenses based on the provided filter category.
@@ -202,7 +204,7 @@ public class ExpenseList {
         System.out.println("Expense added: " + category + " of $" + String.format("%.2f", amount)
                 + " Description: " + description);
     }
-
+    // @@author
 
     //@@author Zhang Yangda
     public void addExpense(String category, String amount, String description) throws BudgetBuddyException {
