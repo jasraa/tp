@@ -31,6 +31,7 @@
 &nbsp;&nbsp;[3.24 Print Budget](#324-print-all-the-budgets)<br>
 &nbsp;&nbsp;[3.25 Get Graphical Insights for expenses](#325-get-graphical-insights-for-expenses-get-expenses-insights)<br>
 &nbsp;&nbsp;[3.26 Get Graphical Insights for savings](#326-get-graphical-insights-for-savings-get-savings-insights)<br>
+&nbsp;&nbsp;[3.27 Exiting the Application](#327-exiting-the-application--bye)<br>
 [4. FAQ](#4-faq)<br>
 [5. Command Summary](#5-command-summary)<br>
 [6. For Advanced Users](#6-for-advanced-users)<br>
@@ -547,6 +548,7 @@ Example of Usage: `get savings insights`
 Example of Expected Output:
 ![GetSavingsInsights.png](userguideimages%2FGetSavingsInsights.png)
 
+### 3.27 Exiting the application : `bye`
 
 ## 4. FAQ
 
@@ -583,31 +585,32 @@ As our program does not require Internet access, the conversion ratios are taken
 
 
 ## 5. Command Summary
-* Display Commands : `menu [INDEX]`
+* Display Commands: `menu [INDEX]`
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * Add Shared Bill: `a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
-* Edit Expenses `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
-* Edit Savings `edit savings c/CATEGORY i/INDEX a/AMOUNT`
-* Reduce Savings `educe savings i/INDEX a/AMOUNT`
-* Delete Expense `delete expense i/INDEX`
+* Edit Expenses: `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
+* Edit Savings: `edit savings c/CATEGORY i/INDEX a/AMOUNT`
+* Reduce Savings: `educe savings i/INDEX a/AMOUNT`
+* Delete Expense: `delete expense i/INDEX`
 * List Expenses: `list expenses [CATEGORY]`
 * List Savings: `list savings [CATEGORY]`
-* Check Splitted Expenses `check split bills`
-* Settle Bill `settle bill i/Index`
-* Find Expenses `find expenses d/[DESCRIPTION] morethan/[MINAMOUNT] lessthan/[MAXAMOUNT]`
-* Add Recurring Bill : `rec newlist LISTNAME`
-* List all Recurring Bills : `rec viewlists`
-* Remove Recurring Bill : `rec removelist LISTNUMBER`
-* Add an Expense to a Recurring Bill : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
-* View expense in a Recurring Bill : `rec viewexpenses LISTNUMBER`
-* Add expenses in a Recurring Bill to overall Expenses : `rec addrec LISTNUMBER`
-* Change Currency `change currency [CURRENCY_CODE]`
-* Set Budget `set budget c/CATEGORY b/BUDGET`
-* Get Budget `get budget c/CATEGORY`
-* Print Budgets `print budget`
-* Get Graphical Insights for expenses `get expenses insights`
-* Get Graphical Insights for savings `get savings insights`
+* Check Splitted Expenses: `check split bills`
+* Settle Bill: `settle bill i/Index`
+* Find Expenses: `find expenses d/[DESCRIPTION] morethan/[MINAMOUNT] lessthan/[MAXAMOUNT]`
+* Add Recurring Bill: `rec newlist LISTNAME`
+* List all Recurring Bills: `rec viewlists`
+* Remove Recurring Bill: `rec removelist LISTNUMBER`
+* Add an Expense to a Recurring Bill: `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
+* View expense in a Recurring Bill: `rec viewexpenses LISTNUMBER`
+* Add expenses in a Recurring Bill to overall Expenses: `rec addrec LISTNUMBER`
+* Change Currency: `change currency [CURRENCY_CODE]`
+* Set Budget: `set budget c/CATEGORY b/BUDGET`
+* Get Budget: `get budget c/CATEGORY`
+* Print Budgets: `print budget`
+* Get Graphical Insights for expenses: `get expenses insights`
+* Get Graphical Insights for savings: `get savings insights`
+* Exiting the application: `bye`
 
 ## 6. For Advanced Users:
 
