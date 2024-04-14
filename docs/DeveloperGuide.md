@@ -120,8 +120,8 @@ UML Sequence Diagram provided in section `3.4 Command Class`
 
 #### 3.5 Command Class
 The Command class, similar to the CommandCreator class, contains multiple subclasses, all corresponding to a specific
-function/feature of the application. Stated in section`3.5 CommandCreator Class`
-, each subclass of the `Command` Object is created by its associated `CommandCreator`. 
+function/feature of the application. Stated in section`3.4 CommandCreator Class`
+, each subclass of the `Command` Object is created by its associated `CommandCreator` subclass. 
 
 The superclass `Command` is an abstract class which is never instantiated. Where its `execute()` method is overridden
 by its subclasses. What each Command subclass does when its `execute()` method is called would be discussed in 
@@ -997,6 +997,7 @@ Sequence Diagram for convertSavingCurrency():
 
 <!-- @@author itsmejr257-->
 Sequence Diagram for convertRecurringExpensesCurrency():
+
 ![Sequence diagram for convertRecurringExpensesCurrency](diagrams/CurrencyConverter_RecurringExpenses_SequenceDiagram.png)
 
 <!-- @@author yyangdaa-->
@@ -1159,8 +1160,8 @@ both valid and invalid inputs. To run these tests, on `IntelliJ IDE`, simply
 coverage for each file of the main application.
 
 ### 6.2 Logger
-A Global Logger is utilized in certain method and features which are more prone to errors, etc, methods that may potentially deal with invalid inputs. In the releases, this Logger is disabled using the command
-`Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).setLevel(Level.OFF);` before `run()` is called in `BudgetBuddy` . However, in the code files, the Logger is still enabled and aids in tracing the code when testing for errors.
+A Global Logger is utilized in certain methods and features which are more prone to errors, etc., methods that may potentially deal with invalid inputs. In the releases, this Logger is disabled using the command
+`Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).setLevel(Level.OFF);` before `run()` is called in `BudgetBuddy#main()` . However, in the code files, the Logger is still enabled and aids in tracing the code when testing for errors.
 
 ## Appendix A: Product scope
 
@@ -1795,6 +1796,7 @@ Expected : A recurring expense list named `newlist` will be present at list numb
 Expected : The `RecurringExpensesFile.txt` should now contain a `!!! streaming services !!!`. The list will also still be present after Relaunching application.
 2. Test Case : `rec newlist streaming services` followed by a `rec newexpense to/1 c/Entertainment a/200 d/description`, followed by a `bye`  
 Expected : The recurring list `streaming services` which contains an expense with the description above will still be present after relaunching the application
+<!-- @@author -->
 
 #### 2.20 Changing Currency
 
