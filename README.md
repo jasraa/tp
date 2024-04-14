@@ -9,8 +9,8 @@ Useful Links :
 * [About Us](docs/AboutUs.md)
 
 Contributors :
-*[Chan Jun Rong](docs/team/itsmejr257.md)
-*[Soh Wei Jie ](docs/team/sweijie24.md)
-*[Zhang Yangda](docs/team/yyangdaa.md)
-*[Jasra Zainab](docs/team/jasraa.md)
-*[Dheekshitha](docs/team/dheekshitha2.md)
+* [Chan Jun Rong](docs/team/itsmejr257.md)
+* [Soh Wei Jie](docs/team/sweijie24.md)
+* [Jasra Zainab](docs/team/jasraa.md)
+* [Dheekshitha](docs/team/dheekshitha2.md)
+* [Zhang Yangda](docs/team/yyangdaa.md)
