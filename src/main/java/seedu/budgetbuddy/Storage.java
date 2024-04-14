@@ -53,7 +53,7 @@ public class Storage {
     }
 
     private void checkValidAmount(Double amount) throws BudgetBuddyException{
-        if (amount <= 0 || amount > MAX_AMOUNT) {
+        if (amount <= 0 || amount > MAX_AMOUNT || amount < 0.005) {
             throw new BudgetBuddyException("Invalid Amount detected. Possible Corrupted File");
         }
     }
