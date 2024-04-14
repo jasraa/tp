@@ -16,12 +16,13 @@ public class EditSavingsCommandCreator extends CommandCreator {
     /**
      * Parses the input command to extract the parameters for editing a saving entry and then
      * initiates the edit operation. The command string is expected to contain indicators
-     * followed by the values for category (c/), index (i/), and amount (a/).
+     * followed by the values for category (c/) and amount (a/).
      *
      * @param savings The SavingList object that contains the list of savings.
      * @param input   The input command string containing the parameters to edit a saving entry.
      * @return A Command object to execute the edit operation or null if the input is invalid.
      */
+    //@@author jasraa
     public Command handleEditSavingCommand(SavingList savings, String input) {
         try {
             checkForInvalidInputs(input);
@@ -29,26 +30,20 @@ public class EditSavingsCommandCreator extends CommandCreator {
             checkForInvalidAmount(input);
         } catch (IllegalArgumentException | BudgetBuddyException e) {
             System.out.println(e.getMessage());
-            System.out.println("Command Format : edit savings c/CATEGORY i/INDEX a/AMOUNT");
+            System.out.println("Command Format : edit savings c/CATEGORY a/AMOUNT");
             return null;
         }
-        String[] parts = input.split(" ");
+
         String category = null;
-        int index = -1;
         double amount = -1;
 
-        for (String part : parts) {
-            if (part.startsWith("c/")) {
-                category = part.substring(2);
-            } else if (part.startsWith("i/")) {
-                index = Integer.parseInt(part.substring(2));
-            } else if (part.startsWith("a/")) {
-                amount = Double.parseDouble(part.substring(2));
-            }
+        if (input.contains("c/") && input.contains("a/")) {
+            category = input.substring(input.indexOf("c/") + 2, input.indexOf("a/")).trim();
+            amount = Double.parseDouble(input.substring(input.indexOf("a/") + 2).trim());
         }
 
-        if (category != null && index != -1 && amount != -1) {
-            return new EditSavingCommand(savings, category, index, amount);
+        if (category != null && amount != -1) {
+            return new EditSavingCommand(savings, category, amount);
         } else {
             // Handle incomplete command
             return null;
@@ -57,17 +52,16 @@ public class EditSavingsCommandCreator extends CommandCreator {
 
     public static void checkForInvalidInputs (String input) throws BudgetBuddyException {
         final String categoryPrefix = "c/";
-        final String indexPrefix = "i/";
         final String amountPrefix = "a/";
 
         if (input.contains("!") || input.contains("|")) {
             throw new BudgetBuddyException("Please do not include a ! or | in your input");
         }
-        if (!input.contains("c/") || !input.contains("i/") || !input.contains("a/")) {
-            throw new IllegalArgumentException("Please Ensure that you include c/, i/ and a/");
+        if (!input.contains("c/") || !input.contains("a/")) {
+            throw new IllegalArgumentException("Please Ensure that you include c/ and a/");
         }
 
-        String [] parameters = {categoryPrefix, indexPrefix, amountPrefix};
+        String [] parameters = {categoryPrefix, amountPrefix};
 
         for (String parameter : parameters) {
             if (input.indexOf(parameter) != input.lastIndexOf(parameter)) {
@@ -86,11 +80,11 @@ public class EditSavingsCommandCreator extends CommandCreator {
             }
         }
 
-        if (category == null || !(category.equals("Salary") || category.equals("Investments") ||
-                category.equals("Gifts") || category.equals("Others"))) {
+        if (category == null || !(category.equalsIgnoreCase("Salary") ||
+                category.equalsIgnoreCase("Investments") || category.equalsIgnoreCase("Gifts")
+                || category.equalsIgnoreCase("Others"))) {
             throw new BudgetBuddyException("Please enter a valid category: Salary, Investments, Gifts and Others");
         }
-
     }
 
     public static void checkForInvalidAmount(String input) throws BudgetBuddyException {

@@ -206,59 +206,46 @@ public class SavingList {
 
 
     /**
-     * Edits the saving entry at the specified index. This method updates the category and amount
-     * of a saving object within the savings list. If the provided category doesn't exist or the index
-     * is out of the valid range, it logs a warning and prints an error message without making changes.
+     * Edits the savings entries matched by category, treating all category names in a case-insensitive manner.
+     * This method updates the amount of saving objects within the savings list.
+     * If the provided category doesn't exist, it logs a warning and prints an error message without making changes.
      *
-     * @param category The new category to which the saving entry will be updated.
-     * @param index    The index of the saving entry in the list to be edited.
-     * @param amount   The new amount of the saving entry.
+     * @param category The category to which the saving entries will be updated.
+     * @param amount   The new amount to update the saving entries.
      */
-    public void editSaving(String category, int index, double amount) {
-        LOGGER.info(String.format("Attempting to edit saving at index %d with category '%s' " +
-                "and amount %.2f", index, category, amount));
+    public void editSaving(String category, double amount) {
+        LOGGER.info(String.format("Attempting to edit savings with category '%s' and amount %.2f", category, amount));
+
+        // Convert category to lower case for case insensitive comparison
+        String lowerCaseCategory = category.toLowerCase();
 
         // Assert that the provided category is not null or empty
         assert category != null && !category.isEmpty() : "Category cannot be null or empty";
 
-        // Assert that the index is within the valid bounds of the savings list
-        assert index > 0 && index <= savings.size() : "Index is out of bounds";
-
         // Assert that the amount is non-negative
         assert amount >= 0 : "Amount cannot be negative";
 
-        // Check if the category exists in the list of categories
-        int categoryIndex = categories.indexOf(category);
-        if (categoryIndex == -1) {
-            LOGGER.warning("Invalid category: " + category);
-            System.out.println("Invalid category.");
-            return;
+        // Create a flag to check if any savings were edited
+        boolean isEdited = false;
+
+        for (Saving saving : savings) {
+            if (saving.getCategory().toLowerCase().equals(lowerCaseCategory)) {
+                saving.setAmount(amount);
+                LOGGER.info("Updated saving: " + saving.toString());
+                isEdited = true;
+            }
         }
 
-        // Check if the index is within valid bounds
-        if (index <= 0 || index > savings.size()) {
-            LOGGER.warning(String.format("Invalid index: %d. Valid index range " +
-                    "is 1 to %d.", index, savings.size()));
-            System.out.println("Invalid index. Enter \"list savings\" to view index");
-            return;
-        }
-
-        Saving savingToEdit = null;
-        try {
-            // Retrieve the saving to edit
-            savingToEdit = savings.get(index - 1);
-
-            // Update the saving details
-            savingToEdit.setCategory(category);
-            savingToEdit.setAmount(amount);
-
-            System.out.println("Saving edited successfully.");
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error occurred while editing saving at index " + index, e);
-            System.out.println("An error occurred during saving edition. Please try again.");
-
+        if (!isEdited) {
+            LOGGER.warning("No savings found under category: " + category);
+            System.out.println("No savings found under category: " + category);
+        } else {
+            System.out.println("Savings successfully updated for category: " + category);
         }
     }
+
+
+
 
 
     public double calculateTotalSavings() {

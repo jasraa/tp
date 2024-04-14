@@ -488,36 +488,35 @@ Calculation: The command calculates each participant's share of the bill and rec
 The Edit Savings feature allows users to update their previously saved financial contributions, specifically adjusting
 the `category` and `amount`. This feature is facilitated by the `EditSavingCommand` class, which is prepared and issued
 by the `Parser` class. An `EditSavingCommand` object encapsulates several variables that are instantiated within the
-`Parser`: a `SavingList` object, `category`, `index`, and `amount`. The significance of these Class Attributes within
+`Parser`: a `SavingList` object, `category`, and `amount`. The significance of these Class Attributes within
 `EditSavingCommand` is detailed below:
 
 | Class Attribute | Variable Type | Relevance                                                             |
 |-----------------|---------------|-----------------------------------------------------------------------|
 | savings         | SavingList    | SavingList Object containing the list of savings that can be modified |
 | category        | String        | The updated category for the saving entry at the specified index      |
-| index           | Integer       | The index of the saving entry to be updated within `SavingList`       |
 | amount          | Double        | The updated monetary value for the saving entry at the specified index|
 
 Upon invoking the `execute()` method in `BudgetBuddy` through `command.execute()`, the `EditSavingCommand` object
 leverages the following method from the `SavingList` class to carry out the modification:
 
-| Method       | Return Type | Relevance                                                                                   |
-|--------------|-------------|---------------------------------------------------------------------------------------------|
-| editSaving() | void        | Adjusts the `category` and `amount` for the saving entry at the provided `index`            |
+| Method       | Return Type | Relevance                                                            |
+|--------------|-------------|----------------------------------------------------------------------|
+| editSaving() | void        | Adjusts the `amount` for the saving entry at the provided `category` |
 
 The following UML Sequence diagram illustrates the execution process of the Edit Savings Feature Command when a user enters a valid edit savings command:
 
-![EditSavingsDiagram.png](diagrams%2FEditSavingsDiagram.png)
+![EditSavingsDiagram.png](diagrams/EditSavingsDiagram.png)
 
 Here is a step-by-step narrative of the actions taken for a sample input:
-`edit savings c/Salary i/1 a/3000`
+`edit savings c/Salary a/3000`
 
-1. BudgetBuddy receives the command `edit savings c/Salary i/1 a/3000` and passes it to the `Parser` for interpretation.
-2. The `Parser` splits the command into components and constructs an `EditSavingCommand` object with the category (`c/Salary`), index (`i/1`), and amount (`a/3000`).
+1. BudgetBuddy receives the command `edit savings c/Salary a/3000` and passes it to the `Parser` for interpretation.
+2. The `Parser` splits the command into components and constructs an `EditSavingCommand` object with the category (`c/Salary`) and amount (`a/3000`).
 3. The `Parser` returns the constructed `EditSavingCommand` object to BudgetBuddy.
 4. BudgetBuddy then executes the `execute()` method on the `EditSavingCommand` object.
 5. Inside its `execute()` method, `EditSavingCommand` calls the `editSaving` method of `SavingList`, supplying the relevant parameters.
-6. `SavingList` locates the first saving entry in its array (adjusting for zero-based indexing with index - 1) and updates the entry's category to "Salary" and the amount to 3000.0.
+6. `SavingList` updates the entry's amount to 3000 for the category Salary.
 7. Finally, the console outputs a confirmation message: "Saving updated successfully."
 
 <!-- @@author jasraa-->
@@ -1250,15 +1249,15 @@ type fast. It also provides the ability to deal with finances on a singular plat
 <!-- @@author jasraa-->
 ### Use Case: Edit Savings
 
-1. User requests to edit a savings entry by specifying the index of the saving and the details to be updated.
-2. BudgetBuddy prompts the user for the category, amount, and optionally, a description.
-3. BudgetBuddy validates the provided index and updates the savings entry if the index is valid.
+1. User requests to edit a savings entry by specifying the category of the saving.
+2. BudgetBuddy prompts the user for the category and amount.
+3. BudgetBuddy validates the provided category and updates the savings entry if the category is valid.
 4. BudgetBuddy displays a confirmation message indicating the savings entry has been updated.
 
 #### Extensions
 
-* 1.1 User specifies an index that does not exist.
-    * 1.1.1 BudgetBuddy displays an error message indicating the index is out of bounds.
+* 1.1 User specifies an category that does not exist.
+    * 1.1.1 BudgetBuddy displays an error message indicating the category is invalid.
       Use case ends.
 
 * 1.2 User enters an invalid or non-numeric amount.
@@ -1635,11 +1634,11 @@ type fast. It also provides the ability to deal with finances on a singular plat
 
 #### 2.5 Edit Savings
 **Prerequisites** : Some savings has been added to the overall savings.
-1. Test Case : `edit savings c/Salary i/2 a/2000`
-Expected : if there is an saving with index 2, it edits the saving at index 2. Else, an error message stating invalid index will be printed.
-2. Test Case : `edit savings c/Allowance i/2 a/2000`
+1. Test Case : `edit savings c/Salary a/2000`
+Expected : Edits the saving with category "Salary". If there is no saving with this category, an error message stating invalid category will be printed.
+2. Test Case : `edit savings c/Allowance a/2000`
 Expected : An error message mentioning invalid saving category will be printed.
-3. Test Case : `edit savings c/Salary i/2 a/-2000`
+3. Test Case : `edit savings c/Salary a/-2000`
 Expected : An error message mentioning invalid amount will be printed.
 
 #### 2.6 Edit Expenses
