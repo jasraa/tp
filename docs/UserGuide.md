@@ -4,7 +4,8 @@
 [1. Introduction](#1-introduction) <br>
 [2. Quick Start](#2-quick-start) <br>
 [3. Features](#3-features) <br>
-&nbsp;&nbsp;[3.1 Display Commands()](#31-display-commands--menu) <br>
+&nbsp;&nbsp;[3.0 General Information](#30-general-information) <br>
+&nbsp;&nbsp;[3.1 Display Commands](#31-display-commands--menu) <br>
 &nbsp;&nbsp;[3.2 Add Expense](#32-add-expense)<br>
 &nbsp;&nbsp;[3.3 Add Savings](#33-add-savings)<br>
 &nbsp;&nbsp;[3.4 Add Split Expenses](#34-add-shared-bill)<br>
@@ -51,6 +52,12 @@ command to run the application.
 
 ## 3. Features
 
+### 3.0 General Information
+1. All user input variables are denoted in all caps. Etc, if the format of a command is `menu INDEX`, `INDEX` refers
+to the user input variable. Hence, you may input `menu 1`, `menu 2`, `menu string`, etc. depending on the command constraints.
+2. User Input variables that are enclosed with a `[]` are denoted as **optional** inputs. Etc, if the format of a command is `menu [INDEX]`,
+the user may wish to not include anything for the `INDEX` and just type `menu`.
+
 ### 3.1 Display Commands : `menu`
 
 Displays the corresponding features of BudgetBuddy
@@ -60,6 +67,8 @@ Format: `menu [INDEX]`
 * The `INDEX` refers to the number associated with each menu option. If `INDEX` is not provided **OR** 
 is of value `0`, the overall menu list will be displayed
 * `INDEX` must be either be empty OR a positive integer and a valid index in the menu list
+* The `menu` command is **space sensitive**. In particular, there should only be one space between `menu` and `INDEX`
+for the command to be properly recognized should you wish to view a menu item of a certain `INDEX`
 
 Example of usage:
 
@@ -289,25 +298,31 @@ Example of usage:
 
 Finds expenses based on their description or amount
 
-Format : `find expenses d/DESCRIPTION morethan/MINAMOUNT lessthan/MAXAMOUNT`
+Format : `find expenses d/[DESCRIPTION] morethan/[MINAMOUNT] lessthan/[MAXAMOUNT]`
 
 * All prefixes `d/`, `morethan/` and `lessthan/` **must be** present
-* `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` are optional to use as long as *at least* one parameter used.
+* `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` are optional to use. Leaving them all empty simply obtains the entire expense list.
 * Leaving either `DESCRIPTION`, `MINAMOUNT`, `MAXAMOUNT` empty assumes that the parameter is not considered when finding expenses
 * `DESCRIPTION` is the description associated with the expenses the user wishes to find
 * `MINAMOUNT` is the filter for expenses with amounts higher than or equal to the specified value
 * `MAXAMOUNT` is the filter for expenses with amounts lower than or equal to the specified value
 * **Note** Although the user is able to combine the prefixes without any spaces, etc.
   `find expenses d/descriptionmorethan/10lessthan/20`, it is strongly recommended to ensure spaces for clarity.
+* The `find expenses` portion is **case sensitive**. In particular, there should only be one space between `find` and `expenses`
+for the command to be recognized.
 
 Examples of usage :
 
 `find expenses d/coffee morethan/ lessthan/ ` : Finds all expenses with the word "coffee" in the description
+
+
 `find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than $200
+
+
 `find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than $200, but lesser than $400
 
 ### 3.14 Recurring Bill Description
-The next few features in the user guide would be related to the Recurring Bill Feature. The commands associated to
+The next few features from `3.15` to `3.20` in the user guide would be related to the Recurring Bill Feature. The commands associated to
 this overall feature would start with the `rec` command, followed by the relevant `commandType` and parameters. This
 feature allows the user to create and manage multiple lists of expenses **separate** from the user's overall expenses
 , which can be added to the users overall expenses.
@@ -340,7 +355,7 @@ Format : `rec viewlists`
 
 * This command is **space sensitive**, in particular, the space between `rec` and `viewlists` must be
 **exactly** one space apart for the command to be recognised 
-* **Note** Anything typed after `rec viewlists ` will be ignored.
+* **Note** : Anything typed after `rec viewlists ` will be ignored.
 
 Examples of Output : 
 
@@ -374,6 +389,7 @@ Format : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * `LISTNUMBER` refers to the associated list number of recurring bill when doing a `rec viewlists`
 * `CATEGORY` refers to the category of the expense you wish to add
 * `AMOUNT` refers to the amount value of the expense you wish to add
+* **Note** : Any `Amount` that is more than `2 d.p.` is automatically rounded to the nearest `2 d.p.`
 * `DESCRIPTION` refers to the description of the expense you wish to add
 * `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
 * `CATEGORY`, `AMOUNT` and `DESCRIPTION` follows the same constraints as if you were to add a normal expense.
@@ -395,15 +411,20 @@ Format : `rec viewexpenses LISTNUMBER`
 * `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
 * This command is **space sensitive**, in particular, the space between `rec` and `viewlists` must be
   **exactly** one space apart for the command to be recognised
+* **Note** : In the output, the `Date` refers to the date the expense was added to the Recurring Expense List
 
 Examples of usage :
 `rec viewexpenses 1` : Prints all expenses in the 1st recurring bill
 
 Here are some expected outputs for different situations :
 
-When the list to view contains expenses : ![View Expenses Command when List is Non-Empty](userguideimages/rec_viewexpenses_NonEmptyList.png)
+When the list to view contains expenses : 
 
-When the list to view does not contain any expenses : ![View Expenses Command when List is Empty](userguideimages/rec_viewexpenses_EmptyList.png)
+![View Expenses Command when List is Non-Empty](userguideimages/rec_viewexpenses_NonEmptyList.png)
+
+When the list to view does not contain any expenses : 
+
+![View Expenses Command when List is Empty](userguideimages/rec_viewexpenses_EmptyList.png)
 
 ### 3.20 Add expenses in a recurring bill to overall expenses : `rec addrec`
 
@@ -421,9 +442,13 @@ Examples of usage :
 
 Here are some expected outputs for different situations : 
 
-When the list to add contains expenses : ![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_NonEmptyList.png)
+When the list to add contains expenses : 
 
-When the list to add is empty: ![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_EmptyList.png)
+![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_NonEmptyList.png)
+
+When the list to add is empty: 
+
+![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_EmptyList.png)
 
 ### 3.21 Changing Currencies : `change currency [CURRENCY_CODE]`
 
@@ -527,6 +552,17 @@ Example of Expected Output:
 
 This section answers some frequently asked questions.
 
+### Why can I only add amounts less than 1,000,000,000,000.00
+In BudgetBuddy, we set a maximum limit on transaction amounts to ensure consistent functionality across different systems. Since variable storage capacities can vary
+, this limit helps prevent errors and maintain reliable operations. With the richest man in the world having
+an approximate net worth of 231,000,000,000. We believe that the cap should be sufficient to most users.
+
+### What happens if the total amount of all expenses is above 1,000,000,000,000.00
+Exceeding the maximum limit of 1,000,000,000,000.00 for total expenses can lead to calculation errors and issues in data representation 
+due to the limited range of numbers the application can handle. 
+While we strongly recommend staying within this limit to avoid such problems, 
+most users should find that BudgetBuddy meets their needs without issue.
+
 ### How do I transfer my data to another computer.
 
 The save files for BudgetBuddy are stored in `[JAR file location]/data/`. <br>
@@ -547,7 +583,7 @@ As our program does not require Internet access, the conversion ratios are taken
 
 
 ## 5. Command Summary
-* Display Commands : `menu INDEX`
+* Display Commands : `menu [INDEX]`
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * Add Shared Bill: `a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
@@ -557,15 +593,15 @@ As our program does not require Internet access, the conversion ratios are taken
 * Delete Expense `delete expense i/INDEX`
 * List Expenses: `list expenses [CATEGORY]`
 * List Savings: `list savings [CATEGORY]`
-* Find Expenses `find expenses d/DESCRIPTION morethan/MINAMOUNT lessthan/MAXAMOUNT`
 * Check Splitted Expenses `check split bills`
 * Settle Bill `settle bill i/Index`
-* Add Recurring Bill `rec newlist LISTNAME`
-* List all Recurring Bills `rec viewlists`
-* Remove Reccuring Bill `rec removelist LISTNUMBER`
-* Add an expense to a recurring bill `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
-* View expenses in a recurring bill `rec viewexpenses LISTNUMBER`
-* Add expenses in a recurring bill to overall expenses `rec addrec LISTNUMBER`
+* Find Expenses `find expenses d/[DESCRIPTION] morethan/[MINAMOUNT] lessthan/[MAXAMOUNT]`
+* Add Recurring Bill : `rec newlist LISTNAME`
+* List all Recurring Bills : `rec viewlists`
+* Remove Recurring Bill : `rec removelist LISTNUMBER`
+* Add an Expense to a Recurring Bill : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
+* View expense in a Recurring Bill : `rec viewexpenses LISTNUMBER`
+* Add expenses in a Recurring Bill to overall Expenses : `rec addrec LISTNUMBER`
 * Change Currency `change currency [CURRENCY_CODE]`
 * Set Budget `set budget c/CATEGORY b/BUDGET`
 * Get Budget `get budget c/CATEGORY`
@@ -576,21 +612,28 @@ As our program does not require Internet access, the conversion ratios are taken
 ## 6. For Advanced Users:
 
 ### 6.1 Saving the data
-
 BudgetBuddy data is automatically saved to the hard disk after any command that changes the data. There is no need to save manually.
 
-However, the exceptions to these are the following features. Where no implementation of saving and loading has been added for these features :
-* Setting Budgets
-* Splitted Expenses
+**Note** : As the data to be saved depends on the **current state** of the application, any manual changes made to
+the files **during** the run of the application will not be reflected in the application.
 
 ### 6.2 Editing the data file
 
 BudgetBuddy data is saved automatically as a text file `[JAR file location]/data/*.txt`. Where * represents the different names of the files
-. Four files should be created upon first startup of BudgetBuddy : `SavingsFile.txt`, `ExpenseFile.txt`, `RecurringExpensesFile.txt` and `DefaultCurrency.txt`
+. Five files should be created upon first startup of BudgetBuddy : `SavingsFile.txt`, `ExpenseFile.txt`, `RecurringExpensesFile.txt`, `DefaultCurrency.txt` and `SplitExpensesFile.txt`
 Advanced users are welcome to update the data directly by editing this file. However, caution is advised as certain edits may cause JunBot to behave unexpectedly.
 
+#### RecurringExpensesFile.txt
+For advanced users who wish to edit the `RecurringExpensesFile.txt`, do take note of the following
+* `!!! NAME !!!` will denote the creation of a RecurringExpenseList with the name as the specified `NAME`
+* The list number of each RecurringExpenseList is determined by the position of its associated `!!! NAME !!!` in `RecurringExpensesFile.txt`, where the highest in the file would have its associated list number as `1`.
+* `LISTNUMBER | DATE | CATEGORY | AMOUNT | DESCRIPTION` will denote the addition of an expense into the `RecurringExpenseList` associated with the provided `LISTNUMBER`
+* `DATE`, `CATEGORY`, `AMOUNT` and `DESCRIPTION` follow the same restrictions as if a user were to normally add an expense within the application itself. 
+* On top of the restrictions stated in the previous point, do note that `CATEGORY` is **case-sensitive** here. Hence, `entertainment` is considered an invalid category as it should be `Entertainment`
+* Any `AMOUNT` that is more than 2 decimal places will be automatically treated as 2 d.p.
+* The file is considered **corrupted** as long as the inputs are out of place / invalid. Etc. invalid category, invalid amount, wrong format for naming a recurring list
 
-> ⚠️ **Caution:** Certain edits can cause BudgetBuddy to behave in unexpected ways (e.g. if value entered is outside of acceptable range, or the entries are not in the right format). Therefore, edit the data file only
+> ⚠️ **Caution:** Certain edits can cause BudgetBuddy to behave in unexpected ways (e.g. if value entered is outside the acceptable range, or the entries are not in the right format). Therefore, edit the data file only
 > if you are confident that you can update it correctly
 
 

@@ -1,6 +1,6 @@
 package seedu.budgetbuddy.command;
 
-public class Command {
+public abstract class Command {
 
     public String getDescription() {
         return "Empty";
