@@ -409,6 +409,13 @@ public class Storage {
         }
     }
 
+    //@@author yyangdaa
+    /**
+     * Loads the split expenses from the specified file path.
+     *
+     * @return A list of {@link SplitExpense} objects loaded from the file.
+     * @throws FileNotFoundException If the file does not exist.
+     */
     public List<SplitExpense> loadSplitExpenses() throws FileNotFoundException {
         File file = new File(filePath);
         List<SplitExpense> splitExpenses = new ArrayList<>();
@@ -428,6 +435,13 @@ public class Storage {
     }
     
 
+    //@@author yyangdaa
+    /**
+     * Saves the list of split expenses to the specified file path.
+     *
+     * @param splitExpenses A list of {@link SplitExpense} objects to save to the file.
+     * @throws IOException If an error occurs during writing to the file.
+     */
     public void saveSplitExpenses(List<SplitExpense> splitExpenses) throws IOException {
         ensureDirectoryExists();
     

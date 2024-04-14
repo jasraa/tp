@@ -109,8 +109,6 @@ Example of Usage:
 
 `add savings c/Salary a/500.50`
 
-### Add Shared Bill
-Add bills that are meant for splitting among friends or colleague
 ### 3.4 Add Shared Bill
 Add bills that are meant for splitting among friends or colleague
 
@@ -552,11 +550,22 @@ As our program does not require Internet access, the conversion ratios are taken
 * Display Commands : `menu INDEX`
 * Add Savings: `add savings c/CATEGORY a/AMOUNT`
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
+* Add Shared Bill: `a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 * Edit Expenses `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
 * Edit Savings `edit savings c/CATEGORY i/INDEX a/AMOUNT`
+* Reduce Savings `educe savings i/INDEX a/AMOUNT`
+* Delete Expense `delete expense i/INDEX`
 * List Expenses: `list expenses [CATEGORY]`
 * List Savings: `list savings [CATEGORY]`
 * Find Expenses `find expenses d/DESCRIPTION morethan/MINAMOUNT lessthan/MAXAMOUNT`
+* Check Splitted Expenses `check split bills`
+* Settle Bill `settle bill i/Index`
+* Add Recurring Bill `rec newlist LISTNAME`
+* List all Recurring Bills `rec viewlists`
+* Remove Reccuring Bill `rec removelist LISTNUMBER`
+* Add an expense to a recurring bill `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
+* View expenses in a recurring bill `rec viewexpenses LISTNUMBER`
+* Add expenses in a recurring bill to overall expenses `rec addrec LISTNUMBER`
 * Change Currency `change currency [CURRENCY_CODE]`
 * Set Budget `set budget c/CATEGORY b/BUDGET`
 * Get Budget `get budget c/CATEGORY`

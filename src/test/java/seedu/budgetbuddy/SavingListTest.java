@@ -19,6 +19,7 @@ public class SavingListTest {
     private static final Logger LOGGER = Logger.getLogger(SavingListTest.class.getName());
 
 
+    //@@author yyangdaa
     @Test 
     public void addSaving_validInput_success() throws BudgetBuddyException {
         SavingList savingList = new SavingList();
@@ -29,6 +30,7 @@ public class SavingListTest {
         assertEquals(500, savingList.getSavings().get(0).getAmount());
     }
 
+    //@@author yyangdaa
     @Test 
     public void addSaving_invalidAmount_exceptionThrown() {
         SavingList savingList = new SavingList();
@@ -40,6 +42,7 @@ public class SavingListTest {
         }
     }
 
+    //@@yyangdaa
     @Test
     public void addSaving_negativeAmount_exceptionThrown() {
         SavingList savingList = new SavingList();
@@ -51,6 +54,7 @@ public class SavingListTest {
         }
     }
 
+    //@@yyangdaa
     @Test
     public void addSaving_nullCategory_exceptionThrown() {
         SavingList savingList = new SavingList();
