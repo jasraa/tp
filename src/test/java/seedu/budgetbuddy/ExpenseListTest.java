@@ -23,6 +23,7 @@ public class ExpenseListTest {
 
     private static final Logger LOGGER = Logger.getLogger(ExpenseListTest.class.getName());
 
+    //@@author yyangdaa
     @Test
     public void calculateTotalExpenses_addingIntegers_success() throws BudgetBuddyException {
         ExpenseList expenseList = new ExpenseList();
@@ -32,6 +33,7 @@ public class ExpenseListTest {
         assertEquals(80, expenseList.calculateTotalExpenses());
     }
 
+    //@@author yyangdaa
     @Test
     public void addExpense_addingExpense_success() throws BudgetBuddyException {
         ExpenseList expenseList = new ExpenseList();
@@ -43,6 +45,7 @@ public class ExpenseListTest {
         assertEquals("Bus Fare", expenseList.getExpenses().get(0).getDescription());
     }
 
+    //@@author yyangdaa
     @Test 
     public void addExpense_addingNegativeExpense_exceptionThrown() {
         ExpenseList expenseList = new ExpenseList();
@@ -55,6 +58,7 @@ public class ExpenseListTest {
         }
     }
 
+    //@@author yyangdaa
     @Test
     public void addExpense_addingInvalidAmount_exceptionThrown() {
         ExpenseList expenseList = new ExpenseList();
@@ -67,6 +71,7 @@ public class ExpenseListTest {
         }
     }
 
+    //@@author yyangdaa
     @Test
     public void addExpense_addingNullCategory_exceptionThrown() {
         ExpenseList expenseList = new ExpenseList();
@@ -78,6 +83,7 @@ public class ExpenseListTest {
         }
     }
 
+    //@@author yyangdaa
     @Test
     public void deleteExpense_validInput_success() throws BudgetBuddyException {
         // Create an ExpenseList and add two expenses

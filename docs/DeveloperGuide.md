@@ -423,7 +423,7 @@ list of `savings` matching against the corresponding `category`.
 | addSaving()  | void        | Add savings to the existing list of `savings`   |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSavings.jpg)
+![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSaving.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -453,10 +453,10 @@ Class Attributes for SplitExpenseCommand:
 
 |   Class Attribute	| Variable Type	    | Relevance                                                    |
 |-------------------|-------------------|--------------------------------------------------------------|
-| splitExpenseList	| SplitExpenseList	 | SplitExpenseList O bject where the shared bill will be added |     |
-| amount	          | double	           | The total amount of the shared bill                          |
+| splitExpenseList	| SplitExpenseList	| SplitExpenseList O bject where the shared bill will be added |     
+| amount	          | double	          | The total amount of the shared bill                          |
 | numerOfPeople     | int               | The number of people that are meant for splitting the bill   | 
-| description	      | String	           | Description of the shared bill                               |
+| description	      | String	          | Description of the shared bill                               |
 
 Upon the call of the execute() method via command.execute(), SplitExpenseCommand performs the following key actions:
 
