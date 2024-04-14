@@ -70,7 +70,7 @@ public class Ui {
             System.out.println("Manage Savings");
             System.out.println("add savings c/CATEGORY a/AMOUNT");
             System.out.println("edit savings c/CATEGORY i/INDEX a/AMOUNT");
-            System.out.println("reduce savings i/INDEX a/AMOUNT");
+            System.out.println("reduce savings c/CATEGORY a/AMOUNT");
             break;
         case 3:
             System.out.println("View Expenses");
