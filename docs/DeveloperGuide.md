@@ -714,7 +714,7 @@ Process Overview:
 
 Sequence Diagram:
 The sequence diagram for the Check Split Expenses feature would illustrate the interactions between the User, BudgetBuddy, Parser, CheckSplitExpensesCommand, and SplitExpenseList classes, showing how the method calls and returns between these objects complete the operation to display all split expenses.
-![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_ListSplitExpense.jpg)
+![Sequence Diagram for Parser for addSplitExpense Feature](diagrams/sequenceDiagram_checkSplitBills.jpg)
 
 <!-- @@author yyangdaa-->
 ### 4.12 Settle Bill feature
@@ -744,9 +744,10 @@ Process Overview:
 
 Sequence Diagram:
 The sequence diagram for the Settle Bill feature would illustrate the interactions between the `User`, `BudgetBuddy`, `Parser`, `SettleSplitExpenseCommand`, and `SplitExpenseList` classes, showing how the method calls and returns between these objects complete the operation to mark a shared bill as settled.
-![Sequence Diagram for Parser for addSplitExpense Feature](docs\diagram\sequenceDiagram_SettleSplitExpense.jpg)
+![Sequence Diagram for Parser for addSplitExpense Feature](diagrams/sequenceDiagram_settleSplitBill.jpg)
 
 
+<!-- @@author itsmejr257-->
 ### 4.13 Find Feature
 The Find Feature allows users to search for expenses based on a specific criteria such as description, minimum amount
 and maximum amount. This feature is orchestrated by the `FindExpensesCommand` class, which is created by the `FindExpensesCommandCreator`
@@ -880,7 +881,8 @@ when `RecurringExpensesCommand#execute()` is called
 | viewexpenses | printExpensesAtIndex             | `RecurringExpenseLists#getExpenseListAtListNumber()` , `ExpenseList#listExpenses()`                              |                             |
 
 From the table above, most commandTypes have a fairly straight forward process of calling a single method from the relevant classes, and follows
-a similar process to many of the previous features too. However, the `addrec` commandType would be the most complicated to follow, given that it utilizes 3 methods from three different classes. The following
+a similar process to many of the previous features too. Hence, the explanation of these trivial methods would be left out to avoid repetition. For details regarding these methods, you may also view the JavaDoc comments found in the code. 
+However, the `addrec` commandType would be the most complicated to follow, given that it utilizes 3 methods from three different classes. The following
 is a UML sequence diagram to illustrate the implementation of the addRecurringExpensesToExpenses() method in `RecurringExpenseCommand`, upon the call of the `execute()`
 from `BudgetBuddy`
 
