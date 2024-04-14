@@ -52,8 +52,16 @@ public class Storage {
         }
     }
 
+    /**
+     * Check if the provided amount is a valid acceptable amount. Checks if amount is 0 or negative, larger than the
+     * allowed maximum amount and if amount will be round to 0.00 at 2.dp
+     *
+     * @param amount The amount to be checked
+     * @throws BudgetBuddyException If amount is 0, negative, larger than allowed maximum , or is rounded to 0.00
+     *                              at 2.dp
+     */
     private void checkValidAmount(Double amount) throws BudgetBuddyException{
-        if (amount <= 0 || amount > MAX_AMOUNT) {
+        if (amount <= 0 || amount > MAX_AMOUNT || amount < 0.005) {
             throw new BudgetBuddyException("Invalid Amount detected. Possible Corrupted File");
         }
     }

@@ -45,7 +45,7 @@ to deal with finances on a singular platform with ease as long as you can type f
 
 ## 2. Quick Start
 1. Ensure that you have Java 11 installed.
-2. Download the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp/releases/tag/v2.0).
+2. Download the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp).
 3. Copy the file to the folder you want to use as the home folder.
 4. Open  command terminal, ``cd`` into the folder you put your jar file in, and use the `java -jar BudgetBuddy.jar` 
 command to run the application.
@@ -316,10 +316,10 @@ Examples of usage :
 `find expenses d/coffee morethan/ lessthan/ ` : Finds all expenses with the word "coffee" in the description
 
 
-`find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than $200
+`find expenses d/coffee morethan/200 lessthan/ ` : Finds all expenses with the word "coffee" and amount higher than equals to $200
 
 
-`find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than $200, but lesser than $400
+`find expenses d/coffee morethan/200 lessthan/400 ` : Finds all expenses with the word "coffee" and amount higher than equals to $200, but lesser than equals to $400
 
 ### 3.14 Recurring Bill Description
 The next few features from `3.15` to `3.20` in the user guide would be related to the Recurring Bill Feature. The commands associated to
@@ -339,9 +339,10 @@ Adds a new recurring Bill.
 Format : `rec newlist LISTNAME`
 
 * `LISTNAME` refers to the name you wish to associate the recurring Bill with
-* `LISTNAME` cannot be empty
+* `LISTNAME` cannot be empty, and cannot contain a `|` or `!`
 * This command is **space sensitive**, in particular the space between `rec`, `newlist` and `LISTNAME`
 should be **exactly** one space apart for the command to be recognised
+* **Note** : You can add bills of the same `LISTNAME` as lists are differentiated by their list position
 
 Examples of usage :
 
@@ -375,6 +376,8 @@ Format : `rec removelist LISTNUMBER`
 
 * `LISTNUMBER` refers to the associated list number of recurring bill when doing a `rec viewlists`
 * `LISTNUMBER` must be a **valid** integer > 0, and should be a **valid** list number
+* This command is **space sensitive**, in particular, the space between `rec` and `removelist` must be
+  **exactly** one space apart for the command to be recognised
 
 Examples of usage :
 
@@ -386,7 +389,7 @@ Adds an expense to a specified recurring bill
 
 Format : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
 
-* `LISTNUMBER` refers to the associated list number of recurring bill when doing a `rec viewlists`
+* `LISTNUMBER` refers to the associated list number of the recurring bill when doing a `rec viewlists`
 * `CATEGORY` refers to the category of the expense you wish to add
 * `AMOUNT` refers to the amount value of the expense you wish to add
 * **Note** : Any `Amount` that is more than `2 d.p.` is automatically rounded to the nearest `2 d.p.`
@@ -396,6 +399,8 @@ Format : `rec newexpense to/LISTNUMBER c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * `to/, c/, a/, d/` must be placed in the **right order**
 * **Note** Although the user is able to combine the prefixes without any spaces, etc. 
 `rec newexpense to/1c/Entertainmenta/200d/movies`, it is strongly recommended to ensure spaces for clarity.
+* This command is **space sensitive**, in particular, the space between `rec` and `newexpense` must be
+    **exactly** one space apart for the command to be recognised
 
 Examples of usage :
 `rec newexpense to/1 c/Entertainment a/200 d/movies` : Adds a new expense to the 1st recurring bill 
@@ -434,6 +439,8 @@ Format : `rec addrec LISTNUMBER`
 
 * `LISTNUMBER` refers to the associated list number of the recurring bill when doing a `rec viewlists`
 * `LISTNUMBER` must be a **valid** integer, and should be a **valid** list number
+* This command is **space sensitive**, in particular, the space between `rec` and `addrec` must be
+    **exactly** one space apart for the command to be recognised
 *  You may wish to perform a `list expenses` to view the newly added expenses being added to the
 overall list of expenses
 
@@ -442,7 +449,7 @@ Examples of usage :
 
 Here are some expected outputs for different situations : 
 
-When the list to add contains expenses : 
+When the list to add contains 2 expenses : 
 
 ![Add Recurring Expenses Command when List is Non-Empty](userguideimages/rec_addrec_NonEmptyList.png)
 
@@ -589,8 +596,8 @@ As our program does not require Internet access, the conversion ratios are taken
 * Add Expense: `add expense c/CATEGORY a/AMOUNT d/DESCRIPTION`
 * Add Shared Bill: `a/AMOUNT n/NUMBER_OF_PEOPLE d/DESCRIPTION`
 * Edit Expenses: `edit expense c/CATEGORY i/INDEX a/AMOUNT d/DESCRIPTION`
-* Edit Savings: `edit savings c/CATEGORY i/INDEX a/AMOUNT`
-* Reduce Savings: `educe savings i/INDEX a/AMOUNT`
+* Edit Savings: `edit savings c/CATEGORY a/AMOUNT`
+* Reduce Savings: `reduce savings c/CATEGORY a/AMOUNT`
 * Delete Expense: `delete expense i/INDEX`
 * List Expenses: `list expenses [CATEGORY]`
 * List Savings: `list savings [CATEGORY]`
@@ -614,7 +621,7 @@ As our program does not require Internet access, the conversion ratios are taken
 ## 6. For Advanced Users:
 
 ### 6.1 Saving the data
-BudgetBuddy data is automatically saved to the hard disk after any command that changes the data. There is no need to save manually.
+BudgetBuddy data is automatically saved to the hard disk after any command. There is no need to save manually.
 
 **Note** : As the data to be saved depends on the **current state** of the application, any manual changes made to
 the files **during** the run of the application will not be reflected in the application.
@@ -627,6 +634,7 @@ Advanced users are welcome to update the data directly by editing this file. How
 
 #### RecurringExpensesFile.txt
 For advanced users who wish to edit the `RecurringExpensesFile.txt`, do take note of the following
+
 * `!!! NAME !!!` will denote the creation of a RecurringExpenseList with the name as the specified `NAME`
 * The list number of each RecurringExpenseList is determined by the position of its associated `!!! NAME !!!` in `RecurringExpensesFile.txt`, where the highest in the file would have its associated list number as `1`.
 * `LISTNUMBER | DATE | CATEGORY | AMOUNT | DESCRIPTION` will denote the addition of an expense into the `RecurringExpenseList` associated with the provided `LISTNUMBER`
