@@ -370,7 +370,7 @@ public class Storage {
         } catch (Exception e) {
             LOGGER.log(Level.INFO, "Exception successfully caught. Error has been handled");
             System.out.println("Error Detected : " + e.getMessage());
-            System.out.println("You Recurring Expenses File is corrupted, resetting the file....");
+            System.out.println("Your Recurring Expenses File is corrupted, resetting the file....");
             resetRecurringExpensesListFile();
             return new RecurringExpenseLists();
         }

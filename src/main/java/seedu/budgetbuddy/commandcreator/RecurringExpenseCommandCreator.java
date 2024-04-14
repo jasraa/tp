@@ -191,7 +191,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         }
 
         throw new BudgetBuddyException("Please ensure the category is a valid category\n" +
-                "Valid Categories : Entertainment, Housing, Groceries, Utility, Transport, Other");
+                "Valid Categories : Entertainment, Housing, Groceries, Utility, Transport, Others");
     }
     /**
      * Parses the category from the input string

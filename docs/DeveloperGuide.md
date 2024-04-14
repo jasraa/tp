@@ -1020,6 +1020,7 @@ process:
 
 ##### Class Attributes for `SetBudgetCommand`:
 
+
 | Class Attribute | Variable Type | Relevance                                                           |
 |-----------------|---------------|---------------------------------------------------------------------|
 | expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
@@ -1042,6 +1043,7 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 
 ##### Class Attributes for `ListBudgetCommand`:
 
+
 | Class Attribute | Variable Type | Relevance                                                           |
 |-----------------|---------------|---------------------------------------------------------------------|
 | expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
@@ -1056,6 +1058,8 @@ budget in `ExpenseList` using `setBudget`. Similarly, `ListBudgetCommand` will f
 their budgets using `getBudgets`, and highlight those that are above the set budget.
 
 ##### Key Methods used from `ExpenseList`
+
+
 | Method                      | Return Type   | Relevance                                                          |
 |-----------------------------|---------------|--------------------------------------------------------------------|
 | setBudget(category, budget) | void          | Sets or updates the budget for a given category in the ExpenseList |
@@ -1393,7 +1397,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
 ### Use Case : Add a Recurring Expense List
 1. User requests to add a recurring expense list with a specific name
 2. BudgetBuddy creates a recurring expense list with the specified name 
-   3. Use Case Ends.
+   3. use case ends.
 
 #### Extensions
 * 1a. Name is Empty
@@ -1409,7 +1413,7 @@ type fast. It also provides the ability to deal with finances on a singular plat
 #### Extensions
 * 1a. The list of all recurring expense lists is empty
   * 1a1. BudgetBuddy states that no recurring expense lists has been added yet 
-    * user case ends
+    * use case ends
 
 <!-- @@author itsmejr257-->
 ### Use Case : Remove a recurring expense list
