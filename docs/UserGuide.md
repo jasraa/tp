@@ -607,21 +607,27 @@ As our program does not require Internet access, the conversion ratios are taken
 ## 6. For Advanced Users:
 
 ### 6.1 Saving the data
-
 BudgetBuddy data is automatically saved to the hard disk after any command that changes the data. There is no need to save manually.
 
-However, the exceptions to these are the following features. Where no implementation of saving and loading has been added for these features :
-* Setting Budgets
-* Splitted Expenses
+**Note** : As the data to be saved depends on the **current state** of the application, any manual changes made to
+the files **during** the run of the application will not be reflected in the application.
 
 ### 6.2 Editing the data file
 
 BudgetBuddy data is saved automatically as a text file `[JAR file location]/data/*.txt`. Where * represents the different names of the files
-. Four files should be created upon first startup of BudgetBuddy : `SavingsFile.txt`, `ExpenseFile.txt`, `RecurringExpensesFile.txt` and `DefaultCurrency.txt`
+. Five files should be created upon first startup of BudgetBuddy : `SavingsFile.txt`, `ExpenseFile.txt`, `RecurringExpensesFile.txt`, `DefaultCurrency.txt` and `SplitExpensesFile.txt`
 Advanced users are welcome to update the data directly by editing this file. However, caution is advised as certain edits may cause JunBot to behave unexpectedly.
 
+#### RecurringExpensesFile.txt
+For advanced users who wish to edit the `RecurringExpensesFile.txt`, do take note of the following
+* `!!! NAME !!!` will denote the creation of a RecurringExpenseList with the name as the specified `NAME`
+* The list number of each RecurringExpenseList is determined by the position of its associated `!!! NAME !!!` in `RecurringExpensesFile.txt`, where the highest in the file would have its associated list number as `1`.
+* `LISTNUMBER | DATE | CATEGORY | AMOUNT | DESCRIPTION` will denote the addition of an expense into the `RecurringExpenseList` associated with the provided `LISTNUMBER`
+* `DATE`, `CATEGORY`, `AMOUNT` and `DESCRIPTION` follow the same restrictions as if a user were to normally add an expense within the application itself.
+* Any `AMOUNT` that is more than 2 decimal places will be automatically treated as 2 d.p.
+* The file is considered **corrupted** as long as the inputs are out of place / invalid. Etc. invalid category, invalid amount, wrong format for naming a recurring list
 
-> ⚠️ **Caution:** Certain edits can cause BudgetBuddy to behave in unexpected ways (e.g. if value entered is outside of acceptable range, or the entries are not in the right format). Therefore, edit the data file only
+> ⚠️ **Caution:** Certain edits can cause BudgetBuddy to behave in unexpected ways (e.g. if value entered is outside the acceptable range, or the entries are not in the right format). Therefore, edit the data file only
 > if you are confident that you can update it correctly
 
 
