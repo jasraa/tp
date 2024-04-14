@@ -623,7 +623,8 @@ For advanced users who wish to edit the `RecurringExpensesFile.txt`, do take not
 * `!!! NAME !!!` will denote the creation of a RecurringExpenseList with the name as the specified `NAME`
 * The list number of each RecurringExpenseList is determined by the position of its associated `!!! NAME !!!` in `RecurringExpensesFile.txt`, where the highest in the file would have its associated list number as `1`.
 * `LISTNUMBER | DATE | CATEGORY | AMOUNT | DESCRIPTION` will denote the addition of an expense into the `RecurringExpenseList` associated with the provided `LISTNUMBER`
-* `DATE`, `CATEGORY`, `AMOUNT` and `DESCRIPTION` follow the same restrictions as if a user were to normally add an expense within the application itself.
+* `DATE`, `CATEGORY`, `AMOUNT` and `DESCRIPTION` follow the same restrictions as if a user were to normally add an expense within the application itself. 
+* On top of the restrictions stated in the previous point, do note that `CATEGORY` is **case-sensitive** here. Hence, `entertainment` is considered an invalid category as it should be `Entertainment`
 * Any `AMOUNT` that is more than 2 decimal places will be automatically treated as 2 d.p.
 * The file is considered **corrupted** as long as the inputs are out of place / invalid. Etc. invalid category, invalid amount, wrong format for naming a recurring list
 
