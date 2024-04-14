@@ -57,6 +57,7 @@ everytime they leave/reopen the application
 #### Project Management
 1. Managed releases v1.0-v2.1 (3 releases) on Github
 2. Integrated features to work as a cohesive application in v1.0 (Pull Request [#34](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/34))
+3. Handle Issue tracker for the following [issues](https://github.com/AY2324S2-CS2113-T12-3/tp/issues?q=is%3Aissue+is%3Aclosed+author%3Aitsmejr257)
 
 #### Enhancements to existing features:
 1. Wrote JUnit tests for the Recurring Expense, Find and Menu Command feature, leading to a coverage of the following (Pull Request [#106](https://github.com/AY2324S2-CS2113-T12-3/tp/pull/106))
