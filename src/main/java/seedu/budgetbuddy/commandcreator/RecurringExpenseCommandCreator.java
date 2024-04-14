@@ -167,8 +167,9 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
         Double amount = Double.parseDouble(amountAsString);
 
-        if(amount > MAX_AMOUNT) {
-            throw new BudgetBuddyException("Please Ensure that Amount is Less than " + "1,000,000,000,000");
+        if(amount > MAX_AMOUNT || amount <= 0) {
+            throw new BudgetBuddyException("Please Ensure that Amount is a positive integer (Not 0) and is Less than "
+                    + "1,000,000,000,000");
         }
 
         return amount;
