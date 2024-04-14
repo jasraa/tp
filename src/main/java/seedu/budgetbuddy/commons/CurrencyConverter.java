@@ -180,6 +180,7 @@ public class CurrencyConverter {
         }
     }
 
+    // @@author itsmejr257
     public void convertRecurringExpensesCurrency(Currency newCurrency, RecurringExpenseLists recurringExpenseLists) {
         assert recurringExpenseLists != null : "RecurringExpenseLists cannot be null";
 
@@ -203,7 +204,9 @@ public class CurrencyConverter {
         System.out.println("Default currency for Recurring Expenses changed to " + newCurrency);
         ui.printDivider();
     }
- 
+    // @@author
+
+
     public void convertBudgetCurrency(Currency newCurrency, ExpenseList expenseList) {
         if (expenseList == null) {
             throw new IllegalArgumentException("ExpenseList cannot be null");

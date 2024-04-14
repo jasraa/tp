@@ -172,101 +172,73 @@ public class Parser {
      */
     public Command parseCommand(ExpenseList expenses, SavingList savings, SplitExpenseList
             splitexpenses, RecurringExpenseLists expensesList, String input) {
-        
+
+        CommandCreator commandCreator = null;
+
         if(isMenuCommand(input)) {
             LOGGER.log(Level.INFO, "Confirmed that input is a menu command");
-            CommandCreator commandCreator = new MenuCommandCreator(input);
-            return commandCreator.createCommand();
+            commandCreator = new MenuCommandCreator(input);
         }
-
         if (isAddExpenseCommand(input)) {
-            CommandCreator commandCreator = new AddExpenseCommandCreator(expenses, input);
-            return commandCreator.createCommand();
+            commandCreator = new AddExpenseCommandCreator(expenses, input);
         }
-
         if (isAddSavingCommand(input)) {
-            CommandCreator commandCreator = new AddSavingCommandCreator(savings, input);
-            return commandCreator.createCommand();
+            commandCreator = new AddSavingCommandCreator(savings, input);
         }
-
         if (isEditExpenseCommand(input)) {
-            CommandCreator commandCreator = new EditExpenseCommandCreator(input, expenses);
-            return commandCreator.createCommand();
+            commandCreator = new EditExpenseCommandCreator(input, expenses);
         }
-
         if (isEditSavingCommand(input)) {
-            CommandCreator commandCreator = new EditSavingsCommandCreator(input, savings);
-            return commandCreator.createCommand();
+            commandCreator = new EditSavingsCommandCreator(input, savings);
         }
-
         if (isDeleteExpenseCommand(input)) {
-            CommandCreator commandCreator = new DeleteExpenseCommandCreator(expenses, input);
-            return commandCreator.createCommand();
+            commandCreator = new DeleteExpenseCommandCreator(expenses, input);
         }
-
         if (isReduceSavingCommand(input)) {
-            CommandCreator commandCreator = new ReduceSavingCommandCreator(savings, input);
-            return commandCreator.createCommand();
+            commandCreator = new ReduceSavingCommandCreator(savings, input);
         }
-
         if (isListCommand(input.toLowerCase())) {
-            CommandCreator commandCreator = new ListCommandCreator(expenses, savings, input);
-            return commandCreator.createCommand();
+            commandCreator = new ListCommandCreator(expenses, savings, input);
         }
-
         if (isListSplitExpenseCommand(input)) {
-            CommandCreator commandCreator = new ListSplittedExpenseCommandCreator(input, splitexpenses);
-            return commandCreator.createCommand();
+            commandCreator = new ListSplittedExpenseCommandCreator(input, splitexpenses);
         }
-
         if (isFindExpensesCommand(input)) {
-            CommandCreator commandCreator = new FindExpensesCommandCreator(input, expenses);
-            return commandCreator.createCommand();
+            commandCreator = new FindExpensesCommandCreator(input, expenses);
         }
-
         if (isRecCommand(input)) {
-            CommandCreator commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenses);
-            return commandCreator.createCommand();
+            commandCreator = new RecurringExpenseCommandCreator(input, expensesList, expenses);
         }
-
         if (isConvertCurrencyCommand(input.toLowerCase())) {
-            CommandCreator commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses, splitexpenses, 
+            commandCreator = new ChangeCurrencyCommandCreator(input, savings, expenses, splitexpenses,
                     expensesList, new CurrencyConverter());
-            return commandCreator.createCommand();
         }
-
         if (isSplitExpenseCommand(input)) {
-            CommandCreator commandCreator = new SplitExpenseCommandCreator(splitexpenses, input);
-            return commandCreator.createCommand();
+            commandCreator = new SplitExpenseCommandCreator(splitexpenses, input);
         }
-
         if (isSettleSplitExpenseCommand(input)) {
-            CommandCreator commandCreator = new SettleSplitExpenseCommandCreator(input, splitexpenses);
-            return commandCreator.createCommand();
+            commandCreator = new SettleSplitExpenseCommandCreator(input, splitexpenses);
         }
-        
         if (isSetBudgetCommand(input)) {
-            CommandCreator commandCreator = new SetBudgetCommandCreator(expenses, input);
-            return commandCreator.createCommand();
+            commandCreator = new SetBudgetCommandCreator(expenses, input);
         }
         if (isGetBudgetCommand(input)) {
-            CommandCreator commandCreator = new GetBudgetCommandCreator(expenses, input);
-            return commandCreator.createCommand();
+            commandCreator = new GetBudgetCommandCreator(expenses, input);
         }
         if (isListBudgetCommand(input)){
-            CommandCreator commandCreator = new ListBudgetCommandCreator(expenses);
-            return commandCreator.createCommand();
+            commandCreator = new ListBudgetCommandCreator(expenses);
         }
         if (isGetExpensesInsightsCommand(input)) {
-            CommandCreator commandCreator = new GetExpenseInsightsCommandCreator(expenses);
-            return commandCreator.createCommand();
+            commandCreator = new GetExpenseInsightsCommandCreator(expenses);
         }
-
         if (isGetSavingsInsightsCommand(input)) {
-            CommandCreator commandCreator = new GetSavingsInsightsCommandCreator(savings);
-            return commandCreator.createCommand();
+            commandCreator = new GetSavingsInsightsCommandCreator(savings);
         }
 
-        return null;
+        if (commandCreator == null) {
+            return null;
+        }
+
+        return commandCreator.createCommand();
     }
 }

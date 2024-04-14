@@ -8,9 +8,9 @@ import seedu.budgetbuddy.commandcreator.RecurringExpenseCommandCreator;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.commons.RecurringExpenseLists;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class RecurringExpenseCommandCreatorTest {
 
@@ -266,6 +266,24 @@ public class RecurringExpenseCommandCreatorTest {
         Command command = commandCreator.createCommand();
 
         assertNull(command);
+    }
+
+    @Test
+    public void handleRecCommand_newExpenseToListCommandWithInvalidCategory_returnsNull() {
+
+        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
+        ExpenseList expenseList = new ExpenseList();
+        recurringExpenseLists.addNewRecurringList("list1");
+
+        String userInput = "rec newexpense to/1 c/invalid a/500 d/description";
+
+        RecurringExpenseCommandCreator recurringExpenseCommandCreator = new RecurringExpenseCommandCreator(userInput
+                , recurringExpenseLists,expenseList);
+
+        Command newExpenseCommand = recurringExpenseCommandCreator.createCommand();
+
+        assertNull(newExpenseCommand);
+
     }
 
 }

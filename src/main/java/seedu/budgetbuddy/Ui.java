@@ -14,7 +14,7 @@ public class Ui {
         System.out.println("To view all menu items again, type \"menu\".");
         System.out.println(DIVIDER);
         System.out.println("0. Display the whole menu");
-        System.out.println("1. Manage Expenses        2. View Expenses");
+        System.out.println("1. Manage Expenses        2. Manage Savings");
         System.out.println("3. View Expenses          4. View Savings");
         System.out.println("5. Find Expenses          6. Divide Bills");
         System.out.println("7. Manage Recurring Bills 8. Change Currency");
@@ -33,8 +33,8 @@ public class Ui {
         System.out.println(DIVIDER);
         System.out.println("Menu Options:");
         System.out.println("0. Display the whole menu");
-        System.out.println("1. Manage Expenses        3. View Expenses");
-        System.out.println("2. Manage Savings         4. View Savings");
+        System.out.println("1. Manage Expenses        2. Manage Savings");
+        System.out.println("3. View Expenses          4. View Savings");
         System.out.println("5. Find Expenses          6. Divide Bills");
         System.out.println("7. Manage Recurring Bills 8. Change Currency");
         System.out.println("9. Manage Budget          10. Get Graphical Insights");
@@ -45,7 +45,8 @@ public class Ui {
     // Method to get user confirmation from the console
     public boolean getUserConfirmation() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Do you want to proceed with adding this expense? (yes/no)");
+        System.out.println("Do you want to proceed with adding this expense? (Any input that " +
+                "is not 'yes' is treated as a no)");
         String userInput = scanner.nextLine().trim().toLowerCase();
         return userInput.equals("yes");
     }
