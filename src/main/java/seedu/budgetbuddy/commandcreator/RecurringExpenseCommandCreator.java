@@ -149,7 +149,8 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
      * @param input The user input
      * @return The extracted amount from the a/ prefix
      * @throws NumberFormatException If the extracted amount is not a valid double
-     * @throws BudgetBuddyException If the extracted amount is empty
+     * @throws BudgetBuddyException If the extracted amount is empty, larger than maximum acceptable amount,
+     *                              is a negative number, is 0, or can be rounded to 0.00 at 2.dp
      */
     private Double parseAmount(String input) throws NumberFormatException, BudgetBuddyException{
         int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
@@ -168,8 +169,8 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         Double amount = Double.parseDouble(amountAsString);
 
         if(amount > MAX_AMOUNT || amount <= 0 || amount < 0.005) {
-            throw new BudgetBuddyException("Please Ensure that Amount is a positive value (Not 0 when expressed as 2.d.p.) and is Less than "
-                    + "1,000,000,000,000");
+            throw new BudgetBuddyException("Please Ensure that Amount is a positive value " +
+                    "(Not 0 when expressed as 2.d.p.) " +  "and is Less than " + "1,000,000,000,000");
         }
 
         return amount;
