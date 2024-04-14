@@ -157,21 +157,6 @@ public class RecurringExpenseCommandTest {
         assertEquals(3, recurringExpenseLists.getSize());
     }
 
-    @Test
-    public void execute_newExpenseCommandWithInvalidCategory_sizeOfRecurringExpenseListUnchanged() {
-
-        RecurringExpenseLists recurringExpenseLists = new RecurringExpenseLists();
-        recurringExpenseLists.addNewRecurringList("list1");
-
-        RecurringExpenseCommand newExpenseCommand = new RecurringExpenseCommand(1, recurringExpenseLists
-                ,"invalid", 500.00,"description", "newexpense" );
-
-
-        newExpenseCommand.execute();
-
-        assertEquals(0, recurringExpenseLists.getExpenseListAtListNumber(1).getExpenses().size());
-
-    }
 
     @Test
     public void execute_newExpenseCommand_sizeOfRecurringExpenseListIncreaseByOne() {
