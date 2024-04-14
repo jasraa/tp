@@ -160,7 +160,7 @@ public class SavingList {
         if (amountDouble > MAX_AMOUNT) {
             throw new BudgetBuddyException("Amount exceeds the maximum allowed limit of " + MAX_AMOUNT);
         }
-        
+
         boolean found = false;
         for (Saving saving : savings) {
             if (saving.getCategory().equalsIgnoreCase(category)) {
@@ -171,8 +171,13 @@ public class SavingList {
             }
         }
         if (!found) {
-            Saving saving = new Saving(category, amountDouble);
+            String matchedcateogry = categories.stream()
+                    .filter(existingCategory -> existingCategory.equalsIgnoreCase(category))
+                    .findFirst()
+                    .orElse(null);
+            Saving saving = new Saving(matchedcateogry, amountDouble);
             savings.add(saving);
+            System.out.println("Savings Added to: " + matchedcateogry + " of $" + amount);
         }
     }
     
