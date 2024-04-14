@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RecurringExpenseCommand extends Command{
-    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private RecurringExpenseLists recurringExpenseLists;
 
     private ExpenseList overallExpenses;
@@ -156,23 +155,17 @@ public class RecurringExpenseCommand extends Command{
 
         ExpenseList expenses = recurringExpenseLists.getExpenseListAtListNumber(listNumber);
 
-        try {
-            expenses.addExpense(category, amount.toString(), description);
+        Expense expenseToAdd = new Expense(category, amount, description);
+        expenses.getExpenses().add(expenseToAdd);
 
-            ui.printDivider();
-            System.out.println("Successfully Added Expense to " + expenses.getName());
-            System.out.println("|Details of Expense");
-            System.out.println("--------------------");
-            System.out.println("|Category : " + category);
-            System.out.println("|Amount : " + String.format("%.2f", amount));
-            System.out.println("|Description : " + description);
-            ui.printDivider();
-
-        } catch (BudgetBuddyException e) {
-            LOGGER.log(Level.WARNING
-                    , "An attempt to add an Invalid Expense was created. Error Captured Successfully");
-            System.out.println(e.getMessage());
-        }
+        ui.printDivider();
+        System.out.println("Successfully Added Expense to " + expenses.getName());
+        System.out.println("|Details of Expense");
+        System.out.println("--------------------");
+        System.out.println("|Category : " + category);
+        System.out.println("|Amount : " + String.format("%.2f", amount));
+        System.out.println("|Description : " + description);
+        ui.printDivider();
 
     }
     
@@ -208,14 +201,15 @@ public class RecurringExpenseCommand extends Command{
             Double amount = expense.getAmount();
             String description = expense.getDescription();
 
-            Command addExpenseCommand = new AddExpenseCommand(overallExpenses, category,
-                    amount.toString(), description);
+            ui.printDivider();
+            System.out.println("Adding : " + category + " | " + amount + " | " + description + " | ");
 
-            addExpenseCommand.execute();
+            overallExpenses.addExpense(category,amount,description);
+            ui.printDivider();
         }
 
         ui.printDivider();
-        System.out.println("Your Recurring Expenses in " + expenseList.getName() +
+        System.out.println("Your chosen Recurring Expenses in " + expenseList.getName() +
                 " has been added to your overall Expenses");
         ui.printDivider();
 
@@ -229,6 +223,7 @@ public class RecurringExpenseCommand extends Command{
      * @param recurringExpenseLists The recurringExpensesList to obtain ExpenseList from
      */
     private void printExpensesAtIndex(int listNumber, RecurringExpenseLists recurringExpenseLists) {
+        assert recurringExpenseLists != null : "listNumber cannot be Null";
 
         if (listNumber <= 0 || listNumber > recurringExpenseLists.getSize()) {
             System.out.println("Invalid List Number. Choose a List Number from 1 onwards");
@@ -249,6 +244,7 @@ public class RecurringExpenseCommand extends Command{
         recurringExpenseLists.printAllRecurringLists();
     }
     public void execute(){
+        assert commandType != null : "CommandType cannot be null";
 
         switch(commandType) {
         case "newlist":

@@ -6,11 +6,14 @@ import seedu.budgetbuddy.command.Command;
 import seedu.budgetbuddy.command.RecurringExpenseCommand;
 import seedu.budgetbuddy.exception.BudgetBuddyException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RecurringExpenseCommandCreator extends CommandCreator{
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final double MAX_AMOUNT = 1_000_000_000_000.00;
     private static final String LISTNUMBER_PREFIX = "to/";
     private static final String CATEGORY_PREFIX = "c/";
     private static final String AMOUNT_PREFIX = "a/";
@@ -18,6 +21,9 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
     private String input;
     private RecurringExpenseLists recurringExpenseLists;
     private ExpenseList expenses;
+
+    private ArrayList<String> expenseCategories = new ArrayList<>(Arrays.asList("Housing"
+            , "Groceries", "Utility", "Transport", "Entertainment", "Others"));
 
 
     /**
@@ -161,9 +167,30 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
         Double amount = Double.parseDouble(amountAsString);
 
+        if(amount > MAX_AMOUNT) {
+            throw new BudgetBuddyException("Please Ensure that Amount is Less than " + "1,000,000,000,000");
+        }
+
         return amount;
     }
 
+
+    /**
+     * Returns a case-insensitive match to the provided `category`
+     * @param category The category to be found
+     * @return The case-insensitive match to the category to be found
+     * @throws BudgetBuddyException if no matches are found
+     */
+    private String getCategory(String category) throws BudgetBuddyException{
+        for (String validCategory : expenseCategories) {
+            if (validCategory.equalsIgnoreCase(category)) {
+                return validCategory;
+            }
+        }
+
+        throw new BudgetBuddyException("Please ensure the category is a valid category\n" +
+                "Valid Categories : Entertainment, Housing, Groceries, Utility, Transport, Other");
+    }
     /**
      * Parses the category from the input string
      *
@@ -178,12 +205,14 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         int indexOfAmountPrefix = input.indexOf(AMOUNT_PREFIX);
         int endIndexOfCategory = indexOfAmountPrefix;
 
-        String category = input.substring(startIndexOfCategory, endIndexOfCategory).trim();
+        String categoryToObtain = input.substring(startIndexOfCategory, endIndexOfCategory).trim();
 
-        if(category.trim().isEmpty()) {
+        if(categoryToObtain.trim().isEmpty()) {
+            LOGGER.log(Level.WARNING, "Empty Category Detected, throwing BudgetBuddyException");
             throw new BudgetBuddyException("Please Ensure Category is NOT empty");
         }
 
+        String category = getCategory(categoryToObtain);
         return category;
     }
 
@@ -205,6 +234,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
         String listNumberAsString = input.substring(startIndexOfListNumber, endIndexOfListNumber).trim();
 
         if(listNumberAsString.trim().isEmpty()) {
+            LOGGER.log(Level.WARNING, "Empty ListNumber Detected, throwing BudgetBuddyException");
             throw new BudgetBuddyException("Please Ensure List Number is NOT empty");
         }
 
@@ -246,6 +276,7 @@ public class RecurringExpenseCommandCreator extends CommandCreator{
 
         for (String parameter : parameters) {
             if (input.indexOf(parameter) != input.lastIndexOf(parameter)) {
+                LOGGER.log(Level.WARNING, "Duplicate Parameters Detected, throwing BudgetBuddyException");
                 throw new BudgetBuddyException("Please ensure that you do not have any duplicate parameters");
             }
         }

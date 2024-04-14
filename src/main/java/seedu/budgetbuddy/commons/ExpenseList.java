@@ -170,6 +170,37 @@ public class ExpenseList {
         return false;
     }
 
+    //@@author itsmejr257
+
+    /**
+     * Adds an expense to the overall expense list. Takes in 2 strings, category and description, and one double
+     * value. This method assumes that the provide category, amount and description is always valid
+     *
+     * @param category The category of the expense to be added
+     * @param amount The amount of the expense to be added
+     * @param description The description of the expense to be added
+     */
+    public void addExpense(String category, Double amount, String description)  {
+        assert category != null : "Category should not be null";
+        assert amount != null : "Amount should not be null";
+        assert description != null : "Description should not be null";
+
+        boolean budgetExceeded = checkBudgetBeforeAddingExpense(category, amount);
+        if (budgetExceeded) {
+            System.out.println("Warning: Adding this expense will exceed your budget for " + category);
+            boolean userConfirmation = ui.getUserConfirmation();
+            if (!userConfirmation) {
+                System.out.println("Expense not added due to budget constraints.");
+                return;
+            }
+        }
+
+        Expense expense = new Expense(category, amount, description);
+        expenses.add(expense);
+
+        System.out.println("Expense added: " + category + " of $" + String.format("%.2f", amount)
+                + " Description: " + description);
+    }
 
 
     //@@author Zhang Yangda
