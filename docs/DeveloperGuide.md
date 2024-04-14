@@ -424,7 +424,7 @@ list of `savings` matching against the corresponding `category`.
 | addSaving()  | void        | Add savings to the existing list of `savings`   |
 
 The following UML Sequence diagram shows how the Parser works to obtain the relevant inputs for the Add Expense Feature :
-![Sequence Diagram for Parser for Add Expense Feature](docs\diagram\sequenceDiagram_AddSaving.jpg)
+![Sequence Diagram for Parser for Add Expense Feature](diagrams/sequenceDiagram_AddSaving.jpg)
 
 The following is a step-by-step explanation for the Parser for the Find Feature :
 1. `BudgetBuddy` calls `Parser#parseCommand(input)` with `input` being the entire user input.
@@ -1018,6 +1018,7 @@ class. Below is a description of the key class attributes and methods involved i
 process:
 
 ##### Class Attributes for `SetBudgetCommand`:
+
 | Class Attribute | Variable Type | Relevance                                                           |
 |-----------------|---------------|---------------------------------------------------------------------|
 | expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
@@ -1026,6 +1027,7 @@ process:
 
 The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to set a budget:
+
 ![sequenceDiagram_setBudget.jpg](diagrams/sequenceDiagram_SetBudget.jpg)
 
 The sequence of operations for an example input, `set budget c/Transport b/500`, is as follows:
@@ -1038,12 +1040,14 @@ The sequence of operations for an example input, `set budget c/Transport b/500`,
 7. A confirmation message is displayed in the console indicating the budget has been successfully set or updated.
 
 ##### Class Attributes for `ListBudgetCommand`:
+
 | Class Attribute | Variable Type | Relevance                                                           |
 |-----------------|---------------|---------------------------------------------------------------------|
 | expenseList     | ExpenseList   | Object containing the list of expenses to check against set budgets |
 
 The UML Sequence diagram below illustrates the execution flow of the Set Budget Feature when a user inputs a valid
 command to list budgets:
+
 ![sequenceDiagram_listBudget.png](diagrams/sequenceDiagram_ListBudget.png)
 
 Upon the call of the `execute()` method in `BudgetBuddy` using `command.execute()`, `SetBudgetCommand` will update the
