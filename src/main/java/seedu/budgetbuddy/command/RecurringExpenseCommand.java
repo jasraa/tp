@@ -4,11 +4,8 @@ import seedu.budgetbuddy.commons.Expense;
 import seedu.budgetbuddy.commons.ExpenseList;
 import seedu.budgetbuddy.commons.RecurringExpenseLists;
 import seedu.budgetbuddy.Ui;
-import seedu.budgetbuddy.exception.BudgetBuddyException;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RecurringExpenseCommand extends Command{
     private RecurringExpenseLists recurringExpenseLists;
