@@ -48,7 +48,7 @@ to deal with finances on a singular platform with ease as long as you can type f
 2. Download the latest version of `BudgetBuddy` from [here](https://github.com/AY2324S2-CS2113-T12-3/tp).
 3. Copy the file to the folder you want to use as the home folder.
 4. Open  command terminal, ``cd`` into the folder you put your jar file in, and use the `java -jar [CS2113-T12-3][BudgetBuddy].jar` 
-command to run the application.
+command to run the application (Name of JAR File may vary)
 
 
 ## 3. Features
